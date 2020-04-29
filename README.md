@@ -18,6 +18,13 @@ elan default nightly
 
 Visit https://marketplace.visualstudio.com/items?itemName=jroesch.lean
 
+### Install mathlib-tools
+
+```
+pip install mathlibtools
+leanproject global-install
+```
+
 ### Experiment!
 
 ```
