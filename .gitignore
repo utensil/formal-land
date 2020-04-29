@@ -1,0 +1,7 @@
+.DS_Store
+*.olean
+/_target
+/leanpkg.path
+.vscode/*
+.history/
+*.code-workspace
