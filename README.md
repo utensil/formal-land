@@ -4,11 +4,22 @@
 
 ### Install Lean and Configure it
 
-```
-curl https://raw.githubusercontent.com/Kha/elan/master/elan-init.sh -sSf | sh
+On *nix:
+
+```bash
+# On Mac
+# brew install gmp coreutils
+
+yes 1|curl https://raw.githubusercontent.com/Kha/elan/master/elan-init.sh -sSf | sh
 ```
 
-```
+On Windows:
+
+Download and run `elan-init.exe` from https://github.com/Kha/elan/releases/tag/v0.8.0
+
+Then on both:
+
+```bash
 elan toolchain install stable
 elan toolchain install nightly
 elan default nightly
@@ -18,16 +29,9 @@ elan default nightly
 
 Visit https://marketplace.visualstudio.com/items?itemName=jroesch.lean
 
-### Install mathlib-tools
-
-```
-pip install mathlibtools
-leanproject global-install
-```
-
 ### Experiment!
 
-```
+```bash
 lean hello.lean
 ```
 
