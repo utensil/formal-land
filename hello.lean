@@ -1,3 +1,10 @@
+set_option trace.debug.eqn_compiler true
+set_option trace.cc true
+set_option trace.debug.dsimplify true
+set_option trace.simplify.context true
+set_option trace.simplify.rewrite true
+set_option trace.debug true
+
 lemma ℕ_addition_commutative
 (n m : ℕ) : 
     n + m = m + n :=
