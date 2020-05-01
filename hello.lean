@@ -11,8 +11,17 @@ set_option trace.simplify.rewrite true
 lemma ℕ_addition_commutative
 (n m : ℕ) : 
     n + m = m + n :=
-by cc
--- TODO why simp failed?
+by apply add_comm
+-- by cc
+-- by simp [add_comm]
+-- why `simp` failed? See:
+-- - https://github.com/leanprover-community/lean/blob/master/doc/changes.md#v360c-26-feb-2020
+-- - https://github.com/leanprover-community/lean/pull/65
+
+-- example is just a nameless lemma
+example (n m : ℕ) : 
+    n * m = m * n :=
+by apply mul_comm
 
 -- The following are adapted from 
 -- Chapter 1, The Hitchhiker’s Guide to Logical Verification
