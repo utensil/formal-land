@@ -1,3 +1,5 @@
+-- begin header
+
 set_option trace.cc true
 set_option trace.debug.dsimplify true
 set_option trace.simplify.context true
@@ -5,20 +7,51 @@ set_option trace.simplify.rewrite true
 -- set_option trace.debug.eqn_compiler true
 -- set_option trace.debug true
 
--- Adapted from the default code 
--- on https://leanprover.github.io/live/latest/
+-- end header
 
+/-
+# Hello
+-/
+
+/-
+## Commutativity
+
+The following is adapted from the default code 
+on <https://leanprover.github.io/live/latest/> .
+-/
+
+/- Lemma
+
+$\mathbb{N}$ is commutative under addition.
+
+-/
 lemma ℕ_addition_commutative
 (n m : ℕ) : 
     n + m = m + n :=
-by apply add_comm
--- by cc
--- by simp [add_comm]
--- why `simp` failed? See:
--- - https://github.com/leanprover-community/lean/blob/master/doc/changes.md#v360c-26-feb-2020
--- - https://github.com/leanprover-community/lean/pull/65
+begin
+    -- $\mathbb{N}$ is a semi-group which is commutative under addition.
+    apply add_comm
+end
 
--- example is just a nameless lemma
+/-
+    There're alternative tatics:
+
+    * `apply add_comm`
+    * `cc`
+    * `simp [add_comm]`
+    
+    why `simp` failed? See:
+
+    * <https://github.com/leanprover-community/lean/blob/master/doc/changes.md#v360c-26-feb-2020>
+    * <https://github.com/leanprover-community/lean/pull/65>
+-/
+
+/- Example
+
+$\mathbb{N}$ is commutative under multiplication.
+
+(example is just a nameless lemma)
+-/
 example (n m : ℕ) : 
     n * m = m * n :=
 by apply mul_comm

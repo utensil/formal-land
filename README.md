@@ -29,6 +29,12 @@ elan default nightly
 
 Visit https://marketplace.visualstudio.com/items?itemName=jroesch.lean
 
+### Install Lean formatter
+
+```bash
+pip install -U git+https://github.com/utensil-contrib/format_lean.git@working
+```
+
 ### Experiment!
 
 ```bash
@@ -57,4 +63,8 @@ list.nil : list ?M_1
   Π (Animal : Type), Animal → list Animal → list Animal
 λ (Animal : Type) (cat_1 cat_ooo cat_n : Animal), [cat_1, cat_ooo, cat_n] :
   Π (Animal : Type), Animal → Animal → Animal → list Animal
+```
+
+```bash
+format_lean --inpath hello.lean --outdir build
 ```
