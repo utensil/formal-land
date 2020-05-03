@@ -35,10 +35,16 @@ Visit https://marketplace.visualstudio.com/items?itemName=jroesch.lean
 pip install -U git+https://github.com/utensil-contrib/format_lean.git@working
 ```
 
+### Download dependencies
+
+```bash
+leanpkg configure
+```
+
 ### Experiment!
 
 ```bash
-lean hello.lean
+lean src/hello.lean
 ```
 
 ```lean
@@ -66,5 +72,7 @@ list.nil : list ?M_1
 ```
 
 ```bash
+cd src
 format_lean --inpath hello.lean --outdir build
+# open build/hello.html
 ```
