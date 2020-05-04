@@ -691,8 +691,49 @@ theorem t1₇ : ∀ (p q : Prop), p → q → p :=
 
 #check t1₇
 
+-- If p and q have been declared as variables, 
+-- Lean will generalize them for us automatically:
+
+variables p q : Prop
+
 theorem t1₈ : p → q → p := λ (hp : p) (hq : q), hp
 
+#check t1₈ -- t1₈ : ∀ (p q : Prop), p → q → p
+
+variable  hp : p
+
 theorem t1₉ : q → p := λ (hq : q), hp
+
+#check t1₉ -- t1₉ : ∀ (p q : Prop), q → p
+
+theorem t1ₐ (p q : Prop) (hp : p) (hq : q) : p := hp
+
+variables r s : Prop
+
+-- we can apply t1ₐ to different pairs of propositions, 
+-- to obtain different instances of the general theorem.
+
+#check t1ₐ p q                -- p → q → p
+#check t1ₐ r s                -- r → s → r
+#check t1ₐ (r → s) (s → r)    -- (r → s) → (s → r) → r → s
+
+variable h : r → s
+#check t1ₐ (r → s) (s → r) h  -- (s → r) → r → s
+
+def compose (α β γ : Type) (g : β → γ) (f : α → β) (x : α) :
+  γ :=
+g (f x)
+
+theorem t_compose (h₁ : q → r) (h₂ : p → q) : p → r :=
+assume h₃ : p,
+show r, from h₁ (h₂ h₃)
+
+theorem t_compose₁ (h₁ : q → r) (h₂ : p → q) : p → r :=
+λ h₃ : p,
+h₁ (h₂ h₃)
+
+#check t_compose₁
+
+-- 3.3. Propositional Logic
 
 end chap_03
