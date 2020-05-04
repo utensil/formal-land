@@ -123,6 +123,7 @@ constant G : Type → Type → Type
 #check Sort 4   -- Type 3 : Type 4
 
 universe u
+universe v
 
 -- #check u     -- unknown identifier 'u'
 #check Sort u   -- Sort u : Type u
@@ -539,6 +540,161 @@ namespace ex_02_02
 
 end ex_02_02
 
+namespace ex_02_03
 
+    constant vec : Type u → ℕ → Type u
 
+    constant vec_add {n : ℕ} : vec ℕ n → vec ℕ n → vec ℕ n
 
+    constant vec_reverse {α : Type} {n : ℕ} : vec α n → vec α n
+
+    variables (v1 v2 : vec ℕ 5) (v3 : vec ℕ 7) (v4 : vec string 5)
+
+    #check vec_add v1 v2
+    -- #check vec_add v1 v3 -- errror: type mismatch
+    -- #check vec_add v1 v4 -- errror: type mismatch
+
+    #check vec_reverse v1
+    #check vec_reverse v3
+    #check vec_reverse v4
+    #check vec_reverse (vec_add v1 v2)
+
+end ex_02_03
+
+namespace ex_02_04
+
+    constant vec : Type u → ℕ → Type u
+
+    constant matrix : Type u → ℕ → ℕ → Type u
+
+    constant matrix_add {α : Type} {m n : ℕ} : matrix α m n → matrix α m n → matrix α m n
+
+    -- https://www.mathsisfun.com/algebra/matrix-multiplying.html :)
+    constant matrix_mul {α : Type} {m n p : ℕ} : matrix α m n → matrix α n p → matrix α m p
+
+    constant matrix_vec_mul {α : Type} {m n p : ℕ} : matrix α m n → vec α n → vec α m
+
+    variables (m1 : matrix ℕ 3 4) (m2 : matrix ℕ 4 5) (m3 : vec ℕ 3) (m4 : vec ℕ 4)
+
+    #check matrix_add m1 m1
+    -- #check matrix_add m1 m2 -- errror: type mismatch 
+    #check matrix_mul m1 m2
+    -- #check matrix_mul m1 m1 -- errror: type mismatch
+    --#check matrix_mul m1 m3 -- errror: type mismatch
+    -- #check matrix_vec_mul m1 m3 -- errror: type mismatch
+    #check matrix_vec_mul m1 m4
+
+end ex_02_04
+
+-- 3. Propositions and Proofs
+namespace chap_03
+
+-- 3.1. Propositions as Types
+
+constant and : Prop → Prop → Prop
+constant or : Prop → Prop → Prop
+constant not : Prop → Prop
+constant implies : Prop → Prop → Prop
+
+variables p q r : Prop
+#check and p q                      -- Prop
+#check or (and p q) r               -- Prop
+#check implies (and p q) (and q p)  -- Prop
+
+#check Prop -- Prop : Type
+#check Type -- Type : Type 1
+
+constant Proof : Prop → Type
+
+constant local_and_comm : Π p q : Prop,
+  Proof (implies (and p q) (and q p))
+
+#check local_and_comm p q
+
+constant local_modus_ponens :
+  Π p q : Prop, Proof (implies p q) →  Proof p → Proof q
+
+constant local_implies_intro :
+  Π p q : Prop, (Proof p → Proof q) → Proof (implies p q)
+
+-- Calculus of Constructions
+
+-- Curry-Howard isomorphism a.k.a. propositions-as-types paradigm
+
+-- Prop, like the other type universes, is closed under the arrow constructor: 
+-- if we have p q : Prop, then p → q : Prop.
+
+#check p → q -- Prop
+
+#check α → β -- Type
+
+#check Type u → Type v -- Type u → Type v : Type (max (u+1) (v+1))
+
+-- Prop are definitionally proof-irrelevant types
+
+-- 3.2. Working with Propositions as Types
+
+-- constants p q : Prop
+
+theorem t1 : p → q → p := λ hp : p, λ hq : q, hp
+
+#print t1
+-- theorem chap_03.t1 : ∀ (p q : Prop), p → q → p :=
+-- λ (p q : Prop) (hp : p) (hq : q), hp
+
+-- Lean provides the alternative syntax assume for such a lambda abstraction:
+
+theorem t1₂ : p → q → p :=
+assume hp : p,
+assume hq : q,
+hp
+
+#check t1₂ -- t1₂ : ∀ (p q : Prop), p → q → p
+
+-- Lean also allows us to specify the type of the final term hp, explicitly, 
+-- with a show statement.
+
+theorem t1₃ : p → q → p :=
+assume hp : p,
+assume hq : q,
+show p, from hp
+
+#check t1₃ -- t1₃ : ∀ (p q : Prop), p → q → p
+
+-- As with ordinary definitions, we can move the lambda-abstracted variables
+-- to the left of the colon:
+
+theorem t1₄ (hp : p) (hq : q) : p := hp
+
+#check t1₄    -- t1₄ : ∀ (p q : Prop), p → q → p
+
+-- the axiom command is alternative syntax for constant. 
+-- Declaring a “constant” hp : p is tantamount to declaring that p is true, 
+-- as witnessed by hp. 
+axiom hp : p
+
+#check hp -- hp : ∀ (p : Prop), p
+
+#check p
+#check q
+#check hp
+#check t1₄
+-- #check t1₄ hp --error
+
+theorem t1₅ (p q : Prop) (hp : p) (hq : q) : p := hp
+
+-- FIXME we can apply the theorem t1 just as a function application.
+-- theorem t2 : q → p := t1₄ hp -- error type mismatch at application
+
+theorem t1₆ (p q : Prop) (hp : p) (hq : q) : p := hp
+
+theorem t1₇ : ∀ (p q : Prop), p → q → p :=
+λ (p q : Prop) (hp : p) (hq : q), hp
+
+#check t1₇
+
+theorem t1₈ : p → q → p := λ (hp : p) (hq : q), hp
+
+theorem t1₉ : q → p := λ (hq : q), hp -- error type mismatch
+
+end chap_03
