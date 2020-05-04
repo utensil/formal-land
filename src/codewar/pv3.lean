@@ -57,13 +57,21 @@ case nat.zero {
 },
 case nat.succ : m ih {
     rw sum_simple,
-    apply eq.symm,
-    rw <- ih,
-    rw sum_tail,
-    apply eq.symm,
-    rw sum_aux,
-    simp only [add_zero],
+
+    -- apply eq.symm, -- f (m + 1) + sum_simple f m = sum_tail f (nat.succ m)
+    -- rw <- ih,
+    -- rw sum_tail,
+    -- apply eq.symm, -- sum_aux 0 f (nat.succ m) = f (m + 1) + sum_aux 0 f m
+    -- rw sum_aux,
+    -- rw add_zero, -- sum_aux (f (m + 1)) f m = f (m + 1) + sum_aux 0 f m
+    -- simp only [add_zero], --squeez_simp
     
+    conv_rhs {
+        rw <- ih,
+    },
+    rw sum_tail,
+    rw sum_aux,
+    rw add_zero,
 
     --tidy?,
 
