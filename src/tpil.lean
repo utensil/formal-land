@@ -596,7 +596,7 @@ constant or : Prop → Prop → Prop
 constant not : Prop → Prop
 constant implies : Prop → Prop → Prop
 
-variables p q r : Prop
+constants p q r : Prop
 #check and p q                      -- Prop
 #check or (and p q) r               -- Prop
 #check implies (and p q) (and q p)  -- Prop
@@ -634,13 +634,11 @@ constant local_implies_intro :
 
 -- 3.2. Working with Propositions as Types
 
--- constants p q : Prop
-
 theorem t1 : p → q → p := λ hp : p, λ hq : q, hp
 
 #print t1
--- theorem chap_03.t1 : ∀ (p q : Prop), p → q → p :=
--- λ (p q : Prop) (hp : p) (hq : q), hp
+-- theorem chap_03.t1 : p → q → p :=
+-- λ (hp : p) (hq : q), hp
 
 -- Lean provides the alternative syntax assume for such a lambda abstraction:
 
@@ -649,7 +647,7 @@ assume hp : p,
 assume hq : q,
 hp
 
-#check t1₂ -- t1₂ : ∀ (p q : Prop), p → q → p
+#check t1₂ -- t1₂ : p → q → p
 
 -- Lean also allows us to specify the type of the final term hp, explicitly, 
 -- with a show statement.
@@ -659,32 +657,32 @@ assume hp : p,
 assume hq : q,
 show p, from hp
 
-#check t1₃ -- t1₃ : ∀ (p q : Prop), p → q → p
+#check t1₃ -- t1₃ : p → q → p
 
 -- As with ordinary definitions, we can move the lambda-abstracted variables
 -- to the left of the colon:
 
 theorem t1₄ (hp : p) (hq : q) : p := hp
 
-#check t1₄    -- t1₄ : ∀ (p q : Prop), p → q → p
+#check t1₄    -- t1₄ : p → q → p
 
 -- the axiom command is alternative syntax for constant. 
 -- Declaring a “constant” hp : p is tantamount to declaring that p is true, 
 -- as witnessed by hp. 
 axiom hp : p
 
-#check hp -- hp : ∀ (p : Prop), p
+#check hp -- hp : p
 
 #check p
 #check q
 #check hp
 #check t1₄
--- #check t1₄ hp --error
+#check t1₄ hp
 
 theorem t1₅ (p q : Prop) (hp : p) (hq : q) : p := hp
 
--- FIXME we can apply the theorem t1 just as a function application.
--- theorem t2 : q → p := t1₄ hp -- error type mismatch at application
+-- we can apply the theorem t1 just as a function application.
+theorem t2 : q → p := t1₄ hp
 
 theorem t1₆ (p q : Prop) (hp : p) (hq : q) : p := hp
 
@@ -695,6 +693,6 @@ theorem t1₇ : ∀ (p q : Prop), p → q → p :=
 
 theorem t1₈ : p → q → p := λ (hp : p) (hq : q), hp
 
-theorem t1₉ : q → p := λ (hq : q), hp -- error type mismatch
+theorem t1₉ : q → p := λ (hq : q), hp
 
 end chap_03
