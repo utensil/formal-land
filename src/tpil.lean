@@ -736,4 +736,188 @@ h₁ (h₂ h₃)
 
 -- 3.3. Propositional Logic
 
+#check true
+#check false
+#check tt
+#check ff
+#check ¬ -- \not, \neg
+#check p ∧ q -- \and
+#check p ∨ q -- \or 
+#check p -> q
+#check p → q -- \to, \r, \imp
+#check p ↔ q -- \iff, \lr
+
+#check p → q → p ∧ q
+#check ¬p → p ↔ false
+#check p ∨ q → q ∨ p
+
+#print notation *  -- _ `*`:70 _:70 := has_mul.mul #1 #0
+#print notation +  -- _ `+`:65 _:65 := has_add.add #1 #0
+#print notation ¬  -- `¬`:40 _:40 := not #0
+#print notation ∧ -- _ `∧`:35 _:34 := and #1 #0
+#print notation ∨ -- _ `∨`:30 _:29 := or #1 #0
+#print notation -> -- _ `->`:25 _:24 := #1 → #2
+#print notation ↔  -- _ `↔`:20 _:20 := iff #1 #0
+
+-- 3.3.1. Conjunction
+
+example (hp : p) (hq : q) : p ∧ q := and.intro hp hq
+
+#check assume (hp : p) (hq : q), and.intro hp hq
+#check λ (hp : p) (hq : q), and.intro hp hq
+
+#check and.intro -- ?M_1 → ?M_2 → ?M_1 ∧ ?M_2
+#check and.elim_left -- ?M_1 ∧ ?M_2 → ?M_1
+#check and.elim_right -- ?M_1 ∧ ?M_2 → ?M_2
+
+example (h : p ∧ q) : p := and.elim_left h
+example (h : p ∧ q) : q := and.elim_right h
+
+example (h : p ∧ q) : q ∧ p :=
+and.intro (and.right h) (and.left h)
+
+-- and-introduction and and-elimination are similar to 
+-- the pairing and projection operations for the cartesian product
+
+-- The similarity between ∧ and × is another instance of 
+-- the Curry-Howard isomorphism, but in contrast to implication
+--  and the function space constructor, 
+-- ∧ and × are treated separately in Lean.
+
+#check λ (p q : Prop) (hp : p) (hq : q), and.intro hp hq
+
+#check λ (p q : Prop), (p, q)
+
+-- #check λ (p q : Prop) (hp : p) (hq : q), (hp, hq) -- error
+
+-- namespace hmn
+
+-- variables m n : Prop
+-- variable hm : m
+-- variable hn : n
+
+-- -- #check (hm, hn) --error
+
+-- end hmn
+
+-- the canonical way to construct an element is to apply and.intro to suitable arguments 
+-- hp : p and hq : q.
+-- Lean allows us to use anonymous constructor notation ⟨arg1, arg2, ...⟩ 
+-- when the relevant type is an inductive type and can be inferred from the context.
+-- In particular, we can often write ⟨hp, hq⟩ instead of and.intro hp hq
+
+#check λ (p q : Prop) (hp : p) (hq : q), (⟨hp, hq⟩ : p ∧ q)
+
+example (p q : Prop) (hp : p) (hq : q) : p ∧ q := (|hp, hq|)
+
+example (p q : Prop) (hp : p) (hq : q) : p ∧ q := ⟨hp, hq⟩
+
+-- Given an expression e of an inductive type foo, 
+-- the notation e.bar is shorthand for foo.bar e.
+
+variable l : list ℕ
+
+#check list.head l
+#check l.head
+
+example : list.head l == l.head :=
+begin
+refl
+end
+
+-- example (h : p ∧ q) : q ∧ p := and.intro (and.right h) (and.left h)
+
+example (h : p ∧ q) : q ∧ p := ⟨ h.right, h.left ⟩
+
+example (h : p ∧ q) : q ∧ p ∧ q:=
+⟨h.right, ⟨h.left, h.right⟩⟩
+-- is equivalent to
+example (h : p ∧ q) : q ∧ p ∧ q:=
+⟨h.right, h.left, h.right⟩
+
+-- 3.3.2. Disjunction
+
+example (hp : p) : p ∨ q := or.intro_left q hp
+example (hq : q) : p ∨ q := or.intro_right p hq
+
+example (h : p ∨ q) : q ∨ p :=
+or.elim h
+  (assume hp : p,
+    show q ∨ p, from or.intro_right q hp)
+  (assume hq : q,
+    show q ∨ p, from or.intro_left p hq)
+
+example : p ∨ q → q ∨ p :=
+begin
+    intro h,
+    apply or.elim h,
+    {
+        apply or.intro_right
+    },
+    {
+        apply or.intro_left
+    }
+end
+
+example : p ∨ q → q ∨ p :=
+assume h : p ∨ q,
+or.elim h
+  (assume hp : p,
+    show q ∨ p, from or.intro_right q hp)
+  (assume hq : q,
+    show q ∨ p, from or.intro_left p hq)
+
+example : p ∨ q → q ∨ p :=
+λ h : p ∨ q,
+or.elim h
+  (λ hp : p, or.intro_right q hp)
+  (λ hq : q, or.intro_left p hq)
+
+example (h : p ∨ q) : q ∨ p :=
+or.elim h (λ hp, or.inr hp) (λ hq, or.inl hq)
+
+example (h : p ∨ q) : q ∨ p :=
+h.elim
+  (assume hp : p, or.inr hp)
+  (assume hq : q, or.inl hq)
+
+example (h : p ∨ q) : q ∨ p :=
+h.elim
+  (λ hp : p, or.inr hp)
+  (λ hq : q, or.inl hq)
+
+example (h : p ∨ q) : q ∨ p :=
+begin
+apply h.elim,
+{
+    intro hp,
+    apply or.inr hp
+},
+{
+    intro hq,
+    apply or.inl hq
+}
+end
+
+-- The type of ¬q is q → false
+
+example (hpq : p → q) (hnq : ¬q) : ¬p :=
+assume hp : p,
+show false, from hnq (hpq hp)
+
+example (hpq : p → q) (hnq : ¬q) : ¬p :=
+begin
+intro hp,
+apply hnq,
+apply hpq,
+exact hp
+end
+
+example (hpq : p → q) (hnq : q → false) : p → false :=
+λ hnp, hnq (hpq hnp)
+
+example (hpq : p → q) (hnq : q → false) : p → false :=
+calc p → q       : hpq
+...    → false   : hnq
+
 end chap_03
