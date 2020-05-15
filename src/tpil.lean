@@ -1,5 +1,7 @@
 -- https://leanprover.github.io/theorem_proving_in_lean/
 
+open classical
+
 -- 1.3. About this Book
 
 -- Structural Proof
@@ -901,9 +903,39 @@ end
 
 -- The type of ¬q is q → false
 
+example (hpq : p → q) (hnq : ¬q) : ¬p := sorry
+
+lemma nameless (hpq : p → q) (hnq : ¬q) : ¬p := sorry
+
+#check nameless
+
+def nameless₁ (hpq : p → q) (hnq : ¬q) : ¬p := sorry
+
+def nameless₂ : (p → q) → (¬q) → ¬p := sorry
+
+-- Play with `hpq` and `hnq` directly
+def nameless₁' (hpq : p → q) (hnq : ¬q) : ¬p := (let play_with := (nameless₁ p q) in play_with hpq hnq)
+
+-- Need Lambda to introduce binding names
+def nameless₂' : (p → q) → (¬q) → ¬p :=  (let play_with := (nameless₁ p q) in λ hpq, λ hnq, (play_with hpq hnq)) -- need Lambda to introduce names for the type
+
 example (hpq : p → q) (hnq : ¬q) : ¬p :=
 assume hp : p,
 show false, from hnq (hpq hp)
+
+example (hpq : p → q) (hnq : ¬q) : ¬p :=
+by_contradiction
+(assume hnnp : ¬¬p,
+have hp : p, from sorry,
+have hq : q, from sorry,
+show false, from sorry)
+
+example (hpq : p → q) (hnq : ¬q) : ¬p :=
+by_contradiction
+(assume hnnp : ¬¬p,
+have hp : p, from by_contradiction hnnp,
+have hq : q, from hpq hp,
+show false, from hnq hq)
 
 example (hpq : p → q) (hnq : ¬q) : ¬p :=
 begin
@@ -914,10 +946,20 @@ exact hp
 end
 
 example (hpq : p → q) (hnq : q → false) : p → false :=
-λ hnp, hnq (hpq hnp)
+λ hp, hnq (hpq hp)
 
 example (hpq : p → q) (hnq : q → false) : p → false :=
 calc p → q       : hpq
 ...    → false   : hnq
+
+example (p_to_q : p → q) (q_to_false : q → false) : p → false :=
+calc p → q       : p_to_q
+...    → false   : q_to_false
+
+
+--  p → q       : hpq
+-- ...    → false   : hnq
+
+#check λ a : ℕ, a + 1
 
 end chap_03
