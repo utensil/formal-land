@@ -919,25 +919,35 @@ def nameless₁' (hpq : p → q) (hnq : ¬q) : ¬p := (let play_with := (nameles
 -- Need Lambda to introduce binding names
 def nameless₂' : (p → q) → (¬q) → ¬p :=  (let play_with := (nameless₁ p q) in λ hpq, λ hnq, (play_with hpq hnq)) -- need Lambda to introduce names for the type
 
-example (hpq : p → q) (hnq : ¬q) : ¬p :=
+lemma contrapositive_structural (hpq : p → q) (hnq : ¬q) : ¬p :=
 assume hp : p,
 show false, from hnq (hpq hp)
 
-example (hpq : p → q) (hnq : ¬q) : ¬p :=
+#print contrapositive_structural
+-- theorem chap_03.contrapositive_structural : ∀ (p q : Prop), (p → q) → ¬q → ¬p :=
+-- λ (p q : Prop) (hpq : p → q) (hnq : ¬q) (hp : p), show false, from hnq (hpq hp)
+
+lemma contrapositive_structural_by_contradiction_sorry (hpq : p → q) (hnq : ¬q) : ¬p :=
 by_contradiction
 (assume hnnp : ¬¬p,
 have hp : p, from sorry,
 have hq : q, from sorry,
 show false, from sorry)
 
-example (hpq : p → q) (hnq : ¬q) : ¬p :=
+lemma contrapositive_structural_by_contradiction (hpq : p → q) (hnq : ¬q) : ¬p :=
 by_contradiction
 (assume hnnp : ¬¬p,
 have hp : p, from by_contradiction hnnp,
 have hq : q, from hpq hp,
 show false, from hnq hq)
 
-example (hpq : p → q) (hnq : ¬q) : ¬p :=
+#print contrapositive_structural_by_contradiction
+-- theorem chap_03.contrapositive_structural_by_contradiction : ∀ (p q : Prop), (p → q) → ¬q → ¬p :=
+-- λ (p q : Prop) (hpq : p → q) (hnq : ¬q),
+--   by_contradiction
+--     (λ (hnnp : ¬¬p), have hp : p, from by_contradiction hnnp, have hq : q, from hpq hp, show false, from hnq hq)
+
+lemma contrapositive_tactic (hpq : p → q) (hnq : ¬q) : ¬p :=
 begin
 intro hp,
 apply hnq,
@@ -945,21 +955,80 @@ apply hpq,
 exact hp
 end
 
-example (hpq : p → q) (hnq : q → false) : p → false :=
+#print contrapositive_tactic
+-- theorem chap_03.contrapositive_tactic : ∀ (p q : Prop), (p → q) → ¬q → ¬p :=
+-- λ (p q : Prop) (hpq : p → q) (hnq : ¬q), id (λ (hp : p), hnq (hpq hp))
+
+lemma contrapositive_term (hpq : p → q) (hnq : q → false) : p → false :=
 λ hp, hnq (hpq hp)
 
-example (hpq : p → q) (hnq : q → false) : p → false :=
+#print contrapositive_term
+-- theorem chap_03.contrapositive_term : ∀ (p q : Prop), (p → q) → (q → false) → p → false :=
+-- λ (p q : Prop) (hpq : p → q) (hnq : q → false) (hp : p), hnq (hpq hp)
+
+lemma contrapositive_calc (hpq : p → q) (hnq : q → false) : p → false :=
 calc p → q       : hpq
 ...    → false   : hnq
 
-example (p_to_q : p → q) (q_to_false : q → false) : p → false :=
+#print contrapositive_calc
+-- theorem chap_03.contrapositive_calc : ∀ (p q : Prop), (p → q) → (q → false) → p → false :=
+-- λ (p q : Prop) (hpq : p → q) (hnq : q → false), implies.trans hpq hnq
+
+lemma contrapositive_calc₂ (p_to_q : p → q) (q_to_false : q → false) : p → false :=
 calc p → q       : p_to_q
 ...    → false   : q_to_false
 
+#print contrapositive_calc₂
 
---  p → q       : hpq
--- ...    → false   : hnq
+theorem not_not_not_tactic
+  (P : Prop) :
+  ¬ ¬ ¬ P → ¬ P := 
+begin
+intro hnnnp,
+intro hp,
+apply hnnnp,
+intro hnp,
+apply hnp,
+exact hp
+end
 
-#check λ a : ℕ, a + 1
+theorem not_not_not_term
+  (P : Prop) :
+  ¬ ¬ ¬ P → ¬ P := 
+λ hnnnp hp, hnnnp (λ hnp, hnp hp)
+
+theorem not_not_not_calc_fancy
+  (P : Prop) :
+  ¬ ¬ ¬ P → ¬ P :=
+calc ¬ ¬ ¬ P → ¬ P : iff.elim_left (not_not_not_iff P)
+
+theorem not_not' (P : Prop) : ¬ (¬ P) → P :=
+begin
+  cases (classical.em P) with hp hnp,
+  {
+    intro hnnp,
+    exact hp,
+  },
+  {
+    intro hnnp,
+    exfalso,
+    apply hnnp,
+    exact hnp
+  }
+end
+
+theorem not_not_not_calc
+  (P : Prop) :
+  ¬ ¬ ¬ P → ¬ P :=
+calc ¬ ¬ ¬ P  → ¬ P : not_not' (¬ P)
+
+
+theorem not_not_not_structural
+  (P : Prop) :
+  ¬ ¬ ¬ P → ¬ P := 
+assume hnnnp : ¬¬¬P,
+assume hp : P,
+have hnnp : ¬¬P, from (assume hnp: ¬P, hnp hp), -- from not_not_intro hp,
+show false, from hnnnp hnnp
 
 end chap_03
