@@ -888,6 +888,17 @@ h.elim
   (λ hp : p, or.inr hp)
   (λ hq : q, or.inl hq)
 
+/-
+inductive or (a b : Prop) : Prop
+| inl (h : a) : or
+| inr (h : b) : or
+
+namespace or
+  lemma elim (h₁ : a ∨ b) (h₂ : a → c) (h₃ : b → c) : c :=
+  or.rec h₂ h₃ h₁
+end or
+-/
+
 example (h : p ∨ q) : q ∨ p :=
 begin
 apply h.elim,
@@ -900,6 +911,8 @@ apply h.elim,
     apply or.inl hq
 }
 end
+
+-- 3.3.3. Negation and Falsity
 
 -- The type of ¬q is q → false
 
@@ -1030,5 +1043,112 @@ assume hnnnp : ¬¬¬P,
 assume hp : P,
 have hnnp : ¬¬P, from (assume hnp: ¬P, hnp hp), -- from not_not_intro hp,
 show false, from hnnnp hnnp
+
+-- false.elim : ∀ {C : Prop}, false → C
+-- This rule is sometimes called ex falso (short for ex falso sequitur quodlibet), or the principle of explosion.
+example (hp : p) (hnp : ¬p) : q := false.elim (hnp hp)
+-- absurd : ∀ {a b : Prop}, a → ¬a → b
+example (hp : p) (hnp : ¬p) : q := absurd hp hnp
+
+example (hnp : ¬p) (hq : q) (hqp : q → p) : r :=
+absurd (hqp hq) hnp
+
+-- 3.4. Introducing Auxiliary Subgoals
+
+theorem and_swap : p ∧ q ↔ q ∧ p :=
+iff.intro
+  (assume h : p ∧ q,
+    show q ∧ p, from and.intro (and.right h) (and.left h))
+  (assume h : q ∧ p,
+    show p ∧ q, from and.intro (and.right h) (and.left h))
+
+#check and_swap p q    -- p ∧ q ↔ q ∧ p
+
+theorem and_swap_term : p ∧ q ↔ q ∧ p :=
+⟨(λ h : p ∧ q, ⟨h.right, h.left⟩),
+  (λ h : q ∧ p, ⟨h.right, h.left⟩)⟩
+
+theorem and_swap_tactic : p ∧ q ↔ q ∧ p :=
+begin
+split,
+{
+  intro h,
+  apply and.intro h.right h.left
+},
+{
+  intro h,
+  apply and.intro h.right h.left
+}
+end
+
+theorem and_swap_structural : p ∧ q ↔ q ∧ p :=
+have lr : p ∧ q → q ∧ p, from (assume h : p ∧ q, ⟨h.right, h.left⟩),
+have rl : q ∧ p → p ∧ q , from (assume h : q ∧ p, ⟨h.right, h.left⟩),
+show p ∧ q ↔ q ∧ p, from iff.intro lr rl
+
+theorem and_swap_calc : p ∧ q ↔ q ∧ p :=
+have lr : p ∧ q → q ∧ p := calc p ∧ q → q ∧ p : (λ h : p ∧ q, ⟨h.right, h.left⟩),
+have rl : q ∧ p → p ∧ q := calc q ∧ p → p ∧ q : (λ h : q ∧ p, ⟨h.right, h.left⟩),
+show p ∧ q ↔ q ∧ p, from iff.intro lr rl
+
+-- Because they represent a form of modus ponens, iff.elim_left and iff.elim_right 
+-- can be abbreviated iff.mp and iff.mpr, respectively. I
+
+example (h : p ∧ q) : q ∧ p := iff.mp (and_swap p q) h
+
+example (h : p ∧ q) : q ∧ p := (and_swap p q).mp h
+
+-- the have construct introduces an auxiliary subgoal in a proof
+
+-- Internally, the expression `have h : p, from s, t` produces the term `(λ (h : p), t) s`. 
+-- In other words, s is a proof of p, t is a proof of the desired conclusion assuming h : p, 
+-- and the two are combined by a lambda abstraction and application.
+
+-- How to write proofs: a quick guide https://deopurkar.github.io/teaching/algebra1/cheng.pdf
+-- Introduction to mathematical arguments https://deopurkar.github.io/teaching/algebra1/hutchings.pdf
+
+example (h : p ∧ q) : q ∧ p :=
+have hp : p, from and.left h,
+suffices hq : q, from and.intro hq hp, -- prove q → what we're prooving
+show q, from and.right h -- prove q
+
+-- 3.5. Classical Logic
+
+-- The introduction and elimination rules we have seen so far are all constructive, 
+-- which is to say, they reflect a computational understanding of the logical connectives based on 
+-- the propositions-as-types correspondence.
+
+-- Ordinary classical logic adds to this the law of the "excluded middle", p ∨ ¬p. 
+#check em p -- em p : p ∨ ¬p
+
+theorem dne {p : Prop} (h : ¬¬p) : p :=
+or.elim (em p)
+  (assume hp : p, hp)
+  (assume hnp : ¬p, absurd hnp h)
+
+example (h : ¬¬p) : p :=
+by_cases
+  (assume h1 : p, h1)
+  (assume h1 : ¬p, absurd h1 h)
+
+example (h : ¬¬p) : p :=
+by_contradiction
+  (assume h1 : ¬p,
+    show false, from h h1)
+
+example (h : ¬(p ∧ q)) : ¬p ∨ ¬q :=
+or.elim (em p)
+  (assume hp : p,
+    or.inr
+      (show ¬q, from
+        assume hq : q,
+        h ⟨hp, hq⟩))
+  (assume hp : ¬p,
+    or.inl hp)
+
+-- example (h : ¬(p ∧ q)) : ¬p ∨ ¬q :=
+-- or.elim _ _ _
+
+
 
 end chap_03
