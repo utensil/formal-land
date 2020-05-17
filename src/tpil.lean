@@ -1367,6 +1367,42 @@ have rl : (p ∧ q) ∨ (p ∧ r) → p ∧ (q ∨ r), from
   ),
 show p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r), from iff.intro lr rl
 
+example : (p → (q → r)) ↔ (p ∧ q → r) :=
+iff.intro
+  (
+    assume hpqr : (p → (q → r)),
+    show (p ∧ q → r), from (λ hpq, hpqr hpq.left hpq.right)
+  )
+  (
+    assume hpqr : (p ∧ q → r),
+    show (p → (q → r)), from (λ hp hq, hpqr ⟨hp, hq⟩)
+  )
+
+example : ¬(p ∨ q) ↔ ¬p ∧ ¬q :=
+iff.intro
+  (
+    assume hnpq : ¬(p ∨ q),
+    have hnp : ¬p, from (λ hp, hnpq (or.inl hp)),
+    have hnq : ¬q, from (λ hq, hnpq (or.inr hq)),
+    show ¬p ∧ ¬q, from ⟨hnp, hnq⟩
+  )
+  (
+    assume hnpnq : ¬p ∧ ¬q,
+    show ¬(p ∨ q), from (λ hpq, or.elim hpq hnpnq.left hnpnq.right)
+  )
+
+example : (¬p ∨ q) → (p → q) :=
+assume hnpq : (¬p ∨ q),
+show (p → q), from (λ hp, or.elim hnpq (λ hnp, absurd hp hnp) (λ hq, hq))
+
+example : (p → q) → (¬q → ¬p) :=
+assume hp2q : (p → q),
+show (¬q → ¬p), from (λ hnq, (λ hp, absurd (hp2q hp) hnq))
+
 end ex_03_01
+
+namespace ex_03_02
+
+end ex_03_02
 
 end chap_03
