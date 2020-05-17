@@ -1149,6 +1149,224 @@ or.elim (em p)
 -- example (h : ¬(p ∧ q)) : ¬p ∨ ¬q :=
 -- or.elim _ _ _
 
+namespace ex_03_01
 
+example : (p ∧ q) ∧ r ↔ p ∧ (q ∧ r) :=
+begin
+split,
+{
+  intro hpqr,
+  apply and.intro,
+  {
+    apply hpqr.left.left
+  },
+  {
+    apply and.intro hpqr.left.right hpqr.right
+  }
+},
+{
+  intro hpqr,
+  apply and.intro,
+  {
+    apply and.intro hpqr.left hpqr.right.left
+  },
+  {
+    apply hpqr.right.right
+  }
+}
+end
+
+-- example : (p ∧ q) ∧ r ↔ p ∧ (q ∧ r) :=
+-- iff.intro
+--   (assume hpqr : (p ∧ q) ∧ r, ⟨ _, _ ⟩)
+--   (assume hpqr : p ∧ (q ∧ r), ⟨ _, _ ⟩)
+
+example : (p ∧ q) ∧ r ↔ p ∧ (q ∧ r) :=
+iff.intro
+  (assume hpqr : (p ∧ q) ∧ r, ⟨ hpqr.left.left, ⟨ hpqr.left.right, hpqr.right ⟩ ⟩)
+  (assume hpqr : p ∧ (q ∧ r), ⟨ ⟨ hpqr.left, hpqr.right.left ⟩, hpqr.right.right ⟩)
+
+example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) :=
+begin
+split,
+{
+  intro hpqr,
+  apply hpqr.cases_on,
+  {
+    intro hpq,
+    apply hpq.cases_on,
+    {
+      intro hp,
+      apply or.intro_left (q ∨ r),
+      exact hp
+    },
+    {
+      intro hq,
+      apply or.intro_right p,
+      apply or.intro_left r,
+      exact hq
+    }
+  },
+  {
+    sorry
+  }
+},
+{
+  sorry
+}
+end
+
+-- example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) :=
+-- iff.intro
+--   (assume hpqr : (p ∨ q) ∨ r, or.elim hpqr _ _)
+--   (assume hpqr : p ∨ (q ∨ r), sorry)
+
+-- copied from lemma or.assoc
+example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) :=
+iff.intro
+  (or.rec (or.imp_right or.inl) (λ h, or.inr (or.inr h)))
+  (or.rec (λ h, or.inl (or.inl h)) (or.imp_left or.inr))
+
+example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) :=
+begin
+split,
+{
+  apply or.rec,
+  {
+    apply or.imp_right,
+    apply or.inl,
+  },
+  {
+    intro hr,
+    apply or.inr,
+    apply or.inr,
+    exact hr
+  }
+},
+{
+  apply or.rec,
+  {
+    sorry
+  },
+  {
+    sorry
+  }
+}
+end
+
+-- example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) :=
+-- iff.intro
+--   (or.rec _ sorry)
+--   (or.rec sorry sorry)
+
+-- don't know how to synthesize placeholder
+-- context:
+-- p q r : Prop
+-- ⊢ p ∨ q → p ∨ q ∨ r
+
+/-
+
+apply or.elim,
+
+5 goals
+p q r : Prop,
+hpqr : p ∧ (q ∨ r)
+⊢ ?m_1 ∨ ?m_2
+
+p q r : Prop,
+hpqr : p ∧ (q ∨ r)
+⊢ ?m_1 → p ∧ q ∨ p ∧ r
+
+p q r : Prop,
+hpqr : p ∧ (q ∨ r)
+⊢ ?m_1 → p ∧ q ∨ p ∧ r
+
+p q r : Prop,
+hpqr : p ∧ (q ∨ r)
+⊢ Prop
+
+-/
+
+example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) :=
+begin
+split,
+{
+  intro  hp_qr,
+  apply or.elim,
+  {
+    /-
+    1 goal
+    p q r : Prop,
+    hpqr : p ∧ (q ∨ r)
+    ⊢ ?m_1 ∨ ?m_2
+    -/
+    exact hp_qr.right,
+  },
+  {
+    sorry
+  },
+  {
+    sorry
+  },
+  -- apply or.elim hp_qr.right,
+  -- {
+  --   intro hq,
+  --   apply or.inl,
+  --   apply and.intro,
+  --   {
+  --     exact hp_qr.left,
+  --   },
+  --   {
+  --     exact hq,
+  --   }
+  -- },
+},
+{
+  sorry
+}
+end
+
+example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) :=
+iff.intro
+  (
+    assume hp_qr : p ∧ (q ∨ r),
+    have hp : p, from hp_qr.left,
+    or.rec sorry sorry hp_qr.right
+    -- or.elim hp_qr.right sorry sorry
+  )
+  (sorry)
+
+example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) :=
+have lr : p ∧ (q ∨ r) → (p ∧ q) ∨ (p ∧ r), from sorry,
+have rl : (p ∧ q) ∨ (p ∧ r) → p ∧ (q ∨ r), from sorry,
+show p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r), from iff.intro lr rl
+
+example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) :=
+have lr : p ∧ (q ∨ r) → (p ∧ q) ∨ (p ∧ r), from 
+  (
+    assume hp_qr : p ∧ (q ∨ r),
+    have hp : p, from hp_qr.left,
+    have hqr : q ∨ r, from hp_qr.right,
+    have hq2c : q → (p ∧ q) ∨ (p ∧ r), from ( assume hq : q, or.inl ⟨hp, hq⟩ ),
+    have hr2c : r → (p ∧ q) ∨ (p ∧ r), from ( assume hr : r, or.inr ⟨hp, hr⟩ ),
+    or.elim hqr hq2c hr2c
+  ),
+have rl : (p ∧ q) ∨ (p ∧ r) → p ∧ (q ∨ r), from
+  (
+    assume hpqpr : (p ∧ q) ∨ (p ∧ r),
+    -- have hcq2p : p ∧ q → p, from (assume hpq : p ∧ q, hpq.left),
+    -- have hcr2p : p ∧ r → p, from (assume hpr : p ∧ r, hpr.left),
+    -- have hp : p, from or.elim hpqpr hcq2p hcr2p,
+    -- have hp : p, from or.elim hpqpr (λ hpq : p ∧ q, hpq.left) (λ hpr : p ∧ r, hpr.left),
+    -- have hqr : q ∨ r, from or.elim hpqpr (λ hpq : p ∧ q, or.inl hpq.right) (λ hpr : p ∧ r, or.inr hpr.right),
+
+    -- have hp : p, from or.elim hpqpr (λ hpq, hpq.left) (λ hpr, hpr.left),
+    -- have hqr : q ∨ r, from or.elim hpqpr (λ hpq, or.inl hpq.right) (λ hpr, or.inr hpr.right),
+
+    or.elim hpqpr (λ hpq, ⟨hpq.left, (or.inl hpq.right)⟩) (λ hpr, ⟨hpr.left, or.inr hpr.right⟩)
+  ),
+show p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r), from iff.intro lr rl
+
+end ex_03_01
 
 end chap_03
