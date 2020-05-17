@@ -598,7 +598,7 @@ constant or : Prop → Prop → Prop
 constant not : Prop → Prop
 constant implies : Prop → Prop → Prop
 
-constants p q r : Prop
+constants p q r s : Prop
 #check and p q                      -- Prop
 #check or (and p q) r               -- Prop
 #check implies (and p q) (and q p)  -- Prop
@@ -742,7 +742,7 @@ h₁ (h₂ h₃)
 #check false
 #check tt
 #check ff
-#check ¬ -- \not, \neg
+#print notation ¬ -- \not, \neg
 #check p ∧ q -- \and
 #check p ∨ q -- \or 
 #check p -> q
@@ -1402,6 +1402,21 @@ show (¬q → ¬p), from (λ hnq, (λ hp, absurd (hp2q hp) hnq))
 end ex_03_01
 
 namespace ex_03_02
+
+example : (p → r ∨ s) → ((p → r) ∨ (p → s)) :=
+assume hp2rs : (p → r ∨ s),
+have hnr2ps : ¬r → (p → s), from (
+  assume hnr,
+  assume hp,
+  by_contradiction
+  (
+    assume hns : ¬s,
+    or.elim (hp2rs hp) (λ hr, absurd hr hnr) (λ hs, absurd hs hns)
+  )
+),
+have hrnr : r ∨ ¬r, from em r,
+have hrpr : r → (p → r), from (λ hr hp, hr),
+show ((p → r) ∨ (p → s)), from or.elim hrnr (λ hr, or.inl (hrpr hr)) (λ hnr, or.inr (hnr2ps hnr))
 
 end ex_03_02
 
