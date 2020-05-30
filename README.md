@@ -21,8 +21,7 @@ Then on both:
 
 ```bash
 elan toolchain install stable
-elan toolchain install nightly
-elan default nightly
+elan default stable
 ```
 
 ### Install Lean extension for VS Code
