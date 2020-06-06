@@ -61,6 +61,22 @@ lemma mul_zero (m : mynat) : m * 0 = 0 := rfl
 
 lemma mul_succ (m n : mynat) : m * (succ n) = m * n + m := rfl
 
+def pow : mynat → mynat → mynat
+| m zero := one
+| m (succ n) := pow m n * m
+
+instance : has_pow mynat mynat := ⟨pow⟩
+-- notation a ^ b := pow a b
+
+example : (1 : mynat) ^ (1 : mynat) = 1 := 
+begin
+refl
+end
+
+lemma pow_zero (m : mynat) : m ^ (0 : mynat) = 1 := rfl
+
+lemma pow_succ (m n : mynat) : m ^ (succ n) = m ^ n * m := rfl
+
 end mynat
 
 ------------------------------------------------------------------------
@@ -400,5 +416,163 @@ begin
   rw mul_comm b a,
   rw mul_assoc a b c
 end
+
+lemma zero_pow_zero : (0 : mynat) ^ (0 : mynat) = 1 :=
+begin
+  rw pow_zero,
+end
+
+lemma zero_pow_succ (m : mynat) : (0 : mynat) ^ (succ m) = 0 :=
+begin
+  rw [pow_succ, mul_zero],
+end
+
+lemma pow_one (a : mynat) : a ^ (1 : mynat) = a :=
+by rw [one_eq_succ_zero, pow_succ, pow_zero, one_mul]
+
+lemma one_pow (m : mynat) : (1 : mynat) ^ m = 1 :=
+begin
+induction m with n h,
+{
+  rw mynat_zero_eq_zero,
+  rw pow_zero,
+},
+{
+  rw pow_succ,
+  rw h,
+  refl,
+}
+end
+
+lemma pow_add (a m n : mynat) : a ^ (m + n) = a ^ m * a ^ n :=
+begin
+  induction n with k h,
+  {
+    rw mynat_zero_eq_zero,
+    rw pow_zero,
+    rw add_zero,
+    rw mul_one,
+  },
+  {
+    rw add_succ,
+    rw [pow_succ, pow_succ],
+    rw h,
+    rw mul_assoc (a ^ m) (a ^ k) a,
+  }
+end
+
+lemma mul_pow (a b n : mynat) : (a * b) ^ n = a ^ n * b ^ n :=
+begin
+induction n with k h,
+  {
+    rw mynat_zero_eq_zero,
+    rw [pow_zero, pow_zero, pow_zero],
+    refl,
+  },
+  {
+    rw [pow_succ, pow_succ, pow_succ],
+    rw h,
+    rw mul_assoc (a ^ k) (b ^ k) (a * b),
+    rw mul_left_comm (b ^ k) a b,
+    rw mul_assoc (a ^ k) a (b ^ k * b),
+  }
+end
+
+lemma pow_pow (a m n : mynat) : (a ^ m) ^ n = a ^ (m * n) :=
+begin
+  induction n with k h,
+  {
+    rw mynat_zero_eq_zero,
+    rw [pow_zero, mul_zero, pow_zero],
+  },
+  {
+    rw [pow_succ, mul_succ],
+    rw h,
+    rw pow_add a (m * k) m,
+  }
+end
+
+lemma two_eq_succ_one : 2 = succ 1 := rfl
+
+lemma add_squared (a b : mynat) :
+  (a + b) ^ (2 : mynat) = a ^ (2 : mynat) + b ^ (2 : mynat) + 2 * a * b :=
+begin
+  rw two_eq_succ_one,
+  rw one_eq_succ_zero,
+  rw [pow_succ, pow_succ, pow_succ, pow_succ, pow_succ, pow_succ],
+  rw [pow_zero, pow_zero, pow_zero],
+  rw [one_mul, one_mul, one_mul],
+  rw mul_add,
+  rw add_mul,
+  rw add_mul,
+  rw mul_comm b a,
+  rw succ_mul,
+  rw ←one_eq_succ_zero,
+  rw one_mul,
+  rw add_mul,
+  rw add_assoc (a * a) (a * b) (a * b + b * b),
+  rw add_assoc (a * a) (b * b) (a * b + a * b),
+  rw ←add_assoc  (b * b) (a * b) (a * b),
+  rw add_comm  (b * b) (a * b),
+  rw add_assoc (a * b) (b * b) (a * b),
+  rw add_comm (b * b) (a * b),
+end -- 28 rewrites
+
+-- https://leanprover.zulipchat.com/#narrow/stream/113489-new-members/topic/natural.20number.20game.20questions/near/196864644
+lemma add_squared' (a b : mynat) :
+  (a + b) ^ (2 : mynat) = a ^ (2 : mynat) + b ^ (2 : mynat) + 2 * a * b :=
+begin
+  rw two_eq_succ_one,
+  rw pow_succ,
+  rw pow_succ,
+  rw pow_succ,
+  rw pow_one,
+  rw pow_one,
+  rw pow_one,
+  rw add_mul,
+  rw mul_add,
+  rw mul_add,
+  rw succ_mul,
+  rw one_mul,
+  rw add_mul,
+  rw mul_comm b a,
+  rw add_assoc,
+  rw add_assoc,
+  rw add_comm (b * b),
+  rw add_assoc,
+end
+
+-- Adapted from https://leanprover.zulipchat.com/#narrow/stream/113489-new-members/topic/natural.20number.20game.20questions/near/196867894
+lemma add_squared'' (a b : mynat) :
+  (a + b) ^ (2 : mynat) = a ^ (2 : mynat) + b ^ (2 : mynat) + 2 * a * b :=
+begin
+  have two_mul: ∀ x : mynat, (2:mynat) * x = x + x := λx, by rw [two_eq_succ_one, succ_mul 1 x, one_mul],
+  have pow_two: ∀ x : mynat, x ^ (2:mynat) = x * x := λx, by rw [two_eq_succ_one, pow_succ, pow_one],
+  rw [pow_two, pow_two, pow_two],
+  rw [add_mul, two_mul, add_right_comm, add_mul],
+  rw [← add_assoc, ← mul_add, mul_add b, mul_comm b, add_assoc]
+end
+
+/-
+
+Dark mode for http://wwwf.imperial.ac.uk/~buzzard/xena/natural_number_game/:
+
+body, button, .accordion__button,.accordion__panel {
+    background-color: #202020 !important;
+    color: #cdcdcd;
+
+}
+
+.Resizer {
+    background-color: #535353 !important;
+}
+
+/*
+Press F12, choose Console, copy-paste the following and hit Enter:
+
+monaco.editor.setTheme('vs-dark');
+*/
+
+-/
 
 end mynat
