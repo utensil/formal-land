@@ -1106,6 +1106,7 @@ example (h : p ∧ q) : q ∧ p := (and_swap p q).mp h
 
 -- How to write proofs: a quick guide https://deopurkar.github.io/teaching/algebra1/cheng.pdf
 -- Introduction to mathematical arguments https://deopurkar.github.io/teaching/algebra1/hutchings.pdf
+-- Coq cheat sheet http://www.inf.ed.ac.uk/teaching/courses/tspl/cheatsheet.pdf
 
 example (h : p ∧ q) : q ∧ p :=
 have hp : p, from and.left h,
@@ -1388,7 +1389,7 @@ iff.intro
   )
   (
     assume hnpnq : ¬p ∧ ¬q,
-    show ¬(p ∨ q), from (λ hpq, or.elim hpq hnpnq.left hnpnq.right)
+    show ¬(p ∨ q), from (λ hpq, hpq.elim hnpnq.left hnpnq.right)
   )
 
 example : (¬p ∨ q) → (p → q) :=
@@ -1419,5 +1420,8 @@ have hrpr : r → (p → r), from (λ hr hp, hr),
 show ((p → r) ∨ (p → s)), from or.elim hrnr (λ hr, or.inl (hrpr hr)) (λ hnr, or.inr (hnr2ps hnr))
 
 end ex_03_02
+
+-- https://leanprover.zulipchat.com/#narrow/stream/113489-new-members/topic/Natural.20Numbers.20Game/near/199965171
+example (n : ℕ) : nat.succ n ≠ 0.
 
 end chap_03
