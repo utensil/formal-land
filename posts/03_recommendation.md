@@ -14,7 +14,7 @@ A great game (like @enki ‘s wedge game) for someone who never had contact with
 
 There's also a great overview slide for mathlib in Lean https://lean-forward.github.io/lean-together/2019/slides/hoelzl.pdf , to feel how the mathematical objects and theorems are represented. Lean makes heavy use of unicode characters to make it more accessible to people who have little CS background but some familiarity with mathematical notations.
 
-Just found a cool proof in mathlib demonstrating 4 proof paradigms combined together, I’m pretty sure everyone could have a general idea about what this proof is talking about.
+Just found [a cool proof in mathlib](https://github.com/leanprover-community/mathlib/blob/master/src/topology/metric_space/premetric_space.lean) demonstrating 4 proof paradigms combined together, I’m pretty sure everyone could have a general idea about what this proof is talking about.
 
 ```lean
 class has_dist (α : Type*) := (dist : α → α → ℝ)
@@ -27,17 +27,21 @@ instance has_dist_metric_quot {α : Type u} [premetric_space α] : has_dist (met
     have Hxx' : dist x  x' = 0 := hxx',
     have Hyy' : dist y  y' = 0 := hyy',
     have A    : dist x  y  ≤ dist x' y' := calc
-                dist x  y  ≤ dist x  x' + dist x' y  : premetric_space.dist_triangle _ _ _
-                       ... = dist x' y               : by simp [Hxx']
-                       ... ≤ dist x' y' + dist y' y  : premetric_space.dist_triangle _ _ _
-                       ... = dist x' y'              : by simp [premetric_space.dist_comm, Hyy'],
+                dist x  y  ≤ dist x  x' + dist x' y   : premetric_space.dist_triangle _ _ _
+                       ... = dist x' y                : by simp [Hxx']
+                       ... ≤ dist x' y' + dist y' y   : premetric_space.dist_triangle _ _ _
+                       ... = dist x' y'               : by simp [premetric_space.dist_comm, Hyy'],
     have B    : dist x' y' ≤ dist x  y   := calc
-                dist x' y' ≤ dist x' x + dist x y'   : premetric_space.dist_triangle _ _ _
-                       ... = dist x  y'              : by simp [premetric_space.dist_comm, Hxx']
-                       ... ≤ dist x  y + dist y y'   : premetric_space.dist_triangle _ _ _
-                       ... = dist x  y               : by simp [Hyy'],
+                dist x' y' ≤ dist x' x  + dist x y'   : premetric_space.dist_triangle _ _ _
+                       ... = dist x  y'               : by simp [premetric_space.dist_comm, Hxx']
+                       ... ≤ dist x  y  + dist y y'   : premetric_space.dist_triangle _ _ _
+                       ... = dist x  y                : by simp [Hyy'],
     exact le_antisymm A B
   end
 }
 ```
+
+The only syntax one needs to know is the universal `name : theorem := proof` or its complete version `name {implicit_args : their_type} [type_class_args : their_type] (explicit_args : their_type) : theorem := proof`, the rest can be intuitively guessed.
+
+It’s proving that the canonical quotient of a premetric space also has distance. [The naming convention](https://leanprover-community.github.io/contribute/naming.html) gives you a clear clue about what it is.
 
