@@ -1,3 +1,5 @@
+import tactic.tauto
+
 @[derive decidable_eq]
 inductive mynat
 | zero : mynat
@@ -551,6 +553,339 @@ begin
   rw [pow_two, pow_two, pow_two],
   rw [add_mul, two_mul, add_right_comm, add_mul],
   rw [← add_assoc, ← mul_add, mul_add b, mul_comm b, add_assoc]
+end
+
+example (P Q : Type) (p : P) (h : P → Q) : Q :=
+begin
+  exact h(p),
+end
+
+example : mynat → mynat :=
+begin
+  intro n,
+  exact 3*n+2,
+end
+
+example (P Q R S T U: Type)
+(p : P)
+(h : P → Q)
+(i : Q → R)
+(j : Q → T)
+(k : S → T)
+(l : T → U)
+: U :=
+begin
+  have q : Q := h(p),
+  have t : T := j(q),
+  exact l(t),
+end
+
+example (P Q R S T U: Type)
+(p : P)
+(h : P → Q)
+(i : Q → R)
+(j : Q → T)
+(k : S → T)
+(l : T → U)
+: U :=
+begin
+  apply l,
+  apply j,
+  apply h,
+  exact p,
+end
+
+example (P Q : Type) : P → (Q → P) :=
+begin
+  intros p q,
+  exact p,
+end
+
+example (P Q R : Type) : (P → (Q → R)) → ((P → Q) → (P → R)) :=
+begin
+  intro pqr,
+  intro pq,
+  intro p,
+  have q : Q := pq(p),
+  exact pqr p q,
+end
+
+example (P Q F : Type) : (P → Q) → ((Q → F) → (P → F)) :=
+begin
+  intro pq,
+  intro qf,
+  intro p,
+  have q : Q := pq p,
+  exact qf q,
+end
+
+example (P Q : Type) : (P → Q) → ((Q → empty) → (P → empty)) :=
+begin
+  intro pq,
+  intro qe,
+  intro p,
+  apply qe,
+  apply pq,
+  exact p,
+end
+
+example (A B C D E F G H I J K L : Type)
+(f1 : A → B) (f2 : B → E) (f3 : E → D) (f4 : D → A) (f5 : E → F)
+(f6 : F → C) (f7 : B → C) (f8 : F → G) (f9 : G → J) (f10 : I → J)
+(f11 : J → I) (f12 : I → H) (f13 : E → H) (f14 : H → K) (f15 : I → L)
+ : A → L :=
+begin
+  intro a,
+  apply f15,
+  apply f11,
+  have e : E := f2 (f1 a),
+  have j : J := f9 (f8 (f5 e)),
+  exact j,
+end
+
+example (P Q : Prop) (p : P) (h : P → Q) : Q :=
+begin
+  exact h(p),
+end
+
+lemma imp_self (P : Prop) : P → P :=
+begin
+  intro p,
+  exact p,
+end
+
+lemma maze (P Q R S T U: Prop)
+(p : P)
+(h : P → Q)
+(i : Q → R)
+(j : Q → T)
+(k : S → T)
+(l : T → U)
+: U :=
+begin
+  apply l,
+  have q : Q := h p,
+  exact j q,
+end
+
+example (P Q : Prop) : P → (Q → P) :=
+begin
+  intros p q,
+  exact p,
+end
+
+example (P Q R : Prop) : (P → (Q → R)) → ((P → Q) → (P → R)) :=
+begin
+  intros pqr pq p,
+  have q : Q := pq p,
+  exact pqr p q,
+end
+
+lemma imp_trans (P Q R : Prop) : (P → Q) → ((Q → R) → (P → R)) :=
+begin
+  intros hpq hqr p,
+  exact hqr (hpq p),
+end
+
+lemma contrapositive (P Q : Prop) : (P → Q) → (¬ Q → ¬ P) :=
+begin
+  repeat {rw not_iff_imp_false},
+  intro hpq,
+  intro nq,
+  intro p,
+  exact nq (hpq p),
+end
+
+example (A B C D E F G H I J K L : Prop)
+(f1 : A → B) (f2 : B → E) (f3 : E → D) (f4 : D → A) (f5 : E → F)
+(f6 : F → C) (f7 : B → C) (f8 : F → G) (f9 : G → J) (f10 : I → J)
+(f11 : J → I) (f12 : I → H) (f13 : E → H) (f14 : H → K) (f15 : I → L)
+ : A → L :=
+begin
+  intro a,
+  apply f15,
+  apply f11,
+  exact f9 (f8 (f5 (f2 (f1 a)))),
+end
+
+example (A B C D E F G H I J K L : Prop)
+(f1 : A → B) (f2 : B → E) (f3 : E → D) (f4 : D → A) (f5 : E → F)
+(f6 : F → C) (f7 : B → C) (f8 : F → G) (f9 : G → J) (f10 : I → J)
+(f11 : J → I) (f12 : I → H) (f13 : E → H) (f14 : H → K) (f15 : I → L)
+ : A → L :=
+begin
+  cc
+end
+
+example (P Q : Prop) (p : P) (q : Q) : P ∧ Q :=
+begin
+  split,
+  exact p,
+  exact q,
+end
+
+lemma and_symm (P Q : Prop) : P ∧ Q → Q ∧ P :=
+begin
+  intro hpq,
+  cases hpq with p q,
+  split,
+  exact q,
+  exact p,
+end
+
+lemma and_trans (P Q R : Prop) : P ∧ Q → Q ∧ R → P ∧ R :=
+begin
+  intro hpq,
+  intro hqr,
+  cases hpq with p q,
+  split,
+  {
+    exact p,
+  },
+  {
+    cases hqr with q' r,
+    exact r,
+  }
+end
+
+lemma iff_trans (P Q R : Prop) : (P ↔ Q) → (Q ↔ R) → (P ↔ R) :=
+begin
+  intro hpq,
+  intro hqr,
+  split,
+  {
+    intro p,
+    cases hpq with pq qp,
+    cases hqr with qr rq,
+    exact qr (pq p),
+  },
+  {
+    intro r,
+    cases hpq,
+    cases hqr,
+    apply hpq_mpr,
+    apply hqr_mpr,
+    exact r,
+  }
+end
+
+lemma iff_trans' (P Q R : Prop) : (P ↔ Q) → (Q ↔ R) → (P ↔ R) :=
+begin
+  intros hpq hqr,
+  split,
+  {
+    intro p,
+    exact hqr.1 (hpq.1 p),
+  },
+  {
+    intro r,
+    exact hpq.2 (hqr.2 r),
+  }
+end
+
+lemma iff_trans'' (P Q R : Prop) : (P ↔ Q) → (Q ↔ R) → (P ↔ R) :=
+begin
+  cc
+end
+
+lemma iff_trans''' (P Q R : Prop) : (P ↔ Q) → (Q ↔ R) → (P ↔ R) :=
+begin
+  intros hpq hqr,
+  rw hpq,
+  exact hqr,
+end
+
+example (P Q : Prop) : Q → (P ∨ Q) :=
+begin
+  intro q,
+  right,
+  exact q,
+end
+
+lemma or_symm (P Q : Prop) : P ∨ Q → Q ∨ P :=
+begin
+  intro hpq,
+  cases hpq with p q,
+  {
+    right,
+    exact p,
+  },
+  {
+    left,
+    exact q,
+  }
+end
+
+lemma and_or_distrib_left (P Q R : Prop) : P ∧ (Q ∨ R) ↔ (P ∧ Q) ∨ (P ∧ R) :=
+begin
+  split,
+  {
+    intro pnqr,
+    cases pnqr with p qr,
+    cases qr with q r,
+    {
+      left,
+      split,
+      exact p,
+      exact q,
+    },
+    {
+      right,
+      split,
+      exact p,
+      exact r,
+    }
+  },
+  {
+    intro pqnpr,
+    cases pqnpr with pq pr,
+    {
+      cases pq with p q,
+      split,
+      exact p,
+      left,
+      exact q,
+    },
+    {
+      cases pr with p r,
+      split,
+      exact p,
+      right,
+      exact r,
+    }
+  }
+end
+
+lemma contra (P Q : Prop) : (P ∧ ¬ P) → Q := by tauto
+
+lemma contra' (P Q : Prop) : (P ∧ ¬ P) → Q :=
+begin
+  intro h,
+  repeat {rw not_iff_imp_false at h},
+  cases h with p np,
+  exfalso,
+  exact np p,
+end
+
+lemma contra'' (P Q : Prop) : (P ∧ ¬ P) → Q :=
+begin
+  intro h,
+  cases h with p np,
+  exfalso,
+  exact np p,
+end
+
+local attribute [instance, priority 10] classical.prop_decidable -- we are mathematicians
+
+lemma contrapositive2 (P Q : Prop) : (¬ Q → ¬ P) → (P → Q) :=
+begin
+  by_cases p : P; by_cases q : Q,
+  repeat {cc},
+end
+
+lemma contrapositive2' (P Q : Prop) : (¬ Q → ¬ P) → (P → Q) :=
+begin
+  tauto,
 end
 
 /-
