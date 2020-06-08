@@ -1,7 +1,7 @@
 > chakravala: Saw @Hugo Hadfield is looking at agda, which is also a language i am interested in, it has dependent inductive types, which is cool
 
 I've also spent some time on Agda, but have chosen Lean as the target language. Lean also has dependent inductive types and so many amazing features and it’s rapidly evolving. It’s written in C++ and Lean 4 will be written mostly in itself and compiles natively(almost completely compatible with Lean 3). It has a large and sophisticated mathematical library designed and backed by a community that has many pure mathematicians.
-I particularly enjoy its free and readable syntax friendly to mathematicians, the 5 combinable proof paradigms it supports, the smooth and informative experience of interactive proving, the power and efficiency of its type class system for abstraction, its meta programming framework for developing automatic tactics,  its ability to integrate with other ATP tools such as Vampire, Sledgehammer and ML algorithms , its warm-hearted community on Zulip. It truly unleashes full spectrum of possibilities of formalization, a dream language.
+I particularly enjoy its free and readable syntax friendly to mathematicians, the 6 combinable proof paradigms it supports, the smooth and informative experience of interactive proving, the power and efficiency of its type class system for abstraction, its meta programming framework for developing automatic tactics,  its ability to integrate with other ATP tools such as Vampire, Sledgehammer and ML algorithms , its warm-hearted community on Zulip. It truly unleashes full spectrum of possibilities of formalization, a dream language.
 
 Its mathematical library `mathlib` is already well equipped, but there’re also many areas to fill in. Formalizing GA in Lean would have a significant contribution back to mathlib, just like previous and ongoing formalization projects.
 
@@ -45,3 +45,11 @@ The only syntax one needs to know is the universal `name : theorem := proof` or 
 
 It’s proving that the canonical quotient of a premetric space also has distance. [The naming convention](https://leanprover-community.github.io/contribute/naming.html) gives you a clear clue about what it is.
 
+The 6 combinable proof paradigms Lean supports are:
+
+- tactics mode: reasoning backwards from the goal of the proof, keep modifying the goal until it boils down to the hypothesis
+- term mode: reasoning like lambda functions with the help of the type system, very concise
+- structural mode: reasonning forwards from the hypothesis, reaching some intermediate goals
+- calc mode: reasoning like doing calculation with many intermediate steps (every step is justified by a short proof using other modes)
+- conv mode: freely traverse in the lhs and rhs of the goals
+- equation compiler mode (a.k.a pattern matching) : good for inductive type and recursive functions

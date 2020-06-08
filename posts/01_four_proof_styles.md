@@ -1,6 +1,6 @@
 I, very new to [Lean](https://leanprover-community.github.io/) and [its Zulip Chat Community](https://leanprover.zulipchat.com/), would like to share my experience with Lean prover on trying to prove a trivial proposition in four proof styles supported by Lean. It's gonna feel verbose(for describing the intuition I established during the interactions with Lean), for that, I apologize in advance.
 
-The proposition is from [3.3.3. Negation and Falsity, Theorem Proving in Lean](https://leanprover.github.io/theorem_proving_in_lean/propositions_and_proofs.html#negation-and-falsity) (which is where I'm at in the walkthrough of TPIL:
+The proposition is from [3.3.3. Negation and Falsity, Theorem Proving in Lean](https://leanprover.github.io/theorem_proving_in_lean/propositions_and_proofs.html#negation-and-falsity) (which is where I'm at in the walkthrough of TPIL):
 
 For any two propositions `p` and `q`,  assuming `p → q` and `¬q`, Then `¬p`.
 
