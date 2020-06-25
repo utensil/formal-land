@@ -5,7 +5,7 @@ Apparently, I would not be the first to need such a cheat sheet, so I searched Z
 There're:
 
 - @**Kevin Buzzard** 's cheat sheets [1](https://gist.github.com/utensil/dc635f2991255f76d8da797efdabbf15#file-kbuzzard-lean-tactic-guide-md) and [2](https://gist.github.com/utensil/dc635f2991255f76d8da797efdabbf15#file-kbuzzard-lean-tactics-md)
-- @**Patrick Massot|110031** 's cheat sheet mentioned [here](https://leanprover.zulipchat.com/#narrow/stream/113489-new-members/topic/the.20complex.20number.20game/near/198480780), translated into English [here](https://gist.github.com/utensil/dc635f2991255f76d8da797efdabbf15#file-pmassot-lean-tactics-md)
+- @**Patrick Massot|110031** 's cheat sheet mentioned [here](https://leanprover.zulipchat.com/#narrow/stream/113489-new-members/topic/the.20complex.20number.20game/near/198480780) which is [in French](https://www.imo.universite-paris-saclay.fr/~pmassot/enseignement/math114/tactiques.pdf), translated into English [here](https://gist.github.com/utensil/dc635f2991255f76d8da797efdabbf15#file-pmassot-lean-tactics-md)
 - https://github.com/jldodds/coq-lean-cheatsheet which is a little dated and not so complete, there're better ones in Coq world such as
   - http://www.inf.ed.ac.uk/teaching/courses/tspl/cheatsheet.pdf
   - https://www.cs.cornell.edu/courses/cs3110/2018sp/a5/coq-tactics-cheatsheet.html
