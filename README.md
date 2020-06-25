@@ -10,7 +10,7 @@ On *nix:
 # On Mac
 # brew install gmp coreutils
 
-yes 1|curl https://raw.githubusercontent.com/Kha/elan/master/elan-init.sh -sSf | sh
+yes 1|curl https://raw.githubusercontent.com/Kha/elan/master/elan-init.sh -sSf | bash -s -- -y
 ```
 
 On Windows:
@@ -28,10 +28,17 @@ elan default stable
 
 Visit https://marketplace.visualstudio.com/items?itemName=jroesch.lean
 
+### Install Mathlib Tools
+
+```bash
+pip install mathlibtools
+```
+
 ### Install Lean formatter
 
 ```bash
-pip install -U git+https://github.com/utensil-contrib/format_lean.git@working
+# pip install -U git+https://github.com/utensil-contrib/format_lean.git@working
+pip install -U https://github.com/leanprover-community/format_lean/archive/master.zip
 ```
 
 ### Download dependencies
