@@ -1,6 +1,6 @@
 -- https://leanprover.github.io/theorem_proving_in_lean/
 
-open classical
+import tactic
 
 -- 1.3. About this Book
 
@@ -810,8 +810,6 @@ and.intro (and.right h) (and.left h)
 
 #check λ (p q : Prop) (hp : p) (hq : q), (⟨hp, hq⟩ : p ∧ q)
 
-example (p q : Prop) (hp : p) (hq : q) : p ∧ q := (|hp, hq|)
-
 example (p q : Prop) (hp : p) (hq : q) : p ∧ q := ⟨hp, hq⟩
 
 -- Given an expression e of an inductive type foo, 
@@ -940,6 +938,10 @@ show false, from hnq (hpq hp)
 -- theorem chap_03.contrapositive_structural : ∀ (p q : Prop), (p → q) → ¬q → ¬p :=
 -- λ (p q : Prop) (hpq : p → q) (hnq : ¬q) (hp : p), show false, from hnq (hpq hp)
 
+namespace classical
+
+open classical
+
 lemma contrapositive_structural_by_contradiction_sorry (hpq : p → q) (hnq : ¬q) : ¬p :=
 by_contradiction
 (assume hnnp : ¬¬p,
@@ -959,6 +961,8 @@ show false, from hnq hq)
 -- λ (p q : Prop) (hpq : p → q) (hnq : ¬q),
 --   by_contradiction
 --     (λ (hnnp : ¬¬p), have hp : p, from by_contradiction hnnp, have hq : q, from hpq hp, show false, from hnq hq)
+
+end classical
 
 lemma contrapositive_tactic (hpq : p → q) (hnq : ¬q) : ¬p :=
 begin
@@ -1120,6 +1124,11 @@ show q, from and.right h -- prove q
 -- the propositions-as-types correspondence.
 
 -- Ordinary classical logic adds to this the law of the "excluded middle", p ∨ ¬p. 
+
+namespace classical
+
+open classical
+
 #check em p -- em p : p ∨ ¬p
 
 theorem dne {p : Prop} (h : ¬¬p) : p :=
@@ -1149,6 +1158,8 @@ or.elim (em p)
 
 -- example (h : ¬(p ∧ q)) : ¬p ∨ ¬q :=
 -- or.elim _ _ _
+
+end classical
 
 namespace ex_03_01
 
@@ -1404,6 +1415,8 @@ end ex_03_01
 
 namespace ex_03_02
 
+open classical
+
 example : (p → r ∨ s) → ((p → r) ∨ (p → s)) :=
 assume hp2rs : (p → r ∨ s),
 have hnr2ps : ¬r → (p → s), from (
@@ -1424,4 +1437,610 @@ end ex_03_02
 -- https://leanprover.zulipchat.com/#narrow/stream/113489-new-members/topic/Natural.20Numbers.20Game/near/199965171
 example (n : ℕ) : nat.succ n ≠ 0.
 
+namespace ex_03_03
+
+example : ¬(p ↔ ¬p) :=
+begin
+  intro h,
+  cases h with hp_np hnp_p,
+  have hnp : ¬p, from λ hp : p, (hp_np hp) hp,
+  exact hnp (hnp_p hnp)
+end
+
+example : ¬(p ↔ ¬p) :=
+begin
+  assume h,
+  obtain ⟨p_to_np, np_to_p⟩ := h,
+  have hnp : ¬p, from λ hp : p, (p_to_np hp) hp,
+  show false, from hnp (np_to_p hnp)
+end
+
+example : ¬(p ↔ ¬p) := 
+  λ h,
+    have hnp : ¬p, from λ hp : p, (h.mp hp) hp,
+  hnp (h.mpr hnp)
+
+example : ¬(p ↔ ¬p) :=
+  λ h,
+  (λ hp : p, (h.mp hp) hp) (h.mpr (λ hp : p, (h.mp hp) hp))
+
+end ex_03_03
+
 end chap_03
+
+namespace chap_04
+
+variables (α : Type) (p q : α → Prop)
+
+example : (∀ x : α, p x ∧ q x) → ∀ y : α, p y :=
+assume h : ∀ x : α, p x ∧ q x,
+assume y : α,
+show p y, from (h y).left
+
+example : (∀ x : α, p x ∧ q x) → ∀ x : α, p x  :=
+assume h : ∀ x : α, p x ∧ q x,
+assume z : α,
+show p z, from and.elim_left (h z)
+
+variables (r : α → α → Prop)
+
+section explicit
+
+variable  trans_r : ∀ x y z, r x y → r y z → r x z
+
+variables a b c : α
+variables (hab : r a b) (hbc : r b c)
+
+#check trans_r
+#check trans_r a b c
+#check trans_r a b c hab
+#check trans_r a b c hab hbc
+
+end explicit
+
+section implicit
+
+variable  trans_r : ∀ {x y z}, r x y → r y z → r x z
+
+variables a b c : α
+variables (hab : r a b) (hbc : r b c)
+
+#check trans_r
+#check trans_r
+#check trans_r hab
+#check trans_r hab hbc
+
+end implicit
+
+section equivalence
+
+variable refl_r : ∀ x, r x x
+variable symm_r : ∀ {x y}, r x y → r y x
+variable trans_r : ∀ {x y z}, r x y → r y z → r x z
+
+example (a b c d : α) (hab : r a b) (hcb : r c b) (hcd : r c d) :
+  r a d :=
+trans_r (trans_r hab (symm_r hcb)) hcd
+
+end equivalence
+
+#check eq.refl    -- ∀ (a : ?M_1), a = a
+#check eq.symm    -- ?M_2 = ?M_3 → ?M_3 = ?M_2
+#check eq.trans   -- ?M_2 = ?M_3 → ?M_3 = ?M_4 → ?M_2 = ?M_4
+
+#check @eq.refl.{u}   -- ∀ {α : Sort u} (a : α), a = a
+#check @eq.symm.{u}   -- ∀ {α : Sort u} {a b : α}, a = b → b = a
+#check @eq.trans.{u}  -- ∀ {α : Sort u} {a b c : α},
+                      --   a = b → b = c → a = c
+
+section equality
+
+variables (a b c d : α)
+variables (hab : a = b) (hcb : c = b) (hcd : c = d)
+
+example : a = d :=
+eq.trans (eq.trans hab (eq.symm hcb)) hcd
+
+example : a = d := (hab.trans hcb.symm).trans hcd
+
+example (f : α → β) (a : α) : (λ x, f x) a = f a := eq.refl _
+example (f : α → β) (a : α) : (λ x, f x) a = f a := eq.refl (f a)
+
+example (a : α) (b : α) : (a, b).1 = a := eq.refl _
+example (a : α) (b : α) : (a, b).1 = a := eq.refl a
+
+example : 2 + 3 = 5 := eq.refl _
+example : 2 + 3 = 5 := eq.refl 5
+
+example : 2 + 3 = 5 := by apply eq.refl
+example : 2 + 3 = 5 := by refl
+
+example (f : α → β) (a : α) : (λ x, f x) a = f a := rfl
+example (a : α) (b : α) : (a, b).1 = a := rfl
+example : 2 + 3 = 5 := rfl
+
+example (α : Type u) (a b : α) (p : α → Prop)
+  (h1 : a = b) (h2 : p a) : p b :=
+eq.subst h1 h2
+
+example (α : Type u) (a b : α) (p : α → Prop)
+  (h1 : a = b) (h2 : p a) : p b :=
+h1 ▸ h2
+
+example (α : Type u) (a b : α) (is_apple : α → Prop)
+  (a_b_eq : a = b) (a_is_apple : is_apple a) : is_apple b :=
+a_b_eq ▸ a_is_apple
+
+variables f g : α → ℕ
+variable a_b_eq : a = b
+variable f_g_eq : f = g
+
+example : f a = f b := congr_arg f a_b_eq
+example : f a = g a := congr_fun f_g_eq a
+example : f a = g b := congr f_g_eq a_b_eq
+
+example : g a = f b := congr f_g_eq.symm a_b_eq
+
+example : g b = f a := congr f_g_eq.symm a_b_eq.symm
+
+end equality
+
+section identities
+
+variables a b c d : ℤ
+
+example : a + 0 = a := add_zero a
+example : 0 + a = a := zero_add a
+example : a * 1 = a := mul_one a
+example : 1 * a = a := one_mul a
+example : -a + a = 0 := neg_add_self a
+example : a + -a = 0 := add_neg_self a
+example : a - a = 0 := sub_self a
+example : a + b = b + a := add_comm a b
+example : a + b + c = a + (b + c) := add_assoc a b c
+example : a * b = b * a := mul_comm a b
+example : a * b * c = a * (b * c) := mul_assoc a b c
+example : a * (b + c) = a * b + a * c := mul_add a b c
+example : a * (b + c) = a * b + a * c := left_distrib a b c
+example : (a + b) * c = a * c + b * c := add_mul a b c
+example : (a + b) * c = a * c + b * c := right_distrib a b c
+example : a * (b - c) = a * b - a * c := mul_sub a b c
+example : (a - b) * c = a * c - b * c := sub_mul a b c
+
+end identities
+
+section calculation
+variables x y z : ℤ
+
+example (x y z : ℕ) : x * (y + z) = x * y + x * z := mul_add x y z
+example (x y z : ℕ) : (x + y) * z = x * z + y * z := add_mul x y z
+example (x y z : ℕ) : x + y + z = x + (y + z) := add_assoc x y z
+
+example (x y : ℕ) :
+  (x + y) * (x + y) = x * x + y * x + x * y + y * y :=
+have h1 : (x + y) * (x + y) = (x + y) * x + (x + y) * y,
+  from mul_add (x + y) x y,
+have h2 : (x + y) * (x + y) = x * x + y * x + (x * y + y * y),
+  from (add_mul x y x) ▸ (add_mul x y y) ▸ h1,
+h2.trans (add_assoc (x * x + y * x) (x * y) (y * y)).symm
+end calculation
+
+/-
+
+Notice that the second implicit parameter to eq.subst, which provides the context in which the substitution is to occur, has type α → Prop. Inferring this predicate therefore requires an instance of higher-order unification. In full generality, the problem of determining whether a higher-order unifier exists is undecidable, and Lean can at best provide imperfect and approximate solutions to the problem. As a result, eq.subst doesn’t always do what you want it to.
+
+-/
+
+section calc_mode
+
+variables (a b c d e : ℕ)
+variable h1 : a = b
+variable h2 : b = c + 1
+variable h3 : c = d
+variable h4 : e = 1 + d
+
+example : a = e :=
+calc
+  a     = b      : h1
+    ... = c + 1  : h2
+    ... = d + 1  : congr_arg _ h3
+    ... = 1 + d  : add_comm d (1 : ℕ)
+    ... =  e     : eq.symm h4
+
+-- section variables and variables that only appear in a tactic command or block are not automatically added to the context.
+include h1 h2 h3 h4
+
+example : a = e :=
+calc
+  a     = b      : by rw h1
+    ... = c + 1  : by rw h2
+    ... = d + 1  : by rw h3
+    ... = 1 + d  : by rw add_comm
+    ... =  e     : by rw h4
+
+example : a = e :=
+calc
+  a     = d + 1  : by rw [h1, h2, h3]
+    ... = 1 + d  : by rw add_comm
+    ... =  e     : by rw h4
+
+example : a = e := by rw [h1, h2, h3, add_comm, h4]
+
+/-
+simplify tactic failed to simplify
+-/
+-- example : a = e := by simp_rw [h1, h2, h3, add_comm, h4]
+
+example : a = e := by simp_rw [h1, h2, h3, h4, add_comm]
+
+example : a = e := by simp only [h1, h2, h3, add_comm, h4]
+
+example : a = e := by simp [h1, h2, h3, add_comm, h4]
+
+end calc_mode
+
+section calc_trans
+
+example (a b c d : ℕ)
+  (h1 : a = b) (h2 : b ≤ c) (h3 : c + 1 < d) : a < d :=
+calc
+  a     = b     : h1
+    ... < b + 1 : nat.lt_succ_self b
+    ... ≤ c + 1 : nat.succ_le_succ h2
+    ... < d     : h3
+
+example (x y : ℕ) :
+  (x + y) * (x + y) = x * x + y * x + x * y + y * y :=
+calc
+  (x + y) * (x + y) = (x + y) * x + (x + y) * y  : by rw mul_add
+    ... = x * x + y * x + (x + y) * y            : by rw add_mul
+    ... = x * x + y * x + (x * y + y * y)        : by rw add_mul
+    ... = x * x + y * x + x * y + y * y          : by rw ←add_assoc
+
+example (x y : ℕ) :
+  (x + y) * (x + y) = x * x + y * x + x * y + y * y :=
+by rw [mul_add, add_mul, add_mul, ←add_assoc]
+
+example (x y : ℕ) :
+  (x + y) * (x + y) = x * x + y * x + x * y + y * y :=
+by ring
+
+end calc_trans
+
+namespace existential
+
+open nat
+
+example : ∃ x : ℕ, x > 0 :=
+have h : 1 > 0, from zero_lt_succ 0,
+exists.intro 1 h
+
+example (x : ℕ) (h : x > 0) : ∃ y, y < x :=
+exists.intro 0 h
+
+example (x y z : ℕ) (hxy : x < y) (hyz : y < z) :
+  ∃ w, x < w ∧ w < z :=
+exists.intro y (and.intro hxy hyz)
+
+example (x y z : ℕ) (hxy : x < y) (hyz : y < z) :
+  ∃ w, x < w ∧ w < z :=
+begin
+ apply exists.intro y,
+ exact and.intro hxy hyz
+end
+
+#check @exists.intro
+
+example : ∃ x : ℕ, x > 0 :=
+⟨1, zero_lt_succ 0⟩
+
+example (x : ℕ) (h : x > 0) : ∃ y, y < x :=
+⟨0, h⟩
+
+example (x y z : ℕ) (hxy : x < y) (hyz : y < z) :
+  ∃ w, x < w ∧ w < z :=
+⟨y, hxy, hyz⟩
+
+section implicit
+
+variable g : ℕ → ℕ → ℕ
+variable hg : g 0 0 = 0
+
+theorem gex1 : ∃ x, g x x = x := ⟨0, hg⟩
+theorem gex2 : ∃ x, g x 0 = x := ⟨0, hg⟩
+theorem gex3 : ∃ x, g 0 0 = x := ⟨0, hg⟩
+theorem gex4 : ∃ x, g x x = 0 := ⟨0, hg⟩
+
+set_option pp.implicit true  -- display implicit arguments
+#print gex1
+#print gex2
+#print gex3
+#print gex4
+
+end implicit
+
+namespace elim
+
+example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
+exists.elim h
+  (assume w,
+    assume hw : p w ∧ q w,
+    show ∃ x, q x ∧ p x, from ⟨w, hw.right, hw.left⟩)
+
+example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
+match h with ⟨w, hw⟩ :=
+  ⟨w, hw.right, hw.left⟩
+end
+
+example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
+begin
+  obtain ⟨w, hw⟩ := h,
+  exact ⟨w, hw.right, hw.left⟩
+end
+
+example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
+begin
+  obtain ⟨w, hwl, hwr⟩ := h,
+  exact ⟨w, hwr, hwl⟩
+end
+
+example (h : ∃ x, p x ∧ q x) : ∃ x, q x ∧ p x :=
+let ⟨w, hpw, hqw⟩ := h in ⟨w, hqw, hpw⟩
+
+example : (∃ x, p x ∧ q x) → ∃ x, q x ∧ p x :=
+assume ⟨w, hpw, hqw⟩, ⟨w, hqw, hpw⟩
+
+def is_even (a : nat) := ∃ b, a = 2 * b
+
+theorem even_plus_even {a b : nat}
+  (h1 : is_even a) (h2 : is_even b) : is_even (a + b) :=
+exists.elim h1 (assume w1, assume hw1 : a = 2 * w1,
+exists.elim h2 (assume w2, assume hw2 : b = 2 * w2,
+  exists.intro (w1 + w2)
+    (calc
+      a + b = 2 * w1 + 2 * w2  : by rw [hw1, hw2]
+        ... = 2*(w1 + w2)      : by rw mul_add)))
+
+theorem even_plus_even' {a b : nat}
+  (h1 : is_even a) (h2 : is_even b) : is_even (a + b) :=
+match h1, h2 with
+  ⟨w1, hw1⟩, ⟨w2, hw2⟩ := ⟨w1 + w2, by rw [hw1, hw2, mul_add]⟩
+end
+
+theorem even_plus_even'' {a b : nat}
+  (h1 : is_even a) (h2 : is_even b) : is_even (a + b) :=
+begin
+  obtain ⟨w1, hw1⟩ := h1,
+  obtain ⟨w2, hw2⟩ := h2,
+  exact ⟨w1 + w2, by rw [hw1, hw2, mul_add]⟩
+end
+
+theorem even_plus_even''' {a b : nat}
+  (h1 : is_even a) (h2 : is_even b) : is_even (a + b) :=
+begin
+  obtain ⟨wa, hwa⟩ : is_even a := h1,
+  obtain ⟨wb, hwb⟩ : is_even b := h2,
+  use wa + wb,
+  calc
+      a + b = 2 * wa + 2 * wb  : by rw [hwa, hwb]
+        ... = 2 * (wa + wb)    : by rw mul_add
+end
+
+namespace classical
+
+open classical
+
+example (h : ¬ ∀ x, ¬ p x) : ∃ x, p x :=
+by_contradiction
+  (assume h1 : ¬ ∃ x, p x,
+    have h2 : ∀ x, ¬ p x, from
+      assume x,
+      assume h3 : p x,
+      have h4 : ∃ x, p x, from ⟨x, h3⟩,
+      show false, from h1 h4,
+    show false, from h h2)
+
+namespace identities
+
+variable a : α
+variable h : Prop
+
+example : (∃ x : α, h) → h := sorry
+example : h → (∃ x : α, h) := sorry
+example : (∃ x, p x ∧ h) ↔ (∃ x, p x) ∧ h := sorry
+example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) := sorry
+
+example : (∀ x, p x) ↔ ¬ (∃ x, ¬ p x) := sorry
+example : (∃ x, p x) ↔ ¬ (∀ x, ¬ p x) := sorry
+example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) := sorry
+example : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) := sorry
+
+example : (∀ x, p x → h) ↔ (∃ x, p x) → h := sorry
+example : (∃ x, p x → h) ↔ (∀ x, p x) → h := sorry
+example : (∃ x, h → p x) ↔ (h → ∃ x, p x) := sorry
+
+example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) :=
+iff.intro
+  (assume ⟨a, (h1 : p a ∨ q a)⟩,
+    or.elim h1
+      (assume hpa : p a, or.inl ⟨a, hpa⟩)
+      (assume hqa : q a, or.inr ⟨a, hqa⟩))
+  (assume h : (∃ x, p x) ∨ (∃ x, q x),
+    or.elim h
+      (assume ⟨a, hpa⟩, ⟨a, (or.inl hpa)⟩)
+      (assume ⟨a, hqa⟩, ⟨a, (or.inr hqa)⟩))
+
+-- ERROR
+-- example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) :=
+-- begin
+-- exact iff.intro
+--   (assume ⟨a, (h1 : p a ∨ q a)⟩,
+--     or.elim h1
+--       (assume hpa : p a, or.inl ⟨a, hpa⟩)
+--       (assume hqa : q a, or.inr ⟨a, hqa⟩))
+--   (assume h : (∃ x, p x) ∨ (∃ x, q x),
+--     or.elim h
+--       (assume ⟨a, hpa⟩, ⟨a, (or.inl hpa)⟩)
+--       (assume ⟨a, hqa⟩, ⟨a, (or.inr hqa)⟩))
+-- end
+
+example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) :=
+begin
+  apply iff.intro,
+  {
+    assume h,
+    obtain ⟨a, ha⟩ := h,
+    apply ha.elim,
+    {
+      assume hpa,
+      exact or.inl ⟨a, hpa⟩
+    },
+    {
+      assume hqa,
+      exact or.inr ⟨a, hqa⟩
+    }
+  },
+  {
+    sorry
+  }
+  -- (assume ⟨a, (h1 : p a ∨ q a)⟩,
+  --   or.elim h1
+  --     (assume hpa : p a, or.inl ⟨a, hpa⟩)
+  --     (assume hqa : q a, or.inr ⟨a, hqa⟩))
+  -- (assume h : (∃ x, p x) ∨ (∃ x, q x),
+  --   or.elim h
+  --     (assume ⟨a, hpa⟩, ⟨a, (or.inl hpa)⟩)
+  --     (assume ⟨a, hqa⟩, ⟨a, (or.inr hqa)⟩))
+end
+
+example : (∃ x, p x → h) ↔ (∀ x, p x) → h :=
+iff.intro
+  (assume ⟨b, (hb : p b → h)⟩,
+    assume h2 : ∀ x, p x,
+    show h, from  hb (h2 b))
+  (assume h1 : (∀ x, p x) → h,
+    show ∃ x, p x → h, from
+      by_cases
+        (assume hap : ∀ x, p x, ⟨a, λ h', h1 hap⟩)
+        (assume hnap : ¬ ∀ x, p x,
+          by_contradiction
+            (assume hnex : ¬ ∃ x, p x → h,
+              have hap : ∀ x, p x, from
+                assume x,
+                by_contradiction
+                  (assume hnp : ¬ p x,
+                    have hex : ∃ x, p x → h,
+                      from ⟨x, (assume hp, absurd hp hnp)⟩,
+                    show false, from hnex hex),
+              show false, from hnap hap)))
+
+variable f : ℕ → ℕ
+variable hf : ∀ x : ℕ, f x ≤ f (x + 1)
+
+example : f 0 ≤ f 3 :=
+have f 0 ≤ f 1, from hf 0,
+have f 0 ≤ f 2, from le_trans this (hf 1),
+show f 0 ≤ f 3, from le_trans this (hf 2)
+
+example : f 0 ≤ f 3 :=
+have f 0 ≤ f 1, from hf 0,
+have f 0 ≤ f 2, from le_trans (by assumption) (hf 1),
+show f 0 ≤ f 3, from le_trans (by assumption) (hf 2)
+
+example : f 0 ≥ f 1 → f 1 ≥ f 2 → f 0 = f 2 :=
+assume : f 0 ≥ f 1,
+assume : f 1 ≥ f 2,
+have f 0 ≥ f 2, from le_trans this ‹f 0 ≥ f 1›,
+have f 0 ≤ f 2, from le_trans (hf 0) (hf 1),
+show f 0 = f 2, from le_antisymm this ‹f 0 ≥ f 2›
+
+example : f 0 ≤ f 3 :=
+have f 0 ≤ f 1, from hf 0,
+have f 1 ≤ f 2, from hf 1,
+have f 2 ≤ f 3, from hf 2,
+show f 0 ≤ f 3, from le_trans ‹f 0 ≤ f 1›
+                       (le_trans ‹f 1 ≤ f 2› ‹f 2 ≤ f 3›)
+
+example (hf : ∀ x : ℕ, f x ≤ f (x + 1)) : f 0 ≤ f 3 :=
+begin
+have : f 0 ≤ f 1, from hf 0,
+have : f 1 ≤ f 2, from hf 1,
+have : f 2 ≤ f 3, from hf 2,
+show  f 0 ≤ f 3, from le_trans ‹f 0 ≤ f 1›
+                       (le_trans ‹f 1 ≤ f 2› ‹f 2 ≤ f 3›)
+end
+-- \f< ›
+example (n : ℕ) : ℕ := ‹ℕ›
+
+example : f 0 ≥ f 1 → f 0 = f 1 :=
+assume : f 0 ≥ f 1,
+show f 0 = f 1, from le_antisymm (hf 0) this
+
+example (hf : ∀ x : ℕ, f x ≤ f (x + 1)): f 0 ≥ f 1 → f 0 = f 1 :=
+begin
+assume : f 0 ≥ f 1,
+show f 0 = f 1, from le_antisymm (hf 0) this
+end
+
+end identities
+
+end classical
+
+end elim
+
+end existential
+
+namespace ex_04_01
+
+example : (∀ x, p x ∧ q x) ↔ (∀ x, p x) ∧ (∀ x, q x) :=
+begin
+  apply iff.intro,
+  {
+    assume hapq,
+    apply and.intro,
+    {
+      assume x,
+      exact (hapq x).left
+    },
+    {
+      assume x,
+      exact (hapq x).right
+    }
+  },
+  {
+    assume hapaq,
+    assume x,
+    apply and.intro,
+    {
+      exact hapaq.left x,
+    },
+    {
+      exact hapaq.right x,
+    }
+  }
+end
+
+example : (∀ x, p x ∧ q x) ↔ (∀ x, p x) ∧ (∀ x, q x) :=
+iff.intro
+  (assume : ∀ x, p x ∧ q x, ⟨
+    (assume x, (this x).left),
+    (assume x, (this x).right)
+  ⟩)
+  (
+    assume : (∀ x, p x) ∧ ∀ x, q x,
+    assume x,
+    ⟨this.left x, this.right x⟩
+  )
+
+example : (∀ x, p x → q x) → (∀ x, p x) → (∀ x, q x) :=
+assume hpq hp x, (hpq x) (hp x)
+
+example : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x :=
+assume hpq x,
+or.elim hpq
+  (assume hp, or.inl (hp x))
+  (assume hq, or.inr (hq x))
+
+end ex_04_01
+
+end chap_04
