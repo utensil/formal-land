@@ -1,4 +1,4 @@
-# Lean Playground
+# Lean 3 Playground
 
 ## Setup
 
