@@ -82,3 +82,8 @@ cd src
 format_lean --inpath hello.lean --outdir build
 # open build/hello.html
 ```
+
+### Work with Lean 4 and Lean 3 side by side
+
+* Disable Lean 4 extension for Lean 3 projects (in extension workspace settings)
+* Check `elan toolchain list`
