@@ -1,8 +1,8 @@
 [package]
 name = "lean-playground"
 version = "0.1"
-lean_version = "leanprover-community/lean:3.18.4"
+lean_version = "leanprover-community/lean:3.43.0"
 path = "src"
 
 [dependencies]
-mathlib = {git = "https://github.com/leanprover-community/mathlib", rev = "67dad7f377f23e68e24ac5238479b4c31c1a7bdd"}
+mathlib = {git = "https://github.com/leanprover-community/mathlib", rev = "d21469e412f3974c5e773f8e240610d2b049e96f"}
