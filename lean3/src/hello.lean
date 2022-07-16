@@ -1,5 +1,7 @@
 -- begin header
 
+import algebra.group
+
 set_option trace.cc true
 set_option trace.debug.dsimplify true
 set_option trace.simplify.context true

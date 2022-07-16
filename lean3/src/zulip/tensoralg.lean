@@ -3,7 +3,7 @@ https://leanprover.zulipchat.com/#narrow/stream/113489-new-members/topic/Types.2
 https://gist.github.com/adamtopaz/84315ae5b11319013707b2d0804fb37e
 -/
 
-import ring_theory.algebra
+import algebra.algebra.basic
 import linear_algebra
 
 variables (R : Type*) [comm_ring R]
@@ -284,98 +284,98 @@ instance : algebra R (tensoralg R M) :=
   end,
   ..show has_scalar R (tensoralg R M), by apply_instance }
 
-def lift {A : Type*} [ring A] [algebra R A] (f : M →ₗ[R] A) : tensoralg R M →ₐ[R] A := 
-{ to_fun := λ a, quotient.lift_on' a (lift_fun _ _ f) 
-  begin
-    intros a b h,  
-    apply h,
-  end,
-  map_one' := rfl,
-  map_mul' := 
-  begin
-    intros x y, 
-    letI := tensoralg.setoid R M,
-    rcases quotient.exists_rep x with ⟨x,rfl⟩,
-    rcases quotient.exists_rep y with ⟨y,rfl⟩,
-    change quotient.lift_on _ _ _ = quotient.lift_on _ _ _ * quotient.lift_on _ _ _,
-    simp_rw quotient.lift_on_beta,
-    refl,
-  end,
-  map_zero' := rfl,
-  map_add' := 
-  begin
-    intros x y, 
-    letI := tensoralg.setoid R M,
-    rcases quotient.exists_rep x with ⟨x,rfl⟩,
-    rcases quotient.exists_rep y with ⟨y,rfl⟩,
-    change quotient.lift_on _ _ _ = quotient.lift_on _ _ _ + quotient.lift_on _ _ _,
-    simp_rw quotient.lift_on_beta,
-    refl,
-  end,
-  commutes' := 
-  begin
-    intros r, 
-    letI := tensoralg.setoid R M,
-    change quotient.lift_on (r • 1) _ _ = _,
-    change r • ((lift_fun R M f) pre.one) = _,
-    have : (algebra_map R A) r = r • 1, by refine algebra.algebra_map_eq_smul_one r,
-    rw this, clear this,
-    refl,
-  end }
+-- def lift {A : Type*} [ring A] [algebra R A] (f : M →ₗ[R] A) : tensoralg R M →ₐ[R] A := 
+-- { to_fun := λ a, quotient.lift_on' a (lift_fun _ _ f) 
+--   begin
+--     intros a b h,  
+--     apply h,
+--   end,
+--   map_one' := rfl,
+--   map_mul' := 
+--   begin
+--     intros x y, 
+--     letI := tensoralg.setoid R M,
+--     rcases quotient.exists_rep x with ⟨x,rfl⟩,
+--     rcases quotient.exists_rep y with ⟨y,rfl⟩,
+--     change quotient.lift_on _ _ _ = quotient.lift_on _ _ _ * quotient.lift_on _ _ _,
+--     simp_rw quotient.lift_on_beta,
+--     refl,
+--   end,
+--   map_zero' := rfl,
+--   map_add' := 
+--   begin
+--     intros x y, 
+--     letI := tensoralg.setoid R M,
+--     rcases quotient.exists_rep x with ⟨x,rfl⟩,
+--     rcases quotient.exists_rep y with ⟨y,rfl⟩,
+--     change quotient.lift_on _ _ _ = quotient.lift_on _ _ _ + quotient.lift_on _ _ _,
+--     simp_rw quotient.lift_on_beta,
+--     refl,
+--   end,
+--   commutes' := 
+--   begin
+--     intros r, 
+--     letI := tensoralg.setoid R M,
+--     change quotient.lift_on (r • 1) _ _ = _,
+--     change r • ((lift_fun R M f) pre.one) = _,
+--     have : (algebra_map R A) r = r • 1, by refine algebra.algebra_map_eq_smul_one r,
+--     rw this, clear this,
+--     refl,
+--   end }
 
-def univ : M →ₗ[R] (tensoralg R M) := 
-{ to_fun := λ m, quotient.mk' $ pre.of m,
-  map_add' := 
-  begin
-    intros x y, 
-    apply quotient.sound',
-    intros B _ _ _ _ g,
-    letI := h2,
-    let G := lift_fun R M g,
-    change g (x + y) = g x + g y,
-    refine is_add_hom.map_add ⇑g x y,
-  end,
-  map_smul' := 
-  begin
-    intros x y, 
-    apply quotient.sound',
-    intros B _ _ _ _ g,
-    letI := h2,
-    let G := lift_fun R M g,
-    change g (x • y) = x • g y,
-    refine linear_map.map_smul g x y,
-  end }
+-- def univ : M →ₗ[R] (tensoralg R M) := 
+-- { to_fun := λ m, quotient.mk' $ pre.of m,
+--   map_add' := 
+--   begin
+--     intros x y, 
+--     apply quotient.sound',
+--     intros B _ _ _ _ g,
+--     letI := h2,
+--     let G := lift_fun R M g,
+--     change g (x + y) = g x + g y,
+--     refine is_add_hom.map_add ⇑g x y,
+--   end,
+--   map_smul' := 
+--   begin
+--     intros x y, 
+--     apply quotient.sound',
+--     intros B _ _ _ _ g,
+--     letI := h2,
+--     let G := lift_fun R M g,
+--     change g (x • y) = x • g y,
+--     refine linear_map.map_smul g x y,
+--   end }
 
-theorem univ_comp_lift {A : Type*} [ring A] [algebra R A] (f : M →ₗ[R] A) : 
-  (lift R M f) ∘ (univ R M) = f := rfl
+-- theorem univ_comp_lift {A : Type*} [ring A] [algebra R A] (f : M →ₗ[R] A) : 
+--   (lift R M f) ∘ (univ R M) = f := rfl
 
-theorem lift_unique {A : Type*} [ring A] [algebra R A] (f : M →ₗ[R] A)
-  (g : tensoralg R M →ₐ[R] A) : g ∘ (univ R M) = f → g = lift R M f := 
-begin
-  intro hyp,
-  ext, 
-  letI := tensoralg.setoid R M,
-  rcases quotient.exists_rep x with ⟨x,rfl⟩,
-  let G := lift_fun R M f,
-  induction x,
-  { change (g ∘ (univ R M)) _ = _,
-    rw hyp,
-    refl },
-  { change g 0 = 0,
-    exact alg_hom.map_zero g },
-  { change g 1 = 1,
-    exact alg_hom.map_one g },
-  { change g (⟦x_a⟧ * ⟦x_a_1⟧) = _, 
-    rw alg_hom.map_mul,
-    rw x_ih_a, rw x_ih_a_1,
-    refl },
-  { change g (⟦x_a⟧ + ⟦x_a_1⟧) = _,
-    rw alg_hom.map_add,
-    rw x_ih_a, rw x_ih_a_1,
-    refl },
-  { change g (x_a • ⟦x_a_1⟧) = _,
-    rw alg_hom.map_smul,
-    rw x_ih, refl },
-end
+-- theorem lift_unique {A : Type*} [ring A] [algebra R A] (f : M →ₗ[R] A)
+--   (g : tensoralg R M →ₐ[R] A) : g ∘ (univ R M) = f → g = lift R M f := 
+-- begin
+--   intro hyp,
+--   ext, 
+--   letI := tensoralg.setoid R M,
+--   rcases quotient.exists_rep x with ⟨x,rfl⟩,
+--   let G := lift_fun R M f,
+--   induction x,
+--   { change (g ∘ (univ R M)) _ = _,
+--     rw hyp,
+--     refl },
+--   { change g 0 = 0,
+--     exact alg_hom.map_zero g },
+--   { change g 1 = 1,
+--     exact alg_hom.map_one g },
+--   { change g (⟦x_a⟧ * ⟦x_a_1⟧) = _, 
+--     rw alg_hom.map_mul,
+--     rw x_ih_a, rw x_ih_a_1,
+--     refl },
+--   { change g (⟦x_a⟧ + ⟦x_a_1⟧) = _,
+--     rw alg_hom.map_add,
+--     rw x_ih_a, rw x_ih_a_1,
+--     refl },
+--   { change g (x_a • ⟦x_a_1⟧) = _,
+--     rw alg_hom.map_smul,
+--     rw x_ih, refl },
+-- end
 
 end tensoralg

@@ -2,7 +2,7 @@
 https://leanprover.zulipchat.com/#narrow/stream/217875-Is-there.20code.20for.20X.3F/topic/category.20of.20sets
 -/
 import init.function
-import category_theory.category
+import category_theory.category.basic
 import category_theory.types
 import category_theory.full_subcategory
 import category_theory.sums.basic

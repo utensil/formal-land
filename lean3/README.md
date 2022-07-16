@@ -45,6 +45,7 @@ pip install -U https://github.com/leanprover-community/format_lean/archive/maste
 
 ```bash
 leanpkg configure
+# leanproject get-mathlib-cache
 ```
 
 ### Experiment!

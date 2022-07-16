@@ -1017,7 +1017,7 @@ theorem not_not_not_term
 theorem not_not_not_calc_fancy
   (P : Prop) :
   ¬ ¬ ¬ P → ¬ P :=
-calc ¬ ¬ ¬ P → ¬ P : iff.elim_left (not_not_not_iff P)
+calc ¬ ¬ ¬ P → ¬ P : iff.elim_left (not_non_contradictory_iff_absurd P)
 
 theorem not_not' (P : Prop) : ¬ (¬ P) → P :=
 begin
@@ -1137,7 +1137,7 @@ or.elim (em p)
   (assume hnp : ¬p, absurd hnp h)
 
 example (h : ¬¬p) : p :=
-by_cases
+classical.by_cases
   (assume h1 : p, h1)
   (assume h1 : ¬p, absurd h1 h)
 
@@ -1920,7 +1920,7 @@ iff.intro
     show h, from  hb (h2 b))
   (assume h1 : (∀ x, p x) → h,
     show ∃ x, p x → h, from
-      by_cases
+      classical.by_cases
         (assume hap : ∀ x, p x, ⟨a, λ h', h1 hap⟩)
         (assume hnap : ¬ ∀ x, p x,
           by_contradiction

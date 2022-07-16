@@ -1,6 +1,8 @@
 import tactic.suggest
 import tactic.basic
 
+import algebra.group
+
 def sum_simple (f : ℕ → ℕ) : ℕ → ℕ
 | 0       := f 0
 | n@(m+1) := f n + sum_simple m

@@ -30,7 +30,7 @@ lemma dummy : 2 ∧ 3 = 6 := rfl
 failed to synthesize type class instance for
 ⊢ has_wedge Prop
 -/
-lemma dummy' : (2 ∧ 3 = 6) ∧ (2 ∧ 9 = 18) := sorry
+-- lemma dummy' : (2 ∧ 3 = 6) ∧ (2 ∧ 9 = 18) := sorry
 
 end userland
 
