@@ -1,6 +1,9 @@
 # leanpkg configure
 # leanproject get-mathlib-cache
 
+set -e
+set -o pipefail
+
 cd src
 
 lean hello.lean
