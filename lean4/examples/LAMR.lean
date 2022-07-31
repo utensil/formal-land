@@ -1,4 +1,25 @@
--- Experimenting code from https://github.com/avigad/lamr
+/-!
+======
+LAMR
+======
+
+.. default-role:: lean4
+
+Experimenting code from https://github.com/avigad/lamr
+
+Proofs
+========
+-/
+theorem test (p q : Prop) (hp : p) (hq : q): p ∧ q ↔ q ∧ p := by
+  apply Iff.intro
+  . intro h
+    apply And.intro
+    . exact hq
+    . exact hp
+  . intro h
+    apply And.intro
+    . exact hp
+    . exact hq
 
 #check 2 + 2
 #check -5
@@ -121,7 +142,9 @@ def primes (n : Nat) : Array Nat := Id.run do
 
 #eval (primes 10000).size
 
-/-
+/-!
+Section Props
+=============
 
 An atomic formula is a variable or one of the constants ⊤ or ⊥. A literal is an atomic formula or a negated atomic formula.
 
@@ -204,7 +227,9 @@ end PropForm
 
 def propExample := prop!{p ∧ q → r ∧ p ∨ ¬ s1 → s2 }
 
--- Minimal enhancement for List related examples
+/-!
+Minimal enhancement for List related examples:
+-/
 namespace List
 
 def insert [DecidableEq α] (a : α) (l : List α) : List α :=
