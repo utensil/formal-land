@@ -5,21 +5,17 @@ LAMR
 
 .. default-role:: lean4
 
-Experimenting code from https://github.com/avigad/lamr
+Experimenting with code from https://github.com/avigad/lamr
 
-Proofs
-========
+3. Lean as a Programming Language
+=====================================
+
+3.1. About lean
+------------------
+
+https://avigad.github.io/lamr/using_lean_as_a_programming_language.html
+
 -/
-theorem test (p q : Prop) (hp : p) (hq : q): p ∧ q ↔ q ∧ p := by
-  apply Iff.intro
-  . intro h
-    apply And.intro
-    . exact hq
-    . exact hp
-  . intro h
-    apply And.intro
-    . exact hp
-    . exact hq
 
 #check 2 + 2
 #check -5
@@ -50,6 +46,13 @@ def Fermat_statement : Prop :=
 theorem two_plus_two_is_four : 2 + 2 = 4 := rfl
 
 theorem Fermat_last_theorem : Fermat_statement := sorry
+
+/-!
+
+3.2. Using Lean as a functional programming language
+----------------------------------------------------------------
+
+-/
 
 def printExample : IO Unit:= do
   IO.println "hello"
@@ -96,6 +99,13 @@ end
 partial def gcd m n :=
   if n = 0 then m else gcd n (m % n)
 
+/-!
+
+3.3. Inductive data types in Lean
+----------------------------------------------------------------
+
+-/
+
 section
 
 inductive BinTree
@@ -122,6 +132,13 @@ def example_tree := node (node empty empty) (node empty (node empty empty))
 
 end
 
+/-!
+
+3.4. Using Lean as an imperative programming language
+----------------------------------------------------------------
+
+-/
+
 def isPrime (n : Nat) : Bool := Id.run do
   if n < 2 then false else
     for i in [2:n] do
@@ -143,8 +160,14 @@ def primes (n : Nat) : Array Nat := Id.run do
 #eval (primes 10000).size
 
 /-!
-Section Props
-=============
+
+5. Implementing Propositional Logic
+================================================================
+
+https://avigad.github.io/lamr/implementing_propositional_logic.html
+
+5.1. Syntax
+------------
 
 An atomic formula is a variable or one of the constants ⊤ or ⊥. A literal is an atomic formula or a negated atomic formula.
 
@@ -273,6 +296,13 @@ def vars : PropForm → List String
   | biImpl A B => (vars A).union (vars B)
 
 end PropForm
+
+/-!
+
+5.2. Semantics
+----------------
+
+-/
 
 -- Minimal implementation for PropAssignment examples
 def PropAssignment := List (String × Bool)
