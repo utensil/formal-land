@@ -1,15 +1,15 @@
 import Lake
 open Lake DSL System
 
-require mathlib from git
-  "https://github.com/leanprover-community/mathlib4" @ "d8c7d9897527e99b28862cdf5a4a13aefee95897"
+package «hello» {}
 
-package hello {}
+require mathlib from git
+  "https://github.com/leanprover-community/mathlib4.git"
 
 @[default_target]
-lean_lib Hello {
-  srcDir := "examples"
-  roots := #[`Hello, `LAMR, `Tactics]
+lean_lib «Hello» {
+  -- srcDir := "examples"
+  -- roots := #[`Hello, `LAMR, `Tactics]
 }
 
 -- lean_exe hello {
