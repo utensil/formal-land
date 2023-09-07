@@ -27,8 +27,8 @@ script check_examples (_args) do
       total := total + 1
 
       let r ← timeit s!"Running example: {ex.fileName}\t" (IO.Process.output {
-        cmd := "lean"
-        args := #[ex.path.toString]
+        cmd := "lake"
+        args := #["env", "lean", ex.path.toString]
         env := #[] -- #[("LEAN_PATH", searchPath)]
       })
     
@@ -37,6 +37,8 @@ script check_examples (_args) do
       else
         failed := failed.append #[(ex.path, r)]
         IO.println "  Failed!🔴"
+        IO.println r.stdout
+        IO.println r.stderr
 
   if failed.size != 0 then 
     IO.println "\nFailed examples:"
