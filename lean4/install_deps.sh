@@ -8,7 +8,9 @@ export PATH="$HOME/.elan/bin:$PATH"
 # bash -l
 
 # Install dependencies first
-python3 -m pip install git+https://github.com/cpitclaudel/alectryon.git
+
+# https://github.com/leanprover/lean4/blob/master/doc/flake.nix#L11
+python3 -m pip install git+https://github.com/Kha/alectryon.git@typeid
 
 # TODO if leanInk exists and is good, skip this
 rm -rf /tmp/leanInk || echo
