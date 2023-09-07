@@ -1,20 +1,22 @@
 import Lake
 open Lake DSL System
 
-package hello {
-  -- add package configuration options here
-}
+require mathlib from git
+  "https://github.com/leanprover-community/mathlib4" @ "d8c7d9897527e99b28862cdf5a4a13aefee95897"
 
+package hello {}
+
+@[default_target]
 lean_lib Hello {
-  -- add library configuration options here
+  srcDir := "examples"
+  roots := #[`Hello, `LAMR, `Tactics]
 }
 
-@[defaultTarget]
-lean_exe hello {
-  root := `Main
-}
+-- lean_exe hello {
+--   root := `Main
+-- }
 
-script check_examples (args) do
+script check_examples (_args) do
   let cwd ← IO.currentDir
 
   let mut total := 0
