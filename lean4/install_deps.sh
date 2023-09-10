@@ -18,5 +18,9 @@ git clone https://github.com/leanprover/LeanInk /tmp/leanInk -q
 cd /tmp/leanInk
 lake build
 
-echo You need to run the following command to make leanInk CLI visible to execution
-echo 'export PATH=/tmp/leanInk/build/bin/:$HOME/.elan/bin:$PATH'
+cp /tmp/leanInk/build/bin/* $HOME/.elan/bin
+
+pip install markdown-it-py
+
+# echo You need to run the following command to make leanInk CLI visible to execution
+# echo 'export PATH=/tmp/leanInk/build/bin/:$HOME/.elan/bin:$PATH'
