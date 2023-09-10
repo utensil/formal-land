@@ -1,6 +1,7 @@
 import Mathlib.Data.Set.Basic
 import Mathlib.Data.Set.Finite
 import Mathlib.Order.Filter.Basic
+import Mathlib.Tactic.Explode
 
 theorem Filter.ext_iff' (f g : Filter α) : f = g ↔ (∀ s, s ∈ f ↔ s ∈ g) := by
   simp only [filter_eq_iff, Set.ext_iff, Filter.mem_sets]
@@ -22,3 +23,12 @@ theorem Filter.ext_iff'' (f g : Filter α) : f = g ↔ (∀ s, s ∈ f ↔ s ∈
     intro s
     specialize set_mem_iff s
     exact set_mem_iff
+
+#explode Filter.ext_iff'
+
+#explode Filter.ext_iff''
+
+def f : α → α :=
+  fun f =>
+    let s := 1
+    sorry
