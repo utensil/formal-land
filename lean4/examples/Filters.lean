@@ -105,7 +105,6 @@ theorem Filter.ext_iff'' (f g : Filter α) : f = g ↔ (∀ s, s ∈ f ↔ s ∈
     rw [Set.ext_iff]
     intro s
     specialize set_mem_iff s
-    simp only [<-mem_def]
     exact set_mem_iff
     
       
