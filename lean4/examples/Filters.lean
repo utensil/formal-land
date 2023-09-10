@@ -86,5 +86,35 @@ theorem Filter.eq_def (f g : Filter α) : f = g ↔ f.sets = g.sets := by
     rw [mk.injEq]
     assumption
 
+theorem Filter.ext_iff (f g : Filter α) : f = g ↔ (∀ s, s ∈ f ↔ s ∈ g) := by
+  apply Iff.intro
+  . intro eq
+    intro s
+    apply Iff.intro
+    . intro s_mem_f
+      rw [<-eq]
+      exact s_mem_f
+    . intro h
+      rw [eq]
+      exact h
+  . intro h
+    rw [eq_def]
+    rw [Set.ext_iff]
+    intro x
+    specialize h x
+    simp only [<-mem_def]
+    exact h
+
+    
+      
+
+
+    
+    
+
+    
+
+
+
 
 

@@ -42,3 +42,4 @@ renderRst Hello.lean
 renderRst LAMR.lean
 renderRst Tactics.lean
 renderMd HelloMarkdown.lean
+renderMd Filters.lean
