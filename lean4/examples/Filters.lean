@@ -81,26 +81,10 @@ theorem Filter.eq_def (f g : Filter α) : f = g ↔ f.sets = g.sets := by
   . intro h
     rw [h]
   . intro h
-    induction f with
-    | mk fsets => 
-      induction g with
-      | mk gsets =>
-        have hfg : fsets = gsets := by
-          assumption
-        rw [mk.injEq]
-        exact hfg
-
---     induction f
---     induction g
---     simp only [mk.injEq]
---     assumption
-
---    cases f with
---    | mk =>
---      cases g with
---      | mk =>
---        simp only [mk.injEq]
---        assumption
+    induction f
+    induction g
+    rw [mk.injEq]
+    assumption
 
 
 
