@@ -25,8 +25,7 @@ jobs:
       - name: install elan
         run: |
           set -o pipefail
-          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf > /tmp/elan-init.sh
-          bash /tmp/elan-init.sh -y
+          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | bash -s -- -y
           echo "$HOME/.elan/bin" >> $GITHUB_PATH
       - uses: actions/checkout@v3
       - name: Setup Python
