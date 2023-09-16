@@ -1,1 +1,4 @@
 .DS_Store
+lean4/.ipynb_checkpoints
+*.ipynb
+.lsp_symlink
