@@ -139,6 +139,11 @@ theorem Filter.ext_iff₄ (f g : Filter α) : f = g ↔ (∀ s, s ∈ f ↔ s �
 -- 60
 #explode Filter.ext_iff₄
 
+def f : α → α :=
+  fun f =>
+    let s := 1
+    sorry
+
 
 
 
