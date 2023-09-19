@@ -1,5 +1,6 @@
 import Mathlib.Data.Set.Basic
 import Mathlib.Data.Set.Finite
+import Mathlib.Tactic.Explode
 
 set_option linter.unusedVariables false
 set_option autoImplicit false
@@ -85,11 +86,11 @@ theorem Filter.eq_def (f g : Filter α) : f = g ↔ f.sets = g.sets := by
     induction g
     rw [mk.injEq]
     assumption
-
-theorem Filter.ext_iff' (f g : Filter α) : f = g ↔ (∀ s, s ∈ f ↔ s ∈ g) := by
+    
+theorem Filter.ext_iff₁ (f g : Filter α) : f = g ↔ (∀ s, s ∈ f ↔ s ∈ g) := by
   simp only [eq_def, Set.ext_iff, mem_def]
 
-theorem Filter.ext_iff'' (f g : Filter α) : f = g ↔ (∀ s, s ∈ f ↔ s ∈ g) := by
+theorem Filter.ext_iff₂ (f g : Filter α) : f = g ↔ (∀ s, s ∈ f ↔ s ∈ g) := by
   apply Iff.intro
   . intro f_eq_g
     intro s
@@ -106,12 +107,40 @@ theorem Filter.ext_iff'' (f g : Filter α) : f = g ↔ (∀ s, s ∈ f ↔ s ∈
     intro s
     specialize set_mem_iff s
     exact set_mem_iff
-    
-      
+
+theorem Filter.ext_iff₃ (f g : Filter α) : f = g ↔ (∀ s, s ∈ f ↔ s ∈ g) := by
+  calc
+    (f = g) ↔ (f.sets = g.sets)                           := by rw [eq_def]
+          _ ↔ ∀ (x : Set α), x ∈ f.sets ↔ x ∈ g.sets      := by rw [Set.ext_iff]
+          _ ↔ ∀ (x : Set α), x ∈ f ↔ x ∈ g                := by simp_rw [mem_def]
+
+theorem Filter.ext_iff₄ (f g : Filter α) : f = g ↔ (∀ s, s ∈ f ↔ s ∈ g) := by
+  have mem_sets_eq_mem: ∀ (fg : Filter α) (x : Set α), (x ∈ fg.sets) = (x ∈ fg) := by
+    intros fg x
+    rw [mem_def]
+  calc
+    (f = g) ↔ (f.sets = g.sets)                           := by rw [eq_def]
+          _ ↔ ∀ (x : Set α), x ∈ f.sets ↔ x ∈ g.sets      := by rw [Set.ext_iff]
+          _ ↔ ∀ (x : Set α), x ∈ f ↔ x ∈ g                := by
+            conv_lhs =>
+              intro x
+              rw [mem_sets_eq_mem f]
+              rw [mem_sets_eq_mem g]
+
+-- 19
+#explode Filter.ext_iff₁
+
+-- 38
+#explode Filter.ext_iff₂
+
+-- 31
+#explode Filter.ext_iff₃
+
+-- 60
+#explode Filter.ext_iff₄
 
 
-    
-    
+
 
     
 
