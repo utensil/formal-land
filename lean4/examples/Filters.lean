@@ -293,10 +293,66 @@ example : Filter α := {
     simp_all [Set.mem_iff, Set.compl_inter, Set.Finite.union]
 }
 
+/-!
+# Filter bases
+-/
 
+/--
+Given a type `α`, a filter basis is a collection of sub**sets** of `α` which:
 
-    
+- contains at least one subset (the **sets** collection is **nonempty**),
+- intersections of two member subsets include some member subset of the
+  collection (**inter**sections include **mem**bers of **sets**).
 
+We represent it in Lean as a new type, which "packages" the collection of
+subsets, along with all the properties it should have.
+-/
+structure Basis (α : Type _) where
+  sets                 : Set (Set α)
+  sets_nonempty        : ∃ s, s ∈ sets
+  inter_mem_sets {s t} : s ∈ sets → t ∈ sets → ∃ u ∈ sets, u ⊆ s ∩ t
+
+/--
+If we have a filter basis `b`, it is more convenient to write `s ∈ b` for
+`s ∈ b.sets`. We now define this notation.
+-/
+instance : Membership (Set α) (Basis α) :=
+  ⟨fun s b ↦ s ∈ b.sets⟩
+
+/--
+The definition of `∈`.
+-/
+@[simp]
+theorem Basis.mem_def (b : Basis α) (s : Set α) : s ∈ b ↔ s ∈ b.sets := by
+  exact Iff.rfl
+
+/--
+The definition of equality between filter bases.
+-/
+@[simp]
+theorem Basis.eq_def (b c : Basis α) : b = c ↔ b.sets = c.sets := by
+  apply Iff.intro
+  . intro «b = c»
+    rw [«b = c»]
+  . intro «b.sets = c.sets»
+    cases b
+    cases c
+    congr
+
+-- 46
+#explode Basis.eq_def
+
+theorem Basis.eq_def₁ (b c : Basis α) : b = c ↔ b.sets = c.sets := by
+  apply Iff.intro
+  . intro «b = c»
+    rw [«b = c»]
+  . intro «b.sets = c.sets»
+    cases b
+    cases c
+    simp_all only
+
+-- 53
+#explode Basis.eq_def₁
 
 
 
