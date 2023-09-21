@@ -280,18 +280,14 @@ or, succinctly:
 
 -/
 
-example : Filter α := {
+example : Filter α where
   sets := {s : Set α | Set.Finite sᶜ}
   univ_mem_sets := by
     simp only [Set.mem_iff, Set.compl_univ, Set.finite_empty]
-  superset_mem_sets := by
-    intro s t «sᶜ is finite» «s ⊆ t»
-    simp_rw [Set.mem_iff]
-    have «tᶜ ⊆ sᶜ» := Set.compl_subset_compl.mpr «s ⊆ t»
-    exact Set.Finite.subset «sᶜ is finite» «tᶜ ⊆ sᶜ»
+  superset_mem_sets «sᶜ is finite» «s ⊆ t» :=
+    «sᶜ is finite».subset <| Set.compl_subset_compl.mpr «s ⊆ t»
   inter_mem_sets := by
     simp_all [Set.mem_iff, Set.compl_inter, Set.Finite.union]
-}
 
 /-!
 # Filter bases

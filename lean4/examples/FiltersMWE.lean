@@ -78,15 +78,17 @@ example : Filter α := {
     exact Set.Finite.union «sᶜ is finite» «tᶜ is finite»
 }
 
-example : Filter α := {
+example : Filter α where
   sets := {s : Set α | Set.Finite sᶜ}
   univ_sets := by
     simp only [Set.mem_iff, Set.compl_univ, Set.finite_empty]
-  sets_of_superset := by
-    intros s t «sᶜ is finite» «s ⊆ t»
-    simp_rw [Set.mem_iff]
-    have «tᶜ ⊆ sᶜ» := Set.compl_subset_compl.mpr «s ⊆ t»
-    exact Set.Finite.subset «sᶜ is finite» «tᶜ ⊆ sᶜ»
+  sets_of_superset «sᶜ is finite» «s ⊆ t» :=
+    «sᶜ is finite».subset <| Set.compl_subset_compl.mpr «s ⊆ t»
+  -- equivelent to:
+  -- sets_of_superset := by
+  --   intros s t «sᶜ is finite» «s ⊆ t»
+  --   have «tᶜ ⊆ sᶜ» := Set.compl_subset_compl.mpr «s ⊆ t»
+  --   exact Set.Finite.subset «sᶜ is finite» «tᶜ ⊆ sᶜ»
+  -- hint: https://leanprover-community.github.io/mathlib4_docs/find/?pattern=Filter.cofinite#doc
   inter_sets := by
     simp_all [Set.mem_iff, Set.compl_inter, Set.Finite.union]
-}
