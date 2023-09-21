@@ -144,6 +144,154 @@ def f : α → α :=
     let s := 1
     sorry
 
+/-!
+
+## Trivial lemmas
+
+These lemmas directly follow from the definiton of the filters:
+-/
+theorem Filter.univ_mem (f : Filter α) : Set.univ ∈ f := by
+  exact f.univ_mem_sets
+
+theorem Filter.superset_mem {f : Filter α} {s t : Set α} (hs : s ∈ f) (h : s ⊆ t) : t ∈ f := by
+  exact f.superset_mem_sets hs h
+
+theorem Filter.inter_mem {f : Filter α} {s t : Set α} (hs : s ∈ f) (ht : t ∈ f) : s ∩ t ∈ f := by
+  exact f.inter_mem_sets hs ht
+
+theorem Filter.inter_mem₁ {f : Filter α} {s t : Set α} (hs : s ∈ f) (ht : t ∈ f) : s ∩ t ∈ f := f.inter_mem_sets hs ht
+
+theorem Set.mem_iff (p : α → Prop) (y : α) : y ∈ {x : α | p x} ↔ p y := by
+  exact Iff.rfl
+
+/-！
+
+## Examples of filters
+
+-/
+
+example : Filter α := {
+  sets := Set.univ
+  univ_mem_sets := by
+    exact Set.mem_univ Set.univ
+  superset_mem_sets := by
+    intros s t
+    intros «s ∈ univ» «s ⊆ t»
+    exact Set.mem_univ t
+  inter_mem_sets := by
+    intros s t
+    intros «s ∈ univ» «t ∈ univ»
+    exact Set.mem_univ (s ∩ t)
+}
+
+/-！
+
+or, succinctly:
+
+-/
+
+example : Filter α := {
+  sets := Set.univ
+  univ_mem_sets := by
+    apply Set.mem_univ
+  superset_mem_sets := by
+    intros
+    apply Set.mem_univ
+  inter_mem_sets := by
+    intros
+    apply Set.mem_univ
+}
+
+/-!
+Hint: `rw` using `Set.mem_iff` to unfold the set-builder notation.
+Mathlib lemmas `Set.univ_subset_iff` and `Set.inter_self` can be useful here.
+
+Use simp? rw? exact? apply? aesop? to get hints.
+
+-/
+example : Filter α := {
+  sets := {s : Set α | s = Set.univ}
+  univ_mem_sets := by
+    rw [Set.mem_iff]
+  superset_mem_sets := by
+    simp_rw [Set.mem_iff]
+    intros s t «s = univ» «s ⊆ t»
+    apply Set.univ_subset_iff.mp
+    rw [<-«s = univ»]
+    exact «s ⊆ t»
+  inter_mem_sets := by
+    simp_rw [Set.mem_iff]
+    intros s t «s = univ» «t = univ»
+    rw [«s = univ», «t = univ»]
+    exact Set.inter_self Set.univ
+}
+
+/-！
+
+or, succinctly:
+
+-/
+
+example : Filter α := {
+  sets := {s : Set α | s = Set.univ}
+  univ_mem_sets := by
+    rw [Set.mem_iff]
+  superset_mem_sets := by
+    simp_rw [Set.mem_iff]
+    intros
+    simp_all only [Set.univ_subset_iff]
+  inter_mem_sets := by
+    simp_rw [Set.mem_iff]
+    intros
+    simp_all only [Set.inter_self]
+}
+
+
+/-！
+
+The cofinite filter consists of subsets whose complements are finite.
+
+-/
+example : Filter α := {
+  sets := {s : Set α | Set.Finite sᶜ}
+  univ_mem_sets := by
+    rw [Set.mem_iff, Set.compl_univ]
+    exact Set.finite_empty
+  superset_mem_sets := by
+    intros s t
+    rw [Set.mem_iff]
+    intro «sᶜ is finite» «s ⊆ t»
+    rw [Set.mem_iff]
+    rw [<-Set.compl_subset_compl] at «s ⊆ t»
+    exact Set.Finite.subset «sᶜ is finite» «s ⊆ t»
+  inter_mem_sets := by
+    intros s t
+    intro «sᶜ is finite» «tᶜ is finite»
+    rw [Set.mem_iff] at «sᶜ is finite»
+    rw [Set.mem_iff] at «tᶜ is finite»
+    rw [Set.mem_iff]
+    rw [Set.compl_inter]
+    exact Set.Finite.union «sᶜ is finite» «tᶜ is finite»
+}
+
+/-！
+
+or, succinctly:
+
+-/
+
+example : Filter α := {
+  sets := {s : Set α | Set.Finite sᶜ}
+  univ_mem_sets := by
+    simp only [Set.mem_iff, Set.compl_univ, Set.finite_empty]
+  superset_mem_sets := by
+    intro s t «sᶜ is finite» «s ⊆ t»
+    simp_rw [Set.mem_iff]
+    have «tᶜ ⊆ sᶜ» := Set.compl_subset_compl.mpr «s ⊆ t»
+    exact Set.Finite.subset «sᶜ is finite» «tᶜ ⊆ sᶜ»
+  inter_mem_sets := by
+    simp_all [Set.mem_iff, Set.compl_inter, Set.Finite.union]
+}
 
 
 
