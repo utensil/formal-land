@@ -15,8 +15,7 @@ export PATH=$HOME/.elan/bin:$PATH
 renderRst() {
     # echo "${1%.*}"
     filename="${1%.*}"
-    dirname="${1%/*}"
-    alectryon examples/$filename.lean --lake lakefile.lean --output-directory dist/$dirname/
+    alectryon examples/$filename.lean --lake lakefile.lean --output-directory dist/
 }
 
 renderMd() {
@@ -48,6 +47,6 @@ renderMd FiltersMWE.lean
 
 renderMd index.lean
 
-# Need this to provide assets for HTML under Zulip/
-renderRst Zulip/Have.lean
+cp dist/*.css dist/Zulip/
+cp dist/*.js dist/Zulip/
 renderMd Zulip/Arrow.lean
