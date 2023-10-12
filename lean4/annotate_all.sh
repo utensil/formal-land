@@ -15,7 +15,8 @@ export PATH=$HOME/.elan/bin:$PATH
 renderRst() {
     # echo "${1%.*}"
     filename="${1%.*}"
-    alectryon examples/$filename.lean --lake lakefile.lean --output-directory dist/
+    dirname="${1%/*}"
+    alectryon examples/$filename.lean --lake lakefile.lean --output-directory dist/$dirname/
 }
 
 renderMd() {
