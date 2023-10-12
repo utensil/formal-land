@@ -45,4 +45,6 @@ renderMd HelloMarkdown.lean
 renderMd Filters.lean
 renderMd FiltersMWE.lean
 
+# Need this to provide assets for HTML under Zulip/
+renderRst Zulip/Have.lean
 renderMd Zulip/Arrow.lean
