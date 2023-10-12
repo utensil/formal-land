@@ -20,6 +20,7 @@ git clone https://github.com/leanprover/LeanInk /tmp/leanInk -q
 cd /tmp/leanInk
 lake build
 
+mkdir -p $HOME/.elan/bin
 cp /tmp/leanInk/build/bin/* $HOME/.elan/bin
 
 pip install markdown-it-py

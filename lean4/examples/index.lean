@@ -24,3 +24,5 @@
 - [Zulip/Arrow.lean](./Zulip/Arrow.html)
 
 -/
+
+#eval Lean.toolchain
