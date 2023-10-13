@@ -1,6 +1,21 @@
 set -e
 set -o pipefail
 
+
+# run only for linux not Mac
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain leanprover/lean4:v4.2.0-rc1
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    brew install elan-init
+    elan toolchain install stable
+    elan default stable
+    exit 0
+else
+    echo "Unknown OS: $OSTYPE"
+    echo "Check out https://leanprover-community.github.io/get_started.html for installation"
+    exit 0
+fi
+
 export PATH="$HOME/.elan/bin:$PATH"
 
 # one of below works
@@ -25,5 +40,5 @@ cp /tmp/leanInk/build/bin/* $HOME/.elan/bin
 
 pip install markdown-it-py
 
-# echo You need to run the following command to make leanInk CLI visible to execution
-# echo 'export PATH=/tmp/leanInk/build/bin/:$HOME/.elan/bin:$PATH'
+echo You need to run the following command to make leanInk CLI visible to execution
+echo 'export PATH=$HOME/.elan/bin:$PATH'
