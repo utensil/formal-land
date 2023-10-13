@@ -47,6 +47,7 @@ renderMd FiltersMWE.lean
 
 renderMd index.lean
 
+mkdir -p dist/Zulip/
 cp dist/*.css dist/Zulip/
 cp dist/*.js dist/Zulip/
 renderMd Zulip/Arrow.lean

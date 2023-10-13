@@ -1,8 +1,6 @@
 set -e
 set -o pipefail
 
-
-# run only for linux not Mac
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain leanprover/lean4:v4.2.0-rc1
 elif [[ "$OSTYPE" == "darwin"* ]]; then
