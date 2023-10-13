@@ -9,7 +9,6 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     brew install elan-init
     elan toolchain install stable
     elan default stable
-    exit 0
 else
     echo "Unknown OS: $OSTYPE"
     echo "Check out https://leanprover-community.github.io/get_started.html for installation"
