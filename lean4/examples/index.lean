@@ -20,8 +20,11 @@
 
 ####  Discussion on Zulip
 
-- [Zulip/Have.lean](./Zulip/Have.html)
 - [Zulip/Arrow.lean](./Zulip/Arrow.html)
+- [Zulip/Have.lean](./Zulip/Have.html)
+- [Zulip/Import.lean](./Zulip/Import.html)
+- [Zulip/Monad.lean](./Zulip/Monad.html)
+- [Zulip/SpellCheck.lean](./Zulip/SpellCheck.html)
 
 -/
 

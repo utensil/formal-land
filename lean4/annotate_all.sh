@@ -51,3 +51,7 @@ mkdir -p dist/Zulip/
 cp dist/*.css dist/Zulip/
 cp dist/*.js dist/Zulip/
 renderMd Zulip/Arrow.lean
+renderMd Zulip/Have.lean
+renderMd Zulip/Import.lean
+renderMd Zulip/Monad.lean
+renderMd Zulip/SpellCheck.lean
