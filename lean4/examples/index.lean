@@ -2,6 +2,8 @@
 
 # Lean 4 Playground
 
+#eval Lean.toolchain
+
 ## Examples
 
 ### Literate reStructuredText (RST)
@@ -17,6 +19,7 @@
 - [Filters.lean](./Filters.html)
 - [FiltersMWE.lean](./FiltersMWE.html)
 - [Tactics.lean](./Tactics.html)
+- [Hierarchies.lean](./Hierarchies.html)
 
 ####  Discussion on Zulip
 
@@ -27,5 +30,3 @@
 - [Zulip/SpellCheck.lean](./Zulip/SpellCheck.html)
 
 -/
-
-#eval Lean.toolchain
