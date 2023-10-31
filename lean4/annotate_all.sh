@@ -56,3 +56,4 @@ renderMd Zulip/Have.lean
 renderMd Zulip/Import.lean
 renderMd Zulip/Monad.lean
 renderMd Zulip/SpellCheck.lean
+renderMd Zulip/Agatha.lean

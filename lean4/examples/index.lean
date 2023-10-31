@@ -28,5 +28,5 @@
 - [Zulip/Import.lean](./Zulip/Import.html)
 - [Zulip/Monad.lean](./Zulip/Monad.html)
 - [Zulip/SpellCheck.lean](./Zulip/SpellCheck.html)
-
+- [Zulip/Agatha.lean](./Zulip/Agatha.html)
 -/
