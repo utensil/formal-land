@@ -6,7 +6,7 @@ open Lean Meta Elab Command Tactic
 /-!
   Inspired by
   
-  - `Lean.Elab.Tactic.focus`
+  - [`Lean.Elab.Tactic.focus`](https://leanprover-community.github.io/mathlib4_docs/Lean/Elab/Tactic/Basic.html#Lean.Elab.Tactic.focus)
   - [`Branch` in lean4game](https://github.com/leanprover-community/lean4game/blob/main/server/GameServer/Commands.lean), see also [its doc](https://github.com/leanprover-community/lean4game/blob/main/DOCUMENTATION.md#proof)
   - [`tada` on Zulip`](https://leanprover.zulipchat.com/#narrow/stream/113489-new-members/topic/Lean.203.20or.204.3F/near/394490716)
   - [Lean auto grader](https://github.com/adamtopaz/lean_grader)
@@ -23,16 +23,12 @@ elab (name := proof) "proof" _n:(num)? _desc:interpolatedStr(term)? ":" t:tactic
   setGoals [mvarId]
   let b ← saveState
   let a <- evalTactic t
-  -- let gs ← getUnsolvedGoals
-  -- if !gs.isEmpty then
-  --   let msgs ← Core.getMessageLog
-  --   logWarning "This branch leaves open goals."
-  --   Core.setMessageLog msgs
 
-  let msgs ← Core.getMessageLog
-  b.restore
-  setGoals mvarIds
-  Core.setMessageLog msgs
+  if !mvarIds.isEmpty then
+    let msgs ← Core.getMessageLog
+    b.restore
+    setGoals mvarIds
+    Core.setMessageLog msgs
   
   pure a
 

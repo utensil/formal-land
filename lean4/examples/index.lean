@@ -20,6 +20,7 @@
 - [FiltersMWE.lean](./FiltersMWE.html)
 - [Tactics.lean](./Tactics.html)
 - [Hierarchies.lean](./Hierarchies.html)
+- [Branch.lean](./Branch.html)
 
 ####  Discussion on Zulip
 

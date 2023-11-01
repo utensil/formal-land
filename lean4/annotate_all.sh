@@ -45,6 +45,7 @@ renderMd HelloMarkdown.lean
 renderMd Filters.lean
 renderMd FiltersMWE.lean
 renderMd Hierarchies.lean
+renderMd Branch.lean
 
 renderMd index.lean
 
