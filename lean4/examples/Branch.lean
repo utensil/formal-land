@@ -6,9 +6,10 @@ open Lean Meta Elab Command Tactic
 /-!
   Inspired by
   
-  - [Lean auto grader](https://github.com/adamtopaz/lean_grader)
+  - `Lean.Elab.Tactic.focus`
   - [`Branch` in lean4game](https://github.com/leanprover-community/lean4game/blob/main/server/GameServer/Commands.lean), see also [its doc](https://github.com/leanprover-community/lean4game/blob/main/DOCUMENTATION.md#proof)
   - [`tada` on Zulip`](https://leanprover.zulipchat.com/#narrow/stream/113489-new-members/topic/Lean.203.20or.204.3F/near/394490716)
+  - [Lean auto grader](https://github.com/adamtopaz/lean_grader)
 -/
 
 elab "proofs " n:num : tactic => do
