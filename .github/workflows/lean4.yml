@@ -39,6 +39,7 @@ jobs:
           ./build.sh
           ./annotate_all.sh
           lake script run check_examples
+          lake env leanInk analyze examples/Help.lean
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
