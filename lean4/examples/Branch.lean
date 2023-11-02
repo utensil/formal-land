@@ -24,10 +24,6 @@ elab (name := proof) "proof" _n:(num)? _desc:interpolatedStr(term)? ":" t:tactic
   let b ← saveState
   let a <- evalTactic t
 
-  let localState : Tactic.State ← get
-  -- let env <- getEnv
-  -- let cs := env.constants
-  -- let c := cs.find? `sorryAx |>.get!
   if let some val := (← getMCtx).eAssignment.find? mvarId then
     if val.isSorry then
       logWarning "proof uses 'sorry'"
