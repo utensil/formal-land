@@ -13,32 +13,44 @@ open Lean Meta Elab Command Tactic
 -/
 
 elab "proofs " n:num : tactic => do
-  let goals ← getGoals
-  let m := n.1.toNat
-  let goalsDup := List.range m |>.foldl (init := []) fun acc _ => acc ++ goals
-  setGoals $ goalsDup
+  withMainContext do
+    let mvarId :: mvarIds ← getUnsolvedGoals | throwNoGoalsToBeSolved
+    setGoals $ List.replicate (n.1.toNat) mvarId ++ mvarIds
 
 elab (name := proof) "proof" _n:(num)? _desc:interpolatedStr(term)? ":" t:tacticSeq : tactic => do
-  let mvarId :: mvarIds ← getUnsolvedGoals | throwNoGoalsToBeSolved
-  setGoals [mvarId]
-  let b ← saveState
-  let a <- evalTactic t
+  withMainContext do
+    let mvarId :: mvarIds ← getUnsolvedGoals | throwNoGoalsToBeSolved
 
-  if let some val := (← getMCtx).eAssignment.find? mvarId then
-    if val.isSorry then
-      logWarning "proof uses 'sorry'"
+    -- focus on the first goal
+    setGoals [mvarId]
+    -- save the non-proven state for recover after the proof
+    let b ← saveState
 
-  let gs ← getUnsolvedGoals
-  if !gs.isEmpty then
-    Term.reportUnsolvedGoals gs
+    -- run the proof
+    let a ← evalTactic t
 
-  if !mvarIds.isEmpty then
-    let msgs ← Core.getMessageLog
-    b.restore
-    setGoals mvarIds
-    Core.setMessageLog msgs
-  
-  pure a
+    -- detect sorry in proof
+    if let some proof := (← getMCtx).eAssignment.find? mvarId then
+      if proof.isSorry then
+        logWarning "proof uses 'sorry'"
+
+    -- detect unsolved goals
+    let gs ← getUnsolvedGoals
+    if !gs.isEmpty then
+      Term.reportUnsolvedGoals gs
+
+    -- if it's not the last alternative proof, restore the non-proven state and restore the remaining goals
+    -- otherwise the remaining goal will be proven automatically
+    if !mvarIds.isEmpty then
+      let msgs ← Core.getMessageLog
+      b.restore
+      setGoals mvarIds
+      Core.setMessageLog msgs
+    -- else use the last proof as the proof
+    -- TODO this doesn't guarantee that the whole theorem is proven if any of the proofs are valid
+    -- it also doesn't guarantee that the whole theorem is proven only if all of the proofs are valid
+    
+    pure a
 
 elab (name := QED) "QED" : tactic => do
   let gs ← getUnsolvedGoals
