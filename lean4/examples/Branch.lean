@@ -24,6 +24,18 @@ elab (name := proof) "proof" _n:(num)? _desc:interpolatedStr(term)? ":" t:tactic
   let b ← saveState
   let a <- evalTactic t
 
+  let localState : Tactic.State ← get
+  -- let env <- getEnv
+  -- let cs := env.constants
+  -- let c := cs.find? `sorryAx |>.get!
+  if let some val := (← getMCtx).eAssignment.find? mvarId then
+    if val.isSorry then
+      logWarning "proof uses 'sorry'"
+
+  let gs ← getUnsolvedGoals
+  if !gs.isEmpty then
+    Term.reportUnsolvedGoals gs
+
   if !mvarIds.isEmpty then
     let msgs ← Core.getMessageLog
     b.restore
@@ -50,27 +62,19 @@ example (a b c : ℕ) : a + b * c = c * b + a := by
   proofs 2
   proof 1:
     rw [Nat.add_comm, @Nat.add_right_cancel_iff, Nat.mul_comm]
-    QED
   proof 2:
     ring
-    QED
 
-example : 1 + 2 = 3 := by
+theorem ex : 1 + 2 = 3 := by
   proofs 5
   proof "trivial":
     rfl
-    QED
   proof "automatic":
     simp
-    QED
   proof "cheating":
     sorry
-    QED
   proof "WIP":
     rewrite [Nat.add_comm]
-    WIP
   proof "verbose":
     have h : 1 + 2 = 3 := by rfl
     exact h
-    QED
-  
