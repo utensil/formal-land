@@ -39,13 +39,13 @@ renderMd() {
 # done
 
 renderRst Hello.lean
-# renderRst LAMR.lean
-# renderRst Tactics.lean
+renderRst LAMR.lean
+renderRst Tactics.lean
 renderMd HelloMarkdown.lean
-# renderMd Filters.lean
-# renderMd FiltersMWE.lean
-# renderMd Hierarchies.lean
-# renderMd Branch.lean
+renderMd Filters.lean
+renderMd FiltersMWE.lean
+renderMd Hierarchies.lean
+renderMd Branch.lean
 
 renderMd index.lean
 
