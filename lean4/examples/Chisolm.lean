@@ -96,6 +96,18 @@ lemma mul_eq_half_add_half_sub : u * v = half * (u * v + v * u) + half * (u * v 
   rw [mul_add]
   done
 
+local notation "⅟2" => 𝒢 ⅟2
+
+lemma half_eq_half : half = ⅟2 := by
+  simp only [half, map_invOf]
+  done
+
+lemma mul_eq_half_add_half_sub' : u * v = ⅟2 * (u * v + v * u) + ⅟2 * (u * v - v * u) := by
+  conv_rhs => rw [←half_eq_half]
+  conv_lhs => rw [mul_eq_half_add_half_sub]
+  done
+
+
   -- simp only [add_add_sub_cancel, smul_add, nsmul_eq_mul]
 
   -- rw [← two_mul_eq_add_sub]
