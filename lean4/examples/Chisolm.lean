@@ -4,6 +4,8 @@ import Mathlib.Tactic
 -- import Mathlib.Util.Superscript
 -- import Mathlib.Data.Matrix.Notation
 
+set_option quotPrecheck false
+
 variable {R : Type _}
 
 variable {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
@@ -16,7 +18,8 @@ variable [Invertible (2 : CliffordAlgebra Q)]
 
 variable (u v w : CliffordAlgebra Q)
 
-local notation "𝒢" => algebraMap R (CliffordAlgebra Q)
+local instance hasCoeCliffordAlgebraRing : Coe R (CliffordAlgebra Q) := ⟨algebraMap R (CliffordAlgebra Q)⟩
+local instance hasCoeCliffordAlgebraModule : Coe M (CliffordAlgebra Q) := ⟨CliffordAlgebra.ι Q⟩
 
 lemma mul_eq_half_add_half_sub : u * v = ⅟2 * (u * v + v * u) + ⅟2 * (u * v - v * u) := by
   calc
@@ -49,7 +52,8 @@ example : u * 1 = u := by rw [mul_one]
 local notation "𝟘" => (0 : CliffordAlgebra Q)
 local notation "𝟙" => (1 : CliffordAlgebra Q)
 
-#check 𝒢
+-- local notation "𝒢" => algebraMap R (CliffordAlgebra Q)
+-- #check 𝒢
 #check 𝟘
 #check 𝟙
 
@@ -59,11 +63,16 @@ local notation "𝟙" => (1 : CliffordAlgebra Q)
 -/
 #check M
 
-local notation "ι" => CliffordAlgebra.ι Q
+-- local notation "ι" => CliffordAlgebra.ι Q
 
-example (r : R) (u : M)  : 𝒢 r * ι u = ι u * 𝒢 r := by rw [@Algebra.commutes]
+-- local notation "∘" => CliffordAlgebra.mul
 
-example (r : R) (u : M) : ∃ w : M, ι w = 𝒢 r * ι u := by
+-- example (r : R) (u : M)  : r ∘ u = u ∘ r := by rw [@Algebra.commutes]
+-- local notation "*" => fun x y => (CliffordAlgebra Q).mul ↑x ↑y
+
+example (r : R) (u : M) : (r * u : CliffordAlgebra Q) = u * r := by rw [@Algebra.commutes]
+
+example (r : R) (u : M) : ∃ w : M, w = (r * u : CliffordAlgebra Q) := by
   use (r • u)
   rw [map_smul, Algebra.smul_def, Algebra.commutes]
 
@@ -75,15 +84,58 @@ example (r : R) (u : M) : ∃ w : M, ι w = 𝒢 r * ι u := by
 -- def square {Gn G: Type*} (m : Gn) : G
 -- | M.mk m => (ι m)^2
 
-local instance hasCoeCliffordAlgebraRing : Coe R (CliffordAlgebra Q) := ⟨𝒢⟩
-local instance hasCoeCliffordAlgebraModule : Coe M (CliffordAlgebra Q) := ⟨ι⟩
 
-set_option quotPrecheck false
 local notation x "²" => (↑x : CliffordAlgebra Q)^2
 
 theorem ι_sq_scalar (m : M) : m² = Q m := by
   rw [pow_two, CliffordAlgebra.ι_sq_scalar]
   done
+
+/-！
+  Axiom 5. The inner product is nondegenerate.
+
+TODO: Wait to see if this is necessary and what's the weaker condition.
+-/
+
+/-!
+  Axiom 6. If G0 = G1, then G = G0. TODO: Wait to see if this is necessary and what's the weaker condition.
+  
+  Otherwise, G is the direct sum of all the Gr.
+-/
+
+#check CliffordAlgebra.GradedAlgebra.ι
+#check CliffordAlgebra.GradedAlgebra.ι_apply
+
+-- def 𝒢ᵣ (v : M) (i : ℕ) := CliffordAlgebra.GradedAlgebra.ι Q v i
+
+#check GradedAlgebra.proj
+-- #check CliffordAlgebra.proj
+
+-- invalid occurrence of universe level 'u_3' at '𝒢ᵣ', it does not occur at the declaration type, nor it is explicit universe level provided by the user, occurring at expression
+--   sorryAx.{u_3} (?m.443921 _uniq.442570 _uniq.443000 _uniq.443430 mv i)
+-- at declaration body
+--   fun {R : Type u_1} {M : Type u_2} [CommRing R] [AddCommGroup M] [Module R M] {Q : QuadraticForm R M}
+--       (mv : CliffordAlgebra Q) (i : ℕ) =>
+--     sorryAx (?m.443921 _uniq.442570 _uniq.443000 _uniq.443430 mv i)
+-- def 𝒢ᵣ (mv : CliffordAlgebra Q) (i : ℕ) := sorry
+
+-- variable {ι : Type _} [DecidableEq ι] [AddMonoid ι]
+-- variable (𝒜 : ι → Submodule R (CliffordAlgebra Q))
+variable (𝒜 : ℕ → Submodule R (CliffordAlgebra Q))
+
+def 𝒢ᵣ (mv : CliffordAlgebra Q) (i : ℕ) : CliffordAlgebra Q := GradedAlgebra.proj (CliffordAlgebra.evenOdd Q) i mv
+
+#check List
+
+-- (fun xs i => true)
+--  (CliffordAlgebra Q → ℕ → Prop) 
+instance instGetElemByGradeCliffordAlgebra : GetElem (CliffordAlgebra Q) ℕ (CliffordAlgebra Q) (fun _mv _i => true) := {
+  getElem := fun mv i _h => 𝒢ᵣ mv i
+}
+
+example (mv : CliffordAlgebra Q) (i : ℕ) : mv[i] = mv[i] := rfl
+
+#check CoeFun
 
 -- local macro_rules
 -- | `($x ^ $y) => `(HPow.hPow $x $y)
