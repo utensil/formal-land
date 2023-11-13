@@ -12,25 +12,20 @@ variable {Q : QuadraticForm R M}
 
 variable [Invertible (2 : R)]
 
+variable [Invertible (2 : CliffordAlgebra Q)]
+
 variable (u v w : CliffordAlgebra Q)
 
 local notation "𝒢" => algebraMap R (CliffordAlgebra Q)
 
-local notation "𝟘" => 𝒢 0
-local notation "𝟙" => 𝒢 1
-local notation "𝟚" => 𝒢 2
-local notation "⅟𝟚" => 𝒢 ⅟2
-
-lemma mul_eq_half_add_half_sub : u * v = ⅟𝟚 * (u * v + v * u) + ⅟𝟚 * (u * v - v * u) := by
+lemma mul_eq_half_add_half_sub : u * v = ⅟2 * (u * v + v * u) + ⅟2 * (u * v - v * u) := by
   calc
-    u * v = 𝟙 * (u * v)                                             := by rw [map_one, one_mul]
-        _ = 𝒢 (⅟2 * 2) * (u * v)                                    := by rw [invOf_mul_self']
-        _ = ⅟𝟚 * 𝟚 * (u * v)                                        := by rw [map_mul]
-        _ = ⅟𝟚 * 2 * (u * v)                                        := by rw [map_ofNat]
-        _ = ⅟𝟚 * (2 * (u * v))                                      := by rw [mul_assoc]
-        _ = ⅟𝟚 * (u * v + u * v)                                    := by rw [←two_mul]
-        _ = ⅟𝟚 * ((u * v + v * u) + (u * v - v * u))                := by rw [add_add_sub_cancel]
-        _ = ⅟𝟚 * (u * v + v * u) + ⅟𝟚 * (u * v - v * u)             := by rw [mul_add]
+    u * v = 1 * (u * v)                                             := by rw [one_mul]
+        _ = (⅟2 * 2) * (u * v)                                      := by rw [invOf_mul_self']
+        _ = ⅟2 * (2 * (u * v))                                      := by rw [mul_assoc]
+        _ = ⅟2 * (u * v + u * v)                                    := by rw [←two_mul]
+        _ = ⅟2 * ((u * v + v * u) + (u * v - v * u))                := by rw [add_add_sub_cancel]
+        _ = ⅟2 * (u * v + v * u) + ⅟2 * (u * v - v * u)             := by rw [mul_add]
   done
 
 #check mul_eq_half_add_half_sub
@@ -40,17 +35,20 @@ lemma mul_eq_half_add_half_sub : u * v = ⅟𝟚 * (u * v + v * u) + ⅟𝟚 * (
   The additive identity is called 0 and the multiplicative identity is called 1.
 -/
 #check CliffordAlgebra.instRing
-example : 𝟘 + u = u := by rw [map_zero, zero_add]
-example : u + 𝟘 = u := by rw [map_zero, add_zero]
-#check 𝟙
-example : 𝟙 * u = u := by rw [map_one, one_mul]
-example : u * 𝟙 = u := by rw [map_one, mul_one]
+example : 0 + u = u := by rw [zero_add]
+example : u + 0 = u := by rw [add_zero]
+example : 1 * u = u := by rw [one_mul]
+example : u * 1 = u := by rw [mul_one]
 
 /-!
   Axiom 2. G contains a ~~field~~ring G0 of characteristic zero which includes 0 and 1.
 -/
 -- [Field R]
 -- [DivisionRing R] [CharZero R]
+
+local notation "𝟘" => (0 : CliffordAlgebra Q)
+local notation "𝟙" => (1 : CliffordAlgebra Q)
+
 #check 𝒢
 #check 𝟘
 #check 𝟙
