@@ -1,5 +1,6 @@
 import Mathlib.LinearAlgebra.CliffordAlgebra.Basic
 import Mathlib.LinearAlgebra.CliffordAlgebra.Grading
+import Mathlib.RingTheory.FiniteType
 import Mathlib.Tactic
 -- import Mathlib.Util.Superscript
 -- import Mathlib.Data.Matrix.Notation
@@ -144,6 +145,14 @@ example (mv : CliffordAlgebra Q) (i : ℕ) (h : i < Module.rank R (CliffordAlgeb
 #check Module.rank R M
 
 #check Module.rank R (CliffordAlgebra Q)
+
+#check Algebra.adjoin
+
+#check Subsemiring.closure
+
+#check Algebra.adjoin_eq
+
+#check Algebra.adjoin_eq_range_freeAlgebra_lift
 
 -- local macro_rules
 -- | `($x ^ $y) => `(HPow.hPow $x $y)
