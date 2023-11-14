@@ -129,13 +129,21 @@ def 𝒢ᵣ (mv : CliffordAlgebra Q) (i : ℕ) : CliffordAlgebra Q := GradedAlge
 
 -- (fun xs i => true)
 --  (CliffordAlgebra Q → ℕ → Prop) 
-instance instGetElemByGradeCliffordAlgebra : GetElem (CliffordAlgebra Q) ℕ (CliffordAlgebra Q) (fun _mv _i => true) := {
+instance instGetElemByGradeCliffordAlgebra : GetElem (CliffordAlgebra Q) ℕ (CliffordAlgebra Q) (fun _mv i => i < Module.rank R (CliffordAlgebra Q)) := {
   getElem := fun mv i _h => 𝒢ᵣ mv i
 }
 
-example (mv : CliffordAlgebra Q) (i : ℕ) : mv[i] = mv[i] := rfl
+example (mv : CliffordAlgebra Q) (i : ℕ) (h : i < Module.rank R (CliffordAlgebra Q)) : mv[i] = mv[i] := rfl
 
 #check CoeFun
+
+#check Module.Finite
+
+#check Submodule.span
+
+#check Module.rank R M
+
+#check Module.rank R (CliffordAlgebra Q)
 
 -- local macro_rules
 -- | `($x ^ $y) => `(HPow.hPow $x $y)
