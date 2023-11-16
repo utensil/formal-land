@@ -71,9 +71,32 @@ local notation "𝟙" => (1 : CliffordAlgebra Q)
 -- example (r : R) (u : M)  : r ∘ u = u ∘ r := by rw [@Algebra.commutes]
 -- local notation "*" => fun x y => (CliffordAlgebra Q).mul ↑x ↑y
 
-example (r : R) (u : M) : (r * u : CliffordAlgebra Q) = u * r := by rw [@Algebra.commutes]
+-- abbrev 𝒢 := CliffordAlgebra Q
+-- abbrev Cl := CliffordAlgebra Q
+-- def Cl := CliffordAlgebra Q
 
-example (r : R) (u : M) : ∃ w : M, w = (r * u : CliffordAlgebra Q) := by
+/-
+Cl.{u_2, u_1} {R : Type u_1} {M : Type u_2} [inst✝ : CommRing R] [inst✝¹ : AddCommGroup M] [inst✝² : Module R M]
+  {Q : QuadraticForm R M} : Type (max u_2 u_1)
+-/
+-- #check Cl
+
+-- local notation "𝐶𝑙" => CliffordAlgebra Q
+-- local notation "𝒢" => CliffordAlgebra Q
+-- local notation "𝔊" => CliffordAlgebra Q
+-- local notation:50 A " =[" T:50 "] " B:50 => @Eq T A B
+-- local notation:50 A "=ₐ" B:50 => @Eq 𝐶𝑙 A B
+
+local notation "Cl" => CliffordAlgebra Q
+local notation:50 A "=" B:50 ":" T:50 => @Eq T A B
+
+example (u v: M) : ∃ w : M, w = u + v : Cl := by
+  use (u + v)
+  rw [map_add]
+
+example (r : R) (u : M) : r * u = u * r : Cl := by rw [@Algebra.commutes]
+
+example (r : R) (u : M) : ∃ w : M, w = r * u : Cl := by
   use (r • u)
   rw [map_smul, Algebra.smul_def, Algebra.commutes]
 
@@ -86,9 +109,9 @@ example (r : R) (u : M) : ∃ w : M, w = (r * u : CliffordAlgebra Q) := by
 -- | M.mk m => (ι m)^2
 
 
-local notation x "²" => (↑x : CliffordAlgebra Q)^2
+local notation x "²" => (x : Cl)^2
 
-theorem ι_sq_scalar (m : M) : m² = Q m := by
+theorem ι_sq_scalar (m : M) : m² = Q m : Cl := by
   rw [pow_two, CliffordAlgebra.ι_sq_scalar]
   done
 
