@@ -1,9 +1,12 @@
 import Mathlib.LinearAlgebra.CliffordAlgebra.Basic
 import Mathlib.LinearAlgebra.CliffordAlgebra.Grading
+import Mathlib.LinearAlgebra.CliffordAlgebra.Equivs
 import Mathlib.RingTheory.FiniteType
 import Mathlib.Tactic
 -- import Mathlib.Util.Superscript
 -- import Mathlib.Data.Matrix.Notation
+
+open FiniteDimensional (finrank finrank_eq_card_basis finrank_directSum )
 
 set_option quotPrecheck false
 
@@ -177,33 +180,83 @@ example (mv : CliffordAlgebra Q) (i : ℕ) (h : i < Module.rank R (CliffordAlgeb
 
 #check Algebra.adjoin_eq_range_freeAlgebra_lift
 
--- local macro_rules
--- | `($x ^ $y) => `(HPow.hPow $x $y)
+example (c : ℂ) : c = c := rfl
 
--- #check 𝒢^n
+#check CliffordAlgebraComplex.ofComplex
 
--- syntax (name := cliffordNotation) "𝒢[" term "]" : term
+#check Module.rank ℝ (CliffordAlgebra CliffordAlgebraComplex.Q)
 
-#check CliffordAlgebra.gradedAlgebra
+example : Cardinal.mk ℝ = Cardinal.continuum := by
+  simp only [Cardinal.mk_real]
 
--- local notation "𝒢" => CliffordAlgebra
+example : Module.rank ℝ ℝ = 1 := by
+  simp only [rank_self]
 
--- local macro_rules
--- | `($x ^ $y) => `(HPow.hPow $x $y)
+example : Module.rank ℝ ℂ = 2 := by
+  simp only [Complex.rank_real_complex]
 
--- -- #check 𝒢^n
+#check RingHom.Finite
 
--- -- syntax (name := cliffordNotation) "𝒢[" term "]" : term
+-- local instance : Module.Finite ℝ ℂ := by
+--   apply Complex.finite_real_complex
 
--- namespace GradedAlgebra
+-- instance instFiniteCliffordAlgebraComplex : Module.Finite ℝ (CliffordAlgebra CliffordAlgebraComplex.Q) := sorry
 
--- local notation g "⟦" r "⟧'" => GradedAlgebra.proj g r
+noncomputable def basisOneI : Basis (Fin 2) ℝ (CliffordAlgebra CliffordAlgebraComplex.Q) :=
+  Basis.ofEquivFun
+    { toFun := fun mv =>
+      let z := CliffordAlgebraComplex.toComplex mv
+      ![z.re, z.im]
+      invFun := fun c => CliffordAlgebraComplex.ofComplex (c 0 + c 1 • Complex.I)
+      left_inv := fun z => by simp
+      right_inv := fun c => by
+        ext i
+        fin_cases i <;> simp
+      map_add' := fun z z' => by simp
+      map_smul' := fun c z => by simp }
 
--- -- #check GradedAlgebra.proj G.ι G 0
+example : finrank ℝ (CliffordAlgebra CliffordAlgebraComplex.Q) = 2 := by
+  rw [finrank_eq_card_basis basisOneI, Fintype.card_fin]
+  done
 
--- -- #check G⟦0⟧
+local notation "Clℂ" => CliffordAlgebra CliffordAlgebraComplex.Q
 
--- end GradedAlgebra
+#check CliffordAlgebraComplex.equiv
+
+universe uA
+
+example (A B : Type uA) [CommSemiring R] [AddCommGroup A] [AddCommGroup B] [Module R A] [Module R B] [Semiring A] [Semiring B] [Algebra R A] [Algebra R B] :
+  (A ≃ₐ[R] B) → finrank R A = finrank R B := by
+  intro h
+  -- rw [finrank_eq_card_basis (Basis.ofEquivFun (AlgEquivClass.toLinearEquivClass h)), Fintype.card_fin]
+  done
+--   done
+
+-- example : finrank ℝ Clℂ = finrank ℝ ℂ := by
+--   rw?
+--   done
+  
+--   done
 
 
+-- example (n : ℕ) : Cardinal.mk (Vector ℝ n) = n := by
+--   simp only [Cardinal.mk_vector]
+--   done
 
+-- #check Cardinal.mk_vector
+
+-- example (c : ℂ) : (CliffordAlgebraComplex.ofComplex c)[0] = 1 := rfl
+
+-- example : Module.rank R (CliffordAlgebra Q) = 2^(Module.rank R M) := sorry
+
+
+#check DirectSum.GradeZero.module
+#check finrank_directSum
+
+#check DirectSum.decomposeRingEquiv (CliffordAlgebra.evenOdd Q)
+
+example : finrank R (CliffordAlgebra Q) = 2^(finrank R M) := by
+  -- conv_lhs => rw [finrank_directSum]
+  rw [← Nat.sum_range_choose]
+  have 
+  done
