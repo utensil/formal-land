@@ -114,7 +114,7 @@ example : ∀ u ∈ G1, ∀ v ∈ G1, u + v ∈ G1 := by
     exact hv
   use (u' + v')
   rw [map_add]
-  simp only [hu', hv']
+  rw [hu', hv']
   done
 
 example (r : R) (u : M) : r * u = u * r : Cl := by rw [@Algebra.commutes]
@@ -289,21 +289,21 @@ example : finrank ℝ Clℂ = finrank ℝ ℂ := LinearEquiv.finrank_eq Clifford
 
 open DirectSum
 
-local notation "Clᵣ" => CliffordAlgebra.evenOdd Q 
+local notation "Cl₀₁" => CliffordAlgebra.evenOdd Q 
 
--- def Clᵣ (r : ZMod 2) : Submodule R Cl := CliffordAlgebra.evenOdd Q r
+-- def Cl₀₁ (i : ZMod 2) : Submodule R Cl := CliffordAlgebra.evenOdd Q i
 
-example : Cl ≃+* ⨁ (r : ZMod 2), Clᵣ r := by
+example : Cl ≃+* ⨁ (i : ZMod 2), Cl₀₁ i := by
   apply DirectSum.decomposeRingEquiv (CliffordAlgebra.evenOdd Q)
   done
 
-example : Cl ≃ₐ[R] ⨁ (r : ZMod 2), Clᵣ r := by
+example : Cl ≃ₐ[R] ⨁ (i : ZMod 2), Cl₀₁ i := by
   apply DirectSum.decomposeAlgEquiv (CliffordAlgebra.evenOdd Q)
   done
 
-variable (r : ZMod 2)
+variable (i : ZMod 2)
 
-#check CliffordAlgebra.evenOdd Q r
+#check CliffordAlgebra.evenOdd Q i
 
 #check finrank_directSum
 
