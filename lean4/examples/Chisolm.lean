@@ -10,8 +10,6 @@ open FiniteDimensional (finrank finrank_eq_card_basis finrank_directSum )
 
 set_option quotPrecheck false
 
-variable {R : Type _}
-
 variable {R M : Type*} [CommRing R] [AddCommGroup M] [Module R M]
 
 variable {Q : QuadraticForm R M}
@@ -225,9 +223,52 @@ local notation "Clℂ" => CliffordAlgebra CliffordAlgebraComplex.Q
 
 universe uA
 
-example (A B : Type uA) [CommSemiring R] [AddCommGroup A] [AddCommGroup B] [Module R A] [Module R B] [Semiring A] [Semiring B] [Algebra R A] [Algebra R B] :
+#check AlgEquiv.toLinearEquiv_refl
+#check FiniteDimensional.nonempty_linearEquiv_iff_finrank_eq
+/-
+LinearEquiv.finrank_eq.{u_3, u_2, u_1} {R : Type u_1} {M : Type u_2} {M₂ : Type u_3} [inst✝ : Ring R]
+  [inst✝¹ : AddCommGroup M] [inst✝² : AddCommGroup M₂] [inst✝³ : Module R M] [inst✝⁴ : Module R M₂] (f : M ≃ₗ[R] M₂) :
+  finrank R M = finrank R M₂
+-/
+#check LinearEquiv.finrank_eq
+
+#check CommRing
+
+example (R: Type uR) (A B: Type uA) [CommRing R] [AddCommGroup A] [AddCommGroup B]
+  [Module R A] [Module R B] [Semiring A] [Semiring B] [Algebra R A] [Algebra R B] :
   (A ≃ₐ[R] B) → finrank R A = finrank R B := by
-  intro h
+  intro ha
+  let finrank_eq := @LinearEquiv.finrank_eq R A B _ _ _ _ _
+  have hl : A ≃ₗ[R] B := ha.toLinearEquiv
+  -- have hf : finrank R A = finrank R B := LinearEquiv.finrank_eq hl
+  rw?
+  /-
+    typeclass instance problem is stuck, it is often due to metavariables
+
+    Module ?m.2272 ?m.2274
+  -/
+  -- have hf := LinearEquiv.finrank_eq hl
+
+  /-
+    application type mismatch
+      LinearEquiv.finrank_eq hl
+    argument
+      hl
+    has type
+      @LinearEquiv R R CommSemiring.toSemiring CommSemiring.toSemiring (RingHom.id R) (RingHom.id R)
+        (_ : RingHomInvPair (RingHom.id R) (RingHom.id R)) (_ : RingHomInvPair (RingHom.id R) (RingHom.id R)) A B
+        NonUnitalNonAssocSemiring.toAddCommMonoid NonUnitalNonAssocSemiring.toAddCommMonoid Algebra.toModule
+        Algebra.toModule : Type uA
+    but is expected to have type
+      @LinearEquiv R R Ring.toSemiring Ring.toSemiring (RingHom.id R) (RingHom.id R)
+        (_ : RingHomInvPair (RingHom.id R) (RingHom.id R)) (_ : RingHomInvPair (RingHom.id R) (RingHom.id R)) A B
+        AddCommGroup.toAddCommMonoid AddCommGroup.toAddCommMonoid inst✝⁵ inst✝⁴ : Type uA
+  -/
+  -- have hf' := @LinearEquiv.finrank_eq R A B _ _ _ _ _ hl
+  have hf'' : finrank R A = finrank R B := finrank_eq hl
+  -- rw [←FiniteDimensional.nonempty_linearEquiv_iff_finrank_eq]
+  -- exact LinearEquiv.finrank_eq hl
+
   -- rw [finrank_eq_card_basis (Basis.ofEquivFun (AlgEquivClass.toLinearEquivClass h)), Fintype.card_fin]
   done
 --   done
@@ -254,6 +295,8 @@ example (A B : Type uA) [CommSemiring R] [AddCommGroup A] [AddCommGroup B] [Modu
 #check finrank_directSum
 
 #check DirectSum.decomposeRingEquiv (CliffordAlgebra.evenOdd Q)
+
+#check LinearEquiv.ofFinrankEq
 
 example : finrank R (CliffordAlgebra Q) = 2^(finrank R M) := by
   -- conv_lhs => rw [finrank_directSum]
