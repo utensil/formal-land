@@ -20,8 +20,13 @@ variable [Invertible (2 : CliffordAlgebra Q)]
 
 variable (u v w : CliffordAlgebra Q)
 
-local instance hasCoeCliffordAlgebraRing : Coe R (CliffordAlgebra Q) := ⟨algebraMap R (CliffordAlgebra Q)⟩
-local instance hasCoeCliffordAlgebraModule : Coe M (CliffordAlgebra Q) := ⟨CliffordAlgebra.ι Q⟩
+local notation "Cl" => CliffordAlgebra Q
+
+local instance hasCoeCliffordAlgebraRing : Coe R Cl := ⟨algebraMap R (Cl)⟩
+local instance hasCoeCliffordAlgebraModule : Coe M Cl := ⟨CliffordAlgebra.ι Q⟩
+
+local notation "G0" => (algebraMap R Cl).range
+local notation "G1" => LinearMap.range (CliffordAlgebra.ι Q)
 
 lemma mul_eq_half_add_half_sub : u * v = ⅟2 * (u * v + v * u) + ⅟2 * (u * v - v * u) := by
   calc
@@ -51,8 +56,8 @@ example : u * 1 = u := by rw [mul_one]
 -- [Field R]
 -- [DivisionRing R] [CharZero R]
 
-local notation "𝟘" => (0 : CliffordAlgebra Q)
-local notation "𝟙" => (1 : CliffordAlgebra Q)
+local notation "𝟘" => (0 : Cl)
+local notation "𝟙" => (1 : Cl)
 
 -- local notation "𝒢" => algebraMap R (CliffordAlgebra Q)
 -- #check 𝒢
@@ -67,9 +72,12 @@ local notation "𝟙" => (1 : CliffordAlgebra Q)
 
 -- local notation "ι" => CliffordAlgebra.ι Q
 
--- local notation "∘" => CliffordAlgebra.mul
+-- #check @Mul.mul Cl _
+
+-- local notation "∘" => @Mul.mul Cl _
 
 -- example (r : R) (u : M)  : r ∘ u = u ∘ r := by rw [@Algebra.commutes]
+
 -- local notation "*" => fun x y => (CliffordAlgebra Q).mul ↑x ↑y
 
 -- abbrev 𝒢 := CliffordAlgebra Q
@@ -88,12 +96,26 @@ Cl.{u_2, u_1} {R : Type u_1} {M : Type u_2} [inst✝ : CommRing R] [inst✝¹ : 
 -- local notation:50 A " =[" T:50 "] " B:50 => @Eq T A B
 -- local notation:50 A "=ₐ" B:50 => @Eq 𝐶𝑙 A B
 
-local notation "Cl" => CliffordAlgebra Q
+
 local notation:50 A "=" B:50 ":" T:50 => @Eq T A B
 
 example (u v: M) : ∃ w : M, w = u + v : Cl := by
   use (u + v)
   rw [map_add]
+
+example : ∀ u ∈ G1, ∀ v ∈ G1, u + v ∈ G1 := by
+  intros u hu v hv
+  rw [LinearMap.mem_range]
+  obtain ⟨u', hu'⟩ : ∃ u' : M, u' = u := by
+    rw [LinearMap.mem_range] at hu
+    exact hu
+  obtain ⟨v', hv'⟩ : ∃ v' : M, v' = v := by
+    rw [LinearMap.mem_range] at hv
+    exact hv
+  use (u' + v')
+  rw [map_add]
+  simp only [hu', hv']
+  done
 
 example (r : R) (u : M) : r * u = u * r : Cl := by rw [@Algebra.commutes]
 
