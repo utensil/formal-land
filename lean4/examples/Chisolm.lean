@@ -217,8 +217,6 @@ example : finrank ℝ (CliffordAlgebra CliffordAlgebraComplex.Q) = 2 := by
   rw [finrank_eq_card_basis basisOneI, Fintype.card_fin]
   done
 
-local notation "Clℂ" => CliffordAlgebra CliffordAlgebraComplex.Q
-
 #check CliffordAlgebraComplex.equiv
 
 universe uA
@@ -234,48 +232,16 @@ LinearEquiv.finrank_eq.{u_3, u_2, u_1} {R : Type u_1} {M : Type u_2} {M₂ : Typ
 
 #check CommRing
 
-example (R: Type uR) (A B: Type uA) [CommRing R] [AddCommGroup A] [AddCommGroup B]
-  [Module R A] [Module R B] [Semiring A] [Semiring B] [Algebra R A] [Algebra R B] :
-  (A ≃ₐ[R] B) → finrank R A = finrank R B := by
-  intro ha
-  let finrank_eq := @LinearEquiv.finrank_eq R A B _ _ _ _ _
-  have hl : A ≃ₗ[R] B := ha.toLinearEquiv
-  -- have hf : finrank R A = finrank R B := LinearEquiv.finrank_eq hl
-  rw?
-  /-
-    typeclass instance problem is stuck, it is often due to metavariables
+local notation "Clℂ" => CliffordAlgebra CliffordAlgebraComplex.Q
 
-    Module ?m.2272 ?m.2274
-  -/
-  -- have hf := LinearEquiv.finrank_eq hl
-
-  /-
-    application type mismatch
-      LinearEquiv.finrank_eq hl
-    argument
-      hl
-    has type
-      @LinearEquiv R R CommSemiring.toSemiring CommSemiring.toSemiring (RingHom.id R) (RingHom.id R)
-        (_ : RingHomInvPair (RingHom.id R) (RingHom.id R)) (_ : RingHomInvPair (RingHom.id R) (RingHom.id R)) A B
-        NonUnitalNonAssocSemiring.toAddCommMonoid NonUnitalNonAssocSemiring.toAddCommMonoid Algebra.toModule
-        Algebra.toModule : Type uA
-    but is expected to have type
-      @LinearEquiv R R Ring.toSemiring Ring.toSemiring (RingHom.id R) (RingHom.id R)
-        (_ : RingHomInvPair (RingHom.id R) (RingHom.id R)) (_ : RingHomInvPair (RingHom.id R) (RingHom.id R)) A B
-        AddCommGroup.toAddCommMonoid AddCommGroup.toAddCommMonoid inst✝⁵ inst✝⁴ : Type uA
-  -/
-  -- have hf' := @LinearEquiv.finrank_eq R A B _ _ _ _ _ hl
-  have hf'' : finrank R A = finrank R B := finrank_eq hl
-  -- rw [←FiniteDimensional.nonempty_linearEquiv_iff_finrank_eq]
-  -- exact LinearEquiv.finrank_eq hl
-
-  -- rw [finrank_eq_card_basis (Basis.ofEquivFun (AlgEquivClass.toLinearEquivClass h)), Fintype.card_fin]
-  done
+lemma finrank_eq (R: Type uR) (A B: Type uA) [CommRing R] [Ring A] [Ring B] [Algebra R A] [Algebra R B] :
+  (A ≃ₐ[R] B) → finrank R A = finrank R B := fun ha => LinearEquiv.finrank_eq ha.toLinearEquiv
 --   done
 
--- example : finrank ℝ Clℂ = finrank ℝ ℂ := by
---   rw?
---   done
+example : finrank ℝ Clℂ = finrank ℝ ℂ := by
+  rw [finrank_eq ℝ Clℂ ℂ CliffordAlgebraComplex.equiv]
+
+example : finrank ℝ Clℂ = finrank ℝ ℂ := LinearEquiv.finrank_eq CliffordAlgebraComplex.equiv.toLinearEquiv
   
 --   done
 
