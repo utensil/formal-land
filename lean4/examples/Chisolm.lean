@@ -258,14 +258,46 @@ example : finrank ℝ Clℂ = finrank ℝ ℂ := LinearEquiv.finrank_eq Clifford
 
 
 #check DirectSum.GradeZero.module
-#check finrank_directSum
 
 #check DirectSum.decomposeRingEquiv (CliffordAlgebra.evenOdd Q)
 
+#check DirectSum.decomposeAlgEquiv (CliffordAlgebra.evenOdd Q)
+
 #check LinearEquiv.ofFinrankEq
 
-example : finrank R (CliffordAlgebra Q) = 2^(finrank R M) := by
-  -- conv_lhs => rw [finrank_directSum]
-  rw [← Nat.sum_range_choose]
-  have 
+open DirectSum
+
+local notation "Clᵣ" => CliffordAlgebra.evenOdd Q 
+
+-- def Clᵣ (r : ZMod 2) : Submodule R Cl := CliffordAlgebra.evenOdd Q r
+
+example : Cl ≃+* ⨁ (r : ZMod 2), Clᵣ r := by
+  apply DirectSum.decomposeRingEquiv (CliffordAlgebra.evenOdd Q)
   done
+
+example : Cl ≃ₐ[R] ⨁ (r : ZMod 2), Clᵣ r := by
+  apply DirectSum.decomposeAlgEquiv (CliffordAlgebra.evenOdd Q)
+  done
+
+variable (r : ZMod 2)
+
+#check CliffordAlgebra.evenOdd Q r
+
+#check finrank_directSum
+
+/-
+failed to synthesize
+  CommRing (⨁ (i : ZMod 2), ↥CliffordAlgebra.evenOdd Q i)
+(deterministic) timeout at 'whnf', maximum number of heartbeats (200000) has been reached (use 'set_option maxHeartbeats <num>' to set the limit)
+-/
+-- #check finrank_directSum (⨁ i, CliffordAlgebra.evenOdd Q i)
+
+-- example (i : ZMod 2) : finrank (⨁ i, CliffordAlgebra.evenOdd Q i) =  := by
+--   -- rw [finrank_directSum]
+--   done
+
+-- example : finrank R (CliffordAlgebra Q) = 2^(finrank R M) := by
+--   -- conv_lhs => rw [finrank_directSum]
+--   rw [← Nat.sum_range_choose]
+--   sorry
+--   done
