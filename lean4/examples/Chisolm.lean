@@ -28,7 +28,7 @@ local instance hasCoeCliffordAlgebraModule : Coe M Cl := ⟨CliffordAlgebra.ι Q
 local notation "G0" => (algebraMap R Cl).range
 local notation "G1" => LinearMap.range (CliffordAlgebra.ι Q)
 
-lemma mul_eq_half_add_half_sub : u * v = ⅟2 * (u * v + v * u) + ⅟2 * (u * v - v * u) := by
+lemma mul_eq_half_add_sub : u * v = ⅟2 * (u * v + v * u) + ⅟2 * (u * v - v * u) := by
   calc
     u * v = 1 * (u * v)                                             := by rw [one_mul]
         _ = (⅟2 * 2) * (u * v)                                      := by rw [invOf_mul_self']
@@ -38,7 +38,7 @@ lemma mul_eq_half_add_half_sub : u * v = ⅟2 * (u * v + v * u) + ⅟2 * (u * v 
         _ = ⅟2 * (u * v + v * u) + ⅟2 * (u * v - v * u)             := by rw [mul_add]
   done
 
-#check mul_eq_half_add_half_sub
+#check mul_eq_half_add_sub
 
 /-!
   Axiom 1. G is a ring with unit.
