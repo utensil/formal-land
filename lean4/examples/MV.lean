@@ -5,40 +5,11 @@ set_option pp.proofs.withType false
 
 variable {R M} [CommRing R] [Invertible (2 : R)] [AddCommGroup M] [Module R M] (Q : QuadraticForm R M)
 
-local notation:50 A "=" B:50 ":" T:50 => @Eq T A B
-local notation:50 A "=[" T:50 "]" B:50 => @Eq T A B
-
 abbrev ExteriorAlgebra.rMultivector (r : ℕ) : Submodule R (ExteriorAlgebra R M) :=
   (LinearMap.range (ExteriorAlgebra.ι R : M →ₗ[R] _) ^ r)
 
-#check ExteriorAlgebra.gradedAlgebra
-
-/-
-GradedAlgebra.proj fun x =>
-  LinearMap.range (ExteriorAlgebra.ι R) ^ x : ℕ → ExteriorAlgebra R M →ₗ[R] ExteriorAlgebra R M
--/
-/-
-GradedAlgebra.proj (fun x => LinearMap.range (ExteriorAlgebra.ι R) ^ x)
-  1 : ExteriorAlgebra R M →ₗ[R] ExteriorAlgebra R M
--/
-variable (r : ℕ) (mv : ExteriorAlgebra R M) in
-#check (ExteriorAlgebra.gradedAlgebra R M).proj r mv
-
-variable (r : ℕ) (mv : ExteriorAlgebra R M) in
-#check @ExteriorAlgebra.rMultivector R M _ _ _ r
-
-variable (r : ℕ) (mv : ExteriorAlgebra R M) in
-#check @GradedAlgebra.proj ℕ R (ExteriorAlgebra R M) _ _ _ _ _ ExteriorAlgebra.rMultivector _ r mv
-
--- variable (r : ℕ) (mv : ExteriorAlgebra R M) in
--- #check @GradedAlgebra.proj ℕ R (Submodule R (ExteriorAlgebra R M)) _ _ _ _ _
-
-#check GradedAlgebra.proj
-
 def ExteriorAlgebra.proj (mv : ExteriorAlgebra R M) (r : ℕ) : ExteriorAlgebra R M := 
   @GradedAlgebra.proj ℕ R (ExteriorAlgebra R M) _ _ _ _ _ ExteriorAlgebra.rMultivector _ r mv
-
-local notation "Cl" => CliffordAlgebra Q
 
 namespace CliffordAlgebra
 
@@ -56,7 +27,7 @@ infix:65 " ⋏ " => wedge
 variable (r : ℕ) (mv : CliffordAlgebra Q) in
 #check equivExterior Q mv
 
-def proj (mv : CliffordAlgebra Q) (i : ℕ) : Cl := (equivExterior Q).symm ((equivExterior Q mv).proj i)
+def proj (mv : CliffordAlgebra Q) (i : ℕ) : CliffordAlgebra Q := (equivExterior Q).symm ((equivExterior Q mv).proj i)
 
 #check proj
 
