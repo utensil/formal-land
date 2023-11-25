@@ -54,21 +54,40 @@ def Relation.deterministic (R: Relation α) : Prop :=
 theorem EvalSmallStep.deterministic : Relation.deterministic Tm.step := by
   unfold Relation.deterministic
   intro x y₁ y₂ hy₁ hy₂
+  -- induction hy₁ generalizing y₂ <;> cases hy₂ <;> rename_i h <;>
+  --   first | rfl | cases h | contradiction |
+  --      (rename_i IH <;> rw [IH h])
   induction hy₁ generalizing y₂ with
   | StPlusConstConst =>
-    -- cases hy₂ <;> rename_i h₂ <;> first | rfl | cases h₂
-    cases hy₂ with
-    | StPlusConstConst => rfl
-    | @StPlusLeft _ _ _ hl => cases hl
-    | @StPlusRight _ _ _ hr => cases hr
-  | @StPlusLeft _ _ _ hl hPl =>
-    cases hy₂ with
-    | StPlusConstConst => contradiction
-    | @StPlusLeft _ _ _ hl' => rw [hPl hl']
-    | StPlusRight => cases hl
-  | @StPlusRight _ _ _ hr hPr =>
-    cases hy₂ with
-    | StPlusConstConst => contradiction
-    | @StPlusLeft _ _ _ hl' => cases hl'
-    | @StPlusRight _ _ _ hr' => rw [hPr hr']
+    cases hy₂ <;> rename_i h₂ <;> first | rfl | cases h₂
+    -- cases hy₂ with
+    -- | StPlusConstConst => rfl
+    -- | StPlusLeft =>
+    --   rename_i hl
+    --   cases hl
+    -- | StPlusRight =>
+    --   rename_i hr
+    --   cases hr
+  | StPlusLeft =>
+    rename_i h hP
+    cases hy₂ <;> first | contradiction | cases hl | (rename_i h'; rw [hP h'])
+    -- rename_i hl hPl
+    -- cases hy₂ with
+    -- | StPlusConstConst => contradiction
+    -- | StPlusLeft =>
+    --   rename_i hl'
+    --   rw [hPl hl']
+    -- | StPlusRight => cases hl
+  | StPlusRight =>
+    rename_i h hP
+    cases hy₂ <;> first | contradiction | cases hl | (rename_i h'; rw [hP h'])
+    -- rename_i hr hPr
+    -- cases hy₂ with
+    -- | StPlusConstConst => contradiction
+    -- | StPlusLeft =>
+    --   rename_i hl'
+    --   cases hl'
+    -- | StPlusRight =>
+    --   rename_i hr'
+    --   rw [hPr hr']
   done
