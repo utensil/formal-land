@@ -14,3 +14,4 @@ dist
 **/lake-packages/
 **/*.olean
 **/*.leanInk
+.lsp_symlink/
