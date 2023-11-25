@@ -35,7 +35,7 @@ inductive step : Tm → Tm → Prop where
 | StPlusConstConst :
     P (C n₁) (C n₂) ~~> C (n₁ + n₂)
 | StPlusLeft (t₁ t₁' t₂ : Tm):
-    t₁~~>t₁' →
+    t₁ ~~> t₁' →
     P t₁ t₂ ~~> P t₁' t₂
 | StPlusRight (t₂ t₂' : Tm):
     t₂ ~~> t₂' →
@@ -55,7 +55,7 @@ theorem EvalSmallStep.deterministic : Relation.deterministic Tm.step := by
   unfold Relation.deterministic
   intro x y₁ y₂ hy₁ hy₂
   induction hy₁ generalizing y₂ <;> first
-  | cases hy₂ <;> rename_i h₂ <;> first | rfl | cases h₂
+  | cases hy₂ <;> rename_i h <;> first | rfl | cases h
   | rename_i h hP; cases hy₂ <;> first | contradiction | cases _ | (rename_i h'; rw [hP h'])
   -- induction hy₁ generalizing y₂ with
   -- | StPlusConstConst =>
