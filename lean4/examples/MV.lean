@@ -11,6 +11,9 @@ abbrev ExteriorAlgebra.rMultivector (r : ℕ) : Submodule R (ExteriorAlgebra R M
 def ExteriorAlgebra.proj (mv : ExteriorAlgebra R M) (r : ℕ) : ExteriorAlgebra R M := 
   @GradedAlgebra.proj ℕ R (ExteriorAlgebra R M) _ _ _ _ _ ExteriorAlgebra.rMultivector _ r mv
 
+def ExteriorAlgebra.proj' (mv : ExteriorAlgebra R M) (r : ℕ) : ExteriorAlgebra R M := 
+  GradedAlgebra.proj ExteriorAlgebra.rMultivector r mv
+
 namespace CliffordAlgebra
 
 abbrev rMultivector (r : ℕ) : Submodule R (CliffordAlgebra Q) :=
