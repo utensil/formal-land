@@ -2,3 +2,4 @@
 lean4/.ipynb_checkpoints
 *.ipynb
 .lsp_symlink
+lean4/.lake/
