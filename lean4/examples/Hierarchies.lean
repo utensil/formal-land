@@ -1,5 +1,6 @@
 import Mathlib.Tactic
 import Mathlib.LinearAlgebra.CliffordAlgebra.Basic
+import Mathlib.LinearAlgebra.ExteriorAlgebra.Basic
 
 set_option trace.Meta.synthInstance true
 set_option synthInstance.checkSynthOrder false
@@ -32,4 +33,19 @@ lemma demo {α : Type} [Monoid α] (a b : α) : a * b = a * b := by rfl
 example [CommSemiring R] [Semiring A] [Algebra R A] (a b : A): a + b = b + a := by
   ring_nf
   sorry
-  
+
+#check CliffordAlgebra.ι
+
+#check CliffordAlgebra.lift
+
+#check algebraMap
+
+#check AlgHom
+
+#check CliffordAlgebra.ι_comp_lift
+
+-- #check f₁ ∘ₗ f₂
+
+#check CliffordAlgebra.lift_unique
+
+#check ExteriorAlgebra
