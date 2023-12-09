@@ -31,9 +31,17 @@ def fnHasUB (f : ℝ → ℝ) := ∃ a, fnUB f a
 
 example (h : ∀ a, ∃ x, f x > a) : ¬ fnHasUB f := by
   simp only [fnHasUB, fnUB] at *
+  -- intro hh
+  -- obtain ⟨a, ha⟩ := hh
   rintro ⟨a, ha⟩
   specialize h a
   obtain ⟨b, hb⟩ := h
   specialize ha b
   rw [<- not_lt] at ha
   contradiction
+
+example (h : ¬fnHasUB f) : ∀ a, ∃ x, f x > a := by
+  simp only [fnHasUB, fnUB] at *
+  contrapose! h
+  obtain ⟨a, ha⟩ := h
+  use a
