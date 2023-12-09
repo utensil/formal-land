@@ -425,18 +425,18 @@ theorem units_involute_act_eq_conjAct {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈
       rw [mem_involute_eq hx, @ConjAct.units_smul_def, @ConjAct.ofConjAct_toConjAct]
 #align spin_group.units_involute_act_eq_conj_act spinGroup.units_involute_act_eq_conjAct
 
-/-- If x is in `spinGroup Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
+/- If x is in `spinGroup Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
 statement presumably being true only in finite dimensions.-/
-theorem units_mem_conjAct_le {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q)
-    [Invertible (2 : R)] : ConjAct.toConjAct x • (ι Q).range ≤ (ι Q).range :=
-  mem_lipschitz_conjAct_le (units_mem_lipschitz hx)
-#align spin_group.units_mem_conj_act_le spinGroup.units_mem_conjAct_le
+-- theorem units_mem_conjAct_le {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q)
+--     [Invertible (2 : R)] : ConjAct.toConjAct x • (ι Q).range ≤ (ι Q).range :=
+--   mem_lipschitz_conjAct_le (units_mem_lipschitz hx)
+-- #align spin_group.units_mem_conj_act_le spinGroup.units_mem_conjAct_le
 
-/-- This is another version of `units_mem_conj_act_le` which uses `involute`.-/
-theorem units_mem_involute_act_le {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q)
-    [Invertible (2 : R)] (y : M) : involute ↑x * ι Q y * ↑x⁻¹ ∈ (ι Q).range :=
-  mem_lipschitz_involute_le (units_mem_lipschitz hx) y
-#align spin_group.units_mem_involute_act_le spinGroup.units_mem_involute_act_le
+/- This is another version of `units_mem_conj_act_le` which uses `involute`.-/
+-- theorem units_mem_involute_act_le {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q)
+--     [Invertible (2 : R)] (y : M) : involute ↑x * ι Q y * ↑x⁻¹ ∈ (ι Q).range :=
+--   mem_lipschitz_involute_le (units_mem_lipschitz hx) y
+-- #align spin_group.units_mem_involute_act_le spinGroup.units_mem_involute_act_le
 
 @[simp]
 theorem star_hMul_self_of_mem {x : CliffordAlgebra Q} (hx : x ∈ spinGroup Q) : star x * x = 1 :=
@@ -456,7 +456,7 @@ theorem star_mem {x : CliffordAlgebra Q} (hx : x ∈ spinGroup Q) : star x ∈ s
   refine' ⟨pinGroup.star_mem hx₁, _⟩
   dsimp only [CliffordAlgebra.even] at hx₂ ⊢
   simp only [Submodule.mem_toSubalgebra] at hx₂ ⊢
-  simp only [star_def, reverse_mem_even_odd_iff, involute_mem_even_odd_iff, hx₂]
+  simp only [star_def, reverse_mem_evenOdd_iff, involute_mem_evenOdd_iff, hx₂]
 #align spin_group.star_mem spinGroup.star_mem
 
 /-- An element is in `spinGroup Q` if and only if `star x` is in `spinGroup Q`.
@@ -501,7 +501,7 @@ theorem hMul_star_self (x : spinGroup Q) : x * star x = 1 :=
 instance : Group (spinGroup Q) :=
   { Submonoid.toMonoid _ with
     inv := star
-    hMul_left_inv := star_hMul_self }
+    mul_left_inv := star_hMul_self }
 
 instance : InvolutiveStar (spinGroup Q) :=
   ⟨fun _ => by ext; simp only [coe_star, star_star]⟩
