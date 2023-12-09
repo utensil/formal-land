@@ -420,61 +420,9 @@ theorem mem_involute_eq {x : CliffordAlgebra Q} (hx : x ∈ spinGroup Q) : invol
   involute_eq_of_mem_even (mem_even hx)
 #align spin_group.mem_involute_eq spinGroup.mem_involute_eq
 
--- variable {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q) [Invertible (2 : R)] (y : M) in
--- #check involute ↑x * ι Q y * (↑x⁻¹ : CliffordAlgebra Q)
-
--- variable {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q) [Invertible (2 : R)] (y : M) in
--- #check (Units.val (ConjAct.toConjAct x)) • (ι Q y)
-
--- example {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q) (hx : ↑x ∈ spinGroup Q) [Invertible (2 : R)] (y : M) :
---   (Units.val (ConjAct.toConjAct x)) • (ι Q y) = (Units.val (ConjAct.toConjAct x)) • (ι Q y) := by
---     simp only [smul_eq_mul]
---     done
-
--- example {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q) (hx : ↑x ∈ spinGroup Q) [Invertible (2 : R)] (y : M) :
---   (↑x * (ι Q) y) * ↑x⁻¹ = (↑x * (ι Q) y) * ↑x⁻¹ := by
---     rfl
---     done
-
--- example {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q)
---     [Invertible (2 : R)] (y : M) : MulAut.conj x x = x * x * x⁻¹ := by
---       simp only [MulAut.conj_apply, mul_inv_cancel_right]
-
--- local instance instDICl : (DivInvMonoid (CliffordAlgebra Q)ˣ) := by
---   infer_instance
-
--- #check instDICl
-
--- variable {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q) [Invertible (2 : R)] (y : M) in
--- #check @ConjAct.smul_def ((CliffordAlgebra Q)ˣ) (ConjAct.toConjAct x) (ι Q y)
-
 theorem units_involute_act_eq_conjAct {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q)
     [Invertible (2 : R)] (y : M) : involute ↑x * ι Q y * ↑x⁻¹ = ConjAct.toConjAct x • (ι Q y) := by
       rw [mem_involute_eq hx, @ConjAct.units_smul_def, @ConjAct.ofConjAct_toConjAct]
-
--- theorem units_involute_act_eq_conjAct {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q)
---     [Invertible (2 : R)] (y : M) : involute ↑x * ι Q y * ↑x⁻¹ = (Units.val (ConjAct.toConjAct x)) • (ι Q y) := by
---       rw [smul_eq_mul, mem_involute_eq hx]
---       rw [@Units.mul_inv_eq_iff_eq_mul]
-
---       rw?
---       -- rw [ConjAct.smul_def]
---       /-
---       R : Type u_1
---       inst✝³ : CommRing R
---       M : Type u_2
---       inst✝² : AddCommGroup M
---       inst✝¹ : Module R M
---       Q : QuadraticForm R M
---       x : (CliffordAlgebra Q)ˣ
---       hx : ↑x ∈ spinGroup Q
---       inst✝ : Invertible 2
---       y : M
---       ⊢ ↑x * (ι Q) y * ↑x⁻¹ = ↑(ConjAct.toConjAct x) * (ι Q) y
---       -/
-
---       done
-  -- simp_rw [SMul.smul, ConjAct.ofConjAct_toConjAct, Units.mul_left_inj, mem_involute_eq hx]
 #align spin_group.units_involute_act_eq_conj_act spinGroup.units_involute_act_eq_conjAct
 
 /-- If x is in `spinGroup Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
