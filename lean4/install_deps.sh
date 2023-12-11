@@ -28,12 +28,12 @@ python3 -m pip install git+https://github.com/utensil/alectryon.git@dev
 
 # TODO if leanInk exists and is good, skip this
 rm -rf /tmp/leanInk || echo
-git clone -b bump https://github.com/utensil/LeanInk /tmp/leanInk -q
+git clone -b fix-print-path https://github.com/utensil/LeanInk /tmp/leanInk -q
 cd /tmp/leanInk
 lake build
 
 mkdir -p $HOME/.elan/bin
-cp /tmp/leanInk/build/bin/* $HOME/.elan/bin
+cp /tmp/leanInk/.lake/build/bin/* $HOME/.elan/bin
 
 pip install markdown-it-py
 

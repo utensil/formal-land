@@ -50,11 +50,15 @@ renderMd Branch.lean
 renderMd index.lean
 
 mkdir -p dist/Zulip/
+mkdir -p dist/NoCI/
+
 cp dist/*.css dist/Zulip/
 cp dist/*.js dist/Zulip/
-renderMd Zulip/Arrow.lean
+renderMd NoCI/Arrow.lean
 renderMd Zulip/Have.lean
 renderMd Zulip/Import.lean
 renderMd Zulip/Monad.lean
 renderMd Zulip/SpellCheck.lean
 renderMd Zulip/Agatha.lean
+
+cp dist/NoCI/Arrow.* dist/Zulip/
