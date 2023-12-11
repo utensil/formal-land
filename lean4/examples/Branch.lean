@@ -5,7 +5,7 @@ open Lean Meta Elab Command Tactic
 
 /-!
   Inspired by
-  
+
   - [`Lean.Elab.Tactic.focus`](https://leanprover-community.github.io/mathlib4_docs/Lean/Elab/Tactic/Basic.html#Lean.Elab.Tactic.focus)
   - [`Branch` in lean4game](https://github.com/leanprover-community/lean4game/blob/main/server/GameServer/Commands.lean), see also [its doc](https://github.com/leanprover-community/lean4game/blob/main/DOCUMENTATION.md#proof)
   - [`tada` on Zulip`](https://leanprover.zulipchat.com/#narrow/stream/113489-new-members/topic/Lean.203.20or.204.3F/near/394490716)
@@ -49,7 +49,7 @@ elab (name := proof) "proof" _n:(num)? _desc:interpolatedStr(term)? ":" t:tactic
     -- else use the last proof as the proof
     -- TODO this doesn't guarantee that the whole theorem is proven if any of the proofs are valid
     -- it also doesn't guarantee that the whole theorem is proven only if all of the proofs are valid
-    
+
     pure a
 
 elab (name := QED) "QED" : tactic => do
@@ -73,6 +73,14 @@ example (a b c : ℕ) : a + b * c = c * b + a := by
   proof 2:
     ring
 
+-- to see the colorful effect, comment out #guard_msgs in
+/--
+warning: proof uses 'sorry'
+---
+error: unsolved goals
+⊢ 2 + 1 = 3
+-/
+#guard_msgs in
 theorem ex : 1 + 2 = 3 := by
   proofs 5
   proof "trivial":

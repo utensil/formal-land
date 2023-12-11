@@ -47,12 +47,12 @@ If there is only one candidate, it suggests `import Mathlib.<uniqueCandidate>` a
 Using `imp! <string>` uses fuzzy-matching, rather than exact matching. -/
 elab (name := commandImp!) tk:"imp" fz:("!")? na:(colGt ident) : command => do
   let inp := na.getId.toString
-  let dat := (← IO.FS.lines "lake-packages/mathlib/Mathlib.lean").map (String.drop · 15)
+  let dat := (← IO.FS.lines ".lake/packages/mathlib/Mathlib.lean").map (String.drop · 15)
   let cands := dat.filter <| (if fz.isSome then fuzzyMatch else String.isPrefixOf) inp
 
   liftTermElabM do
     cands.toList.forM fun imp => do
-      let impS ← moduleNameOfFileName ("lake-packages/mathlib/Mathlib/" ++ imp.replace "." "/" ++ ".lean") "lake-packages/mathlib/"
+      let impS ← moduleNameOfFileName (".lake/packages/mathlib/Mathlib/" ++ imp.replace "." "/" ++ ".lean") ".lake/packages/mathlib/"
       let imp : TSyntax `write_me_output_stx ← `(write_me_output_stx| import $(mkIdent impS))
       let stx ← getRef
       Std.Tactic.TryThis.addSuggestion stx imp

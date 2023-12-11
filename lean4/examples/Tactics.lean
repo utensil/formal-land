@@ -12,7 +12,7 @@ universe u1 u2 u3
 /-
 
   The following follows Lean series on writing tactics
-  
+
   https://www.vladasedlacek.cz/en/posts/lean-02-demo
 
 -/
@@ -80,4 +80,5 @@ theorem length_sum_perm_of_B₂ (Babc : B a b c) :
       . exact ne_12_of_B Babc |> (length_symm a b ▸ len_pos_of_neq)
 
 theorem length_sum_perm_of_B₃ (Babc : B a b c) : 0 < length a b ∧ 0 < length b a := by
-   simp only [ne_eq, ne_12_of_B Babc, len_pos_of_neq, length_symm]
+   simp only [ne_eq, ne_12_of_B Babc, len_pos_of_neq, length_symm, and_self]
+   exact len_pos_of_neq (ne_12_of_B Babc)

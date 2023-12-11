@@ -16,6 +16,25 @@ lean_lib «Hello» {
 --   root := `Main
 -- }
 
+def check_example (ex : IO.FS.DirEntry) := do
+  let mut failed : Array (FilePath × IO.Process.Output) := #[]
+
+  let r ← timeit s!"Running example: {ex.fileName}\t" (IO.Process.output {
+    cmd := "lake"
+    args := #["env", "lean", ex.path.toString]
+    env := #[] -- #[("LEAN_PATH", searchPath)]
+  })
+
+  if r.exitCode == 0 then
+    IO.println "  Success!🟢"
+  else
+    failed := failed.append #[(ex.path, r)]
+    IO.println "  Failed!🔴"
+    IO.println r.stdout
+    IO.println r.stderr
+
+  return failed
+
 script check_examples (_args) do
   let cwd ← IO.currentDir
 
@@ -25,26 +44,20 @@ script check_examples (_args) do
   for ex in (← (cwd / "examples").readDir) do
     if ex.path.extension == some "lean" then
       total := total + 1
+      let result := (←check_example ex)
+      failed := failed.append result
 
-      let r ← timeit s!"Running example: {ex.fileName}\t" (IO.Process.output {
-        cmd := "lake"
-        args := #["env", "lean", ex.path.toString]
-        env := #[] -- #[("LEAN_PATH", searchPath)]
-      })
-    
-      if r.exitCode == 0 then
-        IO.println "  Success!🟢"
-      else
-        failed := failed.append #[(ex.path, r)]
-        IO.println "  Failed!🔴"
-        IO.println r.stdout
-        IO.println r.stderr
+  for ex in (← (cwd / "examples" / "Zulip").readDir) do
+    if ex.path.extension == some "lean" then
+      total := total + 1
+      let result := (←check_example ex)
+      failed := failed.append result
 
-  if failed.size != 0 then 
+  if failed.size != 0 then
     IO.println "\nFailed examples:"
     for (ex, _) in failed do
       IO.println s!"  {ex}"
-  
+
   let succeeded := total - failed.size
   let resultMarker := if succeeded == total then "✅" else "❌"
 
