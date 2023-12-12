@@ -36,7 +36,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           curl -O --location https://raw.githubusercontent.com/leanprover/elan/master/elan-init.ps1
-          powershell -ExecutionPolicy Bypass -f elan-init.ps1 -NoPrompt 1
+          powershell -ExecutionPolicy Bypass -f elan-init.ps1 -NoPrompt:$True
           del elan-init.ps1
       - uses: actions/checkout@v3
       - name: Setup Python
