@@ -8,11 +8,12 @@ import Mathlib.GroupTheory.GroupAction.ConjAct
 import Mathlib.Algebra.Star.Unitary
 import Mathlib.LinearAlgebra.CliffordAlgebra.Star
 import Mathlib.LinearAlgebra.CliffordAlgebra.Even
-import Mathlib.Tactic.Common
+import Mathlib.Tactic
 
 -- TODO: remove when in Mathlib
 set_option autoImplicit false
 
+-- TODO: decide what to do with this
 #align_import main
 
 /-!
@@ -59,9 +60,73 @@ open scoped Pointwise
 
 -- begin doesn't belong to this file
 
-def invertible_of_invertible_ι (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible (Q m) :=
-  sorry
-#align invertible_of_invertible_ι invertible_of_invertible_ι
+-- variable (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] in
+-- #check Q (⅟ (ι Q m))
+
+-- theorem IsUnit.nonempty_invertible [Monoid α] {a : α} (h : IsUnit a) : Nonempty (Invertible a) :=
+--   let ⟨x, hx⟩ := h
+--   ⟨x.invertible.copy _ hx.symm⟩
+-- #align is_unit.nonempty_invertible IsUnit.nonempty_invertible
+
+-- /-- Convert `IsUnit` to `Invertible` using `Classical.choice`.
+
+-- Prefer `casesI h.nonempty_invertible` over `letI := h.invertible` if you want to avoid choice. -/
+-- noncomputable def IsUnit.invertible [Monoid α] {a : α} (h : IsUnit a) : Invertible a :=
+--   Classical.choice h.nonempty_invertible
+-- #align is_unit.invertible IsUnit.invertible
+
+-- instance {α : Type*} [Monoid α] (a : α) [Invertible a] : Nonempty (Invertible a) :=
+--   ⟨⅟ a, by simp, by simp⟩
+
+-- example (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] :
+--   ∃ (m' : M), algebraMap _ _ (Q m') = ⅟ (ι Q m) * ⅟ (ι Q m) := by
+
+
+--   done
+
+def invertible_of_invertible_ι (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Q m ≠ 0 := by
+  by_contra h
+  have h1 : ι Q m ≠ 0 := by
+    by_contra h1'
+    have h2 : ι Q m * ⅟ (ι Q m) = 1 := by exact mul_invOf_self ((ι Q) m)
+    /-
+    tactic 'rewrite' failed, motive is not type correct
+
+    R: Type u_1
+    inst✝⁴: CommRing R
+    M: Type u_2
+    inst✝³: AddCommGroup M
+    inst✝²: Module R M
+    Q: QuadraticForm R M
+    m: M
+    inst✝¹: Invertible ((ι Q) m)
+    inst✝: Invertible 2
+    h: Q m = 0
+    h1': (ι Q) m = 0
+    this: (ι Q) m * ⅟((ι Q) m) = 1
+    ⊢ (ι Q) m * ⅟((ι Q) m) = 0
+    -/
+    -- have : ι Q m * ⅟ (ι Q m) = 0 := by rw [h1', zero_mul]
+    have h3 : ι Q m * ⅟ (ι Q m) = 0 := by simp only [h1', zero_mul]
+    have : 0 = (1 : CliffordAlgebra Q) := by
+      rw [h3] at h2
+      exact h2
+    have : 0 ≠ (1 : CliffordAlgebra Q) := by
+      have : 0 = (1 : R) := by sorry
+        /-
+        typeclass instance problem is stuck, it is often due to metavariables
+          NeZero 1
+        -/
+        -- exact zero_ne_one
+      simp only [ne_eq]
+    contradiction
+
+-- def invertible_of_invertible_ι (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible (Q m) := {
+--   invOf := Q (⅟ (ι Q m)),
+--   invOf_mul_self := sorry, -- by rw [← mul_assoc, inv_of_mul_self, one_mul, inv_of_mul_self],
+--   mul_invOf_self := sorry -- by rw [← mul_assoc, mul_inv_of_self, one_mul, mul_inv_of_self]
+-- }
+-- #align invertible_of_invertible_ι invertible_of_invertible_ι
 
 -- restore the lean3 behavior
 macro_rules | `($x * $y) => `(@HMul.hMul _ _ _ instHMul $x $y)
@@ -88,10 +153,27 @@ variable {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)] (hx : x ∈ lipschitz 
 -- https://leanprover.zulipchat.com/#narrow/stream/287929-mathlib4/topic/dot.20notation.20with.20Multiplicative
 -- #check (ι Q).range
 
-#check invertible_of_invertible_ι
+-- #check invertible_of_invertible_ι
 
 -- /-- If x is in `lipschitz Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
 -- statement presumably being true only in finite dimensions.-/
+
+-- set_option trace.Meta.synthInstance true in
+theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)]
+    (hx : x ∈ lipschitz Q) : ConjAct.toConjAct x • (LinearMap.range (ι Q)) ≤ (LinearMap.range (ι Q)) := by
+    unfold lipschitz at hx
+    apply Subgroup.closure_induction'' hx
+    . rintro x' ⟨m, hm⟩ a ⟨b, hb⟩
+      rw [SetLike.mem_coe, LinearMap.mem_range, DistribMulAction.toLinearMap_apply] at hb
+      obtain ⟨⟨m', hm'⟩, hconj⟩ := hb
+      subst hm' -- rw [← hb] at ha1
+      letI := x'.invertible
+      letI : Invertible (ι Q m) := by rwa [hm]
+
+
+    done
+
+
 -- theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)]
 --     (hx : x ∈ lipschitz Q) : ConjAct.toConjAct x • (LinearMap.range (ι Q)) ≤ (LinearMap.range (ι Q)) :=
 --   by
