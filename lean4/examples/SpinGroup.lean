@@ -8,6 +8,7 @@ import Mathlib.GroupTheory.GroupAction.ConjAct
 import Mathlib.Algebra.Star.Unitary
 import Mathlib.LinearAlgebra.CliffordAlgebra.Star
 import Mathlib.LinearAlgebra.CliffordAlgebra.Even
+import Mathlib.LinearAlgebra.CliffordAlgebra.Contraction
 import Mathlib.Tactic
 
 -- TODO: remove when in Mathlib
@@ -46,7 +47,7 @@ Try to show the reverse statement is true in finite dimensions.
 -/
 
 
-variable {R : Type*} [CommRing R]
+variable {R : Type*} [CommRing R] [Nontrivial R]
 
 variable {M : Type*} [AddCommGroup M] [Module R M]
 
@@ -89,44 +90,31 @@ def invertible_of_invertible_ι (m : M) [Invertible (ι Q m)] [Invertible (2 : R
   have h1 : ι Q m ≠ 0 := by
     by_contra h1'
     have h2 : ι Q m * ⅟ (ι Q m) = 1 := by exact mul_invOf_self ((ι Q) m)
-    /-
-    tactic 'rewrite' failed, motive is not type correct
-
-    R: Type u_1
-    inst✝⁴: CommRing R
-    M: Type u_2
-    inst✝³: AddCommGroup M
-    inst✝²: Module R M
-    Q: QuadraticForm R M
-    m: M
-    inst✝¹: Invertible ((ι Q) m)
-    inst✝: Invertible 2
-    h: Q m = 0
-    h1': (ι Q) m = 0
-    this: (ι Q) m * ⅟((ι Q) m) = 1
-    ⊢ (ι Q) m * ⅟((ι Q) m) = 0
-    -/
-    -- have : ι Q m * ⅟ (ι Q m) = 0 := by rw [h1', zero_mul]
     have h3 : ι Q m * ⅟ (ι Q m) = 0 := by simp only [h1', zero_mul]
     have : 0 = (1 : CliffordAlgebra Q) := by
       rw [h3] at h2
       exact h2
     have : 0 ≠ (1 : CliffordAlgebra Q) := by
-      have : 0 = (1 : R) := by sorry
-        /-
-        typeclass instance problem is stuck, it is often due to metavariables
-          NeZero 1
-        -/
-        -- exact zero_ne_one
-      simp only [ne_eq]
+      simp only [ne_eq, zero_ne_one, not_false_eq_true]
+      done
     contradiction
+    done
+  have h2 : (ι Q) m * (ι Q) m = algebraMap _ _ (Q m) := by simp only [ι_sq_scalar]
+  have h3 : (ι Q) m * (ι Q) m = 0 := by
+    rw [h, map_zero] at h2
+    exact h2
+    done
+  have h4 : Q m = 0 := by
+    by_contra h4'
 
--- def invertible_of_invertible_ι (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible (Q m) := {
---   invOf := Q (⅟ (ι Q m)),
---   invOf_mul_self := sorry, -- by rw [← mul_assoc, inv_of_mul_self, one_mul, inv_of_mul_self],
---   mul_invOf_self := sorry -- by rw [← mul_assoc, mul_inv_of_self, one_mul, mul_inv_of_self]
--- }
--- #align invertible_of_invertible_ι invertible_of_invertible_ι
+
+def invertible_of_invertible_ι (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible (Q m) := {
+  invOf := Q (⅟ (ι Q m)),
+  invOf_mul_self := sorry, -- by rw [← mul_assoc, inv_of_mul_self, one_mul, inv_of_mul_self],
+  mul_invOf_self := sorry -- by rw [← mul_assoc, mul_inv_of_self, one_mul, mul_inv_of_self]
+}
+
+#align invertible_of_invertible_ι invertible_of_invertible_ι
 
 -- restore the lean3 behavior
 macro_rules | `($x * $y) => `(@HMul.hMul _ _ _ instHMul $x $y)
