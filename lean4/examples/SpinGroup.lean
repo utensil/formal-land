@@ -202,34 +202,23 @@ variable {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)] (hx : x ∈ lipschitz 
 /-- If x is in `lipschitz Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
 statement presumably being true only in finite dimensions.-/
 theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)]
-    (hx : x ∈ lipschitz Q) : ConjAct.toConjAct x • (LinearMap.range (ι Q)) ≤ (LinearMap.range (ι Q)) :=
+    (hx : x ∈ lipschitz Q) : ConjAct.toConjAct x • (ι Q).range ≤ (ι Q).range :=
   by
-  -- unfold lipschitz at hx
-  apply Subgroup.closure_induction'' hx
-  -- refine Subgroup.closure_induction'' (h := hx)
-  · rintro x' ⟨m, hm⟩ a ⟨b, hb⟩
-    rw [SetLike.mem_coe, LinearMap.mem_range, DistribMulAction.toLinearMap_apply] at hb
-    obtain ⟨⟨m', hm'⟩, hconj⟩ := hb
-    subst hm' -- rw [← hb] at ha1
-    letI := x'.invertible
-    letI : Invertible (ι Q m) := by rwa [hm]
-    rw [LinearMap.mem_range, ← hconj] -- , ← invOf_units x]
-
-    -- have h : ∃ y : M, (ι Q) y = ι Q z * (ι Q) b * ⅟ (ι Q z) := by
-    --   letI := invertible_of_invertible_ι z
-    --   refine' ⟨(⅟ (Q z) * QuadraticForm.polar Q z b) • z - b, (ι_mul_ι_mul_inv_of_ι Q z b).symm⟩
-
-    suffices ∃ m'' : M, (ι Q) m'' = ι Q m * (ι Q) m' * ⅟ (ι Q m)
-      by sorry
-      -- convert this
-      -- ext1
-      -- congr -- <;>simp only [hz.symm, Subsingleton.helim (congr_arg Invertible hz.symm)]
-      -- . simp *
-
-      --   done
-      -- done
-    -- done
-    letI := invertible_of_invertible_ι Q m
+  refine' @Subgroup.closure_induction'' _ _ _ _ _ hx _ _ _ _
+  · rintro x ⟨z, hz⟩ y ⟨a, ha⟩
+    simp only [SMul.smul, SetLike.mem_coe, LinearMap.mem_range, DistribMulAction.toLinearMap_apply,
+      ConjAct.ofConjAct_toConjAct] at ha
+    rcases ha with ⟨⟨b, hb⟩, ha1⟩
+    subst hb
+    letI := x.invertible
+    letI : Invertible (ι Q z) := by rwa [hz]
+    rw [LinearMap.mem_range, ← ha1, ← invOf_units x]
+    suffices ∃ y : M, (ι Q) y = ι Q z * (ι Q) b * ⅟ (ι Q z)
+      by
+      convert this
+      ext1
+      congr <;> simp only [hz.symm, Subsingleton.helim (congr_arg Invertible hz.symm)]
+    letI := invertibleOfInvertibleι Q z
     refine' ⟨(⅟ (Q z) * QuadraticForm.polar Q z b) • z - b, (ι_mul_ι_mul_inv_of_ι Q z b).symm⟩
   · rintro x ⟨z, hz1⟩ y ⟨a, ⟨b, hb⟩, ha2⟩
     simp only [ConjAct.toConjAct_inv, DistribMulAction.toLinearMap_apply, SMul.smul,
@@ -244,7 +233,7 @@ theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)
       convert this
       ext1
       congr <;> simp only [hz1.symm, Subsingleton.helim (congr_arg Invertible hz1.symm)]
-    letI := invertible_of_invertible_ι Q z
+    letI := invertibleOfInvertibleι Q z
     refine' ⟨(⅟ (Q z) * QuadraticForm.polar Q z b) • z - b, (inv_of_ι_mul_ι_mul_ι Q z b).symm⟩
   · simp only [ConjAct.toConjAct_one, one_smul, le_refl]
   · intro x y hx1 hy1 z hz1
@@ -288,7 +277,7 @@ theorem mem_lipschitz_involute_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R
       · rw [← hz, involute_ι]
       · exact hz.symm
       · exact Subsingleton.helim (congr_arg Invertible hz.symm) _ _
-    letI := invertible_of_invertible_ι Q z
+    letI := invertibleOfInvertibleι Q z
     refine'
       ⟨-((⅟ (Q z) * QuadraticForm.polar Q z y) • z - y), by
         simp only [map_neg, neg_mul, ι_mul_ι_mul_inv_of_ι Q z y]⟩
@@ -307,7 +296,7 @@ theorem mem_lipschitz_involute_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R
         apply invertible_unique
         rw [← hz, involute_ι]
       · exact hz.symm
-    letI := invertible_of_invertible_ι Q z
+    letI := invertibleOfInvertibleι Q z
     refine'
       ⟨-((⅟ (Q z) * QuadraticForm.polar Q z y) • z - y), by
         simp only [map_neg, neg_mul, inv_of_ι_mul_ι_mul_ι Q z y]⟩
