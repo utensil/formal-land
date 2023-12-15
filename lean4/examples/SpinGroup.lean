@@ -85,32 +85,92 @@ open scoped Pointwise
 
 --   done
 
-def invertible_of_invertible_ι (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Q m ≠ 0 := by
-  by_contra h
-  have h1 : ι Q m ≠ 0 := by
-    by_contra h1'
-    have h2 : ι Q m * ⅟ (ι Q m) = 1 := by exact mul_invOf_self ((ι Q) m)
-    have h3 : ι Q m * ⅟ (ι Q m) = 0 := by simp only [h1', zero_mul]
-    have : 0 = (1 : CliffordAlgebra Q) := by
-      rw [h3] at h2
-      exact h2
-    have : 0 ≠ (1 : CliffordAlgebra Q) := by
-      simp only [ne_eq, zero_ne_one, not_false_eq_true]
+#check equivExterior
+#check ExteriorAlgebra.algebraMapInv
+#check instNontrivialCliffordAlgebra
+variable (m : M) [Invertible (2 : R)] in
+#check ExteriorAlgebra.algebraMapInv ((equivExterior Q).toFun (ι Q m))
+
+-- def invertible_of_invertible_ι (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Q m ≠ 0 := by
+--   by_contra h
+--   have h1 : ι Q m ≠ 0 := by
+--     by_contra h1'
+--     have h2 : ι Q m * ⅟ (ι Q m) = 1 := by exact mul_invOf_self ((ι Q) m)
+--     have h3 : ι Q m * ⅟ (ι Q m) = 0 := by simp only [h1', zero_mul]
+--     have : 0 = (1 : CliffordAlgebra Q) := by
+--       rw [h3] at h2
+--       exact h2
+--     have : 0 ≠ (1 : CliffordAlgebra Q) := by
+--       simp only [ne_eq, zero_ne_one, not_false_eq_true]
+--       done
+--     contradiction
+--     done
+--   have h2 : (ι Q) m * (ι Q) m = algebraMap _ _ (Q m) := by simp only [ι_sq_scalar]
+--   have h3 : (ι Q) m * (ι Q) m = 0 := by
+--     rw [h, map_zero] at h2
+--     exact h2
+--     done
+--   have h4 : algebraMap _ _ (Q m) = algebraMap _ _ 0 := by
+
+--     done
+
+def inv_of_inv_sq (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible ((ι Q m) * (ι Q m)) := {
+  invOf := ⅟(ι Q m) * ⅟(ι Q m),
+  invOf_mul_self := by
+    convert_to ⅟(ι Q m) * ⅟(ι Q m) * (ι Q m) * (ι Q m) = 1
+    . simp only [mul_assoc]
+    . simp only [mul_invOf_mul_self_cancel', invOf_mul_self']
+    done,
+  mul_invOf_self := by
+    convert_to (ι Q m) * ((ι Q m) * ⅟(ι Q m)) * ⅟(ι Q m) = 1
+    . simp only [mul_assoc]
+    . simp only [mul_invOf_self', mul_one]
+    done
+}
+
+#check inv_of_inv_sq
+
+def invertible_of_invertible_ι (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible (algebraMap _ _ (Q m) : CliffordAlgebra Q) := {
+  invOf := ⅟ (ι Q m) * ⅟ (ι Q m),
+  invOf_mul_self := by
+    rw [← ι_sq_scalar]
+    exact (inv_of_inv_sq m).invOf_mul_self,
+  mul_invOf_self := by
+    rw [← ι_sq_scalar]
+    exact (inv_of_inv_sq m).mul_invOf_self
+}
+
+def CliffordAlgebra.toScalar [Invertible (2 : R)] (x : CliffordAlgebra Q) : R :=
+  ExteriorAlgebra.algebraMapInv ((equivExterior Q).toFun x)
+
+
+variable [Invertible (2 : R)] (r : R) in
+#check CliffordAlgebra.toScalar (algebraMap _ _ r)
+
+lemma algebraMap_toScalar [Invertible (2 : R)] (r : R) :
+  CliffordAlgebra.toScalar (algebraMap _ _ r : CliffordAlgebra Q) = r :=
+  by simp [CliffordAlgebra.toScalar]
+
+def invertible_of_invertible_ι' (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible (Q m) := {
+  invOf := toScalar (⅟ (ι Q m) * ⅟ (ι Q m)),
+  invOf_mul_self := by
+
+
+    done, -- by rw [← mul_assoc, inv_of_mul_self, one_mul, inv_of_mul_self],
+  mul_invOf_self := sorry -- by rw [← mul_assoc, mul_inv_of_self, one_mul, mul_inv_of_self]
+}
+
+def invertible_of_invertible_ι'' (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible (Q m) := {
+  invOf := toScalar (⅟ (ι Q m) * ⅟ (ι Q m)),
+  invOf_mul_self := by
+    have h : (⅟ (ι Q m) * ⅟ (ι Q m)) * ((ι Q m) * (ι Q m)) = 1 := by
+      simp only [←mul_assoc, mul_invOf_mul_self_cancel', invOf_mul_self']
       done
-    contradiction
-    done
-  have h2 : (ι Q) m * (ι Q) m = algebraMap _ _ (Q m) := by simp only [ι_sq_scalar]
-  have h3 : (ι Q) m * (ι Q) m = 0 := by
-    rw [h, map_zero] at h2
-    exact h2
-    done
-  have h4 : Q m = 0 := by
-    by_contra h4'
+    have h' : (⅟ (ι Q m) * ⅟ (ι Q m)) * algebraMap _ _ (Q m) = 1 := by
+      simp only [← ι_sq_scalar, h]
+      done
 
-
-def invertible_of_invertible_ι (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible (Q m) := {
-  invOf := Q (⅟ (ι Q m)),
-  invOf_mul_self := sorry, -- by rw [← mul_assoc, inv_of_mul_self, one_mul, inv_of_mul_self],
+    done, -- by rw [← mul_assoc, inv_of_mul_self, one_mul, inv_of_mul_self],
   mul_invOf_self := sorry -- by rw [← mul_assoc, mul_inv_of_self, one_mul, mul_inv_of_self]
 }
 
