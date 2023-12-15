@@ -91,35 +91,12 @@ open scoped Pointwise
 variable (m : M) [Invertible (2 : R)] in
 #check ExteriorAlgebra.algebraMapInv ((equivExterior Q).toFun (ι Q m))
 
--- def invertible_of_invertible_ι (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Q m ≠ 0 := by
---   by_contra h
---   have h1 : ι Q m ≠ 0 := by
---     by_contra h1'
---     have h2 : ι Q m * ⅟ (ι Q m) = 1 := by exact mul_invOf_self ((ι Q) m)
---     have h3 : ι Q m * ⅟ (ι Q m) = 0 := by simp only [h1', zero_mul]
---     have : 0 = (1 : CliffordAlgebra Q) := by
---       rw [h3] at h2
---       exact h2
---     have : 0 ≠ (1 : CliffordAlgebra Q) := by
---       simp only [ne_eq, zero_ne_one, not_false_eq_true]
---       done
---     contradiction
---     done
---   have h2 : (ι Q) m * (ι Q) m = algebraMap _ _ (Q m) := by simp only [ι_sq_scalar]
---   have h3 : (ι Q) m * (ι Q) m = 0 := by
---     rw [h, map_zero] at h2
---     exact h2
---     done
---   have h4 : algebraMap _ _ (Q m) = algebraMap _ _ 0 := by
-
---     done
-
-def inv_of_inv_sq (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible ((ι Q m) * (ι Q m)) := {
+def inv_of_inv_sq' (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible ((ι Q m) * (ι Q m)) := {
   invOf := ⅟(ι Q m) * ⅟(ι Q m),
   invOf_mul_self := by
-    convert_to ⅟(ι Q m) * ⅟(ι Q m) * (ι Q m) * (ι Q m) = 1
+    convert_to ⅟(ι Q m) * (⅟(ι Q m) * (ι Q m)) * (ι Q m) = 1
     . simp only [mul_assoc]
-    . simp only [mul_invOf_mul_self_cancel', invOf_mul_self']
+    . simp only [invOf_mul_self', mul_one]
     done,
   mul_invOf_self := by
     convert_to (ι Q m) * ((ι Q m) * ⅟(ι Q m)) * ⅟(ι Q m) = 1
@@ -128,16 +105,16 @@ def inv_of_inv_sq (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertibl
     done
 }
 
-#check inv_of_inv_sq
+#check inv_of_inv_sq'
 
-def invertible_of_invertible_ι (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible (algebraMap _ _ (Q m) : CliffordAlgebra Q) := {
+def invertible_of_invertible_ι' (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible (algebraMap _ _ (Q m) : CliffordAlgebra Q) := {
   invOf := ⅟ (ι Q m) * ⅟ (ι Q m),
   invOf_mul_self := by
     rw [← ι_sq_scalar]
-    exact (inv_of_inv_sq m).invOf_mul_self,
+    exact (inv_of_inv_sq' m).invOf_mul_self,
   mul_invOf_self := by
     rw [← ι_sq_scalar]
-    exact (inv_of_inv_sq m).mul_invOf_self
+    exact (inv_of_inv_sq' m).mul_invOf_self
 }
 
 def CliffordAlgebra.toScalar [Invertible (2 : R)] (x : CliffordAlgebra Q) : R :=
@@ -151,30 +128,49 @@ lemma algebraMap_toScalar [Invertible (2 : R)] (r : R) :
   CliffordAlgebra.toScalar (algebraMap _ _ r : CliffordAlgebra Q) = r :=
   by simp [CliffordAlgebra.toScalar]
 
-def invertible_of_invertible_ι' (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible (Q m) := {
-  invOf := toScalar (⅟ (ι Q m) * ⅟ (ι Q m)),
-  invOf_mul_self := by
+-- begin eric PR code
+
+section
+
+variable {R A B : Type*} [CommSemiring R] [Semiring A] [Semiring B] [Algebra R A] [Algebra R B]
+
+/-- If there is a linear map `f : A →ₗ[R] B` that preserves `1`, then `algebraMap R B r` is invertible when `algebraMap R A r` is. -/
+abbrev algebraMapMap (f : A →ₗ[R] B) (hf : f 1 = 1) {r : R} (h : Invertible (algebraMap R A r)) :
+    Invertible (algebraMap R B r) where
+  invOf := f ⅟(algebraMap R A r)
+  invOf_mul_self := by rw [←Algebra.commutes, ←Algebra.smul_def, ←map_smul, Algebra.smul_def, mul_invOf_self, hf]
+  mul_invOf_self := by rw [←Algebra.smul_def, ←map_smul, Algebra.smul_def, mul_invOf_self, hf]
+
+end
+
+-- end eric PR code
+
+-- begin eric code
+
+def inv_of_inv_sq (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible ((ι Q m) * (ι Q m)) :=
+  Invertible.mul ‹_› ‹_›
+
+def inv_algebraMap_of_inv_ι (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible (algebraMap _ _ (Q m) : CliffordAlgebra Q) :=
+  Invertible.copy (inv_of_inv_sq m) _ (ι_sq_scalar _ _).symm
+
+def inv_of_inv_ι (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible (Q m) :=
+  letI : Invertible (algebraMap _ (CliffordAlgebra Q) (Q m)) :=
+    (Invertible.mul ‹Invertible (ι Q m)› ‹Invertible (ι Q m)›).copy  _ (ι_sq_scalar _ _).symm
+  letI bar : Invertible (algebraMap _ (ExteriorAlgebra R M) (Q m)) := {
+    invOf := equivExterior Q ⅟(algebraMap _ (CliffordAlgebra Q) (Q m))
+    invOf_mul_self := by
+      dsimp
+      rw [←Algebra.commutes, ←Algebra.smul_def, ←map_smul, Algebra.smul_def, mul_invOf_self, changeForm_one]
+    mul_invOf_self := by
+      dsimp
+      rw [←Algebra.smul_def, ←map_smul, Algebra.smul_def, mul_invOf_self, changeForm_one]
+  }
+  (bar.map ExteriorAlgebra.algebraMapInv).copy _ (by simp)
+
+-- end eric code
 
 
-    done, -- by rw [← mul_assoc, inv_of_mul_self, one_mul, inv_of_mul_self],
-  mul_invOf_self := sorry -- by rw [← mul_assoc, mul_inv_of_self, one_mul, mul_inv_of_self]
-}
-
-def invertible_of_invertible_ι'' (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible (Q m) := {
-  invOf := toScalar (⅟ (ι Q m) * ⅟ (ι Q m)),
-  invOf_mul_self := by
-    have h : (⅟ (ι Q m) * ⅟ (ι Q m)) * ((ι Q m) * (ι Q m)) = 1 := by
-      simp only [←mul_assoc, mul_invOf_mul_self_cancel', invOf_mul_self']
-      done
-    have h' : (⅟ (ι Q m) * ⅟ (ι Q m)) * algebraMap _ _ (Q m) = 1 := by
-      simp only [← ι_sq_scalar, h]
-      done
-
-    done, -- by rw [← mul_assoc, inv_of_mul_self, one_mul, inv_of_mul_self],
-  mul_invOf_self := sorry -- by rw [← mul_assoc, mul_inv_of_self, one_mul, mul_inv_of_self]
-}
-
-#align invertible_of_invertible_ι invertible_of_invertible_ι
+#align invertible_of_invertible_ι inv_of_inv_ι
 
 -- restore the lean3 behavior
 macro_rules | `($x * $y) => `(@HMul.hMul _ _ _ instHMul $x $y)
@@ -217,10 +213,7 @@ theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)
       subst hm' -- rw [← hb] at ha1
       letI := x'.invertible
       letI : Invertible (ι Q m) := by rwa [hm]
-
-
     done
-
 
 -- theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)]
 --     (hx : x ∈ lipschitz Q) : ConjAct.toConjAct x • (LinearMap.range (ι Q)) ≤ (LinearMap.range (ι Q)) :=
@@ -477,7 +470,7 @@ instance : Group (pinGroup Q) :=
     mul_left_inv := star_hMul_self }
 
 -- set_option trace.Meta.synthInstance true in
--- set_option synthInstance.maxHeartbeats 16500 in
+set_option synthInstance.maxHeartbeats 25000 in
 instance : InvolutiveStar (pinGroup Q) :=
   ⟨fun _ => by
     ext; simp only [coe_star, star_star]
@@ -633,6 +626,7 @@ instance : Group (spinGroup Q) :=
     inv := star
     mul_left_inv := star_hMul_self }
 
+set_option synthInstance.maxHeartbeats 25000 in
 instance : InvolutiveStar (spinGroup Q) :=
   ⟨fun _ => by ext; simp only [coe_star, star_star]⟩
 
