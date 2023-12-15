@@ -199,27 +199,59 @@ variable {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)] (hx : x ∈ lipschitz 
 
 -- #check invertible_of_invertible_ι
 
+theorem extracted_1 {R : Type u_1} [inst : CommRing R] [inst_1 : Nontrivial R] {M : Type u_2}
+  [inst_2 : AddCommGroup M] [inst_3 : Module R M] {Q : QuadraticForm R M} {x : (CliffordAlgebra Q)ˣ}
+  (hx : x ∈ Subgroup.closure (Units.val ⁻¹' Set.range ⇑(ι Q))) (x : (CliffordAlgebra Q)ˣ)
+  (a' : x ∈ Units.val ⁻¹' Set.range ⇑(ι Q)) :
+  ConjAct.toConjAct x • LinearMap.range (ι Q) ≤ LinearMap.range (ι Q) := by
+    rintro a ⟨b, hb⟩
+    rw [SetLike.mem_coe, LinearMap.mem_range, DistribMulAction.toLinearMap_apply] at hb
+    obtain ⟨⟨m, hm⟩, hconj⟩ := hb
+    subst hm
+    letI := x.invertible
+    letI : Invertible (ι Q m) := by
+  done
+
+variable [Invertible (2 : R)] (z: M) [Invertible (ι Q z)] in
+#check inv_of_inv_ι z
+
+example [Invertible (2 : R)] (z: M) (x: (CliffordAlgebra Q)ˣ) (hz : (ι Q z) = x) : Invertible (Q z) := by
+  haveI := x.invertible
+  haveI : Invertible (ι Q z) := by rwa [hz]
+  exact inv_of_inv_ι z
+
+variable [Invertible (2 : R)] (z b: M) [Invertible (ι Q z)] [Invertible (Q z)] in
+#check ι_mul_ι_mul_invOf_ι Q z b
+
 /-- If x is in `lipschitz Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
 statement presumably being true only in finite dimensions.-/
 theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)]
-    (hx : x ∈ lipschitz Q) : ConjAct.toConjAct x • (ι Q).range ≤ (ι Q).range :=
-  by
-  refine' @Subgroup.closure_induction'' _ _ _ _ _ hx _ _ _ _
+    (hx : x ∈ lipschitz Q) : ConjAct.toConjAct x • LinearMap.range (ι Q) ≤ LinearMap.range (ι Q) := by
+  unfold lipschitz at hx
+  apply Subgroup.closure_induction'' hx
   · rintro x ⟨z, hz⟩ y ⟨a, ha⟩
     simp only [SMul.smul, SetLike.mem_coe, LinearMap.mem_range, DistribMulAction.toLinearMap_apply,
       ConjAct.ofConjAct_toConjAct] at ha
     rcases ha with ⟨⟨b, hb⟩, ha1⟩
     subst hb
     letI := x.invertible
-    letI : Invertible (ι Q z) := by rwa [hz]
-    rw [LinearMap.mem_range, ← ha1, ← invOf_units x]
-    suffices ∃ y : M, (ι Q) y = ι Q z * (ι Q) b * ⅟ (ι Q z)
-      by
-      convert this
-      ext1
-      congr <;> simp only [hz.symm, Subsingleton.helim (congr_arg Invertible hz.symm)]
-    letI := invertibleOfInvertibleι Q z
-    refine' ⟨(⅟ (Q z) * QuadraticForm.polar Q z b) • z - b, (ι_mul_ι_mul_inv_of_ι Q z b).symm⟩
+    haveI : Invertible (ι Q z) := by rwa [hz]
+    /-
+    typeclass instance problem is stuck, it is often due to metavariables
+      Invertible 2
+    -/
+    have : Invertible (Q z) := inv_of_inv_ι z
+    rw [LinearMap.mem_range, ← ha1] --, ← invOf_units x]
+    convert_to ∃ y : M, (ι Q) y = ι Q z * (ι Q) b * ⅟ (ι Q z)
+    . rename_i inst inst_1 inst_2 inst_3 x_1 inst_4 this_1
+      aesop_subst ha1
+      simp_all only [invOf_units]
+      apply Eq.refl
+      done
+    . use ((⅟ (Q z) * QuadraticForm.polar Q z b) • z - b)
+      rw [← ι_mul_ι_mul_invOf_ι Q z b]
+      done
+    done
   · rintro x ⟨z, hz1⟩ y ⟨a, ⟨b, hb⟩, ha2⟩
     simp only [ConjAct.toConjAct_inv, DistribMulAction.toLinearMap_apply, SMul.smul,
       ConjAct.ofConjAct_inv, ConjAct.ofConjAct_toConjAct, inv_inv] at ha2
