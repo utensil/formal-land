@@ -199,145 +199,131 @@ variable {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)] (hx : x ∈ lipschitz 
 
 -- #check invertible_of_invertible_ι
 
--- /-- If x is in `lipschitz Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
--- statement presumably being true only in finite dimensions.-/
-
--- set_option trace.Meta.synthInstance true in
+/-- If x is in `lipschitz Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
+statement presumably being true only in finite dimensions.-/
 theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)]
-    (hx : x ∈ lipschitz Q) : ConjAct.toConjAct x • (LinearMap.range (ι Q)) ≤ (LinearMap.range (ι Q)) := by
-    unfold lipschitz at hx
-    apply Subgroup.closure_induction'' hx
-    . rintro x' ⟨m, hm⟩ a ⟨b, hb⟩
-      rw [SetLike.mem_coe, LinearMap.mem_range, DistribMulAction.toLinearMap_apply] at hb
-      obtain ⟨⟨m', hm'⟩, hconj⟩ := hb
-      subst hm' -- rw [← hb] at ha1
-      letI := x'.invertible
-      letI : Invertible (ι Q m) := by rwa [hm]
-    done
+    (hx : x ∈ lipschitz Q) : ConjAct.toConjAct x • (LinearMap.range (ι Q)) ≤ (LinearMap.range (ι Q)) :=
+  by
+  -- unfold lipschitz at hx
+  apply Subgroup.closure_induction'' hx
+  -- refine Subgroup.closure_induction'' (h := hx)
+  · rintro x' ⟨m, hm⟩ a ⟨b, hb⟩
+    rw [SetLike.mem_coe, LinearMap.mem_range, DistribMulAction.toLinearMap_apply] at hb
+    obtain ⟨⟨m', hm'⟩, hconj⟩ := hb
+    subst hm' -- rw [← hb] at ha1
+    letI := x'.invertible
+    letI : Invertible (ι Q m) := by rwa [hm]
+    rw [LinearMap.mem_range, ← hconj] -- , ← invOf_units x]
 
--- theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)]
---     (hx : x ∈ lipschitz Q) : ConjAct.toConjAct x • (LinearMap.range (ι Q)) ≤ (LinearMap.range (ι Q)) :=
---   by
---   -- unfold lipschitz at hx
---   apply Subgroup.closure_induction'' hx
---   -- refine Subgroup.closure_induction'' (h := hx)
---   · rintro x' ⟨m, hm⟩ a ⟨b, hb⟩
---     rw [SetLike.mem_coe, LinearMap.mem_range, DistribMulAction.toLinearMap_apply] at hb
---     obtain ⟨⟨m', hm'⟩, hconj⟩ := hb
---     subst hm' -- rw [← hb] at ha1
---     letI := x'.invertible
---     letI : Invertible (ι Q m) := by rwa [hm]
---     rw [LinearMap.mem_range, ← hconj] -- , ← invOf_units x]
+    -- have h : ∃ y : M, (ι Q) y = ι Q z * (ι Q) b * ⅟ (ι Q z) := by
+    --   letI := invertible_of_invertible_ι z
+    --   refine' ⟨(⅟ (Q z) * QuadraticForm.polar Q z b) • z - b, (ι_mul_ι_mul_inv_of_ι Q z b).symm⟩
 
---     -- have h : ∃ y : M, (ι Q) y = ι Q z * (ι Q) b * ⅟ (ι Q z) := by
---     --   letI := invertible_of_invertible_ι z
---     --   refine' ⟨(⅟ (Q z) * QuadraticForm.polar Q z b) • z - b, (ι_mul_ι_mul_inv_of_ι Q z b).symm⟩
+    suffices ∃ m'' : M, (ι Q) m'' = ι Q m * (ι Q) m' * ⅟ (ι Q m)
+      by sorry
+      -- convert this
+      -- ext1
+      -- congr -- <;>simp only [hz.symm, Subsingleton.helim (congr_arg Invertible hz.symm)]
+      -- . simp *
 
---     suffices ∃ m'' : M, (ι Q) m'' = ι Q m * (ι Q) m' * ⅟ (ι Q m)
---       by sorry
---       -- convert this
---       -- ext1
---       -- congr -- <;>simp only [hz.symm, Subsingleton.helim (congr_arg Invertible hz.symm)]
---       -- . simp *
+      --   done
+      -- done
+    -- done
+    letI := invertible_of_invertible_ι Q m
+    refine' ⟨(⅟ (Q z) * QuadraticForm.polar Q z b) • z - b, (ι_mul_ι_mul_inv_of_ι Q z b).symm⟩
+  · rintro x ⟨z, hz1⟩ y ⟨a, ⟨b, hb⟩, ha2⟩
+    simp only [ConjAct.toConjAct_inv, DistribMulAction.toLinearMap_apply, SMul.smul,
+      ConjAct.ofConjAct_inv, ConjAct.ofConjAct_toConjAct, inv_inv] at ha2
+    subst hb
+    subst ha2
+    letI := x.invertible
+    letI : Invertible (ι Q z) := by rwa [hz1]
+    rw [LinearMap.mem_range, ← invOf_units x]
+    suffices ∃ y : M, (ι Q) y = ⅟ (ι Q z) * (ι Q) b * ι Q z
+      by
+      convert this
+      ext1
+      congr <;> simp only [hz1.symm, Subsingleton.helim (congr_arg Invertible hz1.symm)]
+    letI := invertible_of_invertible_ι Q z
+    refine' ⟨(⅟ (Q z) * QuadraticForm.polar Q z b) • z - b, (inv_of_ι_mul_ι_mul_ι Q z b).symm⟩
+  · simp only [ConjAct.toConjAct_one, one_smul, le_refl]
+  · intro x y hx1 hy1 z hz1
+    simp only [ConjAct.toConjAct_mul] at hz1
+    suffices (ConjAct.toConjAct x * ConjAct.toConjAct y) • (ι Q).range ≤ (ι Q).range by
+      exact this hz1
+    · rintro m ⟨a, ⟨b, hb⟩, ha⟩
+      simp only [DistribMulAction.toLinearMap_apply, SMul.smul, ConjAct.ofConjAct_mul,
+        ConjAct.ofConjAct_toConjAct, Units.val_mul, mul_inv_rev] at ha
+      subst hb
+      have hb : ↑x * (↑y * (ι Q) b * ↑y⁻¹) * ↑x⁻¹ = m := by simp_rw [← ha, mul_assoc]
+      have hy2 : ↑y * (ι Q) b * ↑y⁻¹ ∈ ConjAct.toConjAct y • (ι Q).range := by
+        simp only [SMul.smul, exists_exists_eq_and, exists_apply_eq_apply, Submodule.mem_map,
+          LinearMap.mem_range, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct]
+      specialize hy1 hy2
+      have hx2 : ↑x * (↑y * (ι Q) b * ↑y⁻¹) * ↑x⁻¹ ∈ ConjAct.toConjAct x • (ι Q).range :=
+        by
+        simp only [SMul.smul, Units.mul_left_inj, Units.mul_right_inj, exists_exists_eq_and,
+          Submodule.mem_map, LinearMap.mem_range, DistribMulAction.toLinearMap_apply,
+          ConjAct.ofConjAct_toConjAct]
+        exact hy1
+      specialize hx1 hx2
+      rwa [hb] at hx1
+#align mem_lipschitz_conj_act_le mem_lipschitz_conjAct_le
 
---       --   done
---       -- done
---     -- done
---     letI := invertible_of_invertible_ι Q m
---     refine' ⟨(⅟ (Q z) * QuadraticForm.polar Q z b) • z - b, (ι_mul_ι_mul_inv_of_ι Q z b).symm⟩
---   · rintro x ⟨z, hz1⟩ y ⟨a, ⟨b, hb⟩, ha2⟩
---     simp only [ConjAct.toConjAct_inv, DistribMulAction.toLinearMap_apply, SMul.smul,
---       ConjAct.ofConjAct_inv, ConjAct.ofConjAct_toConjAct, inv_inv] at ha2
---     subst hb
---     subst ha2
---     letI := x.invertible
---     letI : Invertible (ι Q z) := by rwa [hz1]
---     rw [LinearMap.mem_range, ← invOf_units x]
---     suffices ∃ y : M, (ι Q) y = ⅟ (ι Q z) * (ι Q) b * ι Q z
---       by
---       convert this
---       ext1
---       congr <;> simp only [hz1.symm, Subsingleton.helim (congr_arg Invertible hz1.symm)]
---     letI := invertible_of_invertible_ι Q z
---     refine' ⟨(⅟ (Q z) * QuadraticForm.polar Q z b) • z - b, (inv_of_ι_mul_ι_mul_ι Q z b).symm⟩
---   · simp only [ConjAct.toConjAct_one, one_smul, le_refl]
---   · intro x y hx1 hy1 z hz1
---     simp only [ConjAct.toConjAct_mul] at hz1
---     suffices (ConjAct.toConjAct x * ConjAct.toConjAct y) • (ι Q).range ≤ (ι Q).range by
---       exact this hz1
---     · rintro m ⟨a, ⟨b, hb⟩, ha⟩
---       simp only [DistribMulAction.toLinearMap_apply, SMul.smul, ConjAct.ofConjAct_mul,
---         ConjAct.ofConjAct_toConjAct, Units.val_mul, mul_inv_rev] at ha
---       subst hb
---       have hb : ↑x * (↑y * (ι Q) b * ↑y⁻¹) * ↑x⁻¹ = m := by simp_rw [← ha, mul_assoc]
---       have hy2 : ↑y * (ι Q) b * ↑y⁻¹ ∈ ConjAct.toConjAct y • (ι Q).range := by
---         simp only [SMul.smul, exists_exists_eq_and, exists_apply_eq_apply, Submodule.mem_map,
---           LinearMap.mem_range, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct]
---       specialize hy1 hy2
---       have hx2 : ↑x * (↑y * (ι Q) b * ↑y⁻¹) * ↑x⁻¹ ∈ ConjAct.toConjAct x • (ι Q).range :=
---         by
---         simp only [SMul.smul, Units.mul_left_inj, Units.mul_right_inj, exists_exists_eq_and,
---           Submodule.mem_map, LinearMap.mem_range, DistribMulAction.toLinearMap_apply,
---           ConjAct.ofConjAct_toConjAct]
---         exact hy1
---       specialize hx1 hx2
---       rwa [hb] at hx1
--- #align mem_lipschitz_conj_act_le mem_lipschitz_conjAct_le
-
--- /-- This is another version of `mem_lipschitz_conj_act_le` which uses `involute`.-/
--- theorem mem_lipschitz_involute_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)]
---     (hx : x ∈ lipschitz Q) (y : M) : involute ↑x * ι Q y * ↑x⁻¹ ∈ (ι Q).range :=
---   by
---   revert y
---   refine' @Subgroup.closure_induction'' _ _ _ _ _ hx _ _ _ _
---   · rintro x ⟨z, hz⟩ y
---     letI := x.invertible
---     letI : Invertible (ι Q z) := by rwa [hz]
---     rw [LinearMap.mem_range, ← invOf_units x]
---     suffices ∃ y_1 : M, (ι Q) y_1 = -ι Q z * (ι Q) y * ⅟ (ι Q z)
---       by
---       convert this
---       ext1
---       congr
---       · rw [← hz, involute_ι]
---       · exact hz.symm
---       · exact Subsingleton.helim (congr_arg Invertible hz.symm) _ _
---     letI := invertible_of_invertible_ι Q z
---     refine'
---       ⟨-((⅟ (Q z) * QuadraticForm.polar Q z y) • z - y), by
---         simp only [map_neg, neg_mul, ι_mul_ι_mul_inv_of_ι Q z y]⟩
---   · rintro x ⟨z, hz⟩ y
---     letI := x.invertible
---     letI : Invertible (ι Q z) := by rwa [hz]
---     letI := invertibleNeg (ι Q z)
---     letI := Invertible.map (involute : CliffordAlgebra Q →ₐ[R] CliffordAlgebra Q) ↑x
---     rw [inv_inv, LinearMap.mem_range, ← invOf_units x, map_invOf]
---     suffices ∃ y_1 : M, (ι Q) y_1 = -⅟ (ι Q z) * (ι Q) y * ι Q z
---       by
---       convert this
---       ext1
---       congr
---       · rw [← invOf_neg]
---         apply invertible_unique
---         rw [← hz, involute_ι]
---       · exact hz.symm
---     letI := invertible_of_invertible_ι Q z
---     refine'
---       ⟨-((⅟ (Q z) * QuadraticForm.polar Q z y) • z - y), by
---         simp only [map_neg, neg_mul, inv_of_ι_mul_ι_mul_ι Q z y]⟩
---   ·
---     simp only [Units.val_one, map_one, one_mul, inv_one, mul_one, LinearMap.mem_range,
---       exists_apply_eq_apply, forall_const]
---   · intro a b ha hb y
---     simp only [Units.val_mul, map_mul, mul_inv_rev, LinearMap.mem_range]
---     cases' hb y with c hc
---     suffices ∃ y_1 : M, (ι Q) y_1 = involute ↑a * (involute ↑b * (ι Q) y * ↑b⁻¹) * ↑a⁻¹
---       by
---       cases' this with p hp
---       refine' ⟨p, by simp only [hp, mul_assoc]⟩
---     rw [← hc]
---     exact ha c
--- #align mem_lipschitz_involute_le mem_lipschitz_involute_le
+/-- This is another version of `mem_lipschitz_conj_act_le` which uses `involute`.-/
+theorem mem_lipschitz_involute_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)]
+    (hx : x ∈ lipschitz Q) (y : M) : involute ↑x * ι Q y * ↑x⁻¹ ∈ (ι Q).range :=
+  by
+  revert y
+  refine' @Subgroup.closure_induction'' _ _ _ _ _ hx _ _ _ _
+  · rintro x ⟨z, hz⟩ y
+    letI := x.invertible
+    letI : Invertible (ι Q z) := by rwa [hz]
+    rw [LinearMap.mem_range, ← invOf_units x]
+    suffices ∃ y_1 : M, (ι Q) y_1 = -ι Q z * (ι Q) y * ⅟ (ι Q z)
+      by
+      convert this
+      ext1
+      congr
+      · rw [← hz, involute_ι]
+      · exact hz.symm
+      · exact Subsingleton.helim (congr_arg Invertible hz.symm) _ _
+    letI := invertible_of_invertible_ι Q z
+    refine'
+      ⟨-((⅟ (Q z) * QuadraticForm.polar Q z y) • z - y), by
+        simp only [map_neg, neg_mul, ι_mul_ι_mul_inv_of_ι Q z y]⟩
+  · rintro x ⟨z, hz⟩ y
+    letI := x.invertible
+    letI : Invertible (ι Q z) := by rwa [hz]
+    letI := invertibleNeg (ι Q z)
+    letI := Invertible.map (involute : CliffordAlgebra Q →ₐ[R] CliffordAlgebra Q) ↑x
+    rw [inv_inv, LinearMap.mem_range, ← invOf_units x, map_invOf]
+    suffices ∃ y_1 : M, (ι Q) y_1 = -⅟ (ι Q z) * (ι Q) y * ι Q z
+      by
+      convert this
+      ext1
+      congr
+      · rw [← invOf_neg]
+        apply invertible_unique
+        rw [← hz, involute_ι]
+      · exact hz.symm
+    letI := invertible_of_invertible_ι Q z
+    refine'
+      ⟨-((⅟ (Q z) * QuadraticForm.polar Q z y) • z - y), by
+        simp only [map_neg, neg_mul, inv_of_ι_mul_ι_mul_ι Q z y]⟩
+  ·
+    simp only [Units.val_one, map_one, one_mul, inv_one, mul_one, LinearMap.mem_range,
+      exists_apply_eq_apply, forall_const]
+  · intro a b ha hb y
+    simp only [Units.val_mul, map_mul, mul_inv_rev, LinearMap.mem_range]
+    cases' hb y with c hc
+    suffices ∃ y_1 : M, (ι Q) y_1 = involute ↑a * (involute ↑b * (ι Q) y * ↑b⁻¹) * ↑a⁻¹
+      by
+      cases' this with p hp
+      refine' ⟨p, by simp only [hp, mul_assoc]⟩
+    rw [← hc]
+    exact ha c
+#align mem_lipschitz_involute_le mem_lipschitz_involute_le
 
 theorem coe_mem_lipschitz_iff_mem {x : (CliffordAlgebra Q)ˣ} :
     ↑x ∈ (lipschitz Q).toSubmonoid.map (Units.coeHom <| CliffordAlgebra Q) ↔ x ∈ lipschitz Q :=
