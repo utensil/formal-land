@@ -9,14 +9,6 @@ import Mathlib.Algebra.Star.Unitary
 import Mathlib.LinearAlgebra.CliffordAlgebra.Star
 import Mathlib.LinearAlgebra.CliffordAlgebra.Even
 import Mathlib.LinearAlgebra.CliffordAlgebra.Contraction
-import Mathlib.Tactic
-
--- TODO: remove when in Mathlib
-set_option autoImplicit false
--- set_option trace.Meta.synthInstance true
-
--- TODO: decide what to do with this
-#align_import main
 
 /-!
 # The Pin group and the Spin group
@@ -47,7 +39,6 @@ statement presumably being true only in finite dimensions.
 Try to show the reverse statement is true in finite dimensions.
 -/
 
-
 variable {R : Type*} [CommRing R] [Nontrivial R]
 
 variable {M : Type*} [AddCommGroup M] [Module R M]
@@ -59,68 +50,6 @@ section Pin
 open CliffordAlgebra MulAction
 
 open scoped Pointwise
-
--- begin doesn't belong to this file
-
-#check equivExterior
-#check ExteriorAlgebra.algebraMapInv
-#check instNontrivialCliffordAlgebra
-variable (m : M) [Invertible (2 : R)] in
-#check ExteriorAlgebra.algebraMapInv ((equivExterior Q).toFun (ι Q m))
-
-def inv_of_inv_sq' (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible ((ι Q m) * (ι Q m)) := {
-  invOf := ⅟(ι Q m) * ⅟(ι Q m),
-  invOf_mul_self := by
-    convert_to ⅟(ι Q m) * (⅟(ι Q m) * (ι Q m)) * (ι Q m) = 1
-    . simp only [mul_assoc]
-    . simp only [invOf_mul_self', mul_one],
-  mul_invOf_self := by
-    convert_to (ι Q m) * ((ι Q m) * ⅟(ι Q m)) * ⅟(ι Q m) = 1
-    . simp only [mul_assoc]
-    . simp only [mul_invOf_self', mul_one]
-}
-
-#check inv_of_inv_sq'
-
-def invertible_of_invertible_ι' (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible (algebraMap _ _ (Q m) : CliffordAlgebra Q) := {
-  invOf := ⅟ (ι Q m) * ⅟ (ι Q m),
-  invOf_mul_self := by
-    rw [← ι_sq_scalar]
-    exact (inv_of_inv_sq' m).invOf_mul_self,
-  mul_invOf_self := by
-    rw [← ι_sq_scalar]
-    exact (inv_of_inv_sq' m).mul_invOf_self
-}
-
-def CliffordAlgebra.toScalar [Invertible (2 : R)] (x : CliffordAlgebra Q) : R :=
-  ExteriorAlgebra.algebraMapInv ((equivExterior Q).toFun x)
-
-
-variable [Invertible (2 : R)] (r : R) in
-#check CliffordAlgebra.toScalar (algebraMap _ _ r)
-
-lemma algebraMap_toScalar [Invertible (2 : R)] (r : R) :
-  CliffordAlgebra.toScalar (algebraMap _ _ r : CliffordAlgebra Q) = r :=
-  by simp [CliffordAlgebra.toScalar]
-
--- begin eric PR code
-
-section
-
-variable {R A B : Type*} [CommSemiring R] [Semiring A] [Semiring B] [Algebra R A] [Algebra R B]
-
-/-- If there is a linear map `f : A →ₗ[R] B` that preserves `1`, then `algebraMap R B r` is invertible when `algebraMap R A r` is. -/
-abbrev algebraMapMap (f : A →ₗ[R] B) (hf : f 1 = 1) {r : R} (h : Invertible (algebraMap R A r)) :
-    Invertible (algebraMap R B r) where
-  invOf := f ⅟(algebraMap R A r)
-  invOf_mul_self := by rw [←Algebra.commutes, ←Algebra.smul_def, ←map_smul, Algebra.smul_def, mul_invOf_self, hf]
-  mul_invOf_self := by rw [←Algebra.smul_def, ←map_smul, Algebra.smul_def, mul_invOf_self, hf]
-
-end
-
--- end eric PR code
-
--- begin eric code
 
 def inv_of_inv_sq (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertible ((ι Q m) * (ι Q m)) :=
   Invertible.mul ‹_› ‹_›
@@ -141,9 +70,6 @@ def inv_of_inv_ι (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertibl
       rw [←Algebra.smul_def, ←map_smul, Algebra.smul_def, mul_invOf_self, changeForm_one]
   }
   (bar.map ExteriorAlgebra.algebraMapInv).copy _ (by simp)
-
--- end eric code
-
 
 #align invertible_of_invertible_ι inv_of_inv_ι
 
