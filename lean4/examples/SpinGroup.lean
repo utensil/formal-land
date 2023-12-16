@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2022 Jiale Miao. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: Jiale Miao
+Authors: Jiale Miao, Utensil Song, Eric Wieser
 -/
 -- This file is mathported from https://github.com/leanprover-community/mathlib/pull/16040/
 import Mathlib.GroupTheory.GroupAction.ConjAct
@@ -76,49 +76,11 @@ def inv_of_inv_ι (m : M) [Invertible (ι Q m)] [Invertible (2 : R)] : Invertibl
 -- restore the lean3 behavior
 macro_rules | `($x * $y) => `(@HMul.hMul _ _ _ instHMul $x $y)
 
--- local instance : Coe (CliffordAlgebra Q)ˣ (CliffordAlgebra Q) :=
---   ⟨Units.val⟩
-
--- end doesn't belong to this file
-
 /-- `lipschitz` is the subgroup closure of all the elements in the form of `ι Q m` where `ι`
 is the canonical linear map `M →ₗ[R] CliffordAlgebra Q`. -/
 def lipschitz (Q : QuadraticForm R M) :=
   Subgroup.closure (Units.val ⁻¹' Set.range (ι Q) : Set (CliffordAlgebra Q)ˣ)
 #align lipschitz lipschitz
-
-set_option pp.analyze true in
-variable {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)] (hx : x ∈ lipschitz Q) in
-#check @Subgroup.closure_induction'' _ _ _ _ _ hx _ _ _ _
-
-#check (ι Q)
-
-#check LinearMap.range (ι Q)
-
--- https://leanprover.zulipchat.com/#narrow/stream/287929-mathlib4/topic/dot.20notation.20with.20Multiplicative
--- #check (ι Q).range
-
--- #check invertible_of_invertible_ι
-
-variable [Invertible (2 : R)] (z: M) [Invertible (ι Q z)] in
-#check inv_of_inv_ι z
-
-example [Invertible (2 : R)] (z: M) (x: (CliffordAlgebra Q)ˣ) (hz : (ι Q z) = x) : Invertible (Q z) := by
-  haveI := x.invertible
-  haveI : Invertible (ι Q z) := by rwa [hz]
-  exact inv_of_inv_ι z
-
-variable [Invertible (2 : R)] (z b: M) [Invertible (ι Q z)] [Invertible (Q z)] in
-#check ι_mul_ι_mul_invOf_ι Q z b
-
-#check @Algebra.toSMul
-
-set_option trace.Meta.synthInstance true in
-variable {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)] (hx : x ∈ lipschitz Q) in
-#check ConjAct.toConjAct x • LinearMap.range (ι Q)
-
-#check Exists.imp
-
 
 set_option synthInstance.maxHeartbeats 25000 in
 /-- If x is in `lipschitz Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
@@ -416,6 +378,16 @@ theorem units_mem_lipschitz {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup
   pinGroup.units_mem_lipschitz (mem_pin hx)
 #align spin_group.units_mem_lipschitz spinGroup.units_mem_lipschitz
 
+/-- If x is in `spinGroup Q`, then `involute x` is equal to x.-/
+theorem mem_involute_eq {x : CliffordAlgebra Q} (hx : x ∈ spinGroup Q) : involute x = x :=
+  involute_eq_of_mem_even (mem_even hx)
+#align spin_group.mem_involute_eq spinGroup.mem_involute_eq
+
+theorem units_involute_act_eq_conjAct {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q)
+    [Invertible (2 : R)] (y : M) : involute ↑x * ι Q y * ↑x⁻¹ = ConjAct.toConjAct x • (ι Q y) := by
+      rw [mem_involute_eq hx, @ConjAct.units_smul_def, @ConjAct.ofConjAct_toConjAct]
+#align spin_group.units_involute_act_eq_conj_act spinGroup.units_involute_act_eq_conjAct
+
 /- If x is in `spinGroup Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
 statement presumably being true only in finite dimensions.-/
 theorem units_mem_conjAct_le {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q)
@@ -428,16 +400,6 @@ theorem units_mem_involute_act_le {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spi
     [Invertible (2 : R)] (y : M) : involute ↑x * ι Q y * ↑x⁻¹ ∈ LinearMap.range (ι Q) :=
   mem_lipschitz_involute_le (units_mem_lipschitz hx) y
 #align spin_group.units_mem_involute_act_le spinGroup.units_mem_involute_act_le
-
-/-- If x is in `spinGroup Q`, then `involute x` is equal to x.-/
-theorem mem_involute_eq {x : CliffordAlgebra Q} (hx : x ∈ spinGroup Q) : involute x = x :=
-  involute_eq_of_mem_even (mem_even hx)
-#align spin_group.mem_involute_eq spinGroup.mem_involute_eq
-
-theorem units_involute_act_eq_conjAct {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q)
-    [Invertible (2 : R)] (y : M) : involute ↑x * ι Q y * ↑x⁻¹ = ConjAct.toConjAct x • (ι Q y) := by
-      rw [mem_involute_eq hx, @ConjAct.units_smul_def, @ConjAct.ofConjAct_toConjAct]
-#align spin_group.units_involute_act_eq_conj_act spinGroup.units_involute_act_eq_conjAct
 
 @[simp]
 theorem star_hMul_self_of_mem {x : CliffordAlgebra Q} (hx : x ∈ spinGroup Q) : star x * x = 1 :=
