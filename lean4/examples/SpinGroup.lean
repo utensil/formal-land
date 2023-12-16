@@ -545,60 +545,43 @@ theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)
 theorem mem_lipschitz_involute_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)]
     (hx : x ∈ lipschitz Q) (b : M) : involute ↑x * ι Q b * ↑x⁻¹ ∈ LinearMap.range (ι Q) :=
   by
+  revert b
   unfold lipschitz at hx
   apply Subgroup.closure_induction'' hx
-  · rintro x ⟨a, ha⟩
+  · rintro x ⟨a, ha⟩ b
     have := x.invertible
     have : Invertible (ι Q a) := by rwa [ha]
     have : Invertible (Q a) := inv_of_inv_ι a
     rw [LinearMap.mem_range, ← invOf_units x]
-
-    -- suffices ∃ b' : M, (ι Q) b' = -ι Q a * (ι Q) b * ⅟ (ι Q a) by
-    --   simp only [ha.symm]
-    --   convert this
-    --   ext1 xx
-    --   congr
-
-
-    --   · rw [← ha, involute_ι]
-    --   · exact ha.symm
-    --   · exact ha.symm
-    --   done
-    -- refine'
-    --   ⟨-((⅟ (Q z) * QuadraticForm.polar Q z y) • z - y), by
-    --     simp only [map_neg, neg_mul, ι_mul_ι_mul_inv_of_ι Q z y]⟩
-    -- done
-  · rintro x ⟨z, hz⟩
-    letI := x.invertible
-    letI : Invertible (ι Q z) := by rwa [hz]
-    letI := invertibleNeg (ι Q z)
-    letI := Invertible.map (involute : CliffordAlgebra Q →ₐ[R] CliffordAlgebra Q) ↑x
-    rw [inv_inv, LinearMap.mem_range, ← invOf_units x, map_invOf]
-    suffices ∃ y_1 : M, (ι Q) y_1 = -⅟ (ι Q z) * (ι Q) y * ι Q z
-      by
-      convert this
-      ext1
-      congr
-      · rw [← invOf_neg]
-        apply invertible_unique
-        rw [← hz, involute_ι]
-      · exact hz.symm
-    letI := invertibleOfInvertibleι Q z
+    simp_rw [← ha, involute_ι]
     refine'
-      ⟨-((⅟ (Q z) * QuadraticForm.polar Q z y) • z - y), by
-        simp only [map_neg, neg_mul, inv_of_ι_mul_ι_mul_ι Q z y]⟩
-  ·
-    simp only [Units.val_one, map_one, one_mul, inv_one, mul_one, LinearMap.mem_range,
+      ⟨-((⅟ (Q a) * QuadraticForm.polar Q a b) • a - b), by
+        simp only [map_neg, neg_mul, ι_mul_ι_mul_invOf_ι Q a b]⟩
+    done
+  · rintro x ⟨a, ha⟩ b
+    have := x.invertible
+    have : Invertible (ι Q a) := by rwa [ha]
+    have : Invertible (Q a) := inv_of_inv_ι a
+    have := invertibleNeg (ι Q a)
+    have := Invertible.map (involute : CliffordAlgebra Q →ₐ[R] CliffordAlgebra Q) (ι Q a)
+    rw [LinearMap.mem_range, ← invOf_units x, inv_inv]
+    simp_rw [← ha, map_invOf, involute_ι, invOf_neg]
+    refine'
+      ⟨-((⅟ (Q a) * QuadraticForm.polar Q a b) • a - b), by
+        simp only [map_neg, neg_mul, invOf_ι_mul_ι_mul_ι Q a b]⟩
+    done
+  · simp only [Units.val_one, map_one, one_mul, inv_one, mul_one, LinearMap.mem_range,
       exists_apply_eq_apply, forall_const]
-  · intro a b ha hb
+  · intro y z hy hz b
     simp only [Units.val_mul, map_mul, mul_inv_rev, LinearMap.mem_range]
-    cases' hb y with c hc
-    suffices ∃ y_1 : M, (ι Q) y_1 = involute ↑a * (involute ↑b * (ι Q) y * ↑b⁻¹) * ↑a⁻¹
-      by
-      cases' this with p hp
+    let ⟨z', hz'⟩ := hz b
+    let ⟨y', hy'⟩ := hy z'
+    suffices ∃ c : M, (ι Q) c = involute ↑y * (involute ↑z * (ι Q) b * ↑z⁻¹) * ↑y⁻¹ by
+      obtain ⟨p, hp⟩ := this
       refine' ⟨p, by simp only [hp, mul_assoc]⟩
-    rw [← hc]
-    exact ha c
+    rw [← hz']
+    use y'
+    done
 #align mem_lipschitz_involute_le mem_lipschitz_involute_le
 
 /- If x is in `spinGroup Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
@@ -610,7 +593,7 @@ theorem spinGroup.units_mem_conjAct_le {x : (CliffordAlgebra Q)ˣ} (hx : ↑x �
 
 /- This is another version of `units_mem_conj_act_le` which uses `involute`.-/
 theorem spinGroup.units_mem_involute_act_le {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q)
-    [Invertible (2 : R)] (y : M) : involute ↑x * ι Q y * ↑x⁻¹ ∈ (ι Q).range :=
+    [Invertible (2 : R)] (y : M) : involute ↑x * ι Q y * ↑x⁻¹ ∈ LinearMap.range (ι Q) :=
   mem_lipschitz_involute_le (units_mem_lipschitz hx) y
 #align spin_group.units_mem_involute_act_le spinGroup.units_mem_involute_act_le
 
