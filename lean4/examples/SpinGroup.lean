@@ -156,7 +156,7 @@ macro_rules | `($x * $y) => `(@HMul.hMul _ _ _ instHMul $x $y)
 -- end doesn't belong to this file
 
 /-- `lipschitz` is the subgroup closure of all the elements in the form of `ι Q m` where `ι`
-is the canonical linear map `M →ₗ[R] clifford_algebra Q`. -/
+is the canonical linear map `M →ₗ[R] CliffordAlgebra Q`. -/
 def lipschitz (Q : QuadraticForm R M) :=
   Subgroup.closure (Units.val ⁻¹' Set.range (ι Q) : Set (CliffordAlgebra Q)ˣ)
 #align lipschitz lipschitz
@@ -301,7 +301,7 @@ theorem coe_mem_lipschitz_iff_mem {x : (CliffordAlgebra Q)ˣ} :
 
 -- instance : Membership (CliffordAlgebra Q) (lipschitz Q) :=
 
-/-- `pinGroup Q` is defined as the infimum of `lipschitz Q` and `unitary (clifford_algebra Q)`.
+/-- `pinGroup Q` is defined as the infimum of `lipschitz Q` and `unitary (CliffordAlgebra Q)`.
 See `mem_iff`. -/
 def pinGroup (Q : QuadraticForm R M) : Submonoid (CliffordAlgebra Q) :=
   (lipschitz Q).toSubmonoid.map (Units.coeHom <| CliffordAlgebra Q) ⊓ unitary _
@@ -442,7 +442,7 @@ theorem star_eq_inv' : (star : pinGroup Q → pinGroup Q) = Inv.inv :=
   rfl
 #align pin_group.star_eq_inv' pinGroup.star_eq_inv'
 
-/-- The elements in `pinGroup Q` embed into (clifford_algebra Q)ˣ. -/
+/-- The elements in `pinGroup Q` embed into (CliffordAlgebra Q)ˣ. -/
 @[simps]
 def toUnits : pinGroup Q →* (CliffordAlgebra Q)ˣ
     where
@@ -465,7 +465,7 @@ open CliffordAlgebra MulAction
 
 open scoped Pointwise
 
-/-- `spinGroup Q` is defined as the infimum of `pinGroup Q` and `clifford_algebra.even Q`.
+/-- `spinGroup Q` is defined as the infimum of `pinGroup Q` and `CliffordAlgebra.even Q`.
 See `mem_iff`. -/
 def spinGroup (Q : QuadraticForm R M) :=
   pinGroup Q ⊓ (CliffordAlgebra.even Q).toSubring.toSubmonoid
@@ -583,7 +583,7 @@ theorem star_eq_inv' : (star : spinGroup Q → spinGroup Q) = Inv.inv :=
   rfl
 #align spin_group.star_eq_inv' spinGroup.star_eq_inv'
 
-/-- The elements in `spinGroup Q` embed into (clifford_algebra Q)ˣ. -/
+/-- The elements in `spinGroup Q` embed into (CliffordAlgebra Q)ˣ. -/
 @[simps]
 def toUnits : spinGroup Q →* (CliffordAlgebra Q)ˣ
     where
