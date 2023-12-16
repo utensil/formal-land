@@ -217,6 +217,8 @@ set_option trace.Meta.synthInstance true in
 variable {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)] (hx : x ∈ lipschitz Q) in
 #check ConjAct.toConjAct x • LinearMap.range (ι Q)
 
+#check Exists.imp
+
 set_option synthInstance.maxHeartbeats 30000 in
 /-- If x is in `lipschitz Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
 statement presumably being true only in finite dimensions.-/
@@ -224,39 +226,33 @@ theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)
     (hx : x ∈ lipschitz Q) : ConjAct.toConjAct x • LinearMap.range (ι Q) ≤ LinearMap.range (ι Q) := by
   unfold lipschitz at hx
   apply Subgroup.closure_induction'' hx
-  · rintro x ⟨z, hz⟩ y ⟨a, ha⟩
-    simp only [SMul.smul, SetLike.mem_coe, LinearMap.mem_range, DistribMulAction.toLinearMap_apply,
-      ConjAct.ofConjAct_toConjAct] at ha
-    obtain ⟨⟨b, hb⟩, ha1⟩ := ha
+  · rintro x ⟨z, hz⟩ y ⟨a, ⟨⟨b, hb⟩, ha⟩⟩
+    simp only [SMul.smul, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct,
+                SetLike.mem_coe, LinearMap.mem_range] at ha -- diff
     subst hb
-    letI := x.invertible
+    have := x.invertible
     have : Invertible (ι Q z) := by rwa [hz]
     have : Invertible (Q z) := inv_of_inv_ι z
-    rw [LinearMap.mem_range, ← ha1]
-    convert_to ∃ y : M, (ι Q) y = ι Q z * (ι Q) b * ⅟ (ι Q z)
-    . rename_i inst inst_1 inst_2 inst_3 x_1 inst_4 this_1
-      subst ha1
-      simp_all only [invOf_units]
-      apply Eq.refl
-      done
+    rw [LinearMap.mem_range]
+    convert_to ∃ y : M, ι Q y = ι Q z * ι Q b * ⅟ (ι Q z)
+    . aesop
     . use ((⅟ (Q z) * QuadraticForm.polar Q z b) • z - b)
       rw [← ι_mul_ι_mul_invOf_ι Q z b]
       done
     done
-  · rintro x ⟨z, hz1⟩ y ⟨a, ⟨b, hb⟩, ha2⟩
-    simp only [ConjAct.toConjAct_inv, DistribMulAction.toLinearMap_apply, SMul.smul,
-      ConjAct.ofConjAct_inv, ConjAct.ofConjAct_toConjAct, inv_inv] at ha2
+  · rintro x ⟨z, hz⟩ y ⟨a, ⟨⟨b, hb⟩, ha⟩⟩
+    simp only [SMul.smul, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct,
+                ConjAct.toConjAct_inv,  inv_inv] at ha -- diff
     subst hb
-    subst ha2
-    letI := x.invertible
-    letI : Invertible (ι Q z) := by rwa [hz1]
+    have := x.invertible
+    have : Invertible (ι Q z) := by rwa [hz]
     have : Invertible (Q z) := inv_of_inv_ι z
     rw [LinearMap.mem_range]
-    convert_to ∃ y : M, (ι Q) y = ⅟ (ι Q z) * (ι Q) b * ι Q z
-    . rename_i inst inst_1 inst_2 inst_3 x_1 inst_4 this_1 this_2
-      simp_all only [invOf_units]
-      apply Eq.refl
-    . use ((⅟ (Q z) * QuadraticForm.polar Q z b) • z - b)
+    convert_to ∃ y : M, ι Q y = ⅟ (ι Q z) * ι Q b * ι Q z
+    . aesop
+    . have vv := invOf_ι_mul_ι_mul_ι Q z b
+      have ⟨va, vv1, vv2⟩ := exists_eq_right.mpr vv
+      use ((⅟ (Q z) * QuadraticForm.polar Q z b) • z - b)
       rw [← invOf_ι_mul_ι_mul_ι Q z b]
       done
     done
@@ -266,27 +262,28 @@ theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)
     simp only [ConjAct.toConjAct_mul] at hz1
     suffices (ConjAct.toConjAct x * ConjAct.toConjAct y) • LinearMap.range (ι Q) ≤ LinearMap.range (ι Q) by
       exact this hz1
-    · rintro m ⟨a, ⟨b, hb⟩, ha⟩
-      simp only [HSMul.hSMul, DistribMulAction.toLinearMap_apply, SMul.smul, Units.val_mul, mul_inv_rev] at ha
-      subst hb
-      have hb : ↑x * (↑y * (ι Q b) * ↑y⁻¹) * ↑x⁻¹ = m := by
-        simp [← ha, ConjAct.toConjAct_mul, ConjAct.units_smul_def, mul_assoc]
-        done
-      have hy2 : ↑y * (ι Q) b * ↑y⁻¹ ∈ ConjAct.toConjAct y • LinearMap.range (ι Q) := by
-        simp only [HSMul.hSMul, SMul.smul, exists_exists_eq_and, exists_apply_eq_apply, Submodule.mem_map,
-          LinearMap.mem_range, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct]
-        done
-      specialize hy1 hy2
-      have hx2 : ↑x * (↑y * (ι Q) b * ↑y⁻¹) * ↑x⁻¹ ∈ ConjAct.toConjAct x • LinearMap.range (ι Q) :=
-        by
-        simp only [HSMul.hSMul, SMul.smul, Units.mul_left_inj, Units.mul_right_inj, exists_exists_eq_and,
-          Submodule.mem_map, LinearMap.mem_range, DistribMulAction.toLinearMap_apply,
-          ConjAct.ofConjAct_toConjAct]
-        exact hy1
-        done
-      specialize hx1 hx2
-      rwa [hb] at hx1
+
+    rintro m ⟨a, ⟨b, hb⟩, ha⟩
+    simp only [HSMul.hSMul, DistribMulAction.toLinearMap_apply, SMul.smul, Units.val_mul, mul_inv_rev] at ha
+    subst hb
+    have hb : ↑x * (↑y * (ι Q b) * ↑y⁻¹) * ↑x⁻¹ = m := by
+      simp [← ha, ConjAct.toConjAct_mul, ConjAct.units_smul_def, mul_assoc]
       done
+    have hy2 : ↑y * (ι Q) b * ↑y⁻¹ ∈ ConjAct.toConjAct y • LinearMap.range (ι Q) := by
+      simp only [HSMul.hSMul, SMul.smul, exists_exists_eq_and, exists_apply_eq_apply, Submodule.mem_map,
+        LinearMap.mem_range, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct]
+      done
+    specialize hy1 hy2
+    have hx2 : ↑x * (↑y * (ι Q) b * ↑y⁻¹) * ↑x⁻¹ ∈ ConjAct.toConjAct x • LinearMap.range (ι Q) :=
+      by
+      simp only [HSMul.hSMul, SMul.smul, Units.mul_left_inj, Units.mul_right_inj, exists_exists_eq_and,
+        Submodule.mem_map, LinearMap.mem_range, DistribMulAction.toLinearMap_apply,
+        ConjAct.ofConjAct_toConjAct]
+      exact hy1
+      done
+    specialize hx1 hx2
+    rwa [hb] at hx1
+    done
 #align mem_lipschitz_conj_act_le mem_lipschitz_conjAct_le
 
 #print mem_lipschitz_conjAct_le
