@@ -13,6 +13,7 @@ import Mathlib.Tactic
 
 -- TODO: remove when in Mathlib
 set_option autoImplicit false
+-- set_option trace.Meta.synthInstance true
 
 -- TODO: decide what to do with this
 #align_import main
@@ -199,19 +200,6 @@ variable {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)] (hx : x ∈ lipschitz 
 
 -- #check invertible_of_invertible_ι
 
-theorem extracted_1 {R : Type u_1} [inst : CommRing R] [inst_1 : Nontrivial R] {M : Type u_2}
-  [inst_2 : AddCommGroup M] [inst_3 : Module R M] {Q : QuadraticForm R M} {x : (CliffordAlgebra Q)ˣ}
-  (hx : x ∈ Subgroup.closure (Units.val ⁻¹' Set.range ⇑(ι Q))) (x : (CliffordAlgebra Q)ˣ)
-  (a' : x ∈ Units.val ⁻¹' Set.range ⇑(ι Q)) :
-  ConjAct.toConjAct x • LinearMap.range (ι Q) ≤ LinearMap.range (ι Q) := by
-    rintro a ⟨b, hb⟩
-    rw [SetLike.mem_coe, LinearMap.mem_range, DistribMulAction.toLinearMap_apply] at hb
-    obtain ⟨⟨m, hm⟩, hconj⟩ := hb
-    subst hm
-    letI := x.invertible
-    letI : Invertible (ι Q m) := by
-  done
-
 variable [Invertible (2 : R)] (z: M) [Invertible (ι Q z)] in
 #check inv_of_inv_ι z
 
@@ -223,6 +211,101 @@ example [Invertible (2 : R)] (z: M) (x: (CliffordAlgebra Q)ˣ) (hz : (ι Q z) = 
 variable [Invertible (2 : R)] (z b: M) [Invertible (ι Q z)] [Invertible (Q z)] in
 #check ι_mul_ι_mul_invOf_ι Q z b
 
+#check @Algebra.toSMul
+
+set_option trace.Meta.synthInstance true in
+variable {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)] (hx : x ∈ lipschitz Q) in
+/-
+[Meta.synthInstance] ✅ HSMul (ConjAct (CliffordAlgebra Q)ˣ) (Submodule R (CliffordAlgebra Q)) (Submodule R (CliffordAlgebra Q)) ▼
+  [] new goal HSMul (ConjAct (CliffordAlgebra Q)ˣ) (Submodule R (CliffordAlgebra Q)) _tc.0 ▶
+  [] ✅ apply @instHSMul to HSMul (ConjAct (CliffordAlgebra Q)ˣ) (Submodule R (CliffordAlgebra Q))
+        (Submodule R (CliffordAlgebra Q)) ▶
+  [] ✅ apply @Algebra.toSMul to SMul (ConjAct (CliffordAlgebra Q)ˣ) (Submodule R (CliffordAlgebra Q)) ▶
+  [] ✅ apply @SMulZeroClass.toSMul to SMul (ConjAct (CliffordAlgebra Q)ˣ) (Submodule R (CliffordAlgebra Q)) ▶
+  [resume] propagating Zero
+        (Submodule R
+          (CliffordAlgebra
+            Q)) to subgoal Zero
+        (Submodule R (CliffordAlgebra Q)) of SMul (ConjAct (CliffordAlgebra Q)ˣ) (Submodule R (CliffordAlgebra Q)) ▶
+  [] ✅ apply @SMulWithZero.toSMulZeroClass to SMulZeroClass (ConjAct (CliffordAlgebra Q)ˣ) (Submodule R (CliffordAlgebra Q)) ▶
+  [] ✅ apply @DistribSMul.toSMulZeroClass to SMulZeroClass (ConjAct (CliffordAlgebra Q)ˣ) (Submodule R (CliffordAlgebra Q)) ▶
+  [] ✅ apply @DistribMulAction.toDistribSMul to DistribSMul (ConjAct (CliffordAlgebra Q)ˣ) (Submodule R (CliffordAlgebra Q)) ▶
+  [resume] propagating Monoid
+        (ConjAct
+          (CliffordAlgebra
+              Q)ˣ) to subgoal Monoid
+        (ConjAct (CliffordAlgebra Q)ˣ) of DistribSMul (ConjAct (CliffordAlgebra Q)ˣ) (Submodule R (CliffordAlgebra Q)) ▶
+  [] ✅ apply @ConjAct.unitsMulSemiringAction to MulSemiringAction (ConjAct (CliffordAlgebra Q)ˣ) (CliffordAlgebra Q) ▶
+  [resume] propagating MulSemiringAction (ConjAct (CliffordAlgebra Q)ˣ)
+        (CliffordAlgebra
+          Q) to subgoal MulSemiringAction (ConjAct (CliffordAlgebra Q)ˣ)
+        (CliffordAlgebra Q) of DistribMulAction (ConjAct (CliffordAlgebra Q)ˣ) (CliffordAlgebra Q) ▶
+  [resume] propagating DistribMulAction (ConjAct (CliffordAlgebra Q)ˣ)
+        (CliffordAlgebra
+          Q) to subgoal DistribMulAction (ConjAct (CliffordAlgebra Q)ˣ)
+        (CliffordAlgebra Q) of DistribMulAction (ConjAct (CliffordAlgebra Q)ˣ) (Submodule R (CliffordAlgebra Q)) ▶
+  [] ✅ apply ConjAct.unitsSMulCommClass' to SMulCommClass (ConjAct (CliffordAlgebra Q)ˣ) R (CliffordAlgebra Q) ▶
+  [] ❌ apply @CliffordAlgebra.instSMulCommClassCliffordAlgebraToSMulToSemiringInstRingInstAlgebra'ToSMulInstAlgebra' to SMulCommClass
+        (CliffordAlgebra Q) R (CliffordAlgebra Q) ▶
+  [] ❌ apply smulCommClass_self to SMulCommClass (CliffordAlgebra Q) R (CliffordAlgebra Q) ▶
+  [] ❌ apply @Algebra.to_smulCommClass to SMulCommClass (CliffordAlgebra Q) R (CliffordAlgebra Q) ▶
+  [] ✅ apply @IsScalarTower.to_smulCommClass' to SMulCommClass (CliffordAlgebra Q) R (CliffordAlgebra Q) ▶
+  [] ✅ apply @CliffordAlgebra.instAlgebra to Algebra R (CliffordAlgebra Q) ▶
+  [resume] propagating Algebra R
+        (CliffordAlgebra
+          Q) to subgoal Algebra R (CliffordAlgebra Q) of SMulCommClass (CliffordAlgebra Q) R (CliffordAlgebra Q) ▶
+  [] ❌ apply @CliffordAlgebra.instIsScalarTowerCliffordAlgebraToSMulToSemiringInstRingInstAlgebra'ToSMulInstAlgebra' to IsScalarTower
+        R (CliffordAlgebra Q) (CliffordAlgebra Q) ▶
+  [] ✅ apply @IsScalarTower.right to IsScalarTower R (CliffordAlgebra Q) (CliffordAlgebra Q) ▶
+  [resume] propagating IsScalarTower R (CliffordAlgebra Q)
+        (CliffordAlgebra
+          Q) to subgoal IsScalarTower R (CliffordAlgebra Q)
+        (CliffordAlgebra Q) of SMulCommClass (CliffordAlgebra Q) R (CliffordAlgebra Q) ▶
+  [resume] propagating SMulCommClass (CliffordAlgebra Q) R
+        (CliffordAlgebra
+          Q) to subgoal SMulCommClass (CliffordAlgebra Q) R
+        (CliffordAlgebra Q) of SMulCommClass (ConjAct (CliffordAlgebra Q)ˣ) R (CliffordAlgebra Q) ▶
+  [] ❌ apply @CliffordAlgebra.instIsScalarTowerCliffordAlgebraToSMulToSemiringInstRingInstAlgebra'ToSMulInstAlgebra' to IsScalarTower
+        R (CliffordAlgebra Q) (CliffordAlgebra Q) ▶
+  [] ✅ apply @IsScalarTower.right to IsScalarTower R (CliffordAlgebra Q) (CliffordAlgebra Q) ▶
+  [resume] propagating IsScalarTower R (CliffordAlgebra Q)
+        (CliffordAlgebra
+          Q) to subgoal IsScalarTower R (CliffordAlgebra Q)
+        (CliffordAlgebra Q) of SMulCommClass (ConjAct (CliffordAlgebra Q)ˣ) R (CliffordAlgebra Q) ▶
+  [resume] propagating SMulCommClass (ConjAct (CliffordAlgebra Q)ˣ) R
+        (CliffordAlgebra
+          Q) to subgoal SMulCommClass (ConjAct (CliffordAlgebra Q)ˣ) R
+        (CliffordAlgebra Q) of DistribMulAction (ConjAct (CliffordAlgebra Q)ˣ) (Submodule R (CliffordAlgebra Q)) ▶
+  [resume] propagating DistribMulAction (ConjAct (CliffordAlgebra Q)ˣ)
+        (Submodule R
+          (CliffordAlgebra
+            Q)) to subgoal DistribMulAction (ConjAct (CliffordAlgebra Q)ˣ)
+        (Submodule R
+          (CliffordAlgebra Q)) of DistribSMul (ConjAct (CliffordAlgebra Q)ˣ) (Submodule R (CliffordAlgebra Q)) ▶
+  [resume] propagating DistribSMul (ConjAct (CliffordAlgebra Q)ˣ)
+        (Submodule R
+          (CliffordAlgebra
+            Q)) to subgoal DistribSMul (ConjAct (CliffordAlgebra Q)ˣ)
+        (Submodule R
+          (CliffordAlgebra Q)) of SMulZeroClass (ConjAct (CliffordAlgebra Q)ˣ) (Submodule R (CliffordAlgebra Q)) ▶
+  [resume] propagating SMulZeroClass (ConjAct (CliffordAlgebra Q)ˣ)
+        (Submodule R
+          (CliffordAlgebra
+            Q)) to subgoal SMulZeroClass (ConjAct (CliffordAlgebra Q)ˣ)
+        (Submodule R (CliffordAlgebra Q)) of SMul (ConjAct (CliffordAlgebra Q)ˣ) (Submodule R (CliffordAlgebra Q)) ▶
+  [resume] propagating SMul (ConjAct (CliffordAlgebra Q)ˣ)
+        (Submodule R
+          (CliffordAlgebra
+            Q)) to subgoal SMul (ConjAct (CliffordAlgebra Q)ˣ)
+        (Submodule R
+          (CliffordAlgebra
+            Q)) of HSMul (ConjAct (CliffordAlgebra Q)ˣ) (Submodule R (CliffordAlgebra Q))
+        (Submodule R (CliffordAlgebra Q)) ▶
+  [] result instHSMul
+-/
+#check ConjAct.toConjAct x • LinearMap.range (ι Q)
+
+set_option synthInstance.maxHeartbeats 30000 in
 /-- If x is in `lipschitz Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
 statement presumably being true only in finite dimensions.-/
 theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)]
@@ -244,7 +327,7 @@ theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)
     rw [LinearMap.mem_range, ← ha1] --, ← invOf_units x]
     convert_to ∃ y : M, (ι Q) y = ι Q z * (ι Q) b * ⅟ (ι Q z)
     . rename_i inst inst_1 inst_2 inst_3 x_1 inst_4 this_1
-      aesop_subst ha1
+      subst ha1
       simp_all only [invOf_units]
       apply Eq.refl
       done
@@ -259,37 +342,52 @@ theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)
     subst ha2
     letI := x.invertible
     letI : Invertible (ι Q z) := by rwa [hz1]
-    rw [LinearMap.mem_range, ← invOf_units x]
-    suffices ∃ y : M, (ι Q) y = ⅟ (ι Q z) * (ι Q) b * ι Q z
-      by
-      convert this
-      ext1
-      congr <;> simp only [hz1.symm, Subsingleton.helim (congr_arg Invertible hz1.symm)]
-    letI := invertibleOfInvertibleι Q z
-    refine' ⟨(⅟ (Q z) * QuadraticForm.polar Q z b) • z - b, (inv_of_ι_mul_ι_mul_ι Q z b).symm⟩
-  · simp only [ConjAct.toConjAct_one, one_smul, le_refl]
+    have : Invertible (Q z) := inv_of_inv_ι z
+    rw [LinearMap.mem_range] --, ← invOf_units x]
+    convert_to ∃ y : M, (ι Q) y = ⅟ (ι Q z) * (ι Q) b * ι Q z
+    . rename_i inst inst_1 inst_2 inst_3 x_1 inst_4 this_1 this_2
+      simp_all only [invOf_units]
+      apply Eq.refl
+    . use ((⅟ (Q z) * QuadraticForm.polar Q z b) • z - b)
+      rw [← invOf_ι_mul_ι_mul_ι Q z b]
+      done
+    done
+  · simp only [ConjAct.toConjAct_one, (one_smul _ (LinearMap.range (ι Q))), le_refl]
+    done
   · intro x y hx1 hy1 z hz1
     simp only [ConjAct.toConjAct_mul] at hz1
-    suffices (ConjAct.toConjAct x * ConjAct.toConjAct y) • (ι Q).range ≤ (ι Q).range by
+    suffices (ConjAct.toConjAct x * ConjAct.toConjAct y) • LinearMap.range (ι Q) ≤ LinearMap.range (ι Q) by
       exact this hz1
     · rintro m ⟨a, ⟨b, hb⟩, ha⟩
       simp only [DistribMulAction.toLinearMap_apply, SMul.smul, ConjAct.ofConjAct_mul,
         ConjAct.ofConjAct_toConjAct, Units.val_mul, mul_inv_rev] at ha
       subst hb
-      have hb : ↑x * (↑y * (ι Q) b * ↑y⁻¹) * ↑x⁻¹ = m := by simp_rw [← ha, mul_assoc]
-      have hy2 : ↑y * (ι Q) b * ↑y⁻¹ ∈ ConjAct.toConjAct y • (ι Q).range := by
-        simp only [SMul.smul, exists_exists_eq_and, exists_apply_eq_apply, Submodule.mem_map,
+      have hb : ↑x * (↑y * (ι Q b) * ↑y⁻¹) * ↑x⁻¹ = m := by
+        simp [← ha, ConjAct.toConjAct_mul, ConjAct.units_smul_def, mul_assoc]
+        done
+      have hy2 : ↑y * (ι Q) b * ↑y⁻¹ ∈ ConjAct.toConjAct y • LinearMap.range (ι Q) := by
+        simp only [HSMul.hSMul, SMul.smul, exists_exists_eq_and, exists_apply_eq_apply, Submodule.mem_map,
+        --   ConjAct.toConjAct_mul, ConjAct.units_smul_def,
           LinearMap.mem_range, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct]
+        -- rw [DistribMulAction.toLinearMap_apply]
+        -- rw [(ConjAct.units_smul_def (ConjAct.toConjAct y) (LinearMap.range (ι Q)))]
+        -- rw [(ConjAct.smul_def (ConjAct.toConjAct y) (LinearMap.range (ι Q)))]
+        -- simp [ConjAct.units_smul_def]
+        done
       specialize hy1 hy2
-      have hx2 : ↑x * (↑y * (ι Q) b * ↑y⁻¹) * ↑x⁻¹ ∈ ConjAct.toConjAct x • (ι Q).range :=
+      have hx2 : ↑x * (↑y * (ι Q) b * ↑y⁻¹) * ↑x⁻¹ ∈ ConjAct.toConjAct x • LinearMap.range (ι Q) :=
         by
-        simp only [SMul.smul, Units.mul_left_inj, Units.mul_right_inj, exists_exists_eq_and,
+        simp only [HSMul.hSMul, SMul.smul, Units.mul_left_inj, Units.mul_right_inj, exists_exists_eq_and,
           Submodule.mem_map, LinearMap.mem_range, DistribMulAction.toLinearMap_apply,
           ConjAct.ofConjAct_toConjAct]
         exact hy1
+        done
       specialize hx1 hx2
       rwa [hb] at hx1
+      done
 #align mem_lipschitz_conj_act_le mem_lipschitz_conjAct_le
+
+#print mem_lipschitz_conjAct_le
 
 /-- This is another version of `mem_lipschitz_conj_act_le` which uses `involute`.-/
 theorem mem_lipschitz_involute_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)]
