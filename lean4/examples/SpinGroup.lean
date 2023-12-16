@@ -248,9 +248,10 @@ theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)
     simp [HSMul.hSMul, SMul.smul, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct,
                 ConjAct.toConjAct_inv, inv_inv] at hz -- diff
     subst hb
-    use ((⅟ (Q a) * QuadraticForm.polar Q a b) • a - b)
-    rw [← hz, ← invOf_ι_mul_ι_mul_ι Q a b]
-    simp_all only [invOf_units]
+    suffices : ∃ y : M, ι Q y = ⅟ (ι Q a) * ι Q b * ι Q a
+    . simp_all only [invOf_units]
+    . use ((⅟ (Q a) * QuadraticForm.polar Q a b) • a - b)
+      rw [← invOf_ι_mul_ι_mul_ι Q a b]
     done
   · simp only [ConjAct.toConjAct_one, (one_smul _ (LinearMap.range (ι Q))), le_refl]
     done
