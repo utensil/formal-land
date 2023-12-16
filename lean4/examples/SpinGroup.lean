@@ -226,30 +226,30 @@ theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)
     (hx : x ∈ lipschitz Q) : ConjAct.toConjAct x • LinearMap.range (ι Q) ≤ LinearMap.range (ι Q) := by
   unfold lipschitz at hx
   apply Subgroup.closure_induction'' hx
-  · rintro x ⟨z, hz⟩ y ⟨a, ⟨⟨b, hb⟩, ha⟩⟩
-    simp only [HSMul.hSMul, SMul.smul, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct,
-                SetLike.mem_coe, LinearMap.mem_range] at ha -- diff
-    subst hb
+  · rintro x ⟨a, ha⟩ y ⟨z, ⟨⟨b, hb⟩, hz⟩⟩
     rw [LinearMap.mem_range]
     have := x.invertible
-    have : Invertible (ι Q z) := by rwa [hz]
-    have : Invertible (Q z) := inv_of_inv_ι z
-    suffices : ∃ y : M, ι Q y = ι Q z * ι Q b * ⅟ (ι Q z)
+    have : Invertible (ι Q a) := by rwa [ha]
+    have : Invertible (Q a) := inv_of_inv_ι a
+    simp only [HSMul.hSMul, SMul.smul, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct,
+                SetLike.mem_coe, LinearMap.mem_range] at hz -- diff
+    subst hb
+    suffices : ∃ y : M, ι Q y = ι Q a * ι Q b * ⅟ (ι Q a)
     . simp_all only [invOf_units]
-    . use ((⅟ (Q z) * QuadraticForm.polar Q z b) • z - b)
-      rw [← ι_mul_ι_mul_invOf_ι Q z b]
+    . use ((⅟ (Q a) * QuadraticForm.polar Q a b) • a - b)
+      rw [← ι_mul_ι_mul_invOf_ι Q a b]
       done
     done
-  · rintro x ⟨z, hz⟩ y ⟨a, ⟨⟨b, hb⟩, ha⟩⟩
-    simp [HSMul.hSMul, SMul.smul, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct,
-                ConjAct.toConjAct_inv, inv_inv] at ha -- diff
-    subst hb
+  · rintro x ⟨a, ha⟩ y ⟨z, ⟨⟨b, hb⟩, hz⟩⟩
     rw [LinearMap.mem_range]
     have := x.invertible
-    have : Invertible (ι Q z) := by rwa [hz]
-    have : Invertible (Q z) := inv_of_inv_ι z
-    use ((⅟ (Q z) * QuadraticForm.polar Q z b) • z - b)
-    rw [← ha, ← invOf_ι_mul_ι_mul_ι Q z b]
+    have : Invertible (ι Q a) := by rwa [ha]
+    have : Invertible (Q a) := inv_of_inv_ι a
+    simp [HSMul.hSMul, SMul.smul, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct,
+                ConjAct.toConjAct_inv, inv_inv] at hz -- diff
+    subst hb
+    use ((⅟ (Q a) * QuadraticForm.polar Q a b) • a - b)
+    rw [← hz, ← invOf_ι_mul_ι_mul_ι Q a b]
     simp_all only [invOf_units]
     done
   · simp only [ConjAct.toConjAct_one, (one_smul _ (LinearMap.range (ι Q))), le_refl]
