@@ -248,13 +248,12 @@ theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)
     have : Invertible (ι Q z) := by rwa [hz]
     have : Invertible (Q z) := inv_of_inv_ι z
     rw [LinearMap.mem_range]
-    convert_to ∃ y : M, ι Q y = ⅟ (ι Q z) * ι Q b * ι Q z
-    . aesop
-    . have vv := invOf_ι_mul_ι_mul_ι Q z b
-      have ⟨va, vv1, vv2⟩ := exists_eq_right.mpr vv
-      use ((⅟ (Q z) * QuadraticForm.polar Q z b) • z - b)
-      rw [← invOf_ι_mul_ι_mul_ι Q z b]
-      done
+    simp [HSMul.hSMul, SMul.smul] at ha
+    use ((⅟ (Q z) * QuadraticForm.polar Q z b) • z - b)
+    rw [← ha]
+    rw [← invOf_ι_mul_ι_mul_ι Q z b]
+    simp_all only [invOf_units]
+    done
     done
   · simp only [ConjAct.toConjAct_one, (one_smul _ (LinearMap.range (ι Q))), le_refl]
     done
