@@ -490,6 +490,19 @@ theorem units_mem_lipschitz {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup
   pinGroup.units_mem_lipschitz (mem_pin hx)
 #align spin_group.units_mem_lipschitz spinGroup.units_mem_lipschitz
 
+/- If x is in `spinGroup Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
+statement presumably being true only in finite dimensions.-/
+theorem units_mem_conjAct_le {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q)
+    [Invertible (2 : R)] : ConjAct.toConjAct x • LinearMap.range (ι Q) ≤ LinearMap.range (ι Q) :=
+  mem_lipschitz_conjAct_le (units_mem_lipschitz hx)
+#align spin_group.units_mem_conj_act_le spinGroup.units_mem_conjAct_le
+
+/- This is another version of `units_mem_conj_act_le` which uses `involute`.-/
+theorem units_mem_involute_act_le {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q)
+    [Invertible (2 : R)] (y : M) : involute ↑x * ι Q y * ↑x⁻¹ ∈ LinearMap.range (ι Q) :=
+  mem_lipschitz_involute_le (units_mem_lipschitz hx) y
+#align spin_group.units_mem_involute_act_le spinGroup.units_mem_involute_act_le
+
 /-- If x is in `spinGroup Q`, then `involute x` is equal to x.-/
 theorem mem_involute_eq {x : CliffordAlgebra Q} (hx : x ∈ spinGroup Q) : involute x = x :=
   involute_eq_of_mem_even (mem_even hx)
@@ -597,19 +610,5 @@ theorem toUnits_injective : Function.Injective (toUnits : spinGroup Q → (Cliff
 #align spin_group.to_units_injective spinGroup.toUnits_injective
 
 end spinGroup
-
-
-/- If x is in `spinGroup Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
-statement presumably being true only in finite dimensions.-/
-theorem spinGroup.units_mem_conjAct_le {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q)
-    [Invertible (2 : R)] : ConjAct.toConjAct x • LinearMap.range (ι Q) ≤ LinearMap.range (ι Q) :=
-  mem_lipschitz_conjAct_le (units_mem_lipschitz hx)
-#align spin_group.units_mem_conj_act_le spinGroup.units_mem_conjAct_le
-
-/- This is another version of `units_mem_conj_act_le` which uses `involute`.-/
-theorem spinGroup.units_mem_involute_act_le {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ spinGroup Q)
-    [Invertible (2 : R)] (y : M) : involute ↑x * ι Q y * ↑x⁻¹ ∈ LinearMap.range (ι Q) :=
-  mem_lipschitz_involute_le (units_mem_lipschitz hx) y
-#align spin_group.units_mem_involute_act_le spinGroup.units_mem_involute_act_le
 
 end Spin
