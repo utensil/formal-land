@@ -193,6 +193,104 @@ variable {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)] (hx : x ∈ lipschitz 
 
 #check Exists.imp
 
+
+set_option synthInstance.maxHeartbeats 25000 in
+/-- If x is in `lipschitz Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
+statement presumably being true only in finite dimensions.-/
+theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)]
+    (hx : x ∈ lipschitz Q) : ConjAct.toConjAct x • LinearMap.range (ι Q) ≤ LinearMap.range (ι Q) := by
+  unfold lipschitz at hx
+  apply Subgroup.closure_induction'' hx
+  · rintro x ⟨a, ha⟩ y ⟨z, ⟨⟨b, hb⟩, hz⟩⟩
+    have := x.invertible
+    have : Invertible (ι Q a) := by rwa [ha]
+    have : Invertible (Q a) := inv_of_inv_ι a
+    rw [LinearMap.mem_range]
+    simp only [HSMul.hSMul, SMul.smul, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct,
+                SetLike.mem_coe, LinearMap.mem_range] at hz -- diff
+    subst hb
+    suffices ∃ y : M, ι Q y = ι Q a * ι Q b * ⅟ (ι Q a) by simp_all only [invOf_units]
+    rw [ι_mul_ι_mul_invOf_ι Q a b]
+    use ((⅟ (Q a) * QuadraticForm.polar Q a b) • a - b)
+  · rintro x ⟨a, ha⟩ y ⟨z, ⟨⟨b, hb⟩, hz⟩⟩
+    have := x.invertible
+    have : Invertible (ι Q a) := by rwa [ha]
+    have : Invertible (Q a) := inv_of_inv_ι a
+    rw [LinearMap.mem_range]
+    simp [HSMul.hSMul, SMul.smul, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct,
+                ConjAct.toConjAct_inv, inv_inv] at hz -- diff
+    subst hb
+    suffices ∃ y : M, ι Q y = ⅟ (ι Q a) * ι Q b * ι Q a by simp_all only [invOf_units]
+    rw [invOf_ι_mul_ι_mul_ι Q a b]
+    use ((⅟ (Q a) * QuadraticForm.polar Q a b) • a - b)
+  · simp only [ConjAct.toConjAct_one, (one_smul _ (LinearMap.range (ι Q))), le_refl]
+  · intro x y hx1 hy1 z hz
+    simp only [ConjAct.toConjAct_mul] at hz
+    suffices (ConjAct.toConjAct x * ConjAct.toConjAct y) • LinearMap.range (ι Q) ≤ LinearMap.range (ι Q) by
+      exact this hz
+    rintro m ⟨a, ⟨b, hb⟩, ha⟩
+    simp only [HSMul.hSMul, SMul.smul, DistribMulAction.toLinearMap_apply, Units.val_mul, mul_inv_rev] at ha
+    subst hb
+    have hb : ↑x * (↑y * (ι Q b) * ↑y⁻¹) * ↑x⁻¹ = m := by
+      simp [← ha, ConjAct.toConjAct_mul, ConjAct.units_smul_def, mul_assoc]
+    have hy2 : ↑y * (ι Q) b * ↑y⁻¹ ∈ ConjAct.toConjAct y • LinearMap.range (ι Q) := by
+      simp only [HSMul.hSMul, SMul.smul, exists_exists_eq_and, exists_apply_eq_apply, Submodule.mem_map,
+        LinearMap.mem_range, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct]
+    specialize hy1 hy2
+    have hx2 : ↑x * (↑y * (ι Q) b * ↑y⁻¹) * ↑x⁻¹ ∈ ConjAct.toConjAct x • LinearMap.range (ι Q) := by
+      simp only [HSMul.hSMul, SMul.smul, Units.mul_left_inj, Units.mul_right_inj, exists_exists_eq_and,
+        Submodule.mem_map, LinearMap.mem_range, DistribMulAction.toLinearMap_apply,
+        ConjAct.ofConjAct_toConjAct]
+      exact hy1
+    specialize hx1 hx2
+    rwa [hb] at hx1
+#align mem_lipschitz_conj_act_le mem_lipschitz_conjAct_le
+
+#print mem_lipschitz_conjAct_le
+
+/-- This is another version of `mem_lipschitz_conj_act_le` which uses `involute`.-/
+theorem mem_lipschitz_involute_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)]
+    (hx : x ∈ lipschitz Q) (b : M) : involute ↑x * ι Q b * ↑x⁻¹ ∈ LinearMap.range (ι Q) :=
+  by
+  revert b
+  unfold lipschitz at hx
+  apply Subgroup.closure_induction'' hx
+  · rintro x ⟨a, ha⟩ b
+    have := x.invertible
+    have : Invertible (ι Q a) := by rwa [ha]
+    have : Invertible (Q a) := inv_of_inv_ι a
+    rw [LinearMap.mem_range, ← invOf_units x]
+    simp_rw [← ha, involute_ι]
+    refine'
+      ⟨-((⅟ (Q a) * QuadraticForm.polar Q a b) • a - b), by
+        simp only [map_neg, neg_mul, ι_mul_ι_mul_invOf_ι Q a b]⟩
+    done
+  · rintro x ⟨a, ha⟩ b
+    have := x.invertible
+    have : Invertible (ι Q a) := by rwa [ha]
+    have : Invertible (Q a) := inv_of_inv_ι a
+    have := invertibleNeg (ι Q a)
+    have := Invertible.map (involute : CliffordAlgebra Q →ₐ[R] CliffordAlgebra Q) (ι Q a)
+    rw [LinearMap.mem_range, ← invOf_units x, inv_inv]
+    simp_rw [← ha, map_invOf, involute_ι, invOf_neg]
+    refine'
+      ⟨-((⅟ (Q a) * QuadraticForm.polar Q a b) • a - b), by
+        simp only [map_neg, neg_mul, invOf_ι_mul_ι_mul_ι Q a b]⟩
+    done
+  · simp only [Units.val_one, map_one, one_mul, inv_one, mul_one, LinearMap.mem_range,
+      exists_apply_eq_apply, forall_const]
+  · intro y z hy hz b
+    simp only [Units.val_mul, map_mul, mul_inv_rev, LinearMap.mem_range]
+    let ⟨z', hz'⟩ := hz b
+    let ⟨y', hy'⟩ := hy z'
+    suffices ∃ c : M, (ι Q) c = involute ↑y * (involute ↑z * (ι Q) b * ↑z⁻¹) * ↑y⁻¹ by
+      obtain ⟨p, hp⟩ := this
+      refine' ⟨p, by simp only [hp, mul_assoc]⟩
+    rw [← hz']
+    use y'
+    done
+#align mem_lipschitz_involute_le mem_lipschitz_involute_le
+
 theorem coe_mem_lipschitz_iff_mem {x : (CliffordAlgebra Q)ˣ} :
     ↑x ∈ (lipschitz Q).toSubmonoid.map (Units.coeHom <| CliffordAlgebra Q) ↔ x ∈ lipschitz Q :=
   by
@@ -237,6 +335,19 @@ theorem units_mem_iff {x : (CliffordAlgebra Q)ˣ} :
 theorem units_mem_lipschitz {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ pinGroup Q) : x ∈ lipschitz Q :=
   (units_mem_iff.1 hx).1
 #align pin_group.units_mem_lipschitz pinGroup.units_mem_lipschitz
+
+/-- If x is in `pinGroup Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
+statement presumably being true only in finite dimensions.-/
+theorem units_mem_conjAct_le {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ pinGroup Q)
+    [Invertible (2 : R)] : ConjAct.toConjAct x • LinearMap.range (ι Q) ≤ LinearMap.range (ι Q) :=
+  mem_lipschitz_conjAct_le (units_mem_lipschitz hx)
+#align pin_group.units_mem_conj_act_le pinGroup.units_mem_conjAct_le
+
+/-- This is another version of `units_mem_conj_act_le` which uses `involute`. -/
+theorem units_mem_involute_act_le {x : (CliffordAlgebra Q)ˣ} (hx : ↑x ∈ pinGroup Q)
+    [Invertible (2 : R)] (y : M) : involute ↑x * ι Q y * ↑x⁻¹ ∈ LinearMap.range (ι Q) :=
+  mem_lipschitz_involute_le (units_mem_lipschitz hx) y
+#align pin_group.units_mem_involute_act_le pinGroup.units_mem_involute_act_le
 
 @[simp]
 theorem star_hMul_self_of_mem {x : CliffordAlgebra Q} (hx : x ∈ pinGroup Q) : star x * x = 1 :=
@@ -487,102 +598,6 @@ theorem toUnits_injective : Function.Injective (toUnits : spinGroup Q → (Cliff
 
 end spinGroup
 
-set_option synthInstance.maxHeartbeats 25000 in
-/-- If x is in `lipschitz Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
-statement presumably being true only in finite dimensions.-/
-theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)]
-    (hx : x ∈ lipschitz Q) : ConjAct.toConjAct x • LinearMap.range (ι Q) ≤ LinearMap.range (ι Q) := by
-  unfold lipschitz at hx
-  apply Subgroup.closure_induction'' hx
-  · rintro x ⟨a, ha⟩ y ⟨z, ⟨⟨b, hb⟩, hz⟩⟩
-    have := x.invertible
-    have : Invertible (ι Q a) := by rwa [ha]
-    have : Invertible (Q a) := inv_of_inv_ι a
-    rw [LinearMap.mem_range]
-    simp only [HSMul.hSMul, SMul.smul, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct,
-                SetLike.mem_coe, LinearMap.mem_range] at hz -- diff
-    subst hb
-    suffices ∃ y : M, ι Q y = ι Q a * ι Q b * ⅟ (ι Q a) by simp_all only [invOf_units]
-    rw [ι_mul_ι_mul_invOf_ι Q a b]
-    use ((⅟ (Q a) * QuadraticForm.polar Q a b) • a - b)
-  · rintro x ⟨a, ha⟩ y ⟨z, ⟨⟨b, hb⟩, hz⟩⟩
-    have := x.invertible
-    have : Invertible (ι Q a) := by rwa [ha]
-    have : Invertible (Q a) := inv_of_inv_ι a
-    rw [LinearMap.mem_range]
-    simp [HSMul.hSMul, SMul.smul, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct,
-                ConjAct.toConjAct_inv, inv_inv] at hz -- diff
-    subst hb
-    suffices ∃ y : M, ι Q y = ⅟ (ι Q a) * ι Q b * ι Q a by simp_all only [invOf_units]
-    rw [invOf_ι_mul_ι_mul_ι Q a b]
-    use ((⅟ (Q a) * QuadraticForm.polar Q a b) • a - b)
-  · simp only [ConjAct.toConjAct_one, (one_smul _ (LinearMap.range (ι Q))), le_refl]
-  · intro x y hx1 hy1 z hz
-    simp only [ConjAct.toConjAct_mul] at hz
-    suffices (ConjAct.toConjAct x * ConjAct.toConjAct y) • LinearMap.range (ι Q) ≤ LinearMap.range (ι Q) by
-      exact this hz
-    rintro m ⟨a, ⟨b, hb⟩, ha⟩
-    simp only [HSMul.hSMul, SMul.smul, DistribMulAction.toLinearMap_apply, Units.val_mul, mul_inv_rev] at ha
-    subst hb
-    have hb : ↑x * (↑y * (ι Q b) * ↑y⁻¹) * ↑x⁻¹ = m := by
-      simp [← ha, ConjAct.toConjAct_mul, ConjAct.units_smul_def, mul_assoc]
-    have hy2 : ↑y * (ι Q) b * ↑y⁻¹ ∈ ConjAct.toConjAct y • LinearMap.range (ι Q) := by
-      simp only [HSMul.hSMul, SMul.smul, exists_exists_eq_and, exists_apply_eq_apply, Submodule.mem_map,
-        LinearMap.mem_range, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct]
-    specialize hy1 hy2
-    have hx2 : ↑x * (↑y * (ι Q) b * ↑y⁻¹) * ↑x⁻¹ ∈ ConjAct.toConjAct x • LinearMap.range (ι Q) := by
-      simp only [HSMul.hSMul, SMul.smul, Units.mul_left_inj, Units.mul_right_inj, exists_exists_eq_and,
-        Submodule.mem_map, LinearMap.mem_range, DistribMulAction.toLinearMap_apply,
-        ConjAct.ofConjAct_toConjAct]
-      exact hy1
-    specialize hx1 hx2
-    rwa [hb] at hx1
-#align mem_lipschitz_conj_act_le mem_lipschitz_conjAct_le
-
-#print mem_lipschitz_conjAct_le
-
-/-- This is another version of `mem_lipschitz_conj_act_le` which uses `involute`.-/
-theorem mem_lipschitz_involute_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)]
-    (hx : x ∈ lipschitz Q) (b : M) : involute ↑x * ι Q b * ↑x⁻¹ ∈ LinearMap.range (ι Q) :=
-  by
-  revert b
-  unfold lipschitz at hx
-  apply Subgroup.closure_induction'' hx
-  · rintro x ⟨a, ha⟩ b
-    have := x.invertible
-    have : Invertible (ι Q a) := by rwa [ha]
-    have : Invertible (Q a) := inv_of_inv_ι a
-    rw [LinearMap.mem_range, ← invOf_units x]
-    simp_rw [← ha, involute_ι]
-    refine'
-      ⟨-((⅟ (Q a) * QuadraticForm.polar Q a b) • a - b), by
-        simp only [map_neg, neg_mul, ι_mul_ι_mul_invOf_ι Q a b]⟩
-    done
-  · rintro x ⟨a, ha⟩ b
-    have := x.invertible
-    have : Invertible (ι Q a) := by rwa [ha]
-    have : Invertible (Q a) := inv_of_inv_ι a
-    have := invertibleNeg (ι Q a)
-    have := Invertible.map (involute : CliffordAlgebra Q →ₐ[R] CliffordAlgebra Q) (ι Q a)
-    rw [LinearMap.mem_range, ← invOf_units x, inv_inv]
-    simp_rw [← ha, map_invOf, involute_ι, invOf_neg]
-    refine'
-      ⟨-((⅟ (Q a) * QuadraticForm.polar Q a b) • a - b), by
-        simp only [map_neg, neg_mul, invOf_ι_mul_ι_mul_ι Q a b]⟩
-    done
-  · simp only [Units.val_one, map_one, one_mul, inv_one, mul_one, LinearMap.mem_range,
-      exists_apply_eq_apply, forall_const]
-  · intro y z hy hz b
-    simp only [Units.val_mul, map_mul, mul_inv_rev, LinearMap.mem_range]
-    let ⟨z', hz'⟩ := hz b
-    let ⟨y', hy'⟩ := hy z'
-    suffices ∃ c : M, (ι Q) c = involute ↑y * (involute ↑z * (ι Q) b * ↑z⁻¹) * ↑y⁻¹ by
-      obtain ⟨p, hp⟩ := this
-      refine' ⟨p, by simp only [hp, mul_assoc]⟩
-    rw [← hz']
-    use y'
-    done
-#align mem_lipschitz_involute_le mem_lipschitz_involute_le
 
 /- If x is in `spinGroup Q`, then `(ι Q).range` is closed under twisted conjugation. The reverse
 statement presumably being true only in finite dimensions.-/
