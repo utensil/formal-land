@@ -230,17 +230,11 @@ theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)
     simp only [HSMul.hSMul, SMul.smul, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct,
                 SetLike.mem_coe, LinearMap.mem_range] at ha -- diff
     subst hb
+    rw [LinearMap.mem_range]
     have := x.invertible
     have : Invertible (ι Q z) := by rwa [hz]
     have : Invertible (Q z) := inv_of_inv_ι z
-    rw [LinearMap.mem_range]
-    convert_to ∃ y : M, ι Q y = ι Q z * ι Q b * ⅟ (ι Q z)
-    /-
-      rename_i inst inst_1 inst_2 inst_3 x_1 inst_4 this_1 this_2
-      aesop_subst ha
-      simp_all only [invOf_units]
-      apply Eq.refl
-    -/
+    suffices : ∃ y : M, ι Q y = ι Q z * ι Q b * ⅟ (ι Q z)
     . simp_all only [invOf_units]
     . use ((⅟ (Q z) * QuadraticForm.polar Q z b) • z - b)
       rw [← ι_mul_ι_mul_invOf_ι Q z b]
@@ -250,15 +244,13 @@ theorem mem_lipschitz_conjAct_le {x : (CliffordAlgebra Q)ˣ} [Invertible (2 : R)
     simp [HSMul.hSMul, SMul.smul, DistribMulAction.toLinearMap_apply, ConjAct.ofConjAct_toConjAct,
                 ConjAct.toConjAct_inv, inv_inv] at ha -- diff
     subst hb
+    rw [LinearMap.mem_range]
     have := x.invertible
     have : Invertible (ι Q z) := by rwa [hz]
     have : Invertible (Q z) := inv_of_inv_ι z
-    rw [LinearMap.mem_range]
     use ((⅟ (Q z) * QuadraticForm.polar Q z b) • z - b)
-    rw [← ha]
-    rw [← invOf_ι_mul_ι_mul_ι Q z b]
+    rw [← ha, ← invOf_ι_mul_ι_mul_ι Q z b]
     simp_all only [invOf_units]
-    done
     done
   · simp only [ConjAct.toConjAct_one, (one_smul _ (LinearMap.range (ι Q))), le_refl]
     done
