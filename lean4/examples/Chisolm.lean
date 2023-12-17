@@ -56,6 +56,8 @@ example : u * 1 = u := by rw [mul_one]
 -- [Field R]
 -- [DivisionRing R] [CharZero R]
 
+#check G0
+
 local notation "𝟘" => (0 : Cl)
 local notation "𝟙" => (1 : Cl)
 
@@ -69,6 +71,17 @@ local notation "𝟙" => (1 : Cl)
   Axiom 3. G contains a subset G1 closed under addition, and λ ∈ G0, v ∈ G1 implies λv = vλ ∈ G1.
 -/
 #check M
+#check G1
+
+example : r ∈ G0 ∧ u ∈ G1 → r • u ∈ G1 := by
+  rintro ⟨hr, hu⟩
+  rw [LinearMap.mem_range] at *
+  rw [RingHom.mem_range] at hr
+  let ⟨r', hr'⟩ := hr
+  let ⟨u', hu'⟩ := hu
+  use (r' • u')
+  simp only [← hr', ← hu', map_smul, smul_eq_mul, Algebra.smul_def]
+  done
 
 -- local notation "ι" => CliffordAlgebra.ι Q
 
@@ -146,7 +159,7 @@ TODO: Wait to see if this is necessary and what's the weaker condition.
 
 /-!
   Axiom 6. If G0 = G1, then G = G0. TODO: Wait to see if this is necessary and what's the weaker condition.
-  
+
   Otherwise, G is the direct sum of all the Gr.
 -/
 
@@ -175,7 +188,7 @@ def 𝒢ᵣ (mv : CliffordAlgebra Q) (i : ℕ) : CliffordAlgebra Q := GradedAlge
 #check List
 
 -- (fun xs i => true)
---  (CliffordAlgebra Q → ℕ → Prop) 
+--  (CliffordAlgebra Q → ℕ → Prop)
 instance instGetElemByGradeCliffordAlgebra : GetElem (CliffordAlgebra Q) ℕ (CliffordAlgebra Q) (fun _mv i => i < Module.rank R (CliffordAlgebra Q)) := {
   getElem := fun mv i _h => 𝒢ᵣ mv i
 }
@@ -264,7 +277,7 @@ example : finrank ℝ Clℂ = finrank ℝ ℂ := by
   rw [finrank_eq ℝ Clℂ ℂ CliffordAlgebraComplex.equiv]
 
 example : finrank ℝ Clℂ = finrank ℝ ℂ := LinearEquiv.finrank_eq CliffordAlgebraComplex.equiv.toLinearEquiv
-  
+
 --   done
 
 
@@ -289,7 +302,7 @@ example : finrank ℝ Clℂ = finrank ℝ ℂ := LinearEquiv.finrank_eq Clifford
 
 open DirectSum
 
-local notation "Cl₀₁" => CliffordAlgebra.evenOdd Q 
+local notation "Cl₀₁" => CliffordAlgebra.evenOdd Q
 
 -- def Cl₀₁ (i : ZMod 2) : Submodule R Cl := CliffordAlgebra.evenOdd Q i
 

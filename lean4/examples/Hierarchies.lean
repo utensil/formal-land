@@ -63,6 +63,8 @@ variable (n2 : Type u) (α2 : Type v) [DivisionMonoid (Matrix n2 n2 α2)] (A B :
 -/
 #check A * B
 
-theorem mul_inv_rev2 : (A * B)⁻¹ = B⁻¹ * A⁻¹ := by
+theorem mul_inv_rev2 : (A * B)⁻¹ = B⁻¹ * A⁻¹ := by sorry
 
-  done
+#check Prop
+
+#check Bool
