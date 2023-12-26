@@ -3,8 +3,8 @@ import Mathlib.LinearAlgebra.CliffordAlgebra.Basic
 import Mathlib.LinearAlgebra.ExteriorAlgebra.Basic
 import Mathlib.Data.Matrix.Notation
 
-set_option trace.Meta.synthInstance true
-set_option synthInstance.checkSynthOrder false
+-- set_option trace.Meta.synthInstance true
+-- set_option synthInstance.checkSynthOrder false
 
 #check Monoid.mk
 
@@ -51,6 +51,20 @@ example [CommSemiring R] [Semiring A] [Algebra R A] (a b : A): a + b = b + a := 
 
 #check ExteriorAlgebra
 
+#check TensorAlgebra.toClifford
+
+#check Module.Dual
+
+#check Module.Free
+
+#check Module.Finite
+
+#check LinearMap.module
+
+#check star
+
+postfix:max "ᘁ" => star
+
 -- https://leanprover.zulipchat.com/#narrow/stream/113489-new-members/topic/.E2.9C.94.20How.20to.20find.20the.20detailed.20definition.20of.20a.20.22notation.22.20.3F
 
 universe u v
@@ -68,3 +82,7 @@ theorem mul_inv_rev2 : (A * B)⁻¹ = B⁻¹ * A⁻¹ := by sorry
 #check Prop
 
 #check Bool
+
+-- TOD: PR
+#check QuadraticForm.associated_left_inverse
+#check QuadraticForm.associated_rightInverse
