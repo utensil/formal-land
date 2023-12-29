@@ -27,6 +27,9 @@ import Mathlib.LinearAlgebra.Matrix.Spectrum
 import Mathlib.GroupTheory.FreeGroup.IsFreeGroup
 import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup
 import Mathlib.LinearAlgebra.QuadraticForm.IsometryEquiv
+import Mathlib.GroupTheory.SemidirectProduct
+import Mathlib.Logic.Equiv.Defs
+import Mathlib.Data.ZMod.Module
 import Mathlib.Tactic
 
 -- Inspired by Finite symmetric groups in Physics
@@ -57,7 +60,7 @@ abbrev Model.Index := {l : List ι // l.Sorted (· < ·) }
 
 def fp := Model.Index ι →₀ F
 
-def e(g : fp F ι) : fp F ι := g
+def ee (g : fp F ι) : fp F ι := g
 
 #check Fin p
 
@@ -358,3 +361,199 @@ some exponent `k` is contained in the generalized eigenspace for exponents large
 --   ∃ T : Matrix.GeneralLinearGroup n k,
 --     ∀ g, ρ₁ g = T⁻¹ ∘ₗ ρ₂ g ∘ₗ T
 -- end
+
+#check Representation.trivial
+
+#check CategoryTheory.Faithful.of_iso
+
+
+-- #check Real.cos -1
+
+-- #check Real.cos (-1 : ℝ)
+
+-- #check Complex.cos (-1 : ℂ)
+
+-- example : Real.sqrt 1 = 1 := by
+--   norm_num
+
+-- example : Real.sqrt 1 = 1 ^ (1 / 2 : ℝ) := by
+--   norm_num
+--   done
+
+-- example : (Real.sqrt 2)^2 = (2 : ℝ) := by
+--   norm_num
+--   done -- works
+
+-- example : Real.sqrt 2 = 2 ^ (1 / 2) → false := by
+--   norm_num
+--   done -- works
+
+-- example : Real.sqrt 2 = 2 ^ (1 / 2 : ℝ) := by
+--   norm_num
+--   done -- fails
+
+-- example : Real.sqrt 2 = 2 ^ (1 / 2 : ℚ) := by
+--   norm_num
+
+--   done
+
+-- example : Real.sqrt (-1 : ℝ ) = Real.sqrt (-4 : ℝ ) := by
+--   norm_num
+--   done
+
+-- example : (2 : ℝ) * Real.sqrt (-1 : ℝ ) = Real.sqrt (-4 : ℝ ) := by
+--   norm_num
+--   done
+
+-- TODO: FG-module
+
+-- TODO: permutation module
+
+
+#check MonoidAlgebra
+
+#check LinearMap.trace
+
+#check LinearMap.trace_eq_matrix_trace
+
+#check LinearMap.trace_eq_contract
+
+#check LinearMap.baseChange
+
+#check LinearMap.trace_eq_contract_of_basis
+
+#check alternatingGroup (Fin 8)
+
+variable (n : ℕ)
+abbrev Aₙ : Matrix (Fin n) (Fin n) ℕ := Matrix.of fun i j : Fin n =>
+    if i == j then 1
+      else (if i == n - 1 ∨ j == n - 1 then 2 else 3)
+
+#check Aₙ 8
+
+#check QuaternionGroup 8
+
+abbrev Q₈ := QuaternionGroup 2
+
+abbrev C₃ := Multiplicative (ZMod 3)
+
+-- variable (z : Z₃)
+
+-- #synth Group Z₃
+
+-- variable {C₃ : Type} [Group C₃] [Fintype C₃] (h : Fintype.card C₃ = 3) [IsCyclic C₃]
+
+-- #check C₃
+
+#synth CommRing <| ZMod 3
+
+#synth AddGroup <| ZMod 3
+
+#check Multiplicative.group
+
+#synth CommGroup <| Multiplicative (ZMod 3)
+
+#synth IsCyclic C₃
+
+#eval Fintype.card C₃
+
+-- #eval orderOf C₃
+
+#check Additive.ofMul <| Multiplicative (ZMod 3)
+
+#check Multiplicative.toAdd <| Multiplicative <| ZMod 3
+
+-- #synth AddGroup <| Multiplicative.toAdd <| Multiplicative <| ZMod 3
+
+#synth IsCyclic C₃
+
+#synth Group Q₈
+
+#check MulAut.conj
+
+#check RingEquiv
+
+#check SMul
+
+#check MulAction
+
+#check DistribMulAction
+
+#check LinearPMap
+
+#check LinearPMap.instMulAction
+
+-- #check ​Equiv.Perm
+
+-- instance : MulAction C₃ Q₈ where
+--   smul g h :=
+
+def c1 : C₃ := 1
+
+#eval c1.val
+
+def f (n : ℕ) : ZMod 3 := n % 3
+
+#eval f 0
+
+#eval f 1
+
+#eval f 2
+
+/-
+0
+-/
+#eval f 3
+
+#eval f 2 |>.val
+
+/-
+8
+-/
+#eval Fintype.card Q₈
+
+-- TODO: typo Multiplication of the dihedral group PR
+
+def e : Q₈ := QuaternionGroup.a 0
+
+def i : Q₈ := QuaternionGroup.a 1
+
+def ne : Q₈ := QuaternionGroup.a 2
+
+def ni : Q₈ := QuaternionGroup.a 3
+
+def j : Q₈ := QuaternionGroup.xa 0
+
+def nk : Q₈ := QuaternionGroup.xa 1
+
+def nj : Q₈ := QuaternionGroup.xa 2
+
+def k : Q₈ := QuaternionGroup.xa 3
+
+def QuaternionGroup.f0 : Q₈ → Q₈
+  | a 1 => xa 0   -- i -> j
+  | xa 0 => xa 3  -- j -> k
+  | xa 3 => a 1   -- k -> i
+  | a 3 => xa 2   -- ni -> nj
+  | xa 2 => xa 1  -- nj -> nk
+  | xa 1 => a 3   -- nk -> ni
+  | x => x        -- e, ne
+
+def φ : C₃ →* MulAut Q₈ where
+  toFun c := {
+      toFun := fun q => q, -- ^c.val,
+      invFun := fun q => q, --^c.val,
+      left_inv := fun x => by
+        simp [Function.LeftInverse]
+        done
+      right_inv := fun x => by simp [Function.RightInverse]
+      map_mul' := by simp [Function.LeftInverse, Function.RightInverse]
+  }
+  map_one' := sorry
+  map_mul' := sorry
+
+#check Q₈ ⋊[φ] C₃
+
+
+
+#check Q₈ ⋊[φ] C₃
