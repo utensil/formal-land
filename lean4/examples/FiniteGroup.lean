@@ -30,6 +30,7 @@ import Mathlib.LinearAlgebra.QuadraticForm.IsometryEquiv
 import Mathlib.GroupTheory.SemidirectProduct
 import Mathlib.Logic.Equiv.Defs
 import Mathlib.Data.ZMod.Module
+import Mathlib.GroupTheory.PresentedGroup
 import Mathlib.Tactic
 
 -- Inspired by Finite symmetric groups in Physics
@@ -530,7 +531,7 @@ def nj : Q₈ := QuaternionGroup.xa 2
 
 def k : Q₈ := QuaternionGroup.xa 3
 
-def QuaternionGroup.f0 : Q₈ → Q₈
+def QuaternionGroup.f : Q₈ → Q₈
   | a 1 => xa 0   -- i -> j
   | xa 0 => xa 3  -- j -> k
   | xa 3 => a 1   -- k -> i
@@ -539,21 +540,216 @@ def QuaternionGroup.f0 : Q₈ → Q₈
   | xa 1 => a 3   -- nk -> ni
   | x => x        -- e, ne
 
-def φ : C₃ →* MulAut Q₈ where
+#check ZMod.card
+
+-- example (z : ZMod 3) : 1 = 1 := by
+--   cases z.val with
+--   | zero => rfl
+--   | succ n => rfl
+
+-- example (q : Q₈) : Nat.repeat QuaternionGroup.f 3 q = 1 := by
+--   simp only [QuaternionGroup.one_def, Nat.repeat]
+--   cases q with
+--   | a i => cases i.val with
+--     | zero =>
+--         rw (config := {occs := .pos {1} }) [QuaternionGroup.f]
+--         done
+--     | succ n => repeat { rw [QuaternionGroup.f] }
+--     | _ => sorry
+--   | _ => sorry
+--   done
+
+-- def φ : C₃ →* MulAut Q₈ where
+--   toFun c := {
+--       toFun := fun q => Nat.repeat QuaternionGroup.f c.val q, -- ^c.val,
+--       invFun := fun q => Nat.repeat QuaternionGroup.f (c.val + 1) q, --^c.val,
+--       left_inv := fun x => by
+--         simp [Function.LeftInverse, QuaternionGroup.f]
+--         done
+--       right_inv := fun x => by simp [Function.RightInverse]
+--       map_mul' := by simp [Function.LeftInverse, Function.RightInverse]
+--   }
+--   map_one' := sorry
+--   map_mul' := sorry
+
+-- #check Q₈ ⋊[φ] C₃
+
+-- #check Q₈ ⋊[φ] C₃
+
+
+#check PresentedGroup
+
+variable {B : Type*} [DecidableEq B] in
+def demo := PresentedGroup <| Set.range <| Function.uncurry fun (i j : B) => FreeGroup.of i * FreeGroup.of j
+
+inductive generator (n : ℕ)
+  | a : ZMod n → generator n
+  | b : ZMod n → generator n
+  deriving DecidableEq
+
+def rel : generator n → generator n → FreeGroup (generator n)
+  | generator.a i, generator.a j => FreeGroup.of (generator.a i) * FreeGroup.of (generator.a j)
+  | generator.b i, generator.b j => FreeGroup.of (generator.b i) * FreeGroup.of (generator.b j)
+  | generator.a i, generator.b j => (FreeGroup.of (generator.a j) * FreeGroup.of (generator.b i))^n
+  | generator.b i, generator.a j => (FreeGroup.of (generator.b j) * FreeGroup.of (generator.a i))^n
+
+#check rel
+
+/-- The presentation of the Dihedral group which makes it a Coxeter group is
+⟨a, b | a^2 = 1, b^2 = 1, (a * b)^n = 1⟩ -/
+def DihedralPresentedGroup {i : ZMod n} := PresentedGroup <| Set.range <| Function.uncurry <| rel n
+
+namespace DihedralPresentedGroup
+
+inductive pre (n : ℕ)
+  | a : ZMod n → pre n
+  | b : ZMod n → pre n
+  deriving DecidableEq
+
+#check (1 : FreeGroup (pre n))
+
+/-- The presentation of the Dihedral group which makes it a Coxeter group is
+⟨a, b | a^2 = 1, b^2 = 1, (a * b)^n = 1⟩ -/
+def rel {i : ZMod n} : Set (FreeGroup (pre n)) :=
+  {FreeGroup.of (pre.a i)^2} ∪
+  {FreeGroup.of (pre.b i)^2} ∪
+  {(FreeGroup.of (pre.a i) * FreeGroup.of (pre.b i)) ^ n}
+
+abbrev DihedralPresentedGroup {i : ZMod n} := PresentedGroup <| @rel n i
+
+end DihedralPresentedGroup
+
+namespace PresentedQuaternionGroup
+
+-- variable {X : Type*} [DecidableEq X]
+
+inductive pre
+  | x : pre
+  | y : pre
+  deriving DecidableEq
+
+inductive rel {n : ℕ} : FreeGroup pre → FreeGroup pre → Prop
+| cond1 : rel ((FreeGroup.of pre.x)^n) ((FreeGroup.of pre.y)^2)
+| cond2 : rel ((FreeGroup.of pre.y)⁻¹ * (FreeGroup.of pre.x) * (FreeGroup.of pre.y)) ((FreeGroup.of pre.x)⁻¹)
+
+end PresentedQuaternionGroup
+
+namespace C
+
+-- variable {X : Type*} [DecidableEq X]
+
+inductive pre
+  | a : pre
+  deriving DecidableEq
+
+def rel := {a : FreeGroup pre| a^n = 1}
+
+end C
+
+abbrev C (n : ℕ) := PresentedGroup <| C.rel n
+
+#synth Group <| C 3
+
+namespace D
+
+inductive pre
+  | x : pre
+  | y : pre
+  deriving DecidableEq
+
+def x := FreeGroup.of pre.x
+def y := FreeGroup.of pre.y
+
+def rel : Set (FreeGroup pre) := {x^n} ∪ {y^2} ∪ {(x * y)^2}
+
+end D
+
+abbrev D (n : ℕ) := PresentedGroup <| D.rel n
+
+namespace Q
+
+inductive pre
+  | x : pre
+  | y : pre
+  deriving DecidableEq
+
+def x := FreeGroup.of pre.x
+def y := FreeGroup.of pre.y
+
+def rel : Set (FreeGroup pre) := {x^4} ∪ {y^4} ∪ {y⁻¹ * x * y * x}
+
+end Q
+
+abbrev Q := PresentedGroup <| Q.rel
+
+#synth Group <| Q
+
+def φ : C 3 →* MulAut Q where
   toFun c := {
-      toFun := fun q => q, -- ^c.val,
-      invFun := fun q => q, --^c.val,
-      left_inv := fun x => by
-        simp [Function.LeftInverse]
-        done
-      right_inv := fun x => by simp [Function.RightInverse]
-      map_mul' := by simp [Function.LeftInverse, Function.RightInverse]
+      toFun := fun q => sorry,
+      invFun := fun q => sorry,
+      left_inv := fun x => by simp [Function.LeftInverse]; sorry
+      right_inv := fun x => by simp [Function.RightInverse]; sorry
+      map_mul' := by simp [Function.LeftInverse, Function.RightInverse]; sorry
   }
   map_one' := sorry
   map_mul' := sorry
 
-#check Q₈ ⋊[φ] C₃
+#check Q ⋊[φ] C 3
 
+#synth Group <| Q ⋊[φ] C 3
 
+namespace BT
 
-#check Q₈ ⋊[φ] C₃
+inductive pre
+  | e : pre
+  | ne : pre
+  | i : pre
+  | j : pre
+  | k : pre
+  | f : pre
+  | g : pre
+  deriving DecidableEq
+
+def e := FreeGroup.of pre.e
+def ne := FreeGroup.of pre.ne
+def i := FreeGroup.of pre.i
+def j := FreeGroup.of pre.j
+def k := FreeGroup.of pre.k
+def f := FreeGroup.of pre.f
+def g := FreeGroup.of pre.g
+
+def rel : Set (FreeGroup pre) :=
+  {e} ∪ {ne^2} ∪ {i^4} ∪ {j^4} ∪ {i * j * k} ∪
+  {f^3} ∪ {g^3} ∪ {f * g} ∪ {f⁻¹ * i * f * j⁻¹} ∪ {f⁻¹ * j * f * k⁻¹}
+
+end BT
+
+-- example (a b: BT) [Group BT] : a^6 = 1 := by
+--   done
+
+abbrev BT := PresentedGroup <| BT.rel
+
+namespace BT
+
+def of := @PresentedGroup.of pre rel
+
+def k' := BT.of pre.k
+def f' := BT.of pre.f
+def i' := BT.of pre.i
+
+-- example : f'⁻¹ * k' * f' = i' := by
+--   simp [f', k', i', BT.of, BT.rel] --, pre.k, pre.f, pre.i]
+--   have h : i'^4 = BT.of pre.e := by
+--     simp [i', BT.of, BT.rel]
+--     done
+--     done
+--   done
+--   done
+--   done
+--   done
+
+end BT
+
+-- TODO Tietze transformations
+-- https://math.stackexchange.com/questions/4273898/proving-an-isomorphism-via-generators
