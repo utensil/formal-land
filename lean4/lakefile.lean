@@ -6,7 +6,7 @@ package «hello» {}
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4"
 
-require «Duper» from git "https://github.com/leanprover-community/duper.git"
+require «Duper» from git "https://github.com/leanprover-community/duper.git" @ "main"
 
 @[default_target]
 lean_lib «Hello» {

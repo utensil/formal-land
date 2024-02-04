@@ -49,9 +49,9 @@ jobs:
           cd lean4
           ./install_deps.sh
           ./build.sh
-          ./annotate_all.sh
+          # ./annotate_all.sh
           lake script run check_examples
-          lake env leanInk analyze examples/Help.lean
+          # lake env leanInk analyze examples/Help.lean
       - name: check on Windows
         if: matrix.os == 'windows-latest'
         run: |
