@@ -31,6 +31,8 @@ import Mathlib.GroupTheory.SemidirectProduct
 import Mathlib.Logic.Equiv.Defs
 import Mathlib.Data.ZMod.Module
 import Mathlib.GroupTheory.PresentedGroup
+import Mathlib.GroupTheory.Commutator
+import Mathlib.GroupTheory.Coprod.Basic
 import Mathlib.Tactic
 
 -- Inspired by Finite symmetric groups in Physics
@@ -434,6 +436,9 @@ abbrev Aₙ : Matrix (Fin n) (Fin n) ℕ := Matrix.of fun i j : Fin n =>
 
 #check QuaternionGroup 8
 
+-- https://en.wikipedia.org/wiki/Quaternion_group
+-- https://kconrad.math.uconn.edu/blurbs/grouptheory/genquat.pdf
+-- https://math.stackexchange.com/questions/305455/generalized-quaternion-group
 abbrev Q₈ := QuaternionGroup 2
 
 abbrev C₃ := Multiplicative (ZMod 3)
@@ -576,7 +581,16 @@ def QuaternionGroup.f : Q₈ → Q₈
 
 -- #check Q₈ ⋊[φ] C₃
 
-
+-- https://en.wikipedia.org/wiki/Presentation_of_a_group
+-- https://mathworld.wolfram.com/GroupPresentation.html
+-- https://leanprover.zulipchat.com/#narrow/stream/287929-mathlib4/topic/Coxeter.20Groups
+-- https://leanprover.zulipchat.com/#narrow/stream/217875-Is-there-code-for-X.3F/topic/Group.20algebra.20over.20finite.20groups
+-- https://encyclopediaofmath.org/wiki/Schur_index
+-- https://en.wikipedia.org/wiki/Covering_groups_of_the_alternating_and_symmetric_groups
+-- https://math.stackexchange.com/questions/4242277/number-of-schur-covering-groups
+-- https://en.m.wikipedia.org/wiki/Tietze_transformations
+-- https://mathworld.wolfram.com/GroupAlgebra.html
+-- https://github.com/leanprover-community/mathlib4/commits/j-loreaux/generator/
 #check PresentedGroup
 
 variable {B : Type*} [DecidableEq B] in
@@ -666,6 +680,16 @@ end D
 
 abbrev D (n : ℕ) := PresentedGroup <| D.rel n
 
+namespace De
+
+variable {X : Type*} [DecidableEq X]
+
+def rel {x y : FreeGroup X} : Set (FreeGroup X) := {x^n} ∪ {y^2} ∪ {(x * y)^2}
+
+end De
+
+def De (n : ℕ) := PresentedGroup <| @De.rel n D.pre D.x D.y
+
 namespace Q
 
 inductive pre
@@ -729,6 +753,42 @@ end BT
 --   done
 
 abbrev BT := PresentedGroup <| BT.rel
+
+-- namespace TT
+
+-- inductive pre
+-- | ofQ :  FreeGroup Q.pre → pre
+-- | ofC :  FreeGroup C.pre → pre
+
+-- def relQ := { FreeGroup.of <| pre.ofQ q | q ∈ Q.rel }
+-- def relC := { FreeGroup.of <| pre.ofC c | c ∈ C.rel 3 }
+
+-- def QC := FreeGroup <| Q.pre × C.pre
+
+-- def rel : Set (FreeGroup pre) :=
+--   relQ ∪ relC
+
+-- end TT
+
+-- https://people.maths.bris.ac.uk/~matyd/GroupNames/1/e5/C3byQ8.html#s1
+-- https://people.maths.bris.ac.uk/~matyd/GroupNames/1/SL(2,3).html
+-- https://en.wikipedia.org/wiki/Direct_product_of_groups#Presentations
+abbrev TT := Q × C 3
+
+#synth Group <| TT
+
+#check Prod
+
+#check Prod.instGroup
+
+#check MulHom
+
+-- free product of groups
+#check Monoid.Coprod
+
+open Monoid.Coprod
+
+#check Q ∗ C 3
 
 namespace BT
 
