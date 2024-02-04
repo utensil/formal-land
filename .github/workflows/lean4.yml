@@ -59,11 +59,11 @@ jobs:
           lake exe cache get
           lake build
           lake script run check_examples
-      - name: Upload artifact
-        if: matrix.os == 'ubuntu-latest'
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: ./lean4/dist
+      # - name: Upload artifact
+      #   if: matrix.os == 'ubuntu-latest'
+      #   uses: actions/upload-pages-artifact@v1
+      #   with:
+      #     path: ./lean4/dist
 
   # Deployment job
   deploy:
