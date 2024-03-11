@@ -19,7 +19,9 @@ lemma demo {α : Type} [Monoid α] (a b : α) : a * b = a * b := by rfl
 
 #check MulHomClass.mk -- map_mul, toFunLike
 
-#check FunLike.mk -- coe, coe_injective'
+#check FunLike
+
+-- #check FunLike.mk -- coe, coe_injective'
 
 #check RingHom.mk -- map_zero', map_add', toMonoidHom
 

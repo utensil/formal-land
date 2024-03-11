@@ -11,7 +11,8 @@ related:
 
 -/
 
-import Std.Tactic.TryThis
+import Lean.Meta.Tactic.TryThis
+open Lean.Meta.Tactic
 
 namespace Mathlib.Tactic.imp
 
@@ -55,7 +56,7 @@ elab (name := commandImp!) tk:"imp" fz:("!")? na:(colGt ident) : command => do
       let impS ← moduleNameOfFileName (".lake/packages/mathlib/Mathlib/" ++ imp.replace "." "/" ++ ".lean") ".lake/packages/mathlib/"
       let imp : TSyntax `write_me_output_stx ← `(write_me_output_stx| import $(mkIdent impS))
       let stx ← getRef
-      Std.Tactic.TryThis.addSuggestion stx imp
+      TryThis.addSuggestion stx imp
 
 
 @[inherit_doc commandImp!]

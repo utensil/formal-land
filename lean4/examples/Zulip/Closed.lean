@@ -62,10 +62,10 @@ example (s t : Set X) (hs : IsClosed (restrict t s)) : closure (s ∩ t) ∩ t �
   sorry
   done
 
-example (s t : Set X) (hs : IsClosed (Subtype.val ⁻¹' s : Set t)) : closure (s ∩ t) ∩ t ⊆ s ∩ t := by
-  suffices : closure (Subtype.val ⁻¹' s : Set t) ⊆ (Subtype.val ⁻¹' s : Set t)
-  · convert Set.image_subset Subtype.val this <;> simp [embedding_subtype_val.closure_eq_preimage_closure_image]
-  rwa [IsClosed.closure_subset_iff]
+-- example (s t : Set X) (hs : IsClosed (Subtype.val ⁻¹' s : Set t)) : closure (s ∩ t) ∩ t ⊆ s ∩ t := by
+--   suffices : closure (Subtype.val ⁻¹' s : Set t) ⊆ (Subtype.val ⁻¹' s : Set t)
+--   · convert Set.image_subset Subtype.val this <;> simp [embedding_subtype_val.closure_eq_preimage_closure_image]
+--   rwa [IsClosed.closure_subset_iff]
 
 variable {α : Type u} {β : Type v}
 

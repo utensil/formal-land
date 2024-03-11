@@ -2,7 +2,7 @@
 import Mathlib.LinearAlgebra.CliffordAlgebra.Contraction
 import Mathlib.LinearAlgebra.ExteriorAlgebra.OfAlternating
 import Mathlib.LinearAlgebra.CliffordAlgebra.BaseChange
-import Mathlib.LinearAlgebra.Finrank
+-- import Mathlib.LinearAlgebra.Finrank
 import Mathlib.LinearAlgebra.Multilinear.FiniteDimensional
 import Mathlib.LinearAlgebra.TensorAlgebra.Basis
 import Mathlib.LinearAlgebra.ExteriorAlgebra.Grading

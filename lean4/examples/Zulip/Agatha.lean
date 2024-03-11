@@ -3,7 +3,7 @@
 -- https://www.tptp.org/cgi-bin/SystemOnTPTP
 
 import Std.Logic
-import Std.Tactic.RCases
+-- import Std.Tactic.RCases
 -- import Mathlib.Tactic
 
 variable (u : Type)

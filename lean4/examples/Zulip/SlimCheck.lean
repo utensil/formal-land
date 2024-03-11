@@ -10,6 +10,16 @@ instance SlimCheck.Testable.existsTestable (p : Prop) {β : α → Prop}
 
 #eval SlimCheck.Testable.check (∀ (x y : Nat), x + y = y + x)
 
+/-
+
+===================
+Found problems!
+x := 0
+y := 0
+issue: 0 ≠ 0 does not hold
+(0 shrinks)
+-------------------
+-/
 #eval SlimCheck.Testable.check (∀ (x y : Nat), x + y ≠ y + x)
 
 lemma ex1 : ∀ (v : Nat × Nat), v.1 + v.2 = v.2 + v.1 := by
@@ -23,7 +33,7 @@ lemma ex2 : ∀ (v : Nat × Nat), v.1 + v.2 ≠ v.2 + v.1 → false := by
 #eval SlimCheck.Testable.check (∀ (v : Nat × Nat), v.1 + v.2 ≠ v.2 + v.1 → false)
 
 -- set_option trace.Meta.synthInstance true in
-#eval SlimCheck.Testable.check (∃ (v : Nat × Nat), v.1 + v.2 ≠ v.2 + v.1 → false)
+-- #eval SlimCheck.Testable.check (∃ (v : Nat × Nat), v.1 + v.2 ≠ v.2 + v.1 → false)
 
 lemma ex'' : ∀ (x y : Nat), x + y = y + x := by
   exact Nat.add_comm

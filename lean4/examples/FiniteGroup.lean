@@ -154,7 +154,9 @@ failed to synthesize instance
 
 #check Module.Finite.of_basis
 
-#check Module.Free.finite_basis
+#check Module.Free
+
+#check Module.Finite.finite_basis
 
 #check Basis.ofVectorSpace
 

@@ -255,11 +255,11 @@ Minimal enhancement for List related examples:
 -/
 namespace List
 
-def insert [DecidableEq α] (a : α) (l : List α) : List α :=
+def insert' [DecidableEq α] (a : α) (l : List α) : List α :=
   if a ∈ l then l else a :: l
 
 protected def union [DecidableEq α] (l₁ l₂ : List α) : List α :=
-  foldr insert l₂ l₁
+  foldr insert' l₂ l₁
 
 end List
 
