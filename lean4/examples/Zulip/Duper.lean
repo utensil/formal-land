@@ -1,7 +1,6 @@
-/-
 import Duper
-import Mathlib.LinearAlgebra.Finrank
-import Mathlib.LinearAlgebra.FreeModule.Finite.Rank
+-- import Mathlib.LinearAlgebra.Finrank
+-- import Mathlib.LinearAlgebra.FreeModule.Finite.Rank
 import Mathlib.LinearAlgebra.CliffordAlgebra.Contraction
 import Mathlib.Tactic
 
@@ -66,4 +65,3 @@ example : finrank R (CliffordAlgebra Q) = finrank R (ExteriorAlgebra R M) := by
 --   let clause_9_0 := (fun heq => (fun h => Eq.mp (congrArg (fun x => x ≠ e!_2) heq) h) clause_8_0) clause_6_0;
 --   exact (fun h => (h rfl).elim) clause_9_0
 --   done
--/
