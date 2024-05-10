@@ -15,13 +15,13 @@ export PATH=$HOME/.elan/bin:$PATH
 renderRst() {
     # echo "${1%.*}"
     filename="${1%.*}"
-    alectryon examples/$filename.lean --lake lakefile.lean --output-directory dist/
+    alectryon examples/$filename.lean --lake lakefile.lean --output-directory dist/ --traceback
 }
 
 renderMd() {
     # echo "${1%.*}"
     filename="${1%.*}"
-    alectryon --frontend lean4+markup examples/$filename.lean --backend webpage --lake lakefile.lean -o dist/$filename.md
+    alectryon --frontend lean4+markup examples/$filename.lean --backend webpage --lake lakefile.lean -o dist/$filename.md --traceback
     markdown-it alectryon/header.md dist/$filename.md alectryon/footer.md > dist/$filename.html
 }
 
