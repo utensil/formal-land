@@ -1,9 +1,9 @@
 /-
 Inspired by https://leanprover.zulipchat.com/#narrow/stream/236449-Program-verification/topic/.E2.9C.94.20Small-step.20operational.20semantics
 -/
-import Std.Tactic.Basic
--- import Std.Tactic.RCases
-import Std.CodeAction
+import Batteries.Tactic.Basic
+-- import Batteries.Tactic.RCases
+import Batteries.CodeAction
 
 inductive Tm where
 | C : Nat → Tm

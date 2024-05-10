@@ -1,6 +1,7 @@
 import Lean
-import Std.Tactic.GuardMsgs
 open Lean System
+
+set_option pp.mvars false
 
 /-!
   From https://leanprover.zulipchat.com/#narrow/stream/270676-lean4/topic/unknown.20identifier.20in.20.60let.20var.20.3A.3D.20if.20let.60
@@ -81,7 +82,7 @@ def oops₁₁ : IO String := do
 error: type mismatch
   some ret
 has type
-  Option ?m.2842 : Type
+  Option ?_ : Type
 but is expected to have type
   IO (Option String) : Type
 -/
@@ -118,13 +119,12 @@ def oops₂ : IO String := do
 /-!
   ### Variant 3. in `if let`, expect `:=`, misuse `<-`
 -/
-
-def oops₃ : IO String := do
-  if let some opt <- getOpt "str" then  -- unexpected token '<-'; expected ':=' or '←'
-    let ret := (<- getIO opt)
-    return ret
-  else
-    return "none"
+-- def oops₃ : IO String := do
+--   if let some opt <- getOpt "str" then  -- unexpected token '<-'; expected ':=' or '←'
+--     let ret := (<- getIO opt)
+--     return ret
+--   else
+--     return "none"
 
 /-!
   ### Variant 4. in `if let`, expect `:= (<- ... )`
@@ -136,7 +136,7 @@ def oops₃ : IO String := do
 error: type mismatch
   some opt
 has type
-  Option ?m.4322 : Type
+  Option ?_ : Type
 but is expected to have type
   IO (Option String) : Type
 -/
@@ -151,12 +151,12 @@ def oops₄₁ : IO String := do
 /-!
   #### 4.2 misuse `<-` gives me `unexpected token '<-'; expected ':=' or '←'`
 -/
-def oops₄₂ : IO String := do
-  if let some opt <- getOptIO "str" then -- unexpected token '<-'; expected ':=' or '←'
-    let ret <- getIO opt
-    pure ret
-  else
-    pure "none"
+-- def oops₄₂ : IO String := do
+--   if let some opt <- getOptIO "str" then -- unexpected token '<-'; expected ':=' or '←'
+--     let ret <- getIO opt
+--     pure ret
+--   else
+--     pure "none"
 
 /-!
   #### 4.3 using `:= (<- ... )` works

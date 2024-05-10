@@ -14,6 +14,9 @@ lean_lib «Hello» {
   -- roots := #[`Hello, `LAMR, `Tactics]
 }
 
+lean_lib Playground {
+}
+
 -- lean_exe hello {
 --   root := `Main
 -- }

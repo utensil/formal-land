@@ -1,5 +1,5 @@
 import Lean
-import Std.Util.TermUnsafe
+-- import Batteries.Util.TermUnsafe
 
 open Lean Meta Elab Command Tactic
 
@@ -14,12 +14,8 @@ initialize myExt : SimplePersistentEnvExtension Entry EntryList ←
     addImportedFn := mkStateFromImportedEntries (·.concat) {}
   }
 
-elab (name := Proof) "Proof" _desc:interpolatedStr(term)* ":" t:tacticSeq : tactic => do
+elab (name := Proof) "Proof" _desc:interpolatedStr(term)* ":" _t:tacticSeq : tactic => do
   unsafe enableInitializersExecution
-  
+
   modifyEnv fun env =>
     myExt.addEntry env ""
-
-theorem foo : 1 + 2 = 3 := by
-  Proof "trivial":
-    rfl

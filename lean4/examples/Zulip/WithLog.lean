@@ -1,6 +1,5 @@
 import Lean.Elab
 
-
 structure WithLog (logged : Type) (α : Type) where
   log : List logged
   val : α
@@ -20,6 +19,10 @@ set_option synthInstance.checkSynthOrder true
 
 def Option' := Option
 
+/--
+error: fields missing: 'map', 'mapConst', 'seq', 'seqLeft'
+-/
+#guard_msgs(error, drop info) in
 instance : Monad Option' where
   pure := Option.some
   bind a f :=

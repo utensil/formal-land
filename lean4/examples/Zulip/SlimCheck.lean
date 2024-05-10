@@ -1,5 +1,19 @@
 import Mathlib.Testing.SlimCheck.Functions
-import Mathlib.Tactic
+
+/--
+info:
+---
+error:
+===================
+Found problems!
+x := 0
+y := 0
+issue: 0 ≠ 0 does not hold
+(0 shrinks)
+-------------------
+-/
+#guard_msgs (whitespace := lax) in
+#eval SlimCheck.Testable.check (∀ (x y : Nat), x + y ≠ y + x)
 
 instance SlimCheck.Testable.existsTestable (p : Prop) {β : α → Prop}
   [Testable (NamedBinder var (∀ x, NamedBinder var $ β x → p))] :
@@ -9,18 +23,6 @@ instance SlimCheck.Testable.existsTestable (p : Prop) {β : α → Prop}
     pure $ SlimCheck.TestResult.iff exists_imp x
 
 #eval SlimCheck.Testable.check (∀ (x y : Nat), x + y = y + x)
-
-/-
-
-===================
-Found problems!
-x := 0
-y := 0
-issue: 0 ≠ 0 does not hold
-(0 shrinks)
--------------------
--/
-#eval SlimCheck.Testable.check (∀ (x y : Nat), x + y ≠ y + x)
 
 lemma ex1 : ∀ (v : Nat × Nat), v.1 + v.2 = v.2 + v.1 := by
   exact fun v => Nat.add_comm v.1 v.2

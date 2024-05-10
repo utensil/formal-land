@@ -1,4 +1,4 @@
--- import Std.Tactic.Rcases
+-- import Batteries.Tactic.Rcases
 -- import Mathlib.Tactic.Cases
 -- import Mathlib.Tactic.Use
 import Mathlib.Logic.Basic

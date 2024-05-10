@@ -3,14 +3,14 @@ import Mathlib.GroupTheory.SpecificGroups.Cyclic
 import Mathlib.GroupTheory.SpecificGroups.Dihedral
 import Mathlib.GroupTheory.SpecificGroups.KleinFour
 import Mathlib.GroupTheory.SpecificGroups.Quaternion
-import Mathlib.GroupTheory.Subgroup.Actions
-import Mathlib.GroupTheory.Subgroup.Basic
-import Mathlib.GroupTheory.Subgroup.Finite
-import Mathlib.GroupTheory.Subgroup.MulOpposite
-import Mathlib.GroupTheory.Subgroup.Pointwise
-import Mathlib.GroupTheory.Subgroup.Saturated
-import Mathlib.GroupTheory.Subgroup.Simple
-import Mathlib.GroupTheory.Subgroup.ZPowers
+-- import Mathlib.GroupTheory.Subgroup.Actions
+-- import Mathlib.GroupTheory.Subgroup.Basic
+-- import Mathlib.GroupTheory.Subgroup.Finite
+-- import Mathlib.GroupTheory.Subgroup.MulOpposite
+-- import Mathlib.GroupTheory.Subgroup.Pointwise
+-- import Mathlib.GroupTheory.Subgroup.Saturated
+-- import Mathlib.GroupTheory.Subgroup.Simple
+-- import Mathlib.GroupTheory.Subgroup.ZPowers
 import Mathlib.RepresentationTheory.Basic
 import Mathlib.RepresentationTheory.Action.Basic
 import Mathlib.CategoryTheory.Endomorphism
@@ -201,7 +201,7 @@ failed to synthesize instance
 
 #check Module.Free.directSum
 
-#check DirectSum.instAlgebraDirectSumSemiring
+#check DirectSum.instAlgebra
 
 #check DirectSum.add_apply
 
@@ -247,7 +247,7 @@ variable (l m n: Type u) (α : Type uα) [Fintype l] [Fintype m] [Fintype n] [Mu
 
 end
 
-#check Matrix.instHMulMatrixMatrixMatrix
+#check Matrix.instHMulOfFintypeOfMulOfAddCommMonoid
 
 #check Matrix.mul_apply
 
@@ -332,7 +332,7 @@ some exponent `k` is contained in the generalized eigenspace for exponents large
 
 #check Matrix.GeneralLinearGroup
 
-#check Matrix.ext'
+#check Matrix.ext
 
 #check Representation
 
@@ -613,7 +613,7 @@ def rel : generator n → generator n → FreeGroup (generator n)
 
 /-- The presentation of the Dihedral group which makes it a Coxeter group is
 ⟨a, b | a^2 = 1, b^2 = 1, (a * b)^n = 1⟩ -/
-def DihedralPresentedGroup {i : ZMod n} := PresentedGroup <| Set.range <| Function.uncurry <| rel n
+def DihedralPresentedGroup {_i : ZMod n} := PresentedGroup <| Set.range <| Function.uncurry <| rel n
 
 namespace DihedralPresentedGroup
 
@@ -631,7 +631,7 @@ def rel {i : ZMod n} : Set (FreeGroup (pre n)) :=
   {FreeGroup.of (pre.b i)^2} ∪
   {(FreeGroup.of (pre.a i) * FreeGroup.of (pre.b i)) ^ n}
 
-abbrev DihedralPresentedGroup {i : ZMod n} := PresentedGroup <| @rel n i
+abbrev DihedralPresentedGroup' {i : ZMod n} := PresentedGroup <| @rel n i
 
 end DihedralPresentedGroup
 
