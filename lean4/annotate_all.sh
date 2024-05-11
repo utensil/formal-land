@@ -56,10 +56,10 @@ cp dist/*.css dist/Zulip/
 cp dist/*.js dist/Zulip/
 
 renderMd Zulip/Have.lean
-renderMd Zulip/Import.lean
+# renderMd Zulip/Import.lean
 renderMd Zulip/Monad.lean
 renderMd Zulip/SpellCheck.lean
 # renderMd Zulip/Agatha.lean
 
-renderMd NoCI/Arrow.lean
-cp dist/NoCI/Arrow.* dist/Zulip/
+# renderMd NoCI/Arrow.lean
+# cp dist/NoCI/Arrow.* dist/Zulip/
