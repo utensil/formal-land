@@ -1,11 +1,15 @@
 name: Lean 4 Playground
 
 on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch
+  # Triggers the workflow on push or pull request events but only for the "master" branch and "v4*" branches
   push:
-    branches: [ "master", "v4.4.0-rc1" ]
+    branches:
+      - master
+      - 'v4*'
   pull_request:
-    branches: [ "master" ]
+    branches:
+      - master
+      - 'v4*'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -50,14 +54,21 @@ jobs:
           lake build
           lake script run check_examples
       - name: annotate examples
-        if: matrix.os == 'ubuntu-latest' && github.ref == 'refs/heads/v4.4.0-rc1'
+        # annotation is enabled for Github Pages deployment or for commits with '[annotate]' in the message
+        if: >-
+          matrix.os == 'ubuntu-latest' && (
+            startsWith(github.ref, 'refs/heads/v4') ||
+            contains(github.event.head_commit.message, '[annotate]')
+          )
         run: |
           cd lean4
           ./install_deps.sh
           ./annotate_all.sh
           # lake env leanInk analyze examples/Help.lean
       - name: Upload artifact
-        if: matrix.os == 'ubuntu-latest' && github.ref == 'refs/heads/v4.4.0-rc1'
+        # For now, disable the deployment job for the master branch
+        # and enable for v4* branches
+        if: matrix.os == 'ubuntu-latest' && startsWith(github.ref, 'refs/heads/v4')
         uses: actions/upload-pages-artifact@v1
         with:
           path: ./lean4/dist
@@ -72,5 +83,7 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        if: github.ref == 'refs/heads/v4.4.0-rc1'
+        # For now, disable the deployment job for the master branch
+        # and enable for v4* branches
+        if: startsWith(github.ref, 'refs/heads/v4')
         uses: actions/deploy-pages@v1
