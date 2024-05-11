@@ -55,7 +55,6 @@ jobs:
         run: |
           cd lean4
           lake exe cache get
-          lake build
           lake script run check_examples
       - name: annotate examples
         # annotation is enabled for Github Pages deployment or for commits with '[annotate]' in the message
