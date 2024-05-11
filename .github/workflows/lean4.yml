@@ -42,11 +42,16 @@ jobs:
           curl -O --location https://raw.githubusercontent.com/leanprover/elan/master/elan-init.ps1
           .\elan-init.ps1 -NoPrompt 1 -DefaultToolchain none
           echo "$HOME\.elan\bin" >> $env:GITHUB_PATH
-      - uses: actions/checkout@v3
-      - name: Setup Python
-        uses: actions/setup-python@v4.6.1
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          python-version: 3.x
+          ref: main
+          submodules: recursive
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: 'pip' # caching pip dependencies
       - name: check examples
         run: |
           cd lean4
@@ -98,4 +103,4 @@ jobs:
             (github.ref == 'master' && contains(github.event.head_commit.message, '[annotate]')) ||
             startsWith(github.ref, 'refs/heads/v4')
           )
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
