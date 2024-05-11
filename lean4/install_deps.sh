@@ -23,19 +23,19 @@ export PATH="$HOME/.elan/bin:$PATH"
 
 # https://github.com/cpitclaudel/alectryon/issues/83
 # https://github.com/leanprover/lean4/blob/master/doc/flake.nix#L11
+python3 -m pip uninstall -y alectryon
 # python3 -m pip install git+https://github.com/Kha/alectryon.git@typeid
 python3 -m pip install git+https://github.com/utensil/alectryon.git@dev
 
 # TODO if leanInk exists and is good, skip this
 rm -rf /tmp/leanInk || echo
-# git clone https://github.com/leanprover/LeanInk /tmp/leanInk -q
-# git clone -b doc-gen https://github.com/hargonix/LeanInk /tmp/leanInk -q
 git clone -b fix-print-path https://github.com/utensil/LeanInk /tmp/leanInk -q
 cd /tmp/leanInk
 lake build
 
 mkdir -p $HOME/.elan/bin
-mv /tmp/leanInk/.lake/build/bin/* $HOME/.elan/bin
+rm -f $HOME/.elan/bin/leanInk*
+cp /tmp/leanInk/.lake/build/bin/* $HOME/.elan/bin
 
 pip install markdown-it-py
 
