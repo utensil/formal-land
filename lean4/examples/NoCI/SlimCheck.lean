@@ -23,7 +23,7 @@ lemma ex2 : ∀ (v : Nat × Nat), v.1 + v.2 ≠ v.2 + v.1 → false := by
 #eval SlimCheck.Testable.check (∀ (v : Nat × Nat), v.1 + v.2 ≠ v.2 + v.1 → false)
 
 -- set_option trace.Meta.synthInstance true in
-#eval SlimCheck.Testable.check (∃ (v : Nat × Nat), v.1 + v.2 ≠ v.2 + v.1 → false)
+-- #eval SlimCheck.Testable.check (∃ (v : Nat × Nat), v.1 + v.2 ≠ v.2 + v.1 → false)
 
 lemma ex'' : ∀ (x y : Nat), x + y = y + x := by
   exact Nat.add_comm
