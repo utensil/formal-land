@@ -6,7 +6,7 @@ package «hello» {}
 def leanVersion : String := s!"v{Lean.versionString}"
 
 require mathlib from git
-  "https://github.com/leanprover-community/mathlib4" -- @ leanVersion
+  "https://github.com/leanprover-community/mathlib4" @ leanVersion
 
 -- require «Duper» from git "https://github.com/leanprover-community/duper.git" @ "main"
 
