@@ -2,8 +2,8 @@
 -- https://gist.github.com/utensil/17159725e5335f6a9688b7443fe0b3aa
 -- https://www.tptp.org/cgi-bin/SystemOnTPTP
 
-import Batteries.Logic
--- import Batteries.Tactic.RCases
+import Std.Logic
+import Std.Tactic.RCases
 -- import Mathlib.Tactic
 
 variable (u : Type)

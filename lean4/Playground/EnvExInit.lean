@@ -1,5 +1,5 @@
 import Lean
--- import Batteries.Util.TermUnsafe
+-- import Std.Util.TermUnsafe
 
 open Lean Meta Elab Command Tactic
 
