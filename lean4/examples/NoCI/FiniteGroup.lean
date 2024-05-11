@@ -201,7 +201,7 @@ failed to synthesize instance
 
 #check Module.Free.directSum
 
-#check DirectSum.instAlgebra
+-- #check DirectSum.instAlgebra
 
 #check DirectSum.add_apply
 
@@ -247,7 +247,7 @@ variable (l m n: Type u) (α : Type uα) [Fintype l] [Fintype m] [Fintype n] [Mu
 
 end
 
-#check Matrix.instHMulOfFintypeOfMulOfAddCommMonoid
+-- #check Matrix.instHMulOfFintypeOfMulOfAddCommMonoid
 
 #check Matrix.mul_apply
 
