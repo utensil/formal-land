@@ -45,7 +45,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: main
           submodules: recursive
       - name: Install Python
         uses: actions/setup-python@v5
@@ -56,7 +55,6 @@ jobs:
         run: |
           cd lean4
           lake exe cache get
-          lake build
           lake script run check_examples
       - name: annotate examples
         # annotation is enabled for Github Pages deployment or for commits with '[annotate]' in the message
@@ -78,7 +76,7 @@ jobs:
             (github.ref == 'main' && contains(github.event.head_commit.message, '[annotate]')) ||
             startsWith(github.ref, 'refs/heads/v4')
           )
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./lean4/dist
 
