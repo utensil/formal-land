@@ -1,14 +1,14 @@
 name: Lean 4 Playground
 
 on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch and "v4*" branches
+  # Triggers the workflow on push or pull request events but only for the "main" branch and "v4*" branches
   push:
     branches:
-      - master
+      - main
       - 'v4*'
   pull_request:
     branches:
-      - master
+      - main
       - 'v4*'
 
   # Allows you to run this workflow manually from the Actions tab
@@ -71,11 +71,11 @@ jobs:
           ./annotate_all.sh
           # lake env leanInk analyze examples/Help.lean
       - name: Upload artifact
-        # For now, disable the deployment job for the master branch
+        # For now, disable the deployment job for the main branch
         # and enable for v4* branches
         if: >-
           matrix.os == 'ubuntu-latest' && (
-            (github.ref == 'master' && contains(github.event.head_commit.message, '[annotate]')) ||
+            (github.ref == 'main' && contains(github.event.head_commit.message, '[annotate]')) ||
             startsWith(github.ref, 'refs/heads/v4')
           )
         uses: actions/upload-pages-artifact@v1
@@ -96,11 +96,11 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        # For now, disable the deployment job for the master branch
+        # For now, disable the deployment job for the main branch
         # and enable for v4* branches
         if: >-
           matrix.os == 'ubuntu-latest' && (
-            (github.ref == 'master' && contains(github.event.head_commit.message, '[annotate]')) ||
+            (github.ref == 'main' && contains(github.event.head_commit.message, '[annotate]')) ||
             startsWith(github.ref, 'refs/heads/v4')
           )
         uses: actions/deploy-pages@v4
