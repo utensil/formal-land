@@ -4,7 +4,7 @@ open Lake DSL System
 package «hello» {}
 
 require mathlib from git
-  "https://github.com/leanprover-community/mathlib4"
+  "https://github.com/leanprover-community/mathlib4" @ "v4.4.0-rc1"
 
 @[default_target]
 lean_lib «Hello» {
