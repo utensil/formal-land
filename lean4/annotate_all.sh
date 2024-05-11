@@ -46,6 +46,9 @@ renderMd Filters.lean
 renderMd FiltersMWE.lean
 renderMd Hierarchies.lean
 renderMd Branch.lean
+renderMd Chisolm.lean
+renderMd MV.lean
+renderMd Rank.lean
 
 renderMd index.lean
 
@@ -55,11 +58,15 @@ mkdir -p dist/NoCI/
 cp dist/*.css dist/Zulip/
 cp dist/*.js dist/Zulip/
 
+renderMd Zulip/Calc.lean
+renderMd Zulip/Closed.lean
 renderMd Zulip/Have.lean
-# renderMd Zulip/Import.lean
+renderMd Zulip/Infix.lean
+renderMd Zulip/LFTCM2023.lean
 renderMd Zulip/Monad.lean
+renderMd Zulip/Rintro.lean
+renderMd Zulip/SmallStep.lean
 renderMd Zulip/SpellCheck.lean
-# renderMd Zulip/Agatha.lean
 
 # renderMd NoCI/Arrow.lean
 # cp dist/NoCI/Arrow.* dist/Zulip/

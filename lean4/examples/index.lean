@@ -21,13 +21,20 @@
 - [Tactics.lean](./Tactics.html)
 - [Hierarchies.lean](./Hierarchies.html)
 - [Branch.lean](./Branch.html)
+- [Chisolm.lean](./Chisolm.html)
+- [MV.lean](./MV.html)
+- [Rank.lean](./Rank.html)
 
 ####  Discussion on Zulip
 
-- [Zulip/Arrow.lean](./Zulip/Arrow.html)
+- [Zulip/Calc.lean](./Zulip/Calc.html)
+- [Zulip/Closed.lean](./Zulip/Closed.html)
 - [Zulip/Have.lean](./Zulip/Have.html)
-- [Zulip/Import.lean](./Zulip/Import.html)
+- [Zulip/Infix.lean](./Zulip/Infix.html)
+- [Zulip/LFTCM2023.lean](./Zulip/LFTCM2023.html)
 - [Zulip/Monad.lean](./Zulip/Monad.html)
+- [Zulip/Rintro.lean](./Zulip/Rintro.html)
+- [Zulip/SmallStep.lean](./Zulip/SmallStep.html)
 - [Zulip/SpellCheck.lean](./Zulip/SpellCheck.html)
-- [Zulip/Agatha.lean](./Zulip/Agatha.html)
+
 -/
