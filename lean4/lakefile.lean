@@ -3,6 +3,8 @@ open Lake DSL System
 
 package «hello» {}
 
+def leanVersion : String := s!"v{Lean.versionString}"
+
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4"
 
