@@ -8,5 +8,7 @@ BRANCH=$(git branch --show-current)
 if [[ $BRANCH == v4* ]]; then
     echo "leanprover/lean4:$BRANCH" > lean-toolchain
     cat lean-toolchain
+    # rm -rf .lake
+    # rm -f lake-manifest.json
     lake -R -Kenv=dev update
 fi
