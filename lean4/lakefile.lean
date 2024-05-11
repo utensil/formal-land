@@ -3,10 +3,10 @@ open Lake DSL System
 
 package «hello» {}
 
-def leanVersion : String := s!"v{Lean.versionString}"
+def mathlibBranch : String := s!"v{Lean.versionString}"
 
 require mathlib from git
-  "https://github.com/leanprover-community/mathlib4"
+  "https://github.com/leanprover-community/mathlib4" @ mathlibBranch
 
 -- require «Duper» from git "https://github.com/leanprover-community/duper.git" @ "main"
 
