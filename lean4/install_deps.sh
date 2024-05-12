@@ -29,7 +29,8 @@ python3 -m pip install git+https://github.com/utensil/alectryon.git@dev
 
 # TODO if leanInk exists and is good, skip this
 rm -rf /tmp/leanInk || echo
-git clone -b fix-print-path https://github.com/utensil/LeanInk /tmp/leanInk -q
+git clone -b v4.6.0-rc1 https://github.com/utensil/LeanInk /tmp/leanInk -q
+# git clone -b fix-print-path https://github.com/utensil/LeanInk /tmp/leanInk -q
 cd /tmp/leanInk
 lake build
 
