@@ -1,17 +1,17 @@
 set -e
 set -o pipefail
 
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain leanprover/lean4:v4.2.0-rc1
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-    brew install elan-init
-    elan toolchain install stable
-    elan default stable
-else
-    echo "Unknown OS: $OSTYPE"
-    echo "Check out https://leanprover-community.github.io/get_started.html for installation"
-    exit 0
-fi
+# if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+#     curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y --default-toolchain leanprover/lean4:v4.2.0-rc1
+# elif [[ "$OSTYPE" == "darwin"* ]]; then
+#     brew install elan-init
+#     elan toolchain install stable
+#     elan default stable
+# else
+#     echo "Unknown OS: $OSTYPE"
+#     echo "Check out https://leanprover-community.github.io/get_started.html for installation"
+#     exit 0
+# fi
 
 export PATH="$HOME/.elan/bin:$PATH"
 
@@ -27,11 +27,15 @@ python3 -m pip uninstall -y alectryon
 # python3 -m pip install git+https://github.com/Kha/alectryon.git@typeid
 python3 -m pip install git+https://github.com/utensil/alectryon.git@dev
 
+LEAN_TOOLCHAIN=`cat lean-toolchain`
+echo $LEAN_TOOLCHAIN
+
 # TODO if leanInk exists and is good, skip this
 rm -rf /tmp/leanInk || echo
 git clone -b v4.6.0-rc1 https://github.com/utensil/LeanInk /tmp/leanInk -q
 # git clone -b fix-print-path https://github.com/utensil/LeanInk /tmp/leanInk -q
 cd /tmp/leanInk
+echo $LEAN_TOOLCHAIN > lean-toolchain
 lake build
 
 mkdir -p $HOME/.elan/bin
