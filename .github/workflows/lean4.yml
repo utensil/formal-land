@@ -60,7 +60,6 @@ jobs:
         # annotation is enabled conditionally
         if: >-
           matrix.os == 'ubuntu-latest' && (
-            github.ref == 'refs/heads/main' ||
             startsWith(github.ref, 'refs/heads/v4') ||
             contains(github.event.head_commit.message, '[annotate]')
           )
@@ -73,7 +72,6 @@ jobs:
         # Github Pages deployment is enabled conditionally
         if: >-
           matrix.os == 'ubuntu-latest' && (
-            github.ref == 'refs/heads/main' ||
             startsWith(github.ref, 'refs/heads/v4') ||
             contains(github.event.head_commit.message, '[annotate]')
           )
@@ -98,7 +96,6 @@ jobs:
         # Github Pages deployment is enabled conditionally
         if: >-
           matrix.os == 'ubuntu-latest' && (
-            github.ref == 'refs/heads/main' ||
             startsWith(github.ref, 'refs/heads/v4') ||
             contains(github.event.head_commit.message, '[annotate]')
           )
