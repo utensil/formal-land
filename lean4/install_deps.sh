@@ -32,7 +32,8 @@ echo $LEAN_TOOLCHAIN
 
 # TODO if leanInk exists and is good, skip this
 rm -rf /tmp/leanInk || echo
-git clone -b fix-print-path https://github.com/utensil/LeanInk /tmp/leanInk -q
+git clone https://github.com/leanprover/LeanInk /tmp/leanInk -q
+# git clone -b fix-print-path https://github.com/utensil/LeanInk /tmp/leanInk -q
 cd /tmp/leanInk
 echo $LEAN_TOOLCHAIN > lean-toolchain
 lake build
