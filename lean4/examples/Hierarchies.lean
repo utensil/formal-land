@@ -2,6 +2,7 @@ import Mathlib.Tactic
 import Mathlib.LinearAlgebra.CliffordAlgebra.Basic
 import Mathlib.LinearAlgebra.ExteriorAlgebra.Basic
 import Mathlib.Data.Matrix.Notation
+import Mathlib.Algebra.Free
 
 -- set_option trace.Meta.synthInstance true
 -- set_option synthInstance.checkSynthOrder false
@@ -9,7 +10,7 @@ import Mathlib.Data.Matrix.Notation
 #check Monoid.mk
 
 whatsnew in
-lemma demo {α : Type} [Monoid α] (a b : α) : a * b = a * b := by rfl
+example {α : Type} [Monoid α] (a b : α) : a * b = a * b := by rfl
 
 #synth Module ℤ ℤ
 
@@ -88,3 +89,28 @@ theorem mul_inv_rev2 : (A * B)⁻¹ = B⁻¹ * A⁻¹ := by sorry
 -- TOD: PR
 #check QuadraticForm.associated_left_inverse
 #check QuadraticForm.associated_rightInverse
+
+#check FreeMagma.rec
+
+#check FreeMonoid
+
+#check FreeSemigroup
+
+#check FreeRing
+
+--#check FreeModule
+
+#check FreeAlgebra.Rel
+
+example {R A : Type} [Monoid α] (a b : α) : a * b = a * b := by rfl
+
+#check RingQuot.mk
+
+#check RingQuot.Rel
+
+#check Ideal
+
+#check TensorAlgebra
+
+
+-- chore(Algebra/FreeAlgebra): fix comments
