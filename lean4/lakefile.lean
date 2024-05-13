@@ -24,19 +24,19 @@ lean_lib Playground {
 --   root := `Main
 -- }
 
-def check_example (ex : IO.FS.DirEntry) := do
+def check_example (ex : FilePath) := do
   let mut failed : Array (FilePath × IO.Process.Output) := #[]
 
-  let r ← timeit s!"Running example: {ex.fileName}\t" (IO.Process.output {
+  let r ← timeit s!"Running example: {ex.fileName.get!}\t" (IO.Process.output {
     cmd := "lake"
-    args := #["env", "lean", ex.path.toString]
+    args := #["env", "lean", ex.toString]
     env := #[] -- #[("LEAN_PATH", searchPath)]
   })
 
   if r.exitCode == 0 then
     IO.println "  Success!🟢"
   else
-    failed := failed.append #[(ex.path, r)]
+    failed := failed.append #[(ex, r)]
     IO.println "  Failed!🔴"
     IO.println r.stdout
     IO.println r.stderr
@@ -52,13 +52,13 @@ script check_examples (_args) do
   for ex in (← (cwd / "examples").readDir) do
     if ex.path.extension == some "lean" then
       total := total + 1
-      let result := (←check_example ex)
+      let result := (←check_example ex.path)
       failed := failed.append result
 
   for ex in (← (cwd / "examples" / "Zulip").readDir) do
     if ex.path.extension == some "lean" then
       total := total + 1
-      let result := (←check_example ex)
+      let result := (←check_example ex.path)
       failed := failed.append result
 
   if failed.size != 0 then
