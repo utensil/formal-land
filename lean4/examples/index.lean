@@ -33,6 +33,7 @@
 - [Zulip/Arrow.lean](./Zulip/Arrow.html)
 - [Zulip/Calc.lean](./Zulip/Calc.html)
 - [Zulip/Closed.lean](./Zulip/Closed.html)
+- [Zulip/CurrentModule.lean](./Zulip/CurrentModule.html)
 - [Zulip/EnvExt.lean](./Zulip/EnvExt.html)
 - [Zulip/Have.lean](./Zulip/Have.html)
 - [Zulip/Heartbeat.lean](./Zulip/Heartbeat.html)

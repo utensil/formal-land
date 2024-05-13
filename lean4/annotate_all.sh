@@ -67,6 +67,7 @@ renderMd Zulip/Agatha.lean
 renderMd Zulip/Arrow.lean
 renderMd Zulip/Calc.lean
 renderMd Zulip/Closed.lean
+renderMd Zulip/CurrentModule.lean
 renderMd Zulip/EnvExt.lean
 renderMd Zulip/Have.lean
 renderMd Zulip/Heartbeat.lean
