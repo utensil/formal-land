@@ -2,7 +2,6 @@
 import Mathlib.Init.Data.Nat.Notation
 import Mathlib.Control.Traversable.Basic
 import ImportGraph.Imports
--- import Mathlib
 
 -- https://leanprover.zulipchat.com/#narrow/stream/217875-Is-there-code-for-X.3F/topic/Agda.20style.20interactive.20case.20splitting.3F/near/424179379
 -- def foo (n : Nat) : Nat := by
