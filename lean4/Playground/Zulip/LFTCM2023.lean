@@ -45,3 +45,5 @@ example (h : ¬fnHasUB f) : ∀ a, ∃ x, f x > a := by
   contrapose! h
   obtain ⟨a, ha⟩ := h
   use a
+
+-- this file seems to be following https://github.com/lftcm2023/lftcm2023/blob/master/LftCM/C02_Logic/Logic.lean

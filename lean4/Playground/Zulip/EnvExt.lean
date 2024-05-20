@@ -1,5 +1,5 @@
 import Lean
-import Playground.EnvExInit
+import Playground.Zulip.EnvExInit
 
 open Lean Meta Elab Command Tactic
 

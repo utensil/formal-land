@@ -12,14 +12,23 @@ export PATH=$HOME/.elan/bin:$PATH
 renderRst() {
     # echo "${1%.*}"
     filename="${1%.*}"
-    alectryon Playground/$filename.lean --lake lakefile.lean --output-directory dist/
+    alectryon $filename.lean --lake lakefile.lean --output-directory dist/
 }
 
 renderMd() {
     # echo "${1%.*}"
     filename="${1%.*}"
-    alectryon --frontend lean4+markup Playground/$filename.lean --backend webpage --lake lakefile.lean -o dist/$filename.md
-    markdown-it alectryon/header.md dist/$filename.md alectryon/footer.md > dist/$filename.html
+    # replace "Playground/" with "dist/"
+    ofilename="${filename//Playground/dist}"
+    echo "Rendering $filename to $ofilename"
+    alectryon --frontend lean4+markup $filename.lean --backend webpage --lake lakefile.lean -o $ofilename.md
+    markdown-it alectryon/header.md $ofilename.md alectryon/footer.md > $ofilename.html
 }
 
-renderMd $1
+if [[ $2 == "rst" ]]; then
+    echo "Rendering RST"
+    renderRst $1
+else
+    echo "Rendering MD"
+    renderMd $1
+fi

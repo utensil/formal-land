@@ -19,3 +19,6 @@ lean_lib Playground {
 @[test_runner]
 lean_exe test where
   srcDir := "scripts"
+
+lean_exe annotate where
+  srcDir := "scripts"

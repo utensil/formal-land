@@ -29,28 +29,30 @@
 
 #### My Learning following various books/tutorials/games
 
-- [Branch.lean](./Branch.html)
-- [Cat.lean](./Cat.html)
+- [AllTactics.lean](./AllTactics.html)
 - [Chisolm.lean](./Chisolm.html)
 - [Filters.lean](./Filters.html)
-- [FiltersMWE.lean](./FiltersMWE.html)
 - [FiniteGroup.lean](./FiniteGroup.html)
 - [HelloMarkdown.lean](./HelloMarkdown.html)
-- [Help.lean](./Help.html)
 - [Hierarchies.lean](./Hierarchies.html)
 - [MV.lean](./MV.html)
 - [Rank.lean](./Rank.html)
+- [Tactics.lean](./Tactics.html)
 
 ####  Discussion on Zulip
 
 - [Zulip/Agatha.lean](./Zulip/Agatha.html)
 - [Zulip/Arrow.lean](./Zulip/Arrow.html)
+- [Zulip/Branch.lean](./Zulip/Branch.html)
 - [Zulip/Calc.lean](./Zulip/Calc.html)
+- [Zulip/Cat.lean](./Zulip/Cat.html)
 - [Zulip/Closed.lean](./Zulip/Closed.html)
 - [Zulip/CodeAction.lean](./Zulip/CodeAction.html)
 - [Zulip/CurrentModule.lean](./Zulip/CurrentModule.html)
+- [Zulip/EnvExInit.lean](./Zulip/EnvExInit.html)
 - [Zulip/EnvExt.lean](./Zulip/EnvExt.html)
 - [Zulip/EvalRewriteSeq.lean](./Zulip/EvalRewriteSeq.html)
+- [Zulip/FiltersMWE.lean](./Zulip/FiltersMWE.html)
 - [Zulip/Have.lean](./Zulip/Have.html)
 - [Zulip/Heartbeat.lean](./Zulip/Heartbeat.html)
 - [Zulip/Import.lean](./Zulip/Import.html)
