@@ -10,14 +10,10 @@ require mathlib from git
 
 -- require «Duper» from git "https://github.com/leanprover-community/duper.git" @ "main"
 
--- @[default_target]
--- lean_lib «Hello» {
---   -- srcDir := "examples"
---   -- roots := #[`Hello, `LAMR, `Tactics]
--- }
-
 @[default_target]
 lean_lib Playground {
+--   -- srcDir := "Playground"
+--   -- roots := #[`Hello, `LAMR, `Tactics]
 }
 
 @[test_runner]

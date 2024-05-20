@@ -15,22 +15,22 @@ export PATH=$HOME/.elan/bin:$PATH
 renderRst() {
     # echo "${1%.*}"
     filename="${1%.*}"
-    alectryon --frontend lean4+rst examples/$filename.lean --lake lakefile.lean --output-directory dist/ --traceback
+    alectryon --frontend lean4+rst Playground/$filename.lean --lake lakefile.lean --output-directory dist/ --traceback
 }
 
 renderMd() {
     # echo "${1%.*}"
     filename="${1%.*}"
-    alectryon --frontend lean4+markup examples/$filename.lean --backend webpage --lake lakefile.lean -o dist/$filename.md --traceback
+    alectryon --frontend lean4+markup Playground/$filename.lean --backend webpage --lake lakefile.lean -o dist/$filename.md --traceback
     markdown-it alectryon/header.md dist/$filename.md alectryon/footer.md > dist/$filename.html
 }
 
-# alectryon examples/Hello.lean --lake lakefile.lean --output-directory dist/
-# alectryon examples/LAMR.lean --lake lakefile.lean --output-directory dist/
-# alectryon examples/Tactics.lean --lake lakefile.lean --output-directory dist/
+# alectryon Playground/Hello.lean --lake lakefile.lean --output-directory dist/
+# alectryon Playground/LAMR.lean --lake lakefile.lean --output-directory dist/
+# alectryon Playground/Tactics.lean --lake lakefile.lean --output-directory dist/
 
 # # https://github.com/leanprover/lean4/blob/master/doc/flake.nix#L89
-# alectryon --frontend lean4+markup examples/HelloMarkdown.lean --backend webpage --lake lakefile.lean -o dist/HelloMarkdown.md
+# alectryon --frontend lean4+markup Playground/HelloMarkdown.lean --backend webpage --lake lakefile.lean -o dist/HelloMarkdown.md
 # markdown-it alectryon/header.md dist/HelloMarkdown.md alectryon/footer.md > dist/HelloMarkdown.html
 
 # TODO

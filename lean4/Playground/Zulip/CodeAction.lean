@@ -24,3 +24,7 @@ instance : Monad Id where
 #minimize_imports
 
 #find_home Nat
+
+-- To use `shake`:
+-- lake build Playground.Zulip.CodeAction
+-- lake exe shake Playground.Zulip.CodeAction

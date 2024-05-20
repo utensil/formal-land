@@ -19,12 +19,12 @@ def time (f : IO α) : IO (String × α) := do
 /--
 Run tests.
 
-If no arguments are provided, run everything in `examples/` and `exmaples/Zulip`.
+If no arguments are provided, run everything in `Playground/` and `Playground/Zulip`.
 
-If arguments are provided, they are interpreted as test names in `examples/`, e.g.
+If arguments are provided, they are interpreted as test names in `Playground/`, e.g.
 
-- `lake exe test Hello` runs `examples/Hello.lean`
-- `lake exe test Zulip/Agatha` runs `examples/Zulip/Agatha.lean`
+- `lake exe test Hello` runs `Playground/Hello.lean`
+- `lake exe test Zulip/Agatha` runs `Playground/Zulip/Agatha.lean`
 
 Allow tests to produce output by default, use the flag `no-noisy` to disallow any output on stdout or stderr.
 -/
@@ -36,14 +36,14 @@ def main (args : List String) : IO Unit := do
   -- but currently with parallelism this results in build jobs interfering with each other.
   _ ← (← IO.Process.spawn { cmd := "lake", args := #["build"] }).wait
 
-  -- Collect test targets by walking `examples/` and `exmaples/Zulip`.
+  -- Collect test targets by walking `Playground/` and `Playground/Zulip`.
   let noNoisy := args.contains "--no-noisy"
   let verbose := args.contains "--verbose"
   let enter : FilePath → IO Bool := fun path ↦ pure <| path.fileName != "NoCI"
   let targets := (<- match args.erase "--no-noisy" |>.erase "--verbose" with
-  | [] => do return (← System.FilePath.walkDir (enter := enter) <| cwd / "examples") ++
-                  (← System.FilePath.walkDir (enter := enter) <| cwd / "examples" / "Zulip")
-  | _ => pure <| (args.map fun t => mkFilePath [cwd.toString, "examples", t] |>.withExtension "lean") |>.toArray)
+  | [] => do return (← System.FilePath.walkDir (enter := enter) <| cwd / "Playground") ++
+                  (← System.FilePath.walkDir (enter := enter) <| cwd / "Playground" / "Zulip")
+  | _ => pure <| (args.map fun t => mkFilePath [cwd.toString, "Playground", t] |>.withExtension "lean") |>.toArray)
   let existing ← targets.filterM fun t => do pure <| (← t.pathExists) && !(← t.isDir) && (t.extension.getD "" == "lean")
   let tasks : Array (Task (Except IO.Error (FilePath × Output))) ←
     existing.mapM fun t => do
