@@ -24,8 +24,9 @@ def main (args : List String) : IO Unit := do
   -- Collect test targets by walking `Playground/` and `Playground/Zulip`.
   -- let noNoisy := args.contains "--no-noisy"
   let verbose := args.contains "--verbose"
+  let toc := args.contains "--toc"
   let enter : FilePath → IO Bool := fun path ↦ pure <| path.fileName != "NoCI"
-  let targets <- match args.erase "--no-noisy" |>.erase "--verbose" with
+  let targets <- match args.erase "--toc" |>.erase "--verbose" with
   | [] =>System.FilePath.walkDir (enter := enter) <| cwd / "Playground"
   | _ => pure <| (args.map fun t => mkFilePath [cwd.toString, "Playground", t] |>.withExtension "lean") |>.toArray
   let existing ← targets.filterM fun t => do pure <| (← t.pathExists) && !(← t.isDir) && (t.extension.getD "" == "lean")
@@ -57,24 +58,32 @@ def main (args : List String) : IO Unit := do
   let mut exitCode : UInt8 := 0
   let mut total := 0
   let mut succeeded := 0
-  let mut failed : Array (UInt32 × FilePath × IO.Process.Output) := #[]
+  let mut jobs : Array (UInt32 × FilePath × IO.Process.Output) := #[]
   for t in tasks do
     let e ← IO.wait t
     total := total + 1
     match e with
     | .error f => IO.eprintln s!"❌ {f}"
     | .ok ⟨code, path, out⟩ =>
+      jobs := jobs.push (code, path, out)
       if code == 0 then
         succeeded := succeeded + 1; pure ()
-      else
-        failed := failed.push (code, path, out); exitCode := 1
 
-  if failed.size != 0 then
+  if total - succeeded != 0 then
+    exitCode := 1
     IO.println "\nFailed annotations:"
-    for (_code, t, out) in failed do
-      IO.println s!"❌ {t}"
-      unless out.stdout.isEmpty do IO.eprintln out.stdout
-      unless out.stderr.isEmpty do IO.eprintln out.stderr
+    for (code, t, out) in jobs do
+      if code != 0 then
+        IO.println s!"❌ {t}"
+        unless out.stdout.isEmpty do IO.eprintln out.stdout
+        unless out.stderr.isEmpty do IO.eprintln out.stderr
   let resultMarker := if succeeded == total then "✅" else "❌"
   IO.println s!"\nSuccessful annotations: {succeeded} / {total} {resultMarker}"
+
+  if toc then
+    for (code, t, _out) in jobs.insertionSort fun x y ↦ x.snd.fst.toString < y.snd.fst.toString do
+      if code == 0 then
+        let name := t.toString.replace "./Playground/" ""
+        let url := t.withExtension "html" |>.toString.replace "./Playground/" "./"
+        IO.println s!"- [{name}]({url})"
   exit exitCode

@@ -38,8 +38,9 @@
 - [MV.lean](./MV.html)
 - [Rank.lean](./Rank.html)
 - [Tactics.lean](./Tactics.html)
+- [Utils.lean](./Utils.html)
 
-####  Discussion on Zulip
+####  Discussions on Zulip
 
 - [Zulip/Agatha.lean](./Zulip/Agatha.html)
 - [Zulip/Arrow.lean](./Zulip/Arrow.html)
