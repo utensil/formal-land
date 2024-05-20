@@ -4,10 +4,7 @@ import Mathlib.Tactic
 
 universe u1 u2 u3
 
--- #help tactic
--- https://github.com/haruhisa-enomoto/mathlib4-all-tactics/blob/main/all-tactics.md
-
--- https://github.com/madvorak/lean4-tactics
+-- See Help.lean for a full list of tactics
 
 /-
 
