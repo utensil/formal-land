@@ -55,7 +55,7 @@ jobs:
         run: |
           cd lean4
           lake exe cache get
-          lake script run check_examples
+          lake test
       - name: annotate examples
         # annotation is enabled conditionally
         if: >-
