@@ -52,6 +52,8 @@ jobs:
           python-version: "3.11"
           # cache: 'pip' # caching pip dependencies
       - name: check examples
+        # working-directory: ./lean4
+        # uses: leanprover/lean-action@v1-alpha
         run: |
           cd lean4
           lake exe cache get
