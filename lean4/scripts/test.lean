@@ -2,6 +2,7 @@
 This is adapted from https://github.com/leanprover-community/batteries/blob/078ac74e3157bd7b02628eca0260faa234878b2a/scripts/test.lean
 with my own customizations on paths, options and summary output.
 -/
+import Batteries.Data.String.Basic
 open IO.Process
 open System
 
@@ -37,8 +38,9 @@ def main (args : List String) : IO Unit := do
 
   -- Collect test targets by walking `examples/` and `exmaples/Zulip`.
   let noNoisy := args.contains "--no-noisy"
+  let verbose := args.contains "--verbose"
   let enter : FilePath → IO Bool := fun path ↦ pure <| path.fileName != "NoCI"
-  let targets := (<- match args.erase "--no-noisy" with
+  let targets := (<- match args.erase "--no-noisy" |>.erase "--verbose" with
   | [] => do return (← System.FilePath.walkDir (enter := enter) <| cwd / "examples") ++
                   (← System.FilePath.walkDir (enter := enter) <| cwd / "examples" / "Zulip")
   | _ => pure <| (args.map fun t => mkFilePath [cwd.toString, "examples", t] |>.withExtension "lean") |>.toArray)
@@ -54,13 +56,19 @@ def main (args : List String) : IO Unit := do
         if exitCode == 0 then
           if out.stdout.isEmpty && out.stderr.isEmpty then
             IO.println s!"✅ {t} {elapsed}"
+          else if !out.stderr.isEmpty || out.stdout.containsSubstr "warning:" then
+            IO.println s!"🟨 {t} {elapsed}"
+            unless !noNoisy do exitCode := 1
           else
-            IO.println s!"ℹ️ {t} {elapsed}"
+            IO.println s!"ℹ️  {t} {elapsed}"
             unless !noNoisy do exitCode := 1
         else
           IO.eprintln s!"❌ {t} {elapsed}"
-        -- unless out.stdout.isEmpty do IO.eprintln out.stdout
-        -- unless out.stderr.isEmpty do IO.eprintln out.stderr
+
+        if verbose then
+          unless out.stdout.isEmpty do IO.eprintln out.stdout
+          unless out.stderr.isEmpty do IO.eprintln out.stderr
+
         pure ⟨t, out⟩
   -- Wait on all the jobs and exit with 1 if any failed.
   let mut exitCode : UInt8 := 0
