@@ -9,8 +9,9 @@ def toDecimal (f : Float) (precision : Nat) : String :=
   let int := f.round
   let intStr := int.intPart
   let fraction := ((f-int) * (10 ^ precision).toFloat).abs.round
-  let fractionStr := if fraction != 0.0 then fraction.intPart else ("".pushn '0' precision)
-  if precision > 0 then s!"{intStr}.{fractionStr}" else intStr
+  let fractionStr := fraction.intPart
+  let fractionStrFinal := "".pushn '0' (precision - fractionStr.length) ++ fractionStr
+  if precision > 0 then s!"{intStr}.{fractionStrFinal}" else intStr
 
 end Float
 
@@ -25,9 +26,9 @@ end Float
 #eval (-123.456789).toDecimal 7
 
 /-
-"0.0000000"
+"0.0000100"
 -/
-#eval 0.0.toDecimal 7
+#eval (0.00001).toDecimal 7
 
 /-
 "-0.3000000"
