@@ -296,7 +296,7 @@ some exponent `k` is contained in the generalized eigenspace for exponents large
 --     exact
 --       LinearMap.ker_le_ker_comp ((f - algebraMap R (End R M) μ) ^ k)
 --         ((f - algebraMap R (End R M) μ) ^ (m - k))
-#check Module.End.generalizedEigenspace
+#check Module.End.genEigenspace
 
 #check OrderHom
 
