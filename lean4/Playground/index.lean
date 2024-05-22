@@ -54,6 +54,7 @@
 - [Zulip/EnvExt.lean](./Zulip/EnvExt.html)
 - [Zulip/EvalRewriteSeq.lean](./Zulip/EvalRewriteSeq.html)
 - [Zulip/FiltersMWE.lean](./Zulip/FiltersMWE.html)
+- [Zulip/Float.lean](./Zulip/Float.html)
 - [Zulip/Have.lean](./Zulip/Have.html)
 - [Zulip/Heartbeat.lean](./Zulip/Heartbeat.html)
 - [Zulip/Import.lean](./Zulip/Import.html)
