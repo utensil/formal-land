@@ -26,6 +26,8 @@ def main (args : List String) : IO Unit := do
   -- Alternatively, we could use `lake lean` below instead of `lake env lean`,
   -- but currently with parallelism this results in build jobs interfering with each other.
   _ ← (← IO.Process.spawn { cmd := "lake", args := #["build"] }).wait
+  -- Duper requires some additional time to build on first run.
+  _ ← (← IO.Process.spawn { cmd := "lake", args := #["build", "Duper"] }).wait
 
   -- Collect test targets by walking `Playground/` and `Playground/Zulip`.
   let noNoisy := args.contains "--no-noisy"
