@@ -82,6 +82,7 @@ jobs:
           path: ./lean4/dist
       - name: Try mk_all
         if: runner.os == 'Windows'
+        shell: bash
         run: |
           cd lean4
           lake env lake exe mk_all || true
