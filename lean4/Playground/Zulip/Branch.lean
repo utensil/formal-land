@@ -15,7 +15,7 @@ open Lean Meta Elab Command Tactic
 elab "proofs " n:num : tactic => do
   withMainContext do
     let mvarId :: mvarIds ← getUnsolvedGoals | throwNoGoalsToBeSolved
-    setGoals $ List.replicate (n.1.toNat) mvarId ++ mvarIds
+    setGoals $ List.replicate (n.raw.toNat) mvarId ++ mvarIds
 
 elab (name := proof) "proof" _n:(num)? _desc:interpolatedStr(term)? ":" t:tacticSeq : tactic => do
   withMainContext do
@@ -94,3 +94,12 @@ theorem ex : 1 + 2 = 3 := by
   proof "verbose":
     have h : 1 + 2 = 3 := by rfl
     exact h
+
+
+example : 1 + 1 = 2 := by
+  proofs 2
+  proof 1:
+    rfl
+  proof 2:
+    linarith
+  QED
