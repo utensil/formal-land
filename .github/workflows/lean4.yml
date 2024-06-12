@@ -85,6 +85,8 @@ jobs:
         shell: bash
         run: |
           cd lean4
+          rm -f .lake/packages/mathlib/lakefile.lean
+          mv lakefile-for-mathlib.lean .lake/packages/mathlib/lakefile.lean
           lake env lake exe mk_all || true
           
 
