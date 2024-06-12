@@ -80,6 +80,10 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./lean4/dist
+      - name: Try mk_all
+        run: |
+          cd lean4
+          lake exe mk_all
 
   # Deployment job
   deploy:
