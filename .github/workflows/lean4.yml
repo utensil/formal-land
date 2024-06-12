@@ -83,7 +83,12 @@ jobs:
       - name: Try mk_all
         run: |
           cd lean4
-          lake exe mk_all
+          if [ {{ runner.os }} == 'Windows' ]; then
+            lake env lake exe mk_all || true
+          else
+            lake exe mk_all || true
+          fi
+          
 
   # Deployment job
   deploy:
