@@ -8,7 +8,7 @@ def leanVersion : String := s!"v{Lean.versionString}"
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4" -- @ leanVersion
 
-require «Duper» from git "https://github.com/leanprover-community/duper.git" @ "main"
+-- require «Duper» from git "https://github.com/leanprover-community/duper.git" @ "main"
 
 @[default_target]
 lean_lib Playground {
@@ -16,7 +16,7 @@ lean_lib Playground {
 --   -- roots := #[`Hello, `LAMR, `Tactics]
 }
 
-@[test_runner]
+@[test_driver]
 lean_exe test where
   srcDir := "scripts"
 

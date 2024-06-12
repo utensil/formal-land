@@ -25,6 +25,8 @@ instance : Monad Id where
 
 #find_home Nat
 
+#check ℕ
+
 -- To use `shake`:
 -- lake build Playground.Zulip.CodeAction
 -- lake exe shake Playground.Zulip.CodeAction

@@ -1,7 +1,7 @@
 /-
 This is adapted from test.lean
 -/
-import Batteries.Data.String.Basic
+import Batteries.Data.String.Matcher
 import Playground.Utils
 open IO.Process
 open System

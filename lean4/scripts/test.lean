@@ -2,7 +2,7 @@
 This is adapted from https://github.com/leanprover-community/batteries/blob/078ac74e3157bd7b02628eca0260faa234878b2a/scripts/test.lean
 with my own customizations on paths, options and summary output.
 -/
-import Batteries.Data.String.Basic
+import Batteries.Data.String.Matcher
 import Playground.Utils
 open IO.Process
 open System
@@ -44,6 +44,7 @@ def main (args : List String) : IO Unit := do
             args := #["env", "lean", t.toString],
             env := #[("LEAN_ABORT_ON_PANIC", "1")] }
         let mut exitCode := out.exitCode
+
         if exitCode == 0 then
           if out.stdout.isEmpty && out.stderr.isEmpty then
             IO.println s!"✅ {t} {elapsed}"

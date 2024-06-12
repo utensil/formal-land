@@ -5,20 +5,19 @@ import Mathlib
 example (s t : Set ℝ) (hs : IsClosed s) : closure (s ∩ t) ∩ t ⊆ s ∩ t := by
   simp only [Set.subset_inter_iff, Set.inter_subset_right, and_true]
   intro x hx
-  obtain ⟨hxst, hxt⟩ := hx
+  obtain ⟨hxst, _hxt⟩ := hx
   have hsub : closure (s ∩ t) ⊆ s := by
     rw [propext (IsClosed.closure_subset_iff hs)]
-    exact Set.inter_subset_left s t
+    exact Set.inter_subset_left
   exact hsub hxst
 
 example (s t : Set ℝ) (hst: IsClosed (s ∩ t)) : closure (s ∩ t) ∩ t ⊆ s ∩ t := by
   simp only [Set.subset_inter_iff, Set.inter_subset_right, and_true]
   intro x hx
-  obtain ⟨hxst, hxt⟩ := hx
-  have hclosed : IsClosed (closure (s ∩ t)) := by
+  obtain ⟨hxst, _hxt⟩ := hx
+  have _hclosed : IsClosed (closure (s ∩ t)) := by
     exact isClosed_closure
-  have hsub : (s ∩ t) ⊆ s := by exact Set.inter_subset_left s t
-  have hsub' : (s ∩ t) ⊆ closure (s ∩ t) := by exact subset_closure
+  have hsub : (s ∩ t) ⊆ s := by exact Set.inter_subset_left
   have hsub'' : closure (s ∩ t) ⊆ (s ∩ t) := by
     rw [propext (IsClosed.closure_subset_iff hst)]
   exact hsub (hsub'' hxst)
@@ -28,7 +27,7 @@ example (s t : Set ℝ) (hst: IsClosed (s ∩ t)) : closure (s ∩ t) ∩ t ⊆ 
   simp only [Set.subset_inter_iff, Set.inter_subset_right, and_true]
   intro x hx
   obtain ⟨hxst, _⟩ := hx
-  have h : (s ∩ t) ⊆ s := by exact Set.inter_subset_left s t
+  have h : (s ∩ t) ⊆ s := by exact Set.inter_subset_left
   have hsub : closure (s ∩ t) ⊆ (s ∩ t) := by
     rw [propext (IsClosed.closure_subset_iff hst)]
   exact h (hsub hxst)
@@ -50,7 +49,7 @@ example (s t : Set X) (hs : IsClosed (restrict t s)) : closure (s ∩ t) ∩ t �
   simp only [Set.subset_inter_iff, Set.inter_subset_right, and_true]
   intro x hx
   obtain ⟨hxst, _⟩ := hx
-  have h : (s ∩ t) ⊆ s := by exact Set.inter_subset_left s t
+  have h : (s ∩ t) ⊆ s := by exact Set.inter_subset_left
   have hsub : closure (restrict t s) ⊆ (restrict t s) := by rwa [IsClosed.closure_subset_iff]
   have hsub' : (restrict t s) ⊆ closure (restrict t s) := by exact subset_closure
   have hsub'' : (s ∩ t) ⊆ closure (s ∩ t) := by exact subset_closure
