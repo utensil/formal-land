@@ -81,13 +81,10 @@ jobs:
         with:
           path: ./lean4/dist
       - name: Try mk_all
+        if: runner.os == 'Windows'
         run: |
           cd lean4
-          if [ {{ runner.os }} == 'Windows' ]; then
-            lake env lake exe mk_all || true
-          else
-            lake exe mk_all || true
-          fi
+          lake env lake exe mk_all || true
           
 
   # Deployment job
