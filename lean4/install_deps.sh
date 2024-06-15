@@ -35,6 +35,8 @@ rm -rf /tmp/leanInk || echo
 git clone https://github.com/leanprover/LeanInk /tmp/leanInk -q
 # git clone -b fix-print-path https://github.com/utensil/LeanInk /tmp/leanInk -q
 cd /tmp/leanInk
+# LeanInk must be built no later than the current Lean4 toolchain
+# https://leanprover.zulipchat.com/#narrow/stream/270676-lean4/topic/LeanInk.20regression.20on.20v4.2E3.2E0-rc1
 echo $LEAN_TOOLCHAIN > lean-toolchain
 lake build
 
