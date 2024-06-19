@@ -1,0 +1,63 @@
+// Adapted from https://www.aya-prover.org/guide/haskeller-tutorial.html
+inductive Nat | zero | suc Nat
+
+open Nat
+// def infixl <+> Nat Nat : Nat
+// | 0, n ⇒ n
+// | suc m, n ⇒ suc (m <+> n)
+
+overlap def infixl <+> Nat Nat : Nat
+| 0, n => n
+| n, 0 => n
+| suc m, n => suc (m <+> n)
+
+def oh (x : Nat) : Nat ⇒ x
+
+example def infixl [+] (a n : Nat) : Nat elim a
+| 0 ⇒ n
+| suc m ⇒ suc (m [+] n)
+
+def id {A : Type} (x : A) ⇒ x
+
+open inductive Maybe (A : Type)
+| nothing
+| just A
+
+variable A : Type
+
+// example def id (x : A) ⇒ x
+
+// def BinOp (A : Type) ⇒ A → A → A
+
+// example def infixl <+> : BinOp Nat
+// | 0, n ⇒ n
+// | suc m, n ⇒ suc (m <+> n)
+
+// Unit type
+open inductive Unit | unit
+
+// A type family
+def FromJust (x : Maybe A) : Type
+| just a ⇒ A
+| nothing ⇒ Unit
+
+// A function that uses the type family
+def fromJust (x : Maybe A) : FromJust x
+| just a ⇒ a
+| nothing ⇒ unit
+
+inductive Example (A : Type)
+| cons (x : Maybe A) (FromJust x)
+
+open inductive Vec (Nat) (Type)
+| 0, T ⇒ nil
+| suc n, T ⇒ infixr :< T (Vec n T)
+
+variable m n : Nat
+
+overlap def infixr ++ (Vec n A) (Vec m A) : Vec (n <+> m) A
+| nil, ys ⇒ ys
+| x :< xs, ys ⇒ x :< xs ++ ys
+| xs, nil => xs
+tighter :<
+
