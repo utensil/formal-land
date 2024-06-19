@@ -1,0 +1,33 @@
+name: Aya Playground CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  test-setup-nightly:
+    name: Setup latest Aya
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Aya
+        uses: ./
+        with:
+          version: 'nightly-build'
+          distribution: 'jlink'
+          build-from-source: 'false'
+    #   - name: Show aya version
+    #     run: aya --version
+    #   - name: Show aya-lsp version
+    #     run: aya-lsp --version
+    #   - name: Show aya help
+    #     run: aya --help
+    #   - name: Show aya-lsp help
+    #     run: aya-lsp --help
+
+      - name: Typechecking examples
+        run: |
+            aya haskeller-tutorial.aya
