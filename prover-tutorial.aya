@@ -1,0 +1,86 @@
+// Adapted from https://www.aya-prover.org/guide/prover-tutorial.html
+
+prim I
+prim coe // fn p0 p1 p2 ⇒ coe p0 p1 (fn p00 ⇒ p2 p00)
+prim Path // fn p0 p1 p2 ⇒ p1 = p2
+variable A B : Type // A : Type 0
+
+def infix = (a b : A) ⇒ Path (fn i ⇒ A) /* I → Type 0*/ a b
+
+open inductive Nat
+| zero
+| suc Nat
+
+open inductive Bool | true | false
+def not Bool : Bool
+| true ⇒ false
+| false ⇒ true
+
+def id (x : Bool) ⇒ x
+
+def Goal ⇒ id = (fn x ⇒ not (not x))
+
+// def question : Goal => {??}
+
+def Goal' (x : Bool) ⇒ id x = not (not x)
+
+def funExt (f g : A → B) (p : ∀ a → f a = g a /* Fn (y : ?_2 A B f g) → f y = g y */) : f = g /* I -> (A -> B) */
+   ⇒ fn i a ⇒ p a i
+
+def refl {a : A} : a = a ⇒ fn i ⇒ a
+
+def pmap (f : A → B) {a b : A} (p : a = b) : f a = f b
+   ⇒ fn i ⇒ f (p i)
+
+def cast (p : A ↑ = B) : A → B ⇒ ↑ coe 0 1 (fn i ⇒ p i)
+
+/*
+    cast
+
+    ?A A a b p
+
+    ?A A a b p = (b = a)
+ */
+// def pinv {a b : A} (p : a = b) : b = a ⇒ cast {??} {??}
+
+/*
+Error: Cannot check the expression
+         cast (\ i ⇒ p i = b) refl
+       of type
+         b = b
+       against the type
+         b = a
+       In particular, we failed to unify
+         b
+       with
+         a
+ */
+// def pinv {a b : A} (p : a = b) : b = a ⇒ cast (fn i ⇒ p i = b) refl
+
+/*
+Error: Cannot check the expression
+         p
+       of type
+         a = b
+       against the type
+         a = a
+       In particular, we failed to unify
+         b
+       with
+         a
+ */
+// def pinv {a b : A} (p : a = b) : b = a ⇒ cast (fn i ⇒ p i = a) p
+
+/*
+
+Error: Cannot check the expression
+         cast (\ i ⇒ p i = b)
+       of type
+         (a = b) → b = b
+       against the type
+         (a = a) = (b = a)
+
+ */
+def pinv_pre {a b : A} (p : a = b) : (a = a) = (b = a) => cast (fn i => p i = b)
+
+def pinv {a b : A} (p : a = b) : b = a ⇒ cast (fn i ⇒ p i = a) refl
