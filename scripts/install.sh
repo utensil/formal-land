@@ -2,7 +2,7 @@
 
 # adapted from https://www.aya-prover.org/guide/install.html#download-from-github-release
 
-AYA_PREFIX=${AYA_PREFIX:-~/.aya/}
+AYA_PREFIX=${AYA_PREFIX:-~/.aya}
 
 #check if the variable $AYA_PREFIX is not empty
 if [ -z "$AYA_PREFIX" ]; then
@@ -40,7 +40,7 @@ else
     exit 1
 fi
 
-rm -rf ${AYA_PREFIX:-~/.aya/}
+rm -rf ${AYA_PREFIX:-~/.aya}
 mkdir -p ${AYA_PREFIX}
 chown $USER ${AYA_PREFIX}
 cd ${AYA_PREFIX}
@@ -49,8 +49,12 @@ wget https://github.com/aya-prover/aya-dev/releases/download/nightly-build/$AYA_
 unzip -o $AYA_ZIP
 rm $AYA_ZIP
 
+echo "export AYA_PREFIX=${AYA_PREFIX}" >> ~/.bashrc
 echo 'export PATH="$AYA_PREFIX/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 
+echo "export AYA_PREFIX=${AYA_PREFIX}" >> ~/.zshrc
 echo 'export PATH="$AYA_PREFIX/bin:$PATH"' >> ~/.zshrc
-# source ~/.zshrc
+source ~/.zshrc
+
+echo 'Run `source ~/.bashrc` or `source ~/.zshrc` to start using Aya Prover'
