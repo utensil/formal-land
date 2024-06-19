@@ -81,6 +81,6 @@ Error: Cannot check the expression
          (a = a) = (b = a)
 
  */
-def pinv_pre {a b : A} (p : a = b) : (a = a) = (b = a) => cast (fn i => p i = b)
+// def pinv_pre {a b : A} (p : a = b) : (a = a) = (b = a) => cast (fn i => p i = b)
 
 def pinv {a b : A} (p : a = b) : b = a ⇒ cast (fn i ⇒ p i = a) refl
