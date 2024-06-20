@@ -247,5 +247,40 @@ tighter :< =
 def ++-assoc (xs : Vec n A) (ys : Vec m A) (zs : Vec o A)
 : Path (fn i ⇒ Vec (+-assoc i) A) ((xs ++ ys) ++ zs) (xs ++ (ys ++ zs)) elim xs
 | nil ⇒ refl
-| x :< xs' =>
-  fn i => x:< ((++-assoc xs' ys zs) i)
+| x :< _ =>
+  fn i => x :< ((++-assoc _ _ _) i)
+
+open inductive Interval
+| left
+| right
+| line : left = right
+
+example def Interval-elim {a b : A} {p : a = b} (i : Interval) : A elim i
+| left ⇒ a
+| right ⇒ b
+| line j ⇒ p j
+
+private def lemma
+  (f g : A → B) (p : ∀ x → f x = g x)
+  (i : Interval) (a : A) : B elim i
+| left ⇒ f a
+| right ⇒ g a
+| line j ⇒ p a j
+
+example def funExt' (f g : A → B) (p : ∀ a → f a = g a) : f = g ⇒
+  pmap (lemma f g p) (fn i ⇒ line i)
+
+open inductive Int
+| pos Nat | neg Nat
+| zro : pos 0 = neg 0
+
+def succ Int : Int
+| pos n ⇒ pos (suc n)
+| neg 0 ⇒ pos 1
+| neg (suc n) ⇒ neg n
+| zro i ⇒ pos 1
+
+def abs Int : Nat
+| pos n ⇒ n
+| neg n ⇒ n
+| zro _ ⇒ 0
