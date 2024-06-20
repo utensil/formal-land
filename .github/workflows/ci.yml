@@ -5,8 +5,8 @@ on:
     branches: [ main ]
 
 jobs:
-  test-setup-nightly:
-    name: Setup latest Aya
+  test-aya-examples:
+    name: Test Aya Examples
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
