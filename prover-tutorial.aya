@@ -84,3 +84,24 @@ Error: Cannot check the expression
 // def pinv_pre {a b : A} (p : a = b) : (a = a) = (b = a) => cast (fn i => p i = b)
 
 def pinv {a b : A} (p : a = b) : b = a ⇒ cast (fn i ⇒ p i = a) refl
+
+def concat {a b c : A} (p : a = b) (q : b = c) : a = c ⇒ cast (fn i ⇒ a = q i) p
+
+example def infix + Nat Nat : Nat
+| 0, n ⇒ n
+| suc m, n ⇒ suc (m + n)
+
+overlap def infix + Nat Nat : Nat
+| 0, n ⇒ n
+| n, 0 ⇒ n
+| suc m, n ⇒ suc (m + n)
+| m, suc n ⇒ suc (m + n)
+tighter =
+
+def +-comm' (a b : Nat) : a + b = b + a
+| _, 0 ⇒ refl
+| _, suc _ ⇒ pmap suc (+-comm' _ _)
+
+def +-comm (a b : Nat) : a + b = b + a elim a
+| 0 ⇒ refl
+| suc _ ⇒ pmap suc (+-comm _ _)
