@@ -1,10 +1,19 @@
 // Adapted from https://www.aya-prover.org/guide/prover-tutorial.html
 
+// For syntax, see
+// - https://github.com/aya-prover/aya-dev/blob/main/parser/src/main/grammar/AyaPsiLexer.flex
+// - https://github.com/aya-prover/aya-dev/blob/main/parser/src/main/grammar/AyaPsiParser.bnf
+
 prim I
-prim coe // fn p0 p1 p2 ⇒ coe p0 p1 (fn p00 ⇒ p2 p00)
-prim Path // fn p0 p1 p2 ⇒ p1 = p2
+prim coe (r s : I) (A : I -> Type) : A r -> A s
+prim Path (A : I -> Type) (a : A 0) (b : A 1) : Type
 variable A B : Type // A : Type 0
 
+// I: 0 = 1
+// Path : 
+//  0 ↦ a : A
+//  1 ↦ b : A
+// 
 def infix = (a b : A) ⇒ Path (fn i ⇒ A) /* I → Type 0*/ a b
 
 open inductive Nat
@@ -32,7 +41,23 @@ def refl {a : A} : a = a ⇒ fn i ⇒ a
 def pmap (f : A → B) {a b : A} (p : a = b) : f a = f b
    ⇒ fn i ⇒ f (p i)
 
+/*
+
+coe (r s : I) (A : I -> Type) : A r -> A s
+
+r: 0
+s: 1
+
+A r ↦ A 0 ↦ p 0 ↦ A
+A s ↦ A 1 ↦ p 1 ↦ B
+
+cast A to B using A ↑= B
+
+ */
 def cast (p : A ↑ = B) : A → B ⇒ ↑ coe 0 1 (fn i ⇒ p i)
+
+// ↑ is ulift
+def cast' (p : A ulift = B) : A → B ⇒ (ulift coe) 0 1 (fn i ⇒ p i)
 
 /*
     cast
@@ -105,3 +130,103 @@ def +-comm' (a b : Nat) : a + b = b + a
 def +-comm (a b : Nat) : a + b = b + a elim a
 | 0 ⇒ refl
 | suc _ ⇒ pmap suc (+-comm _ _)
+
+def +-assoc' (a b c : Nat) : (a + b) + c = a + (b + c)
+| 0, _, _ ⇒ refl
+| suc _, _, _ ⇒ pmap suc (+-assoc' _ _ _)
+
+def +-assoc {a b c : Nat} : (a + b) + c = a + (b + c) elim a
+| 0 ⇒ refl
+| suc _ ⇒ pmap suc +-assoc
+
+variable n m o : Nat
+// Definitions
+open inductive Vec (Nat) (Type)
+| 0, A ⇒ nil
+| suc n, A ⇒ infixr :< A (Vec n A)
+
+overlap def infixr ++ (Vec n A) (Vec m A) : Vec (n + m) A
+| nil, ys ⇒ ys
+| ys, nil ⇒ ys
+| x :< xs, ys ⇒ x :< xs ++ ys
+tighter :< =
+
+/*
+
+Error: Cannot check the expression
+         xs ++ (ys ++ zs)
+       of type
+         Vec (n + (m + o)) A
+       against the type
+         Vec ((n + m) + o) A
+       In particular, we failed to unify
+         n + (m + o)
+       with
+         (n + m) + o
+
+1 error(s), 0 warning(s).
+
+ */
+// example def ++-assoc-ty' (xs : Vec n A) (ys : Vec m A) (zs : Vec o A)
+//   ⇒ ((xs ++ ys) ++ zs) = xs ++ (ys ++ zs)
+
+// This is the original example
+example def ++-assoc-ty (xs : Vec n A) (ys : Vec m A) (zs : Vec o A)
+  ⇒ cast (↑ pmap (fn n ⇒ Vec n A) +-assoc) ((xs ++ ys) ++ zs) = xs ++ (ys ++ zs)
+
+// This is after properly adding parenthesis, and one ulift is actually unnecessary
+example def ++-assoc-ty'' (xs : Vec n A) (ys : Vec m A) (zs : Vec o A)
+  ⇒ (cast // def cast (p : A ↑ = B) : A → B
+      (/* ↑ */ pmap (fn n ⇒ Vec n A) +-assoc) // (n + m) + o = m + (n + o) --pmap-> Vec ((n + m) + o) A = Vec (m + (n + o)) A
+      ((xs ++ ys) ++ zs)
+    ) 
+    = xs ++ (ys ++ zs)
+
+def coeRefl (a : A) : ((coe 1 1 (fn j ⇒ A)) a) = a ⇒ refl
+
+def coeRefl' (a : A) : ((coe 0 0 (fn j ⇒ A)) a) = a ⇒ refl
+
+// def coeRefl'' (a : A) : ((coe 0 1 (fn j ⇒ A)) a) = a ⇒ refl
+
+// original
+def castRefl (a : A) : cast ↑ refl a = a ⇒ fn i ⇒ coe i 1 (fn j ⇒ A) a
+
+// break down
+def castRefl' (a : A) : (cast (↑ refl) a) = a ⇒
+  /*
+    p: (cast (↑ refl) a) = a
+    p 0: (cast (↑ refl) a)
+    p 1: a
+   */
+  fn i ⇒ 
+    /*
+      coe (r s : I) (p : I -> Type) : p r -> p s
+
+      r: i
+      s: 1
+
+      p r ↦ p i
+      p s ↦ p 1 ↦ a
+
+      cast A to A using A ↑= A
+
+    */
+    (coe i 1 (fn j ⇒ A)) a
+
+def castRefl'' (a : A) : a = (cast (↑ refl) a) ⇒
+  fn i ⇒ 
+    /*
+      coe (r s : I) (A : I -> Type) : A r -> A s
+
+      r: i
+      s: 1
+
+      A r ↦ A i ↦ A
+      A s ↦ A 1 ↦ A
+
+      cast A to A using A ↑= A
+
+    */
+    (coe 0 i (fn j ⇒ A)) a
+
+def Path' (A : I → Type) (a : A 0) (b : A 1) ⇒ Path A a b
