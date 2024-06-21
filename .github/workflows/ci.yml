@@ -31,3 +31,4 @@ jobs:
       - name: Typechecking examples
         run: |
             aya haskeller-tutorial.aya
+            aya prover-tutorial.aya
