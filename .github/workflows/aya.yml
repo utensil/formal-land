@@ -3,6 +3,8 @@ name: Aya Playground CI
 on:
   push:
     branches: [ main ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
   test-aya-examples:
@@ -30,5 +32,6 @@ jobs:
 
       - name: Typechecking examples
         run: |
+            cd aya
             aya haskeller-tutorial.aya
             aya prover-tutorial.aya
