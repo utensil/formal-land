@@ -1,4 +1,5 @@
-# Lean Playground
+# Formal Land
 
-* [Lean 3](./lean3/README.md)
-* [Lean 4](./lean4/README.md)
+My monorepo for formalization:
+
+* [Lean 4 Playground](./lean4/README.md)
