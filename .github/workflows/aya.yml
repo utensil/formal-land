@@ -1,4 +1,4 @@
-name: Aya Playground CI
+name: Aya CI
 
 on:
   push:

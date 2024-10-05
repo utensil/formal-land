@@ -1,4 +1,4 @@
-name: Lean 4 Playground
+name: Lean 4 CI
 
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch and "v4*" branches

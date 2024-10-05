@@ -2,8 +2,6 @@
 
 # Lean 4 Playground
 
-[![Lean 4 Playground](https://github.com/utensil/lean-playground/actions/workflows/lean4.yml/badge.svg)](https://github.com/utensil/lean-playground/actions/workflows/lean4.yml)
-
 -/
 
 #eval Lean.versionString
