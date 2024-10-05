@@ -1,0 +1,291 @@
+// Adapted from https://www.aya-prover.org/guide/prover-tutorial.html
+
+// For syntax, see
+// - https://github.com/aya-prover/aya-dev/blob/main/parser/src/main/grammar/AyaPsiLexer.flex
+// - https://github.com/aya-prover/aya-dev/blob/main/parser/src/main/grammar/AyaPsiParser.bnf
+
+prim I
+prim coe (r s : I) (A : I -> Type) : A r -> A s
+prim Path (A : I -> Type) (a : A 0) (b : A 1) : Type
+variable A B : Type // A : Type 0
+
+// I: 0 = 1
+// Path : 
+//  0 ↦ a : A
+//  1 ↦ b : A
+// 
+def infix = (a b : A) ⇒ Path (fn i ⇒ A) /* I → Type 0*/ a b
+
+open inductive Nat
+| zero
+| suc Nat
+
+open inductive Bool | true | false
+def not Bool : Bool
+| true ⇒ false
+| false ⇒ true
+
+def id (x : Bool) ⇒ x
+
+def Goal ⇒ id = (fn x ⇒ not (not x))
+
+// def question : Goal => {??}
+
+def Goal' (x : Bool) ⇒ id x = not (not x)
+
+def funExt (f g : A → B) (p : ∀ a → f a = g a /* Fn (y : ?_2 A B f g) → f y = g y */) : f = g /* I -> (A -> B) */
+   ⇒ fn i a ⇒ p a i
+
+def refl {a : A} : a = a ⇒ fn i ⇒ a
+
+def pmap (f : A → B) {a b : A} (p : a = b) : f a = f b
+   ⇒ fn i ⇒ f (p i)
+
+/*
+
+coe (r s : I) (A : I -> Type) : A r -> A s
+
+r: 0
+s: 1
+
+A r ↦ A 0 ↦ p 0 ↦ A
+A s ↦ A 1 ↦ p 1 ↦ B
+
+cast A to B using A ↑= B
+
+ */
+def cast (p : A ↑ = B) : A → B ⇒ ↑ coe 0 1 (fn i ⇒ p i)
+
+// ↑ is ulift
+def cast' (p : A ulift = B) : A → B ⇒ (ulift coe) 0 1 (fn i ⇒ p i)
+
+/*
+    cast
+
+    ?A A a b p
+
+    ?A A a b p = (b = a)
+ */
+// def pinv {a b : A} (p : a = b) : b = a ⇒ cast {??} {??}
+
+/*
+Error: Cannot check the expression
+         cast (\ i ⇒ p i = b) refl
+       of type
+         b = b
+       against the type
+         b = a
+       In particular, we failed to unify
+         b
+       with
+         a
+ */
+// def pinv {a b : A} (p : a = b) : b = a ⇒ cast (fn i ⇒ p i = b) refl
+
+/*
+Error: Cannot check the expression
+         p
+       of type
+         a = b
+       against the type
+         a = a
+       In particular, we failed to unify
+         b
+       with
+         a
+ */
+// def pinv {a b : A} (p : a = b) : b = a ⇒ cast (fn i ⇒ p i = a) p
+
+/*
+
+Error: Cannot check the expression
+         cast (\ i ⇒ p i = b)
+       of type
+         (a = b) → b = b
+       against the type
+         (a = a) = (b = a)
+
+ */
+// def pinv_pre {a b : A} (p : a = b) : (a = a) = (b = a) => cast (fn i => p i = b)
+
+def pinv {a b : A} (p : a = b) : b = a ⇒ cast (fn i ⇒ p i = a) refl
+
+def concat {a b c : A} (p : a = b) (q : b = c) : a = c ⇒ cast (fn i ⇒ a = q i) p
+
+example def infix + Nat Nat : Nat
+| 0, n ⇒ n
+| suc m, n ⇒ suc (m + n)
+
+overlap def infix + Nat Nat : Nat
+| 0, n ⇒ n
+| n, 0 ⇒ n
+| suc m, n ⇒ suc (m + n)
+| m, suc n ⇒ suc (m + n)
+tighter =
+
+def +-comm' (a b : Nat) : a + b = b + a
+| _, 0 ⇒ refl
+| _, suc _ ⇒ pmap suc (+-comm' _ _)
+
+def +-comm (a b : Nat) : a + b = b + a elim a
+| 0 ⇒ refl
+| suc _ ⇒ pmap suc (+-comm _ _)
+
+def +-assoc' (a b c : Nat) : (a + b) + c = a + (b + c)
+| 0, _, _ ⇒ refl
+| suc a', b', c' ⇒ pmap suc (+-assoc' a' b' c')
+
+def +-assoc {a b c : Nat} : (a + b) + c = a + (b + c) elim a
+| 0 ⇒ refl
+| suc _ ⇒ pmap suc +-assoc
+
+variable n m o : Nat
+// Definitions
+open inductive Vec (Nat) (Type)
+| 0, A ⇒ nil
+| suc n, A ⇒ infixr :< A (Vec n A)
+
+overlap def infixr ++ (Vec n A) (Vec m A) : Vec (n + m) A
+| nil, ys ⇒ ys
+| ys, nil ⇒ ys
+| x :< xs, ys ⇒ x :< xs ++ ys
+tighter :< =
+
+/*
+
+Error: Cannot check the expression
+         xs ++ (ys ++ zs)
+       of type
+         Vec (n + (m + o)) A
+       against the type
+         Vec ((n + m) + o) A
+       In particular, we failed to unify
+         n + (m + o)
+       with
+         (n + m) + o
+
+1 error(s), 0 warning(s).
+
+ */
+// example def ++-assoc-ty' (xs : Vec n A) (ys : Vec m A) (zs : Vec o A)
+//   ⇒ ((xs ++ ys) ++ zs) = xs ++ (ys ++ zs)
+
+// This is the original example
+example def ++-assoc-ty (xs : Vec n A) (ys : Vec m A) (zs : Vec o A)
+  ⇒ cast (↑ pmap (fn n ⇒ Vec n A) +-assoc) ((xs ++ ys) ++ zs) = xs ++ (ys ++ zs)
+
+// This is after properly adding parenthesis, and one ulift is actually unnecessary
+example def ++-assoc-ty'' (xs : Vec n A) (ys : Vec m A) (zs : Vec o A)
+  ⇒ (cast // def cast (p : A ↑ = B) : A → B
+      (/* ↑ */ pmap (fn n ⇒ Vec n A) +-assoc) // (n + m) + o = m + (n + o) --pmap-> Vec ((n + m) + o) A = Vec (m + (n + o)) A
+      ((xs ++ ys) ++ zs)
+    ) 
+    = xs ++ (ys ++ zs)
+
+def coeRefl (a : A) : ((coe 1 1 (fn j ⇒ A)) a) = a ⇒ refl
+
+def coeRefl' (a : A) : ((coe 0 0 (fn j ⇒ A)) a) = a ⇒ refl
+
+// def coeRefl'' (a : A) : ((coe 0 1 (fn j ⇒ A)) a) = a ⇒ refl
+
+// original
+def castRefl (a : A) : cast ↑ refl a = a ⇒ fn i ⇒ coe i 1 (fn j ⇒ A) a
+
+// break down
+def castRefl' (a : A) : (cast (↑ refl) a) = a ⇒
+  /*
+    p: (cast (↑ refl) a) = a
+    p 0: (cast (↑ refl) a)
+    p 1: a
+   */
+  fn i ⇒ 
+    /*
+      coe (r s : I) (p : I -> Type) : p r -> p s
+
+      r: i
+      s: 1
+
+      p r ↦ p i
+      p s ↦ p 1 ↦ a
+
+      cast A to A using A ↑= A
+
+    */
+    (coe i 1 (fn j ⇒ A)) a
+
+def castRefl'' (a : A) : a = (cast (↑ refl) a) ⇒
+  fn i ⇒ 
+    /*
+      coe (r s : I) (A : I -> Type) : A r -> A s
+
+      r: i
+      s: 1
+
+      A r ↦ A i ↦ A
+      A s ↦ A 1 ↦ A
+
+      cast A to A using A ↑= A
+
+    */
+    (coe 0 i (fn j ⇒ A)) a
+
+def Path' (A : I → Type) (a : A 0) (b : A 1) ⇒ Path A a b
+
+def ++-assoc-type (xs : Vec n A) (ys : Vec m A) (zs : Vec o A)
+  ⇒ Path (fn i ⇒ Vec (+-assoc i) A) ((xs ++ ys) ++ zs) (xs ++ (ys ++ zs))
+
+/*
+
+overlap def infixr ++ (Vec n A) (Vec m A) : Vec (n + m) A
+| nil, ys ⇒ ys
+| ys, nil ⇒ ys
+| x :< xs, ys ⇒ x :< xs ++ ys
+tighter :< =
+
+ */
+
+def ++-assoc (xs : Vec n A) (ys : Vec m A) (zs : Vec o A)
+: Path (fn i ⇒ Vec (+-assoc i) A) ((xs ++ ys) ++ zs) (xs ++ (ys ++ zs)) elim xs
+| nil ⇒ refl
+| x :< _ =>
+  fn i => x :< ((++-assoc _ _ _) i)
+
+// def ++-assoc' (xs : Vec n A) (ys : Vec m A) (zs : Vec o A)
+// : Path (fn i ⇒ Vec (+-assoc i) A) ((xs ++ ys) ++ zs) (xs ++ (ys ++ zs)) elim xs
+// | nil ⇒ refl
+// | x :< _ => pmap (x :<) (++-assoc' _ _ _)
+
+open inductive Interval
+| left
+| right
+| line : left = right
+
+example def Interval-elim {a b : A} {p : a = b} (i : Interval) : A elim i
+| left ⇒ a
+| right ⇒ b
+| line j ⇒ p j
+
+private def lemma
+  (f g : A → B) (p : ∀ x → f x = g x)
+  (i : Interval) (a : A) : B elim i
+| left ⇒ f a
+| right ⇒ g a
+| line j ⇒ p a j
+
+example def funExt' (f g : A → B) (p : ∀ a → f a = g a) : f = g ⇒
+  pmap (lemma f g p) (fn i ⇒ line i)
+
+open inductive Int
+| pos Nat | neg Nat
+| zro : pos 0 = neg 0
+
+def succ Int : Int
+| pos n ⇒ pos (suc n)
+| neg 0 ⇒ pos 1
+| neg (suc n) ⇒ neg n
+| zro i ⇒ pos 1
+
+def abs Int : Nat
+| pos n ⇒ n
+| neg n ⇒ n
+| zro _ ⇒ 0
