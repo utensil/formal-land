@@ -3,6 +3,9 @@
 # or
 # brew install just
 
+set windows-shell := ["pwsh.exe", "-c"]
+tla2tools := justfile_directory() / ".tla/tla2tools.jar"
+
 default:
     just --list
 
@@ -12,17 +15,18 @@ prep-dev:
     @echo just prep-tla
 
 trans SOURCE:
-    java -cp {{justfile_directory()}}/.tla/tla2tools.jar pcal.trans {{SOURCE}}
+    java -cp {{tla2tools}} pcal.trans {{SOURCE}}
 
 check SOURCE: (trans SOURCE)
-    java -cp {{justfile_directory()}}/.tla/tla2tools.jar tlc2.TLC {{SOURCE}}
+    java -cp {{tla2tools}} tlc2.TLC {{SOURCE}}
 
 prep-tla:
     #!/usr/bin/env bash
+    set -e
     mkdir -p {{justfile_directory()}}/.tla
     cd {{justfile_directory()}}/.tla
     if [ ! -f tla2tools.jar ]; then
-        wget https://github.com/tlaplus/tlaplus/releases/download/v1.8.0/tla2tools.jar
+        curl -L -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.8.0/tla2tools.jar
     fi
     echo "✅TLA+ installed"
     # wget https://github.com/tlaplus/tlaplus/releases/download/v1.8.0/TLAToolbox-1.8.0-macosx.cocoa.x86_64.zip
