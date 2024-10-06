@@ -4,7 +4,7 @@ name: Deploy Gitub Pages
 
 on:
   workflow_run:
-    workflows: ["Lean 4 CI"]
+    workflows: ["Aya CI"] #, "Lean 4 CI"]
     types:
       - completed
 
@@ -36,8 +36,9 @@ jobs:
           uses: actions/download-artifact@v4
           with:
             name: github-pages
-            path: lean4
+            path: github-pages
             github-token: ${{ secrets.GITHUB_TOKEN }}
+            run-id: ${{ github.event.workflow_run.id }}
         - name: Display structure of downloaded files
           run: ls -R
     #   - name: Deploy to GitHub Pages

@@ -6,4 +6,4 @@ lean4/.lake/
 tla/bin/
 tla/*.old
 tla/*.cfg
-aya/dist/*
+aya/dist/

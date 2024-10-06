@@ -41,3 +41,11 @@ jobs:
         run: |
             cd aya
             just test
+      - name: Generate documentation
+        run: |
+            cd aya
+            just doc
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./aya/dist
