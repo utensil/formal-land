@@ -18,6 +18,9 @@ jobs:
         os: [ ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
+      - uses: extractions/setup-just@v1
+        with:
+          just-version: 1.35.0
       - name: Setup Aya
         uses: aya-prover/setup-aya@latest
         with:
