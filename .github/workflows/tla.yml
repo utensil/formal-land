@@ -29,7 +29,7 @@ jobs:
       - name: Cache tla2tools.jar
         uses: actions/cache@v4
         with:
-            path: tla/.tla
+            path: tla/bin
             key: ${{ runner.os }}-tla
       - name: check
         run: |

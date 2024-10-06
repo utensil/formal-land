@@ -4,7 +4,8 @@
 # brew install just
 
 set windows-shell := ["pwsh.exe", "-c"]
-tla2tools := join(justfile_directory(), ".tla", "tla2tools.jar")
+tlaprefix := join(justfile_directory(), "bin")
+tla2tools := join(tlaprefix, "tla2tools.jar")
 
 default:
     just --list
@@ -23,8 +24,8 @@ check SOURCE: (trans SOURCE)
 prep-tla:
     #!/usr/bin/env bash
     set -e
-    mkdir -p {{justfile_directory()}}/.tla
-    cd {{justfile_directory()}}/.tla
+    mkdir -p {{tlaprefix}}
+    cd {{tlaprefix}}
     if [ ! -f tla2tools.jar ]; then
         curl -L -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.8.0/tla2tools.jar
     fi
