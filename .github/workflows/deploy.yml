@@ -4,7 +4,7 @@ name: Deploy Gitub Pages
 
 on:
   workflow_run:
-    workflows: ["Aya CI"] #, "Lean 4 CI"]
+    workflows: ["Aya CI", "Lean 4 CI"]
     types:
       - completed
 
@@ -27,27 +27,28 @@ concurrency:
 jobs:
   # Single deploy job since we're just deploying
   deploy:
+    # only deploy if the workflow_run was successful or if this is triggered by workflow_dispatch
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-        # - name: Download GitHub Pages artifact
-        #   uses: actions/download-artifact@v4
-        #   with:
-        #     name: github-pages
-        #     path: github-pages
-        #     github-token: ${{ secrets.GITHUB_TOKEN }}
-        #     run-id: ${{ github.event.workflow_run.id }}
-        - name: Cache github-pages
+        - name: Checkout
+          uses: actions/checkout@v4
+        - name: Setup Pages
+          uses: actions/configure-pages@v5
+        - name: Restore github-pages cache
           uses: actions/cache@v4
           with:
               path: github-pages
               key: github-pages
         - name: Display structure of downloaded files
           run: ls -R github-pages
-    #   - name: Deploy to GitHub Pages
-    #     id: deployment
-    #     # Github Pages deployment is enabled conditionally
-    #     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    #     uses: actions/deploy-pages@v4
+        - name: Upload artifact
+          uses: actions/upload-pages-artifact@v3
+          with:
+            path: github-pages
+        - name: Deploy to GitHub Pages
+          id: deployment
+          uses: actions/deploy-pages@v4

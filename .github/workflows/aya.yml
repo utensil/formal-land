@@ -42,11 +42,11 @@ jobs:
     #   - name: Show aya-lsp help
     #     run: aya-lsp --help
 
-      - name: Typechecking examples
+      - name: Test Aya Examples
         run: |
             cd aya
             just test
-      - name: Generate documentation
+      - name: Generate literate Aya documentation
         if: >-
           matrix.os == 'ubuntu-latest'
         run: |
