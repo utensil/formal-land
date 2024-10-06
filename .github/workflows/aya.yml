@@ -23,7 +23,9 @@ jobs:
         uses: actions/cache@v4
         with:
             path: github-pages
-            key: github-pages
+            key: github-pages-${{ github.run_id }}
+            restore-keys: |
+              github-pages
       - uses: extractions/setup-just@v1
         with:
           just-version: 1.35.0

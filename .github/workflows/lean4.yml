@@ -45,7 +45,9 @@ jobs:
         uses: actions/cache@v4
         with:
             path: github-pages
-            key: github-pages
+            key: github-pages-${{ github.run_id }}
+            restore-keys: |
+              github-pages
       - name: Install Python
         uses: actions/setup-python@v5
         with:

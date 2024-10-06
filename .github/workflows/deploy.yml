@@ -38,11 +38,13 @@ jobs:
           uses: actions/checkout@v4
         - name: Setup Pages
           uses: actions/configure-pages@v5
-        - name: Restore github-pages cache
+        - name: Cache github-pages
           uses: actions/cache@v4
           with:
               path: github-pages
-              key: github-pages
+              key: github-pages-${{ github.run_id }}
+              restore-keys: |
+                github-pages
         - name: Display structure of downloaded files
           run: ls -R github-pages
         - name: Upload artifact
