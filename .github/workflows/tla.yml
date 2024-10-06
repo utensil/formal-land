@@ -21,9 +21,14 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '23'
+      - name: Cache tla2tools.jar
+        uses: actions/cache@v4
+        with:
+            path: tla/.tla
+            key: ${{ runner.os }}-tla
       - name: check
         run: |
             cd tla
-            just install-tla
+            just prep-tla
             just check pluscal.tla
 

@@ -3,3 +3,6 @@ lean4/.ipynb_checkpoints
 *.ipynb
 .lsp_symlink
 lean4/.lake/
+tla/.tla/
+tla/*.old
+tla/*.cfg

@@ -6,21 +6,25 @@
 default:
     just --list
 
-prep-tla:
+prep-dev:
     @echo brew install java
     @echo install https://github.com/tlaplus/vscode-tlaplus
+    @echo just prep-tla
 
 trans SOURCE:
-    java -cp ~/.tla/tla2tools.jar pcal.trans {{SOURCE}}
+    java -cp {{justfile_directory()}}/.tla/tla2tools.jar pcal.trans {{SOURCE}}
 
 check SOURCE: (trans SOURCE)
-    java -cp ~/.tla/tla2tools.jar tlc2.TLC {{SOURCE}}
+    java -cp {{justfile_directory()}}/.tla/tla2tools.jar tlc2.TLC {{SOURCE}}
 
-install-tla:
+prep-tla:
     #!/usr/bin/env bash
-    mkdir -p ~/.tla
-    cd ~/.tla
-    wget https://github.com/tlaplus/tlaplus/releases/download/v1.8.0/tla2tools.jar
+    mkdir -p {{justfile_directory()}}/.tla
+    cd {{justfile_directory()}}/.tla
+    if [ ! -f tla2tools.jar ]; then
+        wget https://github.com/tlaplus/tlaplus/releases/download/v1.8.0/tla2tools.jar
+    fi
+    echo "✅TLA+ installed"
     # wget https://github.com/tlaplus/tlaplus/releases/download/v1.8.0/TLAToolbox-1.8.0-macosx.cocoa.x86_64.zip
     # unzip TLAToolbox-1.8.0-macosx.cocoa.x86_64.zip
     # mv TLAToolbox.app /Applications
