@@ -88,30 +88,4 @@ jobs:
           rm -f .lake/packages/mathlib/lakefile.lean
           mv lakefile-for-mathlib.lean .lake/packages/mathlib/lakefile.lean
           lake -R exe mk_all || true
-          
-  # # Deployment job
-  # deploy:
-  #   # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-  #   permissions:
-  #     contents: read
-  #     pages: write
-  #     id-token: write
-  #   environment:
-  #     name: github-pages
-  #     url: ${{ steps.deployment.outputs.page_url }}
-  #   runs-on: ${{ matrix.os }}
-  #   strategy:
-  #     matrix:
-  #       os: [ubuntu-latest]
-  #     fail-fast: false
-  #   needs: lean4
-  #   steps:
-  #     - name: Deploy to GitHub Pages
-  #       id: deployment
-  #       # Github Pages deployment is enabled conditionally
-  #       if: >-
-  #         matrix.os == 'ubuntu-latest' && (
-  #           startsWith(github.ref, 'refs/heads/v4') ||
-  #           contains(github.event.head_commit.message, '[annotate]')
-  #         )
-  #       uses: actions/deploy-pages@v4
+
