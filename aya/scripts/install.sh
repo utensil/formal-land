@@ -49,10 +49,12 @@ wget https://github.com/aya-prover/aya-dev/releases/download/nightly-build/$AYA_
 unzip -o $AYA_ZIP
 rm $AYA_ZIP
 
+echo >> ~/.bashrc
 echo "export AYA_PREFIX=${AYA_PREFIX}" >> ~/.bashrc
 echo 'export PATH="$AYA_PREFIX/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 
+echo >> ~/.zshrc
 echo "export AYA_PREFIX=${AYA_PREFIX}" >> ~/.zshrc
 echo 'export PATH="$AYA_PREFIX/bin:$PATH"' >> ~/.zshrc
 source ~/.zshrc

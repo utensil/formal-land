@@ -1,0 +1,13 @@
+default:
+    just --list
+
+prep:
+    bash scripts/install.sh
+
+test:
+    aya haskeller-tutorial.aya
+    aya prover-tutorial.aya
+
+doc:
+    mkdir -p dist
+    aya literate.aya.md --pretty-format=html -o dist/literate.aya.html

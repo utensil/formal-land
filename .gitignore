@@ -6,3 +6,4 @@ lean4/.lake/
 tla/.tla/
 tla/*.old
 tla/*.cfg
+aya/dist/*

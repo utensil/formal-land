@@ -36,5 +36,4 @@ jobs:
       - name: Typechecking examples
         run: |
             cd aya
-            aya haskeller-tutorial.aya
-            aya prover-tutorial.aya
+            just test
