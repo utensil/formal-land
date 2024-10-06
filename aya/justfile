@@ -12,4 +12,4 @@ test:
 
 doc:
     mkdir -p dist
-    aya literate.aya.md --pretty-format=html -o dist/literate.aya.html
+    -aya literate.aya.md --pretty-format=html -o dist/literate.aya.html

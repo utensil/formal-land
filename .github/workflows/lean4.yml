@@ -47,6 +47,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
+      - name: Cache github-pages
+        uses: actions/cache@v4
+        with:
+            path: github-pages
+            key: github-pages
       - name: Install Python
         uses: actions/setup-python@v5
         with:
@@ -72,17 +77,20 @@ jobs:
           ./install_deps.sh
           ./annotate_all.sh
           # lake env leanInk analyze examples/Help.lean
+          cd ..
+          mkdir -p ./github-pages
+          mv ./lean4/dist ./github-pages/lean4
           echo "deploy=true" >> "$GITHUB_OUTPUT"
-      - name: Upload artifact
-        # Github Pages deployment is enabled conditionally
-        if: >-
-          matrix.os == 'ubuntu-latest' && (
-            startsWith(github.ref, 'refs/heads/v4') ||
-            contains(github.event.head_commit.message, '[annotate]')
-          )
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./lean4/dist
+      # - name: Upload artifact
+      #   # Github Pages deployment is enabled conditionally
+      #   if: >-
+      #     matrix.os == 'ubuntu-latest' && (
+      #       startsWith(github.ref, 'refs/heads/v4') ||
+      #       contains(github.event.head_commit.message, '[annotate]')
+      #     )
+      #   uses: actions/upload-pages-artifact@v3
+      #   with:
+      #     path: ./lean4/dist
       - name: Try mk_all
         shell: bash
         run: |

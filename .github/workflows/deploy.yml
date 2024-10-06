@@ -32,15 +32,20 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-        - name: Download GitHub Pages artifact
-          uses: actions/download-artifact@v4
+        # - name: Download GitHub Pages artifact
+        #   uses: actions/download-artifact@v4
+        #   with:
+        #     name: github-pages
+        #     path: github-pages
+        #     github-token: ${{ secrets.GITHUB_TOKEN }}
+        #     run-id: ${{ github.event.workflow_run.id }}
+        - name: Cache github-pages
+          uses: actions/cache@v4
           with:
-            name: github-pages
-            path: github-pages
-            github-token: ${{ secrets.GITHUB_TOKEN }}
-            run-id: ${{ github.event.workflow_run.id }}
+              path: github-pages
+              key: github-pages
         - name: Display structure of downloaded files
-          run: ls -R
+          run: ls -R github-pages
     #   - name: Deploy to GitHub Pages
     #     id: deployment
     #     # Github Pages deployment is enabled conditionally
