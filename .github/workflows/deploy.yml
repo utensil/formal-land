@@ -37,6 +37,7 @@ jobs:
           with:
             name: github-pages
             path: lean4
+            github-token: ${{ secrets.GITHUB_TOKEN }}
         - name: Display structure of downloaded files
           run: ls -R
     #   - name: Deploy to GitHub Pages
