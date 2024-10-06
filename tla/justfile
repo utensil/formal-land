@@ -4,7 +4,7 @@
 # brew install just
 
 set windows-shell := ["pwsh.exe", "-c"]
-tla2tools := justfile_directory() / ".tla/tla2tools.jar"
+tla2tools := join(justfile_directory(), ".tla", "tla2tools.jar")
 
 default:
     just --list
