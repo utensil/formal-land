@@ -19,7 +19,15 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
+      - name: Should annotate
+        id: annotate
+        # annotation is enabled conditionally
+        if: >-
+          matrix.os == 'ubuntu-latest'
+        run: echo "annotate=true" >> "$GITHUB_OUTPUT"
       - name: Cache github-pages
+        if: >-
+          steps.annotate.outputs.annotate == 'true'
         uses: actions/cache@v4
         with:
             path: github-pages
