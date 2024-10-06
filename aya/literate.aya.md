@@ -35,6 +35,22 @@ example def infixl [+] (a n : Nat) : Nat elim a
 def foo =>
 ```
 
+```aya
+prim I
+prim coe (r s : I) (A : I → Type) : A r → A s
+prim Path
+variable A B : Type
+def infix = (a b : A) ⇒ Path (\i ⇒ A) a b
+open inductive Bool | true | false
+def not Bool : Bool
+| true ⇒ false
+| false ⇒ true
+
+def id (x : Bool) ⇒ x
+
+def Goal ⇒ id = (fn x ⇒ not (not x))
+```
+
 ## Math formulas
 
 $$
