@@ -79,6 +79,7 @@ jobs:
           # lake env leanInk analyze examples/Help.lean
           cd ..
           mkdir -p ./github-pages
+          rm -rf ./github-pages/lean4
           mv ./lean4/dist ./github-pages/lean4
           echo "deploy=true" >> "$GITHUB_OUTPUT"
       # - name: Upload artifact
