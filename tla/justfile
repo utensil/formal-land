@@ -1,0 +1,26 @@
+# To use just, run the following command to install:
+# curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to /usr/local/bin/
+# or
+# brew install just
+
+default:
+    just --list
+
+prep-tla:
+    @echo brew install java
+    @echo install https://github.com/tlaplus/vscode-tlaplus
+
+trans SOURCE:
+    java -cp ~/.tla/tla2tools.jar pcal.trans {{SOURCE}}
+
+check SOURCE: (trans SOURCE)
+    java -cp ~/.tla/tla2tools.jar tlc2.TLC {{SOURCE}}
+
+install-tla:
+    #!/usr/bin/env bash
+    mkdir -p ~/.tla
+    cd ~/.tla
+    wget https://github.com/tlaplus/tlaplus/releases/download/v1.8.0/tla2tools.jar
+    # wget https://github.com/tlaplus/tlaplus/releases/download/v1.8.0/TLAToolbox-1.8.0-macosx.cocoa.x86_64.zip
+    # unzip TLAToolbox-1.8.0-macosx.cocoa.x86_64.zip
+    # mv TLAToolbox.app /Applications
