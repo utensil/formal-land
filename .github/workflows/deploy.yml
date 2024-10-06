@@ -32,8 +32,15 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        # Github Pages deployment is enabled conditionally
-        if: ${{ github.event.workflow_run.conclusion == 'success' }}
-        uses: actions/deploy-pages@v4
+        - name: Download GitHub Pages artifact
+          uses: actions/download-artifact@v2
+          with:
+            name: github-pages
+            path: lean4
+        - name: Display structure of downloaded files
+          run: ls -R
+    #   - name: Deploy to GitHub Pages
+    #     id: deployment
+    #     # Github Pages deployment is enabled conditionally
+    #     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    #     uses: actions/deploy-pages@v4
