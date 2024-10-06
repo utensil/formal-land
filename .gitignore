@@ -7,3 +7,9 @@ tla/bin/
 tla/*.old
 tla/*.cfg
 aya/dist/
+tla/*.aux
+tla/*.dvi
+tla/*.log
+tla/*.tex
+tla/*.pdf
+tla/states

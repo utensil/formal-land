@@ -21,6 +21,9 @@ trans SOURCE:
 check SOURCE: (trans SOURCE)
     java -cp {{tla2tools}} tlc2.TLC {{SOURCE}}
 
+doc SOURCE: (check SOURCE)
+    java -cp {{tla2tools}} tla2tex.TLA -latexCommand pdflatex {{SOURCE}}
+
 prep-tla:
     #!/usr/bin/env bash
     set -e
