@@ -19,6 +19,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Should annotate
+        id: annotate
+        # annotation is enabled conditionally
+        if: >-
+          matrix.os == 'ubuntu-latest'
+        run: echo "annotate=true" >> "$GITHUB_OUTPUT"
+      - name: Cache github-pages
+        if: >-
+          steps.annotate.outputs.annotate == 'true'
+        uses: actions/cache@v4
+        with:
+            path: github-pages
+            key: github-pages-${{ github.run_id }}
+            restore-keys: |
+              github-pages
       - uses: extractions/setup-just@v1
         with:
           just-version: 1.35.0
@@ -36,4 +51,14 @@ jobs:
             cd tla
             just prep-tla
             just check pluscal.tla
-
+      - uses: wtfjoke/setup-tectonic@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build PDF
+        run: |
+            cd tla
+            just doc pluscal
+            mkdir -p dist
+            mv pluscal.pdf dist/
+            cd ..
+            just pages tla

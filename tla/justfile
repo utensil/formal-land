@@ -22,7 +22,7 @@ check SOURCE: (trans SOURCE)
     java -cp {{tla2tools}} tlc2.TLC {{SOURCE}}
 
 doc SOURCE: (check SOURCE)
-    java -cp {{tla2tools}} tla2tex.TLA -latexCommand pdflatex {{SOURCE}}
+    java -cp {{tla2tools}} tla2tex.TLA -latexCommand 'tectonic --keep-logs' {{SOURCE}}
 
 prep-tla:
     #!/usr/bin/env bash
@@ -36,3 +36,7 @@ prep-tla:
     # wget https://github.com/tlaplus/tlaplus/releases/download/v1.8.0/TLAToolbox-1.8.0-macosx.cocoa.x86_64.zip
     # unzip TLAToolbox-1.8.0-macosx.cocoa.x86_64.zip
     # mv TLAToolbox.app /Applications
+
+prep-tectonic:
+    # https://tectonic-typesetting.github.io/en-US/install.html
+    curl --proto '=https' --tlsv1.2 -fsSL https://drop-sh.fullyjustified.net |sh
