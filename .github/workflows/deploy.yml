@@ -36,6 +36,12 @@ jobs:
     steps:
         - name: Checkout
           uses: actions/checkout@v4
+        - uses: extractions/setup-just@v1
+          with:
+            just-version: 1.35.0
+        - name: Test artifact query
+          run: |
+            just jobs
         - name: Setup Pages
           uses: actions/configure-pages@v5
         - name: Cache github-pages
