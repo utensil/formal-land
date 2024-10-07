@@ -17,3 +17,4 @@ Related tech stack:
 - [Quint](https://quint-lang.org/): A modern and executable specification language based on TLA+, developed by 
 - [PlusCal](https://en.wikipedia.org/wiki/PlusCal): a gateway language to TLA+
 - [Apalache](https://apalache-mc.org/): A symbolic model checker for TLA+ specifications, via translation to SMT solvers such as Microsoft Z3
+- [TLAUC](https://github.com/tlaplus-community/tlauc): The TLA⁺ Unicode Converter
