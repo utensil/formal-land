@@ -78,9 +78,7 @@ jobs:
           ./annotate_all.sh
           # lake env leanInk analyze examples/Help.lean
           cd ..
-          mkdir -p ./github-pages
-          rm -rf ./github-pages/lean4
-          mv ./lean4/dist ./github-pages/lean4
+          just pages lean4
       - name: Try mk_all
         shell: bash
         run: |

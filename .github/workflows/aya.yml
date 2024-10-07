@@ -63,6 +63,4 @@ jobs:
             cd aya
             just doc
             cd ..
-            mkdir -p github-pages
-            rm -rf ./github-pages/aya
-            mv ./aya/dist ./github-pages/aya
+            just pages aya
