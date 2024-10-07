@@ -4,7 +4,7 @@ name: Deploy Gitub Pages
 
 on:
   workflow_run:
-    workflows: ["Aya CI", "Lean 4 CI"]
+    workflows: ["Aya CI", "Lean 4 CI", "TLA+ CI"]
     types:
       - completed
 

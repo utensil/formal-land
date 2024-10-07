@@ -31,8 +31,10 @@ prep-tla:
     cd {{tlaprefix}}
     if [ ! -f tla2tools.jar ]; then
         curl -L -o tla2tools.jar https://github.com/tlaplus/tlaplus/releases/download/v1.8.0/tla2tools.jar
+        echo "✅TLA+ installed"
+    else
+        echo "✅TLA+ already installed"
     fi
-    echo "✅TLA+ installed"
     # wget https://github.com/tlaplus/tlaplus/releases/download/v1.8.0/TLAToolbox-1.8.0-macosx.cocoa.x86_64.zip
     # unzip TLAToolbox-1.8.0-macosx.cocoa.x86_64.zip
     # mv TLAToolbox.app /Applications
