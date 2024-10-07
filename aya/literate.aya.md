@@ -1,14 +1,14 @@
-# Literate Programming in Aya
+Literate Programming in Aya
 
 This is based on (outdated) [Introduction to literate Aya](https://blog.kiva.moe/posts/intro-literate-aya.html) and code snippets from `haskeller-tutorial.aya`.
 
-## Defining a type
+Defining a type
 
 ```aya
 open inductive Nat | zero | suc Nat
 ```
 
-## Defining an operation
+Defining an operation
 
 ```aya
 example def infixl <+> Nat Nat : Nat
@@ -21,7 +21,7 @@ overlap def infixl <+> Nat Nat : Nat
 | suc m, n => suc (m <+> n)
 ```
 
-## Meta-variables
+Meta-variables
 
 ```aya
 example def infixl [+] (a n : Nat) : Nat elim a
@@ -29,29 +29,13 @@ example def infixl [+] (a n : Nat) : Nat elim a
 | suc m ⇒ suc {??}
 ```
 
-## Compilation errors
+Compilation errors
 
 ```aya
 def foo =>
 ```
 
-```aya
-prim I
-prim coe (r s : I) (A : I → Type) : A r → A s
-prim Path
-variable A B : Type
-def infix = (a b : A) ⇒ Path (\i ⇒ A) a b
-open inductive Bool | true | false
-def not Bool : Bool
-| true ⇒ false
-| false ⇒ true
-
-def id (x : Bool) ⇒ x
-
-def Goal ⇒ id = (fn x ⇒ not (not x))
-```
-
-## Math formulas
+Math formulas
 
 $$
 \begin{align*}
@@ -61,4 +45,3 @@ $$
                \mid & \quad \Sigma,\mathrm{decl}   \\[-0.3em]
 \end{align*}
 $$
-
