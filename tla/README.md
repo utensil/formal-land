@@ -18,3 +18,4 @@ Related tech stack:
 - [PlusCal](https://en.wikipedia.org/wiki/PlusCal): a gateway language to TLA+
 - [Apalache](https://apalache-mc.org/): A symbolic model checker for TLA+ specifications, via translation to SMT solvers such as Microsoft Z3
 - [TLAUC](https://github.com/tlaplus-community/tlauc): The TLA⁺ Unicode Converter
+- [haybale](https://github.com/PLSysSec/haybale): Symbolic execution of LLVM IR, written in Rust
