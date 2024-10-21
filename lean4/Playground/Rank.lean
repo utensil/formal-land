@@ -2,13 +2,12 @@
 import Mathlib.LinearAlgebra.CliffordAlgebra.Contraction
 import Mathlib.LinearAlgebra.ExteriorAlgebra.OfAlternating
 import Mathlib.LinearAlgebra.CliffordAlgebra.BaseChange
--- import Mathlib.LinearAlgebra.Finrank
 import Mathlib.LinearAlgebra.Multilinear.FiniteDimensional
 import Mathlib.LinearAlgebra.TensorAlgebra.Basis
 import Mathlib.LinearAlgebra.ExteriorAlgebra.Grading
 import Mathlib.Tactic
 
-open QuadraticForm BilinForm ExteriorAlgebra FiniteDimensional
+open QuadraticForm BilinForm ExteriorAlgebra FiniteDimensional QuadraticMap
 
 #check polar_self
 
@@ -29,7 +28,7 @@ noncomputable def QuadraticForm.B := Classical.choose Q.exists_companion
 
 #check Nat.sum_range_choose
 
-#check FiniteDimensional.finrank_directSum
+#check Module.finrank_directSum
 
 #check rank_directSum
 
@@ -68,9 +67,8 @@ noncomputable def QuadraticForm.B := Classical.choose Q.exists_companion
 -- example : (∀ i, M [Λ^Fin i]→ₗ[R] M) = (∀ i, AlternatingMap R M M i) := by
 --   done
 
-example : Module.rank R M = finrank R M := by
-  exact (finrank_eq_rank R M).symm
-  done
+example : Module.rank R M = Module.finrank R M := by
+  exact (Module.finrank_eq_rank R M).symm
 
 -- example : finrank R (TensorAlgebra R M) = 2^(finrank R M) := by
 
