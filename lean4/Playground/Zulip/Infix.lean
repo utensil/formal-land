@@ -1,6 +1,6 @@
 -- https://leanprover.zulipchat.com/#narrow/stream/113489-new-members/topic/Overloading.20infixes.3F
 import Mathlib.Tactic.Common
-import Mathlib.Mathport.Notation
+import Mathlib.Util.Notation3
 
 notation3:70 x " ⊗₁ " y => x * y
 infix:70 " ⊗₂ " => Mul.mul
