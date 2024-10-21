@@ -46,14 +46,14 @@ prove the property for the last kind.
 Here we only need to provide a function.
 -/
 instance : Membership (Set α) (Filter α) := {
-  mem := fun s f ↦ s ∈ f.sets
+  mem := fun f s ↦ s ∈ f.sets
 }
 
 /-!
   To simplify, we can surround the ordered fields with `⟨` and `⟩`, seperated by `,`.
 -/
 instance : Membership (Set α) (Filter α) :=
-  ⟨fun s f ↦ s ∈ f.sets⟩
+  ⟨fun f s ↦ s ∈ f.sets⟩
 
 /-!
   Now that `∈` is defined.
@@ -313,7 +313,7 @@ If we have a filter basis `b`, it is more convenient to write `s ∈ b` for
 `s ∈ b.sets`. We now define this notation.
 -/
 instance : Membership (Set α) (Basis α) :=
-  ⟨fun s b ↦ s ∈ b.sets⟩
+  ⟨fun b s ↦ s ∈ b.sets⟩
 
 /--
 The definition of `∈`.
