@@ -1,3 +1,4 @@
+import Mathlib.Algebra.Group.Defs
 import Mathlib.GroupTheory.SpecificGroups.Alternating
 import Mathlib.GroupTheory.SpecificGroups.Cyclic
 import Mathlib.GroupTheory.SpecificGroups.Dihedral
@@ -25,13 +26,13 @@ import Mathlib.GroupTheory.Index
 import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
 import Mathlib.LinearAlgebra.Matrix.Spectrum
 import Mathlib.GroupTheory.FreeGroup.IsFreeGroup
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup
+-- import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup
 import Mathlib.LinearAlgebra.QuadraticForm.IsometryEquiv
 import Mathlib.GroupTheory.SemidirectProduct
 import Mathlib.Logic.Equiv.Defs
-import Mathlib.Data.ZMod.Module
+-- import Mathlib.Data.ZMod.Module
 import Mathlib.GroupTheory.PresentedGroup
-import Mathlib.GroupTheory.Commutator
+-- import Mathlib.GroupTheory.Commutator
 import Mathlib.GroupTheory.Coprod.Basic
 import Mathlib.Tactic
 
@@ -90,7 +91,7 @@ variable (α β : Type*) in
 
 #check MulOneClass.mul_one
 
-#check Group.mul_left_inv
+#check mul_left_inv
 
 #check Subgroup
 
@@ -160,7 +161,7 @@ failed to synthesize instance
 
 #check Basis.ofVectorSpace
 
-#check FiniteDimensional.finBasis
+#check Module.finBasis
 
 #check Basis.ofVectorSpaceIndex
 
@@ -348,7 +349,7 @@ some exponent `k` is contained in the generalized eigenspace for exponents large
 
 #check Representation.linHom
 
-#find_home QuadraticForm.isometryEquivBasisRepr
+#find_home QuadraticMap.isometryEquivBasisRepr
 
 -- section
 
