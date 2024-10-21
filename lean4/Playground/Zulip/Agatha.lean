@@ -1,10 +1,10 @@
 -- https://leanprover.zulipchat.com/#narrow/stream/270676-lean4/topic/'Who.20Killed.20Aunt.20Agatha'.20puzzle
 -- https://gist.github.com/utensil/17159725e5335f6a9688b7443fe0b3aa
 -- https://www.tptp.org/cgi-bin/SystemOnTPTP
-
-import Batteries.Logic
+import Batteries.Tactic.Init
 -- import Batteries.Tactic.RCases
 -- import Mathlib.Tactic
+-- import Mathlib.Logic.Basic
 
 variable (u : Type)
 variable (lives : u → Prop)
@@ -29,7 +29,7 @@ variable (pel55_10 : ∀ x, ∃ y, ¬ hates x y)
 variable (pel55_11 : agatha ≠ butler)
 -- variable (pel55_12 : agatha ≠ charles)
 -- variable (pel55_13 : charles ≠ butler)
-
+include hates pel55_1 pel55_3 pel55_4 pel55_5 pel55_6 pel55_7 pel55_8 pel55_9 pel55_10 pel55_11 charles in
 theorem result : killed agatha agatha := by
   have haa : hates agatha agatha := pel55_7 agatha pel55_11
   have nkca : ¬killed charles agatha := by
