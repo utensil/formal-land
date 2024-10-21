@@ -6,7 +6,7 @@ import Mathlib.Tactic
 -- import Mathlib.Util.Superscript
 -- import Mathlib.Data.Matrix.Notation
 
-open FiniteDimensional (finrank finrank_eq_card_basis finrank_directSum )
+open Module (finrank finrank_eq_card_basis finrank_directSum rank_self)
 
 set_option quotPrecheck false
 
