@@ -87,8 +87,8 @@ theorem mul_inv_rev2 : (A * B)⁻¹ = B⁻¹ * A⁻¹ := by sorry
 #check Bool
 
 -- TOD: PR
-#check QuadraticForm.associated_left_inverse
-#check QuadraticForm.associated_rightInverse
+#check QuadraticMap.associated_left_inverse
+#check QuadraticMap.associated_rightInverse
 
 #check FreeMagma.rec
 
