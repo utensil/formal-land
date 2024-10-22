@@ -1,4 +1,4 @@
-import DuperLand
+import DuperXp
 import Mathlib.LinearAlgebra.CliffordAlgebra.Contraction
 import Mathlib.Tactic
 import Mathlib.Data.Real.Basic
