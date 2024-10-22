@@ -3,7 +3,7 @@ open Lake DSL System
 
 package «DuperXp» where 
   testDriver := "Lean4XpKit/test"
-  testDriverArgs := #["Lean4XpKit"]
+  testDriverArgs := #["DuperXp"]
 
 def leanVersion : String := s!"v{Lean.versionString}"
 
