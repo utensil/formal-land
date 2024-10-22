@@ -2,7 +2,7 @@
 lean4/.ipynb_checkpoints
 *.ipynb
 .lsp_symlink
-lean4/.lake/
+**/.lake
 tla/bin/
 tla/*.old
 tla/*.cfg
@@ -13,3 +13,4 @@ tla/*.log
 tla/*.tex
 tla/*.pdf
 tla/states
+

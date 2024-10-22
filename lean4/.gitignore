@@ -1,18 +1,3 @@
-/build
-/lean_packages/*
-!/lean_packages/manifest.json
-/build
-/lean_packages/*
-!/lean_packages/manifest.json
-/build
-/lean_packages/*
-!/lean_packages/manifest.json
-
 dist
 .DS_Store
 
-**/lake-packages/
-**/*.olean
-**/*.leanInk
-.lsp_symlink/
-**/.lake/
