@@ -1,4 +1,4 @@
-import Duper
+import DuperLand
 -- import Mathlib.LinearAlgebra.Finrank
 -- import Mathlib.LinearAlgebra.FreeModule.Finite.Rank
 import Mathlib.LinearAlgebra.CliffordAlgebra.Contraction
@@ -30,7 +30,7 @@ theorem barber_paradox {person : Type} {shaves : person → person → Prop}
   by duper [*] {preprocessing := no_preprocessing, inhabitationReasoning := true}
 
 example {G : Type} [hG : Group G] (x y : G) : x * y * y⁻¹ = x :=
-  by duper? [mul_left_inv, one_mul, mul_assoc]
+  by duper? [inv_mul_cancel, one_mul, mul_assoc]
 
 example (a b : ℝ) : |a| - |b| ≤ |a - b| := by
   duper? [abs_le, abs_sub_abs_le_abs_sub]
@@ -42,7 +42,6 @@ example : ∀ f : α → Set α, ¬Surjective f := by
   have counterexample := Surjf {i | i ∉ f i}
   duper [Set.mem_setOf_eq, counterexample]
 
-#check PreprocessingOption
 
 example : Module.rank R M = finrank R M := by
   duper [finrank_eq_rank]

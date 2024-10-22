@@ -1,4 +1,4 @@
-import Duper
+import DuperLand
 import Mathlib.LinearAlgebra.CliffordAlgebra.Contraction
 import Mathlib.Tactic
 import Mathlib.Data.Real.Basic
@@ -32,9 +32,9 @@ example : finrank R (CliffordAlgebra Q) = finrank R (ExteriorAlgebra R M) := by
 use `set_option maxHeartbeats <num>` to set the limit
 use `set_option diagnostics true` to get diagnostic information
 -/
-example : finrank R (CliffordAlgebra Q) = finrank R (ExteriorAlgebra R M) := by
-  duper [LinearEquiv.finrank_eq, CliffordAlgebra.equivExterior]
-  done
+-- example : finrank R (CliffordAlgebra Q) = finrank R (ExteriorAlgebra R M) := by
+--   duper [LinearEquiv.finrank_eq, CliffordAlgebra.equivExterior]
+--   done
 
 -- example : finrank R (CliffordAlgebra Q) = finrank R (ExteriorAlgebra R M) := by
 --   let clause_1_0 := eq_true «_exHyp_uniq.139473»;
