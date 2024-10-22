@@ -6,7 +6,6 @@ def leanVersion : String := s!"v{Lean.versionString}"
 require "leanprover-community" / "batteries" @ git leanVersion
 
 package "Lean4XpKit" where
-  -- add package configuration options here
 
 @[default_target]
 lean_lib «Lean4XpKit» where

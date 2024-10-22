@@ -65,11 +65,16 @@ jobs:
         with:
           python-version: "3.11"
           # cache: 'pip' # caching pip dependencies
-      - name: check examples
+      - name: check Lean 4 Playground 
         # working-directory: ./lean4
         # uses: leanprover/lean-action@v1-alpha
         run: |
           cd lean4
+          lake exe cache get
+          lake test
+      - name: check DuperXp
+        run: |
+          cd lean4-duper-xp
           lake exe cache get
           lake test
       - name: annotate examples
