@@ -16,7 +16,7 @@ on:
 jobs:
   # This workflow contains a single job called "lean4"
   lean4:
-    name: Lean 4 Examples
+    name: Lean 4 Projects 
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:

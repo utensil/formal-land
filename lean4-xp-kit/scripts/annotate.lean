@@ -6,6 +6,8 @@ import Lean4XpKit.Utils
 open IO.Process
 open System
 
+
+
 /--
 Annotate Lean files.
 
@@ -18,6 +20,7 @@ If arguments are provided, they are interpreted as file names in `Playground/`, 
 -/
 def main (args : List String) : IO Unit := do
   let cwd := mkFilePath ["."] -- ← IO.currentDir
+  let LEAN4_XP_KIT_HOME := mkFilePath ["..", "lean4-xp-kit"]
 
   _ ← (← IO.Process.spawn { cmd := "lake", args := #["build"] }).wait
   -- Duper requires some additional time to build on first run.
@@ -45,9 +48,9 @@ def main (args : List String) : IO Unit := do
       IO.asTask do
         let format := if #["Hello.lean", "LAMR.lean"].contains <| t.fileName.getD "" then "rst" else "md"
         let ⟨elapsed, out⟩ ← time <| IO.Process.output {
-            cmd := "bash",
+            cmd :=  "bash",
             args := #[
-              "annotate.sh", t.toString, format]
+              (LEAN4_XP_KIT_HOME / "annotate.sh").toString, t.toString, format]
           }
         let exitCode := out.exitCode
         if exitCode == 0 then
