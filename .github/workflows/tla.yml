@@ -19,6 +19,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - uses: extractions/setup-just@v1
+        with:
+          just-version: 1.35.0
       - name: Should annotate
         id: annotate
         # annotation is enabled conditionally
@@ -34,9 +37,6 @@ jobs:
             key: github-pages-${{ github.run_id }}
             restore-keys: |
               github-pages
-      - uses: extractions/setup-just@v1
-        with:
-          just-version: 1.35.0
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'

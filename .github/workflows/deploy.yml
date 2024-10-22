@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 # based on https://github.com/actions/starter-workflows/blob/main/pages/static.yml
 # and https://stackoverflow.com/questions/62750603/github-actions-trigger-another-action-after-one-action-is-completed/65698892#65698892
 name: Deploy Gitub Pages
@@ -65,3 +66,4 @@ jobs:
         - name: Deploy to GitHub Pages
           id: deployment
           uses: actions/deploy-pages@v4
+

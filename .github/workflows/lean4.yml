@@ -23,6 +23,13 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
       fail-fast: false
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: extractions/setup-just@v1
+        with:
+          just-version: 1.35.0
       - name: install elan on Ubuntu and macOS
         if: matrix.os != 'windows-latest'
         run: |
@@ -35,10 +42,6 @@ jobs:
           curl -O --location https://raw.githubusercontent.com/leanprover/elan/master/elan-init.ps1
           .\elan-init.ps1 -NoPrompt 1 -DefaultToolchain none
           echo "$HOME\.elan\bin" >> $env:GITHUB_PATH
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
       - name: Should annotate
         id: annotate
         # annotation is enabled conditionally
