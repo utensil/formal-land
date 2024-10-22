@@ -82,11 +82,16 @@ jobs:
           # lake env leanInk analyze examples/Help.lean
           cd ..
           just pages lean4
-      - name: Try mk_all
+      # - name: Try mk_all
+      #   shell: bash
+      #   run: |
+      #     cd lean4
+      #     rm -f .lake/packages/mathlib/lakefile.lean
+      #     mv lakefile-for-mathlib.lean .lake/packages/mathlib/lakefile.lean
+      #     lake -R exe mk_all || true
+      - name: Try check NoCI examples
         shell: bash
         run: |
           cd lean4
-          rm -f .lake/packages/mathlib/lakefile.lean
-          mv lakefile-for-mathlib.lean .lake/packages/mathlib/lakefile.lean
-          lake -R exe mk_all || true
+          ./check_noci.sh || true
 
