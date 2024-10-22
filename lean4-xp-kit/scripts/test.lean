@@ -3,7 +3,7 @@ This is adapted from https://github.com/leanprover-community/batteries/blob/078a
 with my own customizations on paths, options and summary output.
 -/
 import Batteries.Data.String.Matcher
-import Playground.Utils
+import Lean4XpKit.Utils
 open IO.Process
 open System
 
@@ -32,10 +32,18 @@ def main (args : List String) : IO Unit := do
   -- Collect test targets by walking `Playground/` and `Playground/Zulip`.
   let noNoisy := args.contains "--no-noisy"
   let verbose := args.contains "--verbose"
-  let enter : FilePath → IO Bool := fun path ↦ pure <| path.fileName != "NoCI" -- || true
-  let targets <- match args.erase "--no-noisy" |>.erase "--verbose" with
-  | [] =>System.FilePath.walkDir (enter := enter) <| cwd / "Playground"
-  | _ => pure <| (args.map fun t => mkFilePath [cwd.toString, "Playground", t] |>.withExtension "lean") |>.toArray
+  let enter : FilePath → IO Bool := fun path ↦ pure <| path.fileName != "NoCI" -- 
+  let positionalArgs := args.erase "--no-noisy" |>.erase "--verbose"
+
+  if positionalArgs.isEmpty then
+    IO.eprintln "Usage: lake exe test [--verbose] [--no-noisy] libraryName testFileName"
+    exit 1
+
+  let libraryName := positionalArgs.head!
+  
+  let targets <- match positionalArgs.drop 1 with
+  | [] =>System.FilePath.walkDir (enter := enter) <| cwd / libraryName 
+  | _ => pure <| (args.map fun t => mkFilePath [cwd.toString, libraryName, t] |>.withExtension "lean") |>.toArray 
   let existing ← targets.filterM fun t => do pure <| (← t.pathExists) && !(← t.isDir) && (t.extension.getD "" == "lean")
   let tasks ← existing.mapM fun t => do
       IO.asTask do

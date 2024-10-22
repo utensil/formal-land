@@ -1,10 +1,20 @@
 import Lake
 open Lake DSL
 
-package "lean4-xp-kit" where
+def leanVersion : String := s!"v{Lean.versionString}"
+
+require "leanprover-community" / "batteries" @ git leanVersion
+
+package "Lean4XpKit" where
   -- add package configuration options here
 
 @[default_target]
 lean_lib «Lean4XpKit» where
   -- add library configuration options here
+
+lean_exe test where
+  srcDir := "scripts"
+
+lean_exe annotate where
+  srcDir := "scripts"
 

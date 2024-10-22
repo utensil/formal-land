@@ -15,7 +15,7 @@ export PATH=$HOME/.elan/bin:$PATH
 mkdir -p dist/Zulip/
 mkdir -p dist/NoCI/
 
-lake -R exe annotate --verbose 2>/dev/null
+lake -R exe annotate Playground --verbose 2>/dev/null
 
 cp dist/*.css dist/Zulip/
 cp dist/*.js dist/Zulip/

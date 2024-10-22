@@ -2,7 +2,7 @@
 This is adapted from test.lean
 -/
 import Batteries.Data.String.Matcher
-import Playground.Utils
+import Lean4XpKit.Utils
 open IO.Process
 open System
 
@@ -28,9 +28,18 @@ def main (args : List String) : IO Unit := do
   let verbose := args.contains "--verbose"
   let toc := args.contains "--toc"
   let enter : FilePath → IO Bool := fun path ↦ pure <| path.fileName != "NoCI"
-  let targets <- match args.erase "--toc" |>.erase "--verbose" with
-  | [] =>System.FilePath.walkDir (enter := enter) <| cwd / "Playground"
-  | _ => pure <| (args.map fun t => mkFilePath [cwd.toString, "Playground", t] |>.withExtension "lean") |>.toArray
+
+  let positionalArgs := args.erase "--toc" |>.erase "--verbose"
+
+  if positionalArgs.isEmpty then
+    IO.eprintln "Usage: lake exe annotate [--verbose] [--toc] libraryName testFileName"
+    exit 1
+
+  let libraryName := positionalArgs.head!
+  
+  let targets <- match positionalArgs.drop 1 with
+  | [] =>System.FilePath.walkDir (enter := enter) <| cwd / libraryName 
+  | _ => pure <| (args.map fun t => mkFilePath [cwd.toString, libraryName, t] |>.withExtension "lean") |>.toArray
   let existing ← targets.filterM fun t => do pure <| (← t.pathExists) && !(← t.isDir) && (t.extension.getD "" == "lean")
   let tasks ← existing.mapM fun t => do
       IO.asTask do
