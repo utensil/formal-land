@@ -12,7 +12,7 @@ test:
 
 @doc:
     mkdir -p dist
-    aya haskeller-tutorial.aya --pretty-format=html --pretty-color=emacs --pretty-inline-code-style -o dist/askeller-tutorial.html
+    aya haskeller-tutorial.aya --pretty-format=html --pretty-color=emacs --pretty-inline-code-style -o dist/haskeller-tutorial.html
     aya prover-tutorial.aya --pretty-format=html --pretty-color=emacs --pretty-inline-code-style -o dist/prover-tutorial.html
     -aya literate.aya.md --pretty-format=html --pretty-color=emacs --pretty-inline-code-style -o dist/literate.html
     # -aya literate.aya.md --pretty-format=markdown --pretty-color=emacs -pretty-inline-code-style -o dist/literate.aya.md
