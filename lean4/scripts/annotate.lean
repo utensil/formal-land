@@ -21,7 +21,7 @@ def main (args : List String) : IO Unit := do
 
   _ ← (← IO.Process.spawn { cmd := "lake", args := #["build"] }).wait
   -- Duper requires some additional time to build on first run.
-  _ ← (← IO.Process.spawn { cmd := "lake", args := #["build", "Duper"] }).wait
+  -- _ ← (← IO.Process.spawn { cmd := "lake", args := #["build", "Duper"] }).wait
 
   -- Collect test targets by walking `Playground/` and `Playground/Zulip`.
   -- let noNoisy := args.contains "--no-noisy"
