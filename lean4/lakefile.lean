@@ -1,7 +1,7 @@
 import Lake
 open Lake DSL System
 
-package «hello» {}
+package «Playground»  {}
 
 def leanVersion : String := s!"v{Lean.versionString}"
 
