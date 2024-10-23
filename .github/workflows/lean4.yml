@@ -42,6 +42,18 @@ jobs:
       #     curl -O --location https://raw.githubusercontent.com/leanprover/elan/master/elan-init.ps1
       #     .\elan-init.ps1 -NoPrompt 1 -DefaultToolchain none
       #     echo "$HOME\.elan\bin" >> $env:GITHUB_PATH
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          list-files: shell
+          filters: |
+            shared:
+              - added|modified: '.github/workflows/lean4.yml'
+              - added|modified: 'lean4-xp-kit/**/*'
+            lean4:
+              - added|modified: 'lean4/**/*'
+            duper:
+              - added|modified: 'lean4-duper-xp/**/*'
       - name: Should annotate
         id: annotate
         # annotation is enabled conditionally
@@ -60,11 +72,17 @@ jobs:
             key: github-pages-${{ github.run_id }}
             restore-keys: |
               github-pages
-      - name: check Lean 4 Playground 
+      - name: check Lean 4 Playground
+        if: >-
+          steps.filter.outputs.lean4 == 'true' ||
+          steps.annotate.outputs.annotate == 'true'
         uses: leanprover/lean-action@v1
         with:
           lake-package-directory: "lean4"
       - name: check DuperXp
+        if: >-
+          steps.filter.outputs.duper == 'true' ||
+          steps.annotate.outputs.annotate == 'true'
         uses: leanprover/lean-action@v1
         with:
           lake-package-directory: "lean4-duper-xp"
