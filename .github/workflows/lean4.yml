@@ -30,18 +30,18 @@ jobs:
       - uses: extractions/setup-just@v1
         with:
           just-version: 1.35.0
-      - name: install elan on Ubuntu and macOS
-        if: matrix.os != 'windows-latest'
-        run: |
-          set -o pipefail
-          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | bash -s -- -y
-          echo "$HOME/.elan/bin" >> $GITHUB_PATH
-      - name: install elan on Windows
-        if: matrix.os == 'windows-latest'
-        run: |
-          curl -O --location https://raw.githubusercontent.com/leanprover/elan/master/elan-init.ps1
-          .\elan-init.ps1 -NoPrompt 1 -DefaultToolchain none
-          echo "$HOME\.elan\bin" >> $env:GITHUB_PATH
+      # - name: install elan on Ubuntu and macOS
+      #   if: matrix.os != 'windows-latest'
+      #   run: |
+      #     set -o pipefail
+      #     curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | bash -s -- -y
+      #     echo "$HOME/.elan/bin" >> $GITHUB_PATH
+      # - name: install elan on Windows
+      #   if: matrix.os == 'windows-latest'
+      #   run: |
+      #     curl -O --location https://raw.githubusercontent.com/leanprover/elan/master/elan-init.ps1
+      #     .\elan-init.ps1 -NoPrompt 1 -DefaultToolchain none
+      #     echo "$HOME\.elan\bin" >> $env:GITHUB_PATH
       - name: Should annotate
         id: annotate
         # annotation is enabled conditionally
@@ -60,23 +60,19 @@ jobs:
             key: github-pages-${{ github.run_id }}
             restore-keys: |
               github-pages
+      - name: check Lean 4 Playground 
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: "lean4"
+      - name: check DuperXp
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: "lean4-duper-xp"
       - name: Install Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           # cache: 'pip' # caching pip dependencies
-      - name: check Lean 4 Playground 
-        # working-directory: ./lean4
-        # uses: leanprover/lean-action@v1-alpha
-        run: |
-          cd lean4
-          lake exe cache get
-          lake test
-      - name: check DuperXp
-        run: |
-          cd lean4-duper-xp
-          lake exe cache get
-          lake test
       - name: annotate Lean 4 projects 
         if: >-
           steps.annotate.outputs.annotate == 'true'
