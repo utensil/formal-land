@@ -1,0 +1,19 @@
+name = "VersoXp"
+
+defaultTargets = ["VersoXp"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.12.0"
+
+[[require]]
+name = "verso"
+scope = "leanprover"
+rev = "v4.12.0"
+
+[[lean_lib]]
+name = "VersoXp"
+
+# see https://github.com/HEPLean/HepLean/blob/master/lakefile.toml for
+# an example of other configs
