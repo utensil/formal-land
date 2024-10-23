@@ -36,7 +36,7 @@ def main (args : List String) : IO Unit := do
   let positionalArgs := args.erase "--no-noisy" |>.erase "--verbose"
 
   if positionalArgs.isEmpty then
-    IO.eprintln "Usage: lake exe test [--verbose] [--no-noisy] libraryName testFileName"
+    IO.eprintln "Usage: lake exe test [--verbose] [--no-noisy] libraryName [targetFileName]"
     exit 1
 
   let libraryName := positionalArgs.head!

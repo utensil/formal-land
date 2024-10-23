@@ -35,7 +35,7 @@ def main (args : List String) : IO Unit := do
   let positionalArgs := args.erase "--toc" |>.erase "--verbose"
 
   if positionalArgs.isEmpty then
-    IO.eprintln "Usage: lake exe annotate [--verbose] [--toc] libraryName testFileName"
+    IO.eprintln "Usage: lake exe annotate [--verbose] [--toc] libraryName [targetFileName]"
     exit 1
 
   let libraryName := positionalArgs.head!

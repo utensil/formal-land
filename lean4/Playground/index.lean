@@ -2,20 +2,6 @@
 
 # Lean 4 Playground
 
--/
-
-#eval Lean.versionString
-
-#eval Lean.versionStringCore
-
-#eval Lean.toolchain
-
-#eval Lean.origin
-
-#eval Lean.githash
-
-/-!
-
 ## Examples
 
 ### Literate reStructuredText (RST)
@@ -67,3 +53,14 @@
 - [Zulip/WithLog.lean](./Zulip/WithLog.html)
 
 -/
+
+#eval Lean.versionString
+
+#eval Lean.versionStringCore
+
+#eval Lean.toolchain
+
+#eval Lean.origin
+
+#eval Lean.githash
+

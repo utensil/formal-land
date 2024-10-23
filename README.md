@@ -9,8 +9,10 @@ My monorepo for formalization.
 I explore with the following formalization systems, and do interactive [literate programming](https://en.wikipedia.org/wiki/Literate_programming) when supported, because then one can interact with the formalization and inspect intermediate (goal) states just from a Web browser.
 
 - [Lean 4](./lean4/README.md)
-  - [examples](https://utensil.github.io/formal-land/lean4/) annotated by [alectryon](https://github.com/cpitclaudel/alectryon)
-- [Aya](./aya/README.md)
+    - annotated by [alectryon](https://github.com/cpitclaudel/alectryon)
+    - [Lean 4 Playground examples](https://utensil.github.io/formal-land/lean4/)
+    - [Duper explorations](https://utensil.github.io/formal-land/lean4-duper-xp/)
+  - [Aya](./aya/README.md)
   - [haskeller-tutorial](https://utensil.github.io/formal-land/aya/haskeller-tutorial.html)
   - [prover-tutorial](https://utensil.github.io/formal-land/aya/prover-tutorial.html)
   - [literate](https://utensil.github.io/formal-land/aya/literate.html)
