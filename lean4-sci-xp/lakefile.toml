@@ -1,0 +1,30 @@
+name = "SciXp"
+
+defaultTargets = ["SciXp"]
+
+# [[require]]
+# name = "mathlib"
+# scope = "leanprover-community"
+# rev = "bd9ce04d7b19b86e6c10976c3871a685d66a53b0"
+[[require]]
+name = "scilean"
+scope = "lecopivo"
+rev = "66ee02bec40d382d634daeb0ca1dce9ef8e3362c"
+
+# [[require]]
+# name = "hep_lean"
+# scope = "HEPLean"
+# rev = "0b8079c1e0ebc262eac53092a1c0b4aa2467acbf"
+
+[[require]]
+name = "verso"
+scope = "leanprover"
+rev = "11903e639bac684b76273287c3293fe4d665f53d"
+
+[[lean_lib]]
+name = "SciXp"
+
+# see https://github.com/leanprover/reservoir-index for the revisions of these dependencies
+
+# see https://github.com/HEPLean/HepLean/blob/master/lakefile.toml for
+# an example of other configs

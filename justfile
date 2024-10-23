@@ -46,4 +46,10 @@ default:
     cd ..
     mv {{NAME}} lean4-{{NAME}}
 
+[no-cd]
+up *NAME:
+  lake -R clean
+  lake -R update {{NAME}}
+  lake -R build
+
 
