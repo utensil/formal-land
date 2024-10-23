@@ -18,7 +18,7 @@ default:
 @check-pages:
     #!/usr/bin/env bash
     missing_dirs=()
-    for dir in aya lean4; do
+    for dir in aya lean4 tla; do
         if [ ! -d "github-pages/$dir" ]; then
             missing_dirs+=("$dir")
         fi
@@ -27,3 +27,10 @@ default:
         echo "Missing directories: ${missing_dirs[*]}"
         exit 1
     fi
+
+[no-cd]
+@annotate LIB_DIR:
+    #!/usr/bin/env bash
+    ../lean4-xp-kit/install_deps.sh
+    ../lean4-xp-kit/annotate_all.sh {{LIB_DIR}}
+    

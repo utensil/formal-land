@@ -6,7 +6,7 @@ lean4/.ipynb_checkpoints
 tla/bin/
 tla/*.old
 tla/*.cfg
-aya/dist/
+**/dist/
 tla/*.aux
 tla/*.dvi
 tla/*.log

@@ -82,11 +82,13 @@ jobs:
           steps.annotate.outputs.annotate == 'true'
         run: |
           cd lean4
-          ./install_deps.sh
-          ./annotate_all.sh
+          just annotate Playground
+          cd lean4-duper-xp
+          just annotate DuperXp
           # lake env leanInk analyze examples/Help.lean
           cd ..
           just pages lean4
+          just pages lean4-duper-xp
       # - name: Try mk_all
       #   shell: bash
       #   run: |

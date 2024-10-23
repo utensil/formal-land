@@ -50,7 +50,7 @@ def main (args : List String) : IO Unit := do
         let ⟨elapsed, out⟩ ← time <| IO.Process.output {
             cmd :=  "bash",
             args := #[
-              (LEAN4_XP_KIT_HOME / "annotate.sh").toString, t.toString, format]
+              (LEAN4_XP_KIT_HOME / "annotate.sh").toString, libraryName, t.toString, format]
           }
         let exitCode := out.exitCode
         if exitCode == 0 then
