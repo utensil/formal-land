@@ -33,4 +33,17 @@ default:
     #!/usr/bin/env bash
     ../lean4-xp-kit/install_deps.sh
     ../lean4-xp-kit/annotate_all.sh {{LIB_DIR}}
-    
+   
+
+@lake-new NAME VERSION="v4.11.0":
+    #!/usr/bin/env bash
+    lake +leanprover/lean4:{{VERSION}} new {{NAME}}
+    cd {{NAME}}
+    mkdir less
+    mv .git less/
+    mv .github less/
+    mv .gitignore less/
+    cd ..
+    mv {{NAME}} lean4-{{NAME}}
+
+
