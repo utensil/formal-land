@@ -56,6 +56,8 @@ jobs:
               - added|modified: 'lean4-duper-xp/**/*'
             verso:
               - added|modified: 'lean4-verso-xp/**/*'
+            sci:
+              - added|modified: 'lean4-sci-xp/**/*'
       - name: Should annotate
         id: annotate
         # annotation is enabled conditionally
@@ -98,6 +100,14 @@ jobs:
         uses: leanprover/lean-action@v1
         with:
           lake-package-directory: "lean4-verso-xp"
+      - name: check SciXp
+        if: >-
+          steps.filter.outputs.shared == 'true' ||
+          steps.filter.outputs.sci == 'true' ||
+          steps.annotate.outputs.annotate == 'true'
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: "lean4-sci-xp"
       - name: Install Python
         uses: actions/setup-python@v5
         with:
