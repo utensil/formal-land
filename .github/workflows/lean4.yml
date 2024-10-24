@@ -42,7 +42,7 @@ jobs:
       #     curl -O --location https://raw.githubusercontent.com/leanprover/elan/master/elan-init.ps1
       #     .\elan-init.ps1 -NoPrompt 1 -DefaultToolchain none
       #     echo "$HOME\.elan\bin" >> $env:GITHUB_PATH
-      - uses: dorny/paths-filter@v2
+      - uses: dorny/paths-filter@v3
         id: filter
         with:
           list-files: shell
