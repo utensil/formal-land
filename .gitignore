@@ -14,3 +14,4 @@ tla/*.tex
 tla/*.pdf
 tla/states
 
+lean4-verso-xp/_out

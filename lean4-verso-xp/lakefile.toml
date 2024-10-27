@@ -2,23 +2,28 @@ name = "VersoXp"
 
 defaultTargets = ["VersoXp"]
 
-[[require]]
-name = "mathlib"
-scope = "leanprover-community"
-rev = "v4.12.0"
+# [[require]]
+# name = "mathlib"
+# scope = "leanprover-community"
+# rev = "v4.12.0"
 
-[[require]]
-name = "hep_lean"
-scope = "HEPLean"
-rev = "4279302bfec42b6bf9ae26e624d3e8bc765b1814"
+# [[require]]
+# name = "hep_lean"
+# scope = "HEPLean"
+# rev = "4279302bfec42b6bf9ae26e624d3e8bc765b1814"
 
 [[require]]
 name = "verso"
 scope = "leanprover"
-rev = "v4.12.0"
+rev = "main"
+# rev = "v4.12.0"
 
 [[lean_lib]]
 name = "VersoXp"
+
+[[lean_exe]]
+name = "mkVersoDoc"
+root = "Main"
 
 # see https://github.com/HEPLean/HepLean/blob/master/lakefile.toml for
 # an example of other configs
