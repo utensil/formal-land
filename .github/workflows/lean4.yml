@@ -103,9 +103,11 @@ jobs:
           use-mathlib-cache: true
       - name: check SciXp
         if: >-
-          steps.filter.outputs.shared == 'true' ||
-          steps.filter.outputs.sci == 'true' ||
-          steps.annotate.outputs.annotate == 'true'
+          runner.os == 'macos-latest' && (
+            steps.filter.outputs.shared == 'true' ||
+            steps.filter.outputs.sci == 'true' ||
+            steps.annotate.outputs.annotate == 'true'
+          )
         uses: leanprover/lean-action@v1
         with:
           lake-package-directory: "lean4-sci-xp"
