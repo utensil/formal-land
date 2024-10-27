@@ -100,7 +100,7 @@ jobs:
         uses: leanprover/lean-action@v1
         with:
           lake-package-directory: "lean4-verso-xp"
-          use-mathlib-cache: true
+          # use-mathlib-cache: true
       - name: check SciXp
         if: >-
           runner.os == 'macos-latest' && (
