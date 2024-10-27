@@ -48,8 +48,11 @@ default:
 
 [no-cd]
 up *NAME:
-  lake -R clean
-  lake -R update {{NAME}}
-  lake -R build
+    lake -R clean
+    lake -R update {{NAME}}
+    lake -R build
 
-
+[no-cd]
+vdoc:
+    lake -R exe mkVersoDoc
+    open _out/html-multi/index.html

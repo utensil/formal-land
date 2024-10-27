@@ -1,5 +1,7 @@
 import VersoManual
 
+import VersoXp.Basic
+
 open Verso.Genre Manual
 
 set_option pp.rawOnError true
@@ -8,3 +10,8 @@ set_option pp.rawOnError true
 %%%
 tag := "verso-xp"
 %%%
+
+This is a Verso exploration.
+
+{include VersoXp.Basic}
+
