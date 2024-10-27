@@ -1,6 +1,7 @@
 import VersoManual
 
 import VersoXp.Basic
+import VersoXp.Math
 
 open Verso.Genre Manual
 
@@ -14,4 +15,6 @@ tag := "verso-xp"
 This is a Verso exploration.
 
 {include VersoXp.Basic}
+
+{include VersoXp.Math}
 

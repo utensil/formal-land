@@ -7,9 +7,10 @@ def main :=
   manualMain (%doc VersoXp) (config := config)
 where
   config := {
-    -- extraFiles := [("static", "static")],
+    extraFiles := [("static", "static")],
     -- extraCss := ["/static/colors.css", "/static/theme.css", "/static/print.css", "/static/fonts/source-serif/source-serif-text.css", "/static/fonts/source-code-pro/source-code-pro.css", "/static/katex/katex.min.css"],
     -- extraJs := ["/static/katex/katex.min.js", "/static/math.js", "/static/print.js"],
+    extraJs := ["/static/math.js"],
     emitTeX := false,
     -- emitHtmlSingle := true, -- for proofreading
     -- logo := some "/static/lean_logo.svg",
