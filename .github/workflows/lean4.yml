@@ -49,16 +49,16 @@ jobs:
           filters: |
             shared:
               - added|modified: '.github/workflows/lean4.yml'
-              - added|modified: 'lean4-xp-kit/**/*'
+              - added|modified: 'lean4-xp-kit/**'
               - added|modified: 'justfile'
             lean4:
-              - added|modified: 'lean4/**/*'
+              - added|modified: 'lean4/**'
             duper:
-              - added|modified: 'lean4-duper-xp/**/*'
+              - added|modified: 'lean4-duper-xp/**'
             verso:
-              - added|modified: 'lean4-verso-xp/**/*'
+              - added|modified: 'lean4-verso-xp/**'
             sci:
-              - added|modified: 'lean4-sci-xp/**/*'
+              - added|modified: 'lean4-sci-xp/**'
       - name: Should annotate
         id: annotate
         # annotation is enabled conditionally
