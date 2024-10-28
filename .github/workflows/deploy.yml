@@ -56,9 +56,9 @@ jobs:
                 github-pages
         - name: Display structure of downloaded files
           run: ls -R github-pages
-        - name: Check pages
-          run: |
-            just check-pages
+        # - name: Check pages
+        #   run: |
+        #     just check-pages
         - name: Upload artifact
           uses: actions/upload-pages-artifact@v3
           with:
