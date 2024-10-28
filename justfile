@@ -54,9 +54,11 @@ up *NAME:
     lake -R build
 
 [no-cd]
-doc:
+vsgen:
     lake -R exe mkVersoDoc
+    rm -rf dist
+    mv _out/html-multi dist
 
 [no-cd]
-vdoc: doc
-    open dist/html-multi/index.html
+vs: vsgen
+    open dist/index.html

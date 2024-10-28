@@ -50,6 +50,7 @@ jobs:
             shared:
               - added|modified: '.github/workflows/lean4.yml'
               - added|modified: 'lean4-xp-kit/**/*'
+              - added|modified: 'justfile'
             lean4:
               - added|modified: 'lean4/**/*'
             duper:
@@ -134,7 +135,7 @@ jobs:
           popd
 
           pushd lean4-verso-xp
-          just doc
+          just vsgen
           popd
 
           just pages lean4
