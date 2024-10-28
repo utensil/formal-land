@@ -84,6 +84,7 @@ jobs:
         uses: leanprover/lean-action@v1
         with:
           lake-package-directory: "lean4"
+          use-github-cache: false
       - name: check DuperXp
         if: >-
           steps.filter.outputs.shared == 'true' ||
@@ -92,6 +93,7 @@ jobs:
         uses: leanprover/lean-action@v1
         with:
           lake-package-directory: "lean4-duper-xp"
+          use-github-cache: false
       - name: check VersoXp
         if: >-
           steps.filter.outputs.shared == 'true' ||
@@ -100,6 +102,7 @@ jobs:
         uses: leanprover/lean-action@v1
         with:
           lake-package-directory: "lean4-verso-xp"
+          use-github-cache: false
           # use-mathlib-cache: true
       - name: check SciXp
         if: >-
@@ -111,6 +114,7 @@ jobs:
         uses: leanprover/lean-action@v1
         with:
           lake-package-directory: "lean4-sci-xp"
+          use-github-cache: false
           use-mathlib-cache: true
       - name: Install Python
         uses: actions/setup-python@v5
