@@ -52,7 +52,6 @@ jobs:
     #     run: aya --help
     #   - name: Show aya-lsp help
     #     run: aya-lsp --help
-
       - name: Test Aya Examples
         run: |
             cd aya
