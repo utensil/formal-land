@@ -53,6 +53,9 @@ up *NAME:
     lake -R build
 
 [no-cd]
-vdoc:
+doc:
     lake -R exe mkVersoDoc
-    open _out/html-multi/index.html
+
+[no-cd]
+vdoc: doc
+    open dist/html-multi/index.html

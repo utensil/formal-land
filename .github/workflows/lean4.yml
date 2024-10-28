@@ -9,7 +9,7 @@ on:
     paths:
       - '.github/workflows/lean4.yml'
       - 'lean4*/**'
-
+      - '.allci'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -133,8 +133,13 @@ jobs:
           just annotate DuperXp
           popd
 
+          pushd lean4-verso-xp
+          just doc
+          popd
+
           just pages lean4
           just pages lean4-duper-xp
+          just pages lean4-verso-xp
       # - name: Try mk_all
       #   shell: bash
       #   run: |
