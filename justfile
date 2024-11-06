@@ -16,6 +16,10 @@ default:
     mv ./{{DIR}}/dist ./github-pages/{{DIR}}
     ls -R ./github-pages/
 
+@copy-assets:
+    mkdir -p github-pages
+    cp -r assets/* github-pages/
+
 @check-pages:
     #!/usr/bin/env bash
     missing_dirs=()
