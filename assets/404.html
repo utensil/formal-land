@@ -40,6 +40,7 @@
     function redirectToPage() {
       const referrer = document.referrer;
       let path = referrer && referrer !== window.location.href && !referrer.includes('404.html') ? new URL(referrer).pathname : '/formal-land/';
+      console.log('referrer:', path);
       const pathParts = path.split('/');
       path = pathParts.length > 2 ? '/' + pathParts.slice(2).join('/') : path;
 
