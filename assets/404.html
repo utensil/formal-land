@@ -39,27 +39,28 @@
 
     function redirectToPage() {
       const referrer = document.referrer;
-      if (referrer && referrer !== window.location.href && !referrer.includes('404.html')) {
-        let path = new URL(referrer).pathname;
-        const pathParts = path.split('/');
-        path = pathParts.length > 2 ? '/' + pathParts.slice(2).join('/') : path;
+      let path = referrer && referrer !== window.location.href && !referrer.includes('404.html') ? new URL(referrer).pathname : '/formal-land/';
+      const pathParts = path.split('/');
+      path = pathParts.length > 2 ? '/' + pathParts.slice(2).join('/') : path;
 
-        for (let rule of redirectConfig) {
-          if (rule.regex.test(path)) {
-            const redirectTo = typeof rule.redirect === 'function' ? rule.redirect(path) : rule.redirect;
-            if (redirectTo) {
-              window.location.href = '/' + pathParts[1] + redirectTo;
-              console.log('Redirecting to', redirectTo);
+      let recentRedirects = JSON.parse(localStorage.getItem('recentRedirects') || '[]');
+
+      for (let rule of redirectConfig) {
+        if (rule.regex.test(path)) {
+          const redirectTo = typeof rule.redirect === 'function' ? rule.redirect(path) : rule.redirect;
+          if (redirectTo && !recentRedirects.includes(redirectTo)) {
+            if (recentRedirects.length >= 5) {
+              recentRedirects.shift();
             }
+            recentRedirects.push(redirectTo);
+            localStorage.setItem('recentRedirects', JSON.stringify(recentRedirects));
+            window.location.href = '/' + pathParts[1] + redirectTo;
             break;
           }
         }
       }
-      else {
-        const pathParts = window.location.pathname.split('/');
-        window.location.href = '/' + pathParts[1] + '/lean4/index.html';
-      }
     }
+
     window.onload = redirectToPage;
   </script>
 </head>
