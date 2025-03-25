@@ -3,6 +3,7 @@ import Mathlib.LinearAlgebra.CliffordAlgebra.Grading
 import Mathlib.LinearAlgebra.CliffordAlgebra.Equivs
 import Mathlib.RingTheory.FiniteType
 import Mathlib.Tactic
+import Mathlib.Data.Complex.FiniteDimensional
 -- import Mathlib.Util.Superscript
 -- import Mathlib.Data.Matrix.Notation
 

@@ -1,4 +1,4 @@
-import Mathlib.Algebra.Group.Nat
+import Mathlib.Algebra.Group.Nat.Defs
 
 namespace String
 

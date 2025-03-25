@@ -6,6 +6,7 @@ import Mathlib.LinearAlgebra.Multilinear.FiniteDimensional
 import Mathlib.LinearAlgebra.TensorAlgebra.Basis
 import Mathlib.LinearAlgebra.ExteriorAlgebra.Grading
 import Mathlib.Tactic
+import Mathlib.LinearAlgebra.DirectSum.Basis
 
 open QuadraticForm BilinForm ExteriorAlgebra FiniteDimensional QuadraticMap
 

@@ -13,11 +13,12 @@ import Mathlib.GroupTheory.SpecificGroups.Quaternion
 -- import Mathlib.GroupTheory.Subgroup.Simple
 -- import Mathlib.GroupTheory.Subgroup.ZPowers
 import Mathlib.RepresentationTheory.Basic
-import Mathlib.RepresentationTheory.Action.Basic
+import Mathlib.CategoryTheory.Action.Basic
 import Mathlib.CategoryTheory.Endomorphism
 import Mathlib.GroupTheory.GroupAction.Basic
 import Mathlib.GroupTheory.GroupAction.DomAct.Basic
 import Mathlib.Algebra.DirectSum.Algebra
+import Mathlib.LinearAlgebra.DirectSum.Basis
 import Mathlib.LinearAlgebra.Matrix.Basis
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.Data.Matrix.Invertible
@@ -91,7 +92,7 @@ variable (α β : Type*) in
 
 #check MulOneClass.mul_one
 
-#check mul_left_inv
+#check Group.inv_mul_cancel
 
 #check Subgroup
 
@@ -183,7 +184,7 @@ failed to synthesize instance
     evaluates this linear combination. -/
 -- protected def total : (α →₀ R) →ₗ[R] M :=
 --   Finsupp.lsum ℕ fun i => LinearMap.id.smulRight (v i)
-#check Finsupp.total
+#check Finsupp.linearCombination 
 
 /- `LinearIndependent R v` states the family of vectors `v` is linearly independent over `R`. -/
 -- def LinearIndependent : Prop :=
@@ -212,7 +213,7 @@ failed to synthesize instance
 
 #check LinearMap.range
 
-#check rank_range_add_rank_ker
+#check LinearMap.rank_range_add_rank_ker
 
 #check LinearEquiv
 
@@ -370,7 +371,7 @@ some exponent `k` is contained in the generalized eigenspace for exponents large
 
 #check Representation.trivial
 
-#check CategoryTheory.Faithful.of_iso
+#check CategoryTheory.Functor.Faithful.of_iso
 
 
 -- #check Real.cos -1

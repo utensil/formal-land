@@ -1,5 +1,5 @@
 import Mathlib.Data.Set.Basic
-import Mathlib.Data.Set.Finite
+import Mathlib.Data.Set.Finite.Basic
 import Mathlib.Tactic.Explode
 
 set_option linter.unusedVariables false

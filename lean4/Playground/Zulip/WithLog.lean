@@ -19,10 +19,11 @@ set_option synthInstance.checkSynthOrder true
 
 def Option' := Option
 
-/--
-error: fields missing: 'map', 'mapConst', 'seq', 'seqLeft'
--/
-#guard_msgs(error, drop info) in
+-- The error is now gone
+-- /--
+-- error: fields missing: 'map', 'mapConst', 'seq', 'seqLeft'
+-- -/
+-- #guard_msgs(error, drop info) in
 instance : Monad Option' where
   pure := Option.some
   bind a f :=
@@ -158,4 +159,4 @@ instance : Monad Option' where
 #check Lean.Elab.Term.elabLetDecl
 #check Lean.Elab.Term.elabLetRec
 #check Lean.Elab.Structural.preprocess
-#check Lean.Elab.Command.elabStructure
+#check Lean.Elab.Command.elabDeclaration

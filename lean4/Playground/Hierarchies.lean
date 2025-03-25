@@ -3,6 +3,7 @@ import Mathlib.LinearAlgebra.CliffordAlgebra.Basic
 import Mathlib.LinearAlgebra.ExteriorAlgebra.Basic
 import Mathlib.Data.Matrix.Notation
 import Mathlib.Algebra.Free
+import Mathlib.RingTheory.FreeRing
 
 -- set_option trace.Meta.synthInstance true
 -- set_option synthInstance.checkSynthOrder false
