@@ -51,11 +51,28 @@ default:
     cd ..
     mv {{NAME}} lean4-{{NAME}}
 
+prep-lean:
+    curl https://elan.lean-lang.org/elan-init.sh -sSf | bash -s -- -y
+
+bump:
+  #!/usr/bin/env bash
+  cd lean4
+  ./switch.sh
+
+[no-cd]
+clean:
+    rm -rf .lake
+    lake -R clean
+
 [no-cd]
 up *NAME:
     lake -R clean
     lake -R update {{NAME}}
     lake -R build
+
+[no-cd]
+test:
+    lake -R test
 
 [no-cd]
 vsgen:
