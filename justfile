@@ -51,6 +51,13 @@ default:
     cd ..
     mv {{NAME}} lean4-{{NAME}}
 
+[no-cd]
+prep-py:
+    #!/usr/bin/env bash
+    uv venv --python 3.11 --seed
+    source .venv/bin/activate
+    ./install_deps.sh
+
 prep-lean:
     curl https://elan.lean-lang.org/elan-init.sh -sSf | bash -s -- -y
 
@@ -66,7 +73,6 @@ clean:
 
 [no-cd]
 up *NAME:
-    lake -R clean
     lake -R update {{NAME}}
     lake -R build
 
