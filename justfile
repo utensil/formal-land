@@ -77,6 +77,11 @@ up *NAME:
     lake -R build
 
 [no-cd]
+build:
+    lake -R exe cache get
+    lake -R build
+
+[no-cd]
 test:
     lake -R test
 
