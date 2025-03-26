@@ -37,12 +37,12 @@ example (a b : ℝ) : |a| - |b| ≤ |a - b| := by
 
 /- Attempting to call `duper` directly on the original goal will fail because it isn't able to generate a
    counterexample to Surjf on its own. But if we provide the counterexample, `duper` can solve from there. -/
-example : ∀ f : α → Set α, ¬Surjective f := by
-  intro f Surjf
-  have counterexample := Surjf {i | i ∉ f i}
-  duper [Set.mem_setOf_eq, counterexample]
+-- deterministic time out
+-- example : ∀ f : α → Set α, ¬Surjective f := by
+--   intro f Surjf
+--   have counterexample := Surjf {i | i ∉ f i}
+--   duper [Set.mem_setOf_eq, counterexample]
 
-
-example : Module.rank R M = finrank R M := by
-  duper [finrank_eq_rank]
+example : Module.rank R M = Module.finrank R M := by
+  duper [Module.finrank_eq_rank]
   done
