@@ -77,14 +77,15 @@ jobs:
             key: github-pages-${{ github.run_id }}
             restore-keys: |
               github-pages
-      - name: check Lean 4 Playground
+      - name: check Lean 4 XP Kit
         if: >-
           steps.filter.outputs.shared == 'true' ||
           steps.filter.outputs.lean4 == 'true' ||
+          steps.filter.outputs.duper == 'true' ||
           steps.annotate.outputs.annotate == 'true'
         uses: leanprover/lean-action@v1
         with:
-          lake-package-directory: "lean4"
+          lake-package-directory: "lean4-xp-kit"
           use-github-cache: false
       - name: check DuperXp
         if: >-
@@ -95,28 +96,37 @@ jobs:
         with:
           lake-package-directory: "lean4-duper-xp"
           use-github-cache: false
-      - name: check VersoXp
+      - name: check Lean 4 Playground
         if: >-
           steps.filter.outputs.shared == 'true' ||
-          steps.filter.outputs.verso == 'true' ||
+          steps.filter.outputs.lean4 == 'true' ||
           steps.annotate.outputs.annotate == 'true'
         uses: leanprover/lean-action@v1
         with:
-          lake-package-directory: "lean4-verso-xp"
+          lake-package-directory: "lean4"
           use-github-cache: false
-          # use-mathlib-cache: true
-      - name: check SciXp
-        if: >-
-          runner.os == 'macos-latest' && (
-            steps.filter.outputs.shared == 'true' ||
-            steps.filter.outputs.sci == 'true' ||
-            steps.annotate.outputs.annotate == 'true'
-          )
-        uses: leanprover/lean-action@v1
-        with:
-          lake-package-directory: "lean4-sci-xp"
-          use-github-cache: false
-          use-mathlib-cache: true
+      # - name: check VersoXp
+      #   if: >-
+      #     steps.filter.outputs.shared == 'true' ||
+      #     steps.filter.outputs.verso == 'true' ||
+      #     steps.annotate.outputs.annotate == 'true'
+      #   uses: leanprover/lean-action@v1
+      #   with:
+      #     lake-package-directory: "lean4-verso-xp"
+      #     use-github-cache: false
+      #     # use-mathlib-cache: true
+      # - name: check SciXp
+      #   if: >-
+      #     runner.os == 'macos-latest' && (
+      #       steps.filter.outputs.shared == 'true' ||
+      #       steps.filter.outputs.sci == 'true' ||
+      #       steps.annotate.outputs.annotate == 'true'
+      #     )
+      #   uses: leanprover/lean-action@v1
+      #   with:
+      #     lake-package-directory: "lean4-sci-xp"
+      #     use-github-cache: false
+      #     use-mathlib-cache: true
       - name: Install Python
         uses: actions/setup-python@v5
         with:
