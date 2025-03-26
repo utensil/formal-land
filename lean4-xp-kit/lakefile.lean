@@ -6,10 +6,11 @@ def leanVersion : String := s!"v{Lean.versionString}"
 require "leanprover-community" / "batteries" @ git leanVersion
 
 package "Lean4XpKit" where
+  testDriver := "test"
+  testDriverArgs := #["Lean4XpKit"]
 
 @[default_target]
 lean_lib «Lean4XpKit» where
-  -- add library configuration options here
 
 lean_exe test where
   srcDir := "scripts"

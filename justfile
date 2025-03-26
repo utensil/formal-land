@@ -78,7 +78,7 @@ up *NAME:
 
 [no-cd]
 build:
-    lake -R exe cache get
+    lake -R exe cache get || true
     lake -R build
 
 [no-cd]
