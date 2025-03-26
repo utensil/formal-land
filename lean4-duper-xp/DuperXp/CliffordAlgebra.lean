@@ -22,7 +22,7 @@ variable [Module.Finite R M] [Module.Free R M]
 set_option trace.duper.printProof true
 set_option trace.duper.proofReconstruction true
 
-example : finrank R (CliffordAlgebra Q) = finrank R (ExteriorAlgebra R M) := by
+example : Module.finrank R (CliffordAlgebra Q) = Module.finrank R (ExteriorAlgebra R M) := by
   exact LinearEquiv.finrank_eq <| CliffordAlgebra.equivExterior Q
 
 -- count_heartbeats in -- never ends
