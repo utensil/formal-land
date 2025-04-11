@@ -16,7 +16,7 @@ I explore with the following formalization systems, and do interactive [literate
         - likely to follow a latest Lean 4 stable release
     - [Verso](https://utensil.github.io/formal-land/lean4-verso-xp/)
         - likely to follow an older Lean 4 stable release
-    - [SciLean](https://utensil.github.io/formal-land/lean4-sci-xp/)
+    - [SciLean](https://utensil.github.io/formal-land/lean4-sci-xp/) (nothing yet)
         - likely to follow an older Lean 4 unstable release
 - [Aya](./aya/README.md)
     - [haskeller-tutorial](https://utensil.github.io/formal-land/aya/haskeller-tutorial.html)
