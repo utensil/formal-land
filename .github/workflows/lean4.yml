@@ -29,7 +29,7 @@ jobs:
           submodules: recursive
       - uses: extractions/setup-just@v2
         with:
-          just-version: 1.35.0
+          just-version: 1.40.0
       # - name: install elan on Ubuntu and macOS
       #   if: matrix.os != 'windows-latest'
       #   run: |
