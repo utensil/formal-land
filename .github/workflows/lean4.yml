@@ -128,7 +128,7 @@ jobs:
       #     use-github-cache: false
       #     use-mathlib-cache: true
       - name: Install Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
           # cache: 'pip' # caching pip dependencies
