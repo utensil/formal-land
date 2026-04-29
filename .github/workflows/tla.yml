@@ -52,7 +52,7 @@ jobs:
             cd tla
             just prep-tla
             just check pluscal.tla
-      - uses: wtfjoke/setup-tectonic@v3
+      - uses: wtfjoke/setup-tectonic@v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build PDF
