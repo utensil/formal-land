@@ -1,6 +1,6 @@
 # Formal Land
 
-My monorepo for formalization.
+Utensil's monorepo for formalization, e.g. Lean, Aya.
 
 ## Included explorations
 
