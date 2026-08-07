@@ -32,8 +32,16 @@ Out of scope: coordinating parallel work across agents (claims, leases, task que
 
 ### 2. Work on a slice in a worktree
 
-- Work on each slice in its own git worktree at a conventional root, by default `~/worktrees/`, unless the user specifies another location. Convention over configuration, the same approach as the reference repositories kept under `~/projects/` (skills README, Reference repositories). The main checkout holds the canonical branches and is not a slice workspace.
-- Before creating each new worktree, check the machine can afford it: free disk with `df -h`, and CPU and memory headroom for the builds the slice will run. Every worktree hydrates its own dependency tree, on the order of seven gigabytes for a mathlib project, plus its build products.
+Principles to be aware of:
+
+- Git worktrees give each slice its own checkout of the same repository, with its own dependency tree under `.lake/packages`.
+- Every worktree hydrates that tree itself: on the order of seven gigabytes for a mathlib project, plus its build products, and the builds it runs use CPU and memory.
+- The compressed mathlib cache archives are shared across worktrees (section 3); the unpacked dependency products are per-checkout.
+
+Recommended practice:
+
+- Work on each slice in its own git worktree at a conventional root, by default `~/worktrees/` unless the user specifies another location. The main checkout holds the canonical branches and is not a slice workspace.
+- Before creating each new worktree, check the machine can afford it: free disk with `df -h`, and CPU and memory headroom for the builds the slice will run.
 - To limit disk use, retain only the live worktrees from the same route (see ut-lean-roadmap for route) and remove finished ones with `git worktree remove`; never remove a worktree belonging to another route or another project, whose work must not be broken. `git worktree prune` clears stale bookkeeping.
 - The reproduction rule (section 5) applies per worktree: a reused cache never turns a failing item green, and the fresh-checkout gate runs in a clean worktree.
 
