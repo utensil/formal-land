@@ -89,14 +89,7 @@ This section and SOFTWARE_VERIFICATION.md apply only to projects that carry exec
 
 ### 6. Bump the pinned toolchain pair
 
-Adopting a new stable pair is itself a checkable operation:
-
-- The ceiling is set by the newest release of every dependency. A dependency that tracks an older Lean, including a release candidate, bounds the whole project: take the latest stable release and settle on the dependency's bound when it cannot go higher.
-- A tagged parent ships with the transitive revisions it was tested against, which need not equal the dependency's matching tag. When two parents pin different revisions of the same transitive package, `lake update` warns and cache hashes break: declare the parent whose pins should win last and re-run `lake update`.
-- After `lake update`, verify the cache actually landed. The automatic post-update cache fetch can report success while package checkouts are not yet in place, leaving an empty build tree: re-run `lake exe cache get` manually and confirm the dependency olean directory has content.
-- A green `lake build` proves only the default target's import closure, and the cache covers only the imports the dependency library itself uses. Files elaborated individually (test drivers that compile every file) reach outside that closure: prefer cached subsets over deprecated umbrella modules, and treat per-file elaboration as the acceptance surface.
-- Between versions expect message-format churn, not only errors: expected-message specs, instance names, namespaces, and quoted identifier output all drift; re-baseline against the new pair rather than porting verbatim. Set `LEAN_ABORT_ON_PANIC=1` when evaluating to surface runtime panics CI-style runners hit, and prefer `#eval!` for IO primitives backed by opaque implementations.
-- Tooling that elaborates against the active toolchain (doc/annotation generators) is part of the bump surface: unmaintained tools lag the new pair, so check forks for an updated port first, then port against the changed core APIs; treat the tool's output as a deliverable rather than silently skipping it when it breaks.
+Moving to a new Lean + mathlib pair is its own operation: dependency-bounded version ceilings, transitive-pin precedence, cache recovery, changelog-traced API drift, and tooling ports. Owned by **ut-lean-bump**; run this skill's verification (cache-first build, per-file test driver, audits, fresh-checkout reproduction) on the result.
 
 ## References
 
@@ -104,4 +97,4 @@ Adopting a new stable pair is itself a checkable operation:
 - Lake documentation: https://github.com/leanprover/lean4/blob/master/src/lake/README.md
 - mathlib: https://github.com/leanprover-community/mathlib4
 - SOFTWARE_VERIFICATION.md in this directory: the verification discipline for executable Lean content, gated on the project carrying executable content.
-- Related skills: ut-lean-check (independent-kernel verification), ut-lean-recon (pinned-revision reconnaissance).
+- Related skills: ut-lean-bump (moving the pinned pair), ut-lean-check (independent-kernel verification), ut-lean-recon (pinned-revision reconnaissance).
