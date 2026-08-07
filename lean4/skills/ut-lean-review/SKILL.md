@@ -1,80 +1,91 @@
 ---
 name: ut-lean-review
-description: Review for Lean and math formalization pull requests. The latest Tau Ceti rubrics are the default quality gate; the review process follows Tau Ceti coordination unless the project specifies its own rules. Applied after the rubrics: the review protocol plus Lean and math quality detection techniques (structural, imports, naming, docstrings, reuse-by-structure, robustness probes).
+description: Review for Lean and math formalization pull requests. The latest Tau Ceti rubrics are the default quality gate; the review process follows Tau Ceti coordination unless the project specifies its own rules. This skill is the extension layer on top: what the rubric wording does not say, learned from actual reviews.
 ---
 
 # ut-lean-review
 
 ## Purpose
 
-The default quality gate for math formalization is the Tau Ceti review rubrics (TauCetiProject/TauCetiReview): every formalization change is first reviewed against the latest universal and per-change rubrics, whatever repository it lives in. This skill does not restate those rubrics. It adds two things the rubrics do not carry: the review protocol (how a review is bound, rechecked, and contested inside an iterative pipeline), and Lean and math quality detection techniques (how to find the problems the rubrics judge).
+The default quality gate for math formalization is the Tau Ceti review rubrics (TauCetiProject/TauCetiReview): every formalization change is first reviewed against the latest universal and per-change rubrics, whatever repository it lives in. The review process follows Tau Ceti coordination (COORDINATION.md) whenever applicable, unless the project under review specifies its own review-process rules, which take precedence.
 
-The order is fixed: first the latest Tau Ceti rubrics, then the additional pass below. The rubrics are the floor, the checks in this skill the ceiling on top of them, so a review that follows this skill already passes the Tau Ceti rubrics and then covers the ground those rubrics do not reach.
+This skill does not restate any of that. It is an extension layer: every section below names the rubric or coordination rule it extends, records what we learned in actual reviews that the rule's general wording does not say, and marks what cannot be missed. Anything the rubrics, coordination, or CI already carry is only referenced.
 
-The review process follows Tau Ceti coordination (COORDINATION.md) whenever applicable, unless the project under review specifies its own coordination rules on the review process. Project-specified rules take precedence; otherwise Tau Ceti first, then this skill's additional checks.
+## How the layers stack
 
-## When to use
+1. The project's own review-process rules, when it specifies them.
+2. The latest Tau Ceti rubrics: the default quality gate for all formalization.
+3. Tau Ceti coordination for the review process, when applicable.
+4. The extensions in this skill.
 
-Use this skill when reviewing a Lean or math formalization pull request, when responding to a review finding, or when preparing a change that will go through a review pipeline. It applies to formalization work in any repository: Tau Ceti itself, mathlib-based libraries, and standalone formalizations. The latest Tau Ceti rubrics are the default standard; the skill references rather than replaces them.
+Do not re-report what CI or the linters already enforce: the build, the axiom audit, the Mathlib linter set, and the import boundary are checked mechanically, and the rubric agents do not re-check them either.
 
-## Review protocol
+## What you cannot miss
 
-The process contract is Tau Ceti coordination, followed whenever applicable and unless the project under review has specified its own coordination rules on the review process. In Tau Ceti that is COORDINATION.md (Section 2, reading review state) together with the contested-findings protocol in the rubrics' `_common.md`. When the project specifies its own review-process rules, those take precedence over Tau Ceti's, which apply to everything else.
+- A review binds to one exact head; a new commit requires a fresh review.
+- Inspect the aggregate diff, not the latest commit: a change introduced several commits back can hide behind it.
+- A fixed-case statement of a uniform argument is a scope defect even when the proof is correct.
+- A duplicate in disguise is still duplication: same content up to definitional spelling, symmetry, or duality.
+- A docstring that overclaims hides a real dependency.
+- A proof that breaks when a nearby definition moves rests on an implementation accident.
 
-### Exact-head binding
+## Review process extensions
 
-A review applies only to the head commit it names; a new commit needs a fresh review (Tau Ceti COORDINATION.md Section 2). Record the exact base, head, declared prerequisites, and changed paths. Inspect the complete aggregate diff, not only the latest commit, since the latest commit alone can hide a change introduced several commits back. Classify every finding as blocking, nonblocking, or optional, and never convert an unperformed check into a pass.
+### Extends COORDINATION.md Section 2: head-bound verdicts
 
-### Post-revision recheck
+The rule: a review applies only to the head commit it names; a new commit needs a fresh review. The extension from our reviews: when the PR accumulated several commits, compare against the aggregate diff rather than trusting the latest commit alone, and classify each finding as blocking, nonblocking, or optional. Never convert an unperformed check into a pass.
 
-After a revision in response to review, recheck the old and new public declarations, the consumers of moved or renamed names, direct imports with targeted builds, the complete build, the exact aggregate diff, and the remote branch state. The review reads the review-state marker for the current head rather than a stale one.
+### Extends COORDINATION.md Section 2: the post-revision recheck
 
-### Contest and pipeline behavior
+A revision is a new head, hence a new review. What we learned to recheck every time: the old and new public declarations, the consumers of moved or renamed names, direct imports with targeted builds, the complete build, the exact aggregate diff, and the remote branch state.
 
-Keep an implement, contest, or wait ledger with one entry per finding, bound to an exact head. The compiler and the linter are the arbiter: contest a wrong prescription with a pinned probe, for example a deletion probe or the full linter output, rather than a repair loop that mutates the code hoping the finding stops firing. Combine interacting requests into one candidate instead of alternating fix and revert commits. When two findings contradict, the sole public reply is one concise evidence-backed contest that quotes the conflicting rubric wording and shows why both cannot hold, per the contested-findings protocol.
+### Extends `_common.md`: contested findings
 
-Respond proportionally. An API-surface change runs the full gate: full build, audits, and full rubric review. A small, delimited repair that changes few lines and no API surface runs a focused build, the affected consumer probes, and a diff-scoped review. Do not re-run the entire gate ceremony for a handful of changed lines.
+The rubric protocol for a contested finding is to engage the quote: restate compatibly, withdraw, or let it stand. What we learned around it:
 
-## Lean and math quality checks
+- Keep an implement, contest, or wait ledger with one entry per finding, bound to an exact head.
+- The compiler and the linter are the arbiter. Contest a wrong prescription with a pinned probe (a deletion probe, the full linter output), not by a repair loop that mutates the code hoping the finding stops firing.
+- Combine interacting requests into one candidate; alternating fix and revert commits makes a finding impossible to verify.
+- Respond proportionally: an API-surface change runs the full gate; a small delimited repair runs a focused build, the affected consumer probes, and a diff-scoped review. The failure mode we hit: re-running the entire gate ceremony for a handful of changed lines.
 
-The rubrics judge the quality angles; these are the techniques for finding the problems they judge, plus structural checks the rubrics do not carry. Run them after the rubric verdict.
+## Quality extensions, one per rubric
 
-### Separate the stack from the change
+### Extends reuse.md: search before writing
 
-A stacked pull request may display every unmerged prerequisite. Record both the GitHub-visible diff against the integration branch and the change's own diff against its exact integration base. The first determines the human dependency order; the second determines whether the change is structurally too large. Do not split a coherent change merely because GitHub includes prerequisite files.
+reuse.md specifies the search protocol and the defects to detect. The lesson from our reviews: a duplicate discovered at review time (for example a proof re-deriving a declaration Mathlib already carries) wastes a whole round; the search belongs before writing, and ut-lean-recon owns the procedure. Run it before the declaration exists, not after the reviewer finds it.
 
-### Organize around downstream consumers
+### Extends generality.md: uniform arguments stated uniformly
 
-Two groups of declarations deserve separate modules when later work needs one without the other. Before proposing a split, ask: does the boundary remove a real dependency for a planned consumer? does each resulting module have a stable mathematical responsibility? can the higher layer directly import the lower one without a cycle? would the split remain sensible if this pull request did not exist? If not, the split is file-count optimization rather than structure.
+generality.md requires the natural level and general-first. The concrete failure mode we hit: a construction fixed at one degree although the argument is uniform in every degree, re-scoped into the all-degree version. The probe: generalize the statement and recompile; if the proof survives, the fixed-case statement is a scope defect.
 
-### Roots and aggregators as policy
+### Extends proof-quality.md: robustness probes
 
-An import-free root avoids a transitive catch-all API and conflicts among independent work streams. A feature pull request must not turn the root into a rolling re-export file, and aggregators, when introduced, need an explicit ownership and import contract rather than arising accidentally from whichever feature most recently touched the root.
+proof-quality.md flags brittle proofs and undocumented definitional equality. The detection technique: perturb and rebuild. Change a hypothesis, rename a lemma, or move a definition; a proof that breaks on such a change rests on an implementation accident (a specific eliminator shape, an unfolding-heavy `simpa`, a hidden defeq) and needs an explicit lemma or comment. A short-but-brittle proof is not a good proof.
 
-### Imports as mathematical ownership
+### Extends documentation.md: docstring-hypothesis traps
 
-A public declaration's defining types and structures must be available through direct public imports. Proof-only tactics and calculations belong in private imports. Check whether a declaration compiles only because of a transitive import, whether a generic module imports a later specialization, whether moving a theorem changes what downstream files receive, and whether an import makes a lower layer appear to depend on an optional presentation. Removal probes and small import-only compile probes are more reliable than guessing from the current build.
+documentation.md treats overclaiming as a finding even when the theorem is correct. The concrete traps we keep seeing: calling an arbitrary element central, an endomorphism a projection before idempotence is proved, or a construction canonical when it depends on selected data. Overclaimed docstrings are how a review misses a real dependency.
 
-### Name against the next model
+### Extends naming.md: name against the next model
 
-Check public names against current mathlib conventions and against known future constructions. A locally clear name can become ambiguous against the next planned equivalence, action, or specialization, so name for the next model, not only the current file.
+naming.md requires conclusion-describing names and adjacent consistency. The extension: test public names against known future constructions, not only the current file. An equivalence named for its current source became ambiguous when a second natural equivalence for the same objects was planned; the role-based name, recording the direction it establishes, left room for the later bridge.
 
-### Docstring-hypothesis traps
+### Extends placement.md: probe imports instead of guessing
 
-Check every docstring against the statement it accompanies. Do not call an arbitrary element central, an endomorphism a projection before idempotence is proved, or a construction canonical when it depends on selected data. Overclaimed docstrings are a common way a review misses a real dependency.
+placement.md reports only evidently wrong imports and leaves the mechanical boundary to CI and `shake`. When imports are suspect, decide with removal probes and small import-only compile probes rather than by guessing from the current build, and watch for a generic module importing a later specialization.
 
-### Reuse by structure, not by name
+## Checks the rubrics do not carry
 
-A declaration that restates an existing theorem under a third definitional-equality spelling is duplication in disguise, even when no name matches. Search by the mathematical structure of the statement before accepting a new declaration (recon owns the search procedure). A lemma re-proved from scratch when Mathlib already carries it wastes a review round: the duplicate is closed, not merged.
+General Lean structural additions, not extensions of any single rubric:
 
-### Generality and robustness probes
-
-Probe, do not assume. When an argument is uniform in a parameter (for example every positive degree), a fixed-case statement is a scope defect: generalize the statement and see whether the proof still compiles, and require the uniform version. Perturb a proof to test robustness: change a hypothesis, rename a lemma, or move a definition, and rebuild; a proof that breaks on such a change rests on an implementation accident (a specific eliminator shape, hidden definitional equality, an unfolding-heavy `simpa`) and needs an explicit lemma or comment. A short-but-brittle proof is not a good proof.
+- Separate the stack from the change: record both the GitHub-visible diff against the integration branch and the change's own diff against its integration base. The first determines the human dependency order; the second whether the change is structurally too large. Do not split a coherent change merely because GitHub includes prerequisite files.
+- Organize around downstream consumers: two groups of declarations deserve separate modules when later work needs one without the other. Before a split, ask whether it removes a real dependency for a planned consumer, whether each module has a stable mathematical responsibility, whether the higher layer can import the lower one without a cycle, and whether the split would remain sensible if this PR did not exist.
+- Roots and aggregators as policy: an import-free root avoids a transitive catch-all; a feature PR must not turn it into a rolling re-export, and aggregators need an explicit ownership and import contract rather than arising from whichever feature touched the root last.
 
 ## Pointer section
 
-- TauCetiProject/TauCetiReview/rubrics/: the latest universal and per-change rubrics, the default quality gate for all math formalization reviews; `_common.md` holds the shared protocol (untrusted input, adversarial author, contested findings).
+- TauCetiProject/TauCetiReview/rubrics/: the latest universal and per-change rubrics (the default gate); `_common.md` holds the shared protocol (untrusted input, adversarial author, contested findings).
 - TauCeti COORDINATION.md: the coordination contract the review process follows by default (Section 2: reading review state, head-bound verdicts); project-specified review-process rules take precedence.
 - REVIEWING.md in TauCetiReview: how the rubric review is run, locally or by CI.
 - leanprover-community.github.io/contribute: mathlib naming, style, and contribution documentation.
-- For the golf-side discipline this review side checks, see the ut-lean-golf skill.
+- ut-lean-recon: the search procedure reuse extensions point to; ut-lean-golf: the proof-golf discipline this review side checks.
