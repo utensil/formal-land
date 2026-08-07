@@ -7,17 +7,17 @@ description: "Run and verify a Lean project at the toolchain level: pinned Lean 
 
 ## Purpose
 
-Lean projects have a reproducible toolchain story (toolchain file, Lake manifest, mathlib cache) and an evidence story (audits, reproduction, a verification chain). This skill covers the low-level mechanics: set up a project, pin its dependencies, build from cache, audit the source, and reproduce results from a fresh checkout. It also records how to be truthful about what verification claims follow from what evidence, especially for executable and numerical content.
+Lean formalization projects have a reproducible toolchain story (toolchain file, Lake manifest, mathlib cache) and an evidence story (audits, reproduction from a fresh checkout). This skill covers the low-level mechanics every mathlib-based project needs: set up a project, pin its dependencies, build from cache, audit the source, and reproduce results from a fresh checkout. A scoped extension (VERIFY.md) adds the extra discipline for the minority of projects that also carry executable content; pure theorem libraries do not need it.
 
 ## When to use
 
-- Setting up or checking a Lean project that depends on mathlib.
+- Setting up or checking a Lean formalization project that depends on mathlib.
 - Deciding whether a build result is trustworthy enough to report.
 - Writing the acceptance check for a Lean change: what must pass and what must be recorded.
-- Adding executable content (`native_decide`, arrays, foreign function interfaces) and needing to state exactly what is proved.
 - Any time "it builds" would otherwise be the whole story.
+- Only if the project actually carries executable content (`native_decide`, arrays, foreign function interfaces): also read VERIFY.md for the executable verification chain.
 
-Out of scope: coordinating parallel work, managing branches or worktrees, monitoring, scheduling, and chat relay. Those are separate concerns.
+Out of scope: coordinating parallel work, managing branches or worktrees, monitoring, scheduling, chat relay, and the verification of executable programs. The last one is an extension (VERIFY.md), not part of the core; most formalization work never reaches it.
 
 ## Procedure
 
@@ -65,14 +65,14 @@ The reproduction rule: a cache hit can never turn a failing item green. The cach
 
 Record the toolchain and manifest readback, the commands, the exit codes, the build logs, and hashes of produced artifacts. Report any environmental deviation. Cache unavailability, an incomplete cache, or a mathlib source compilation fails the reproduction gate.
 
-### 5. State what the verification chain proves
+### 5. Executable content only: state what the verification chain proves
 
-For a project with executable content, keep the layers distinct and prove the bridges between them. The full chain is in VERIFY.md in this directory.
+This section and VERIFY.md apply only to projects that carry executable content (computed programs, native oracles, float kernels). Pure formalization projects, whose deliverables are declarations and proofs, skip it entirely. For projects that do have executable content, keep the layers distinct and prove the bridges between them. The full chain is in VERIFY.md in this directory.
 
 ## References
 
 - Lean manual quickstart: https://lean-lang.org/lean4/doc/quickstart.html
 - Lake documentation: https://github.com/leanprover/lean4/blob/master/src/lake/README.md
 - mathlib: https://github.com/leanprover-community/mathlib4
-- VERIFY.md in this directory: the verification discipline for executable Lean content.
+- VERIFY.md in this directory: the executable verification chain, gated on the project carrying executable content.
 - Related skills: ut-lean-check (independent-kernel verification), ut-lean-recon (pinned-revision reconnaissance).

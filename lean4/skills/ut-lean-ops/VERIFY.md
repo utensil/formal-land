@@ -1,6 +1,11 @@
 # VERIFY.md: the verification discipline for executable Lean content
 
-This file expands section 5 of SKILL.md. It is the checklist for claiming that executable Lean code does what the mathematics says it does.
+This file expands section 5 of SKILL.md and applies only to projects that
+carry executable content: computed programs, native oracles, or float
+kernels. Pure formalization projects, whose deliverables are declarations and
+proofs, never need this file; it exists because a few Lean projects embed a
+program inside the formalization and must state exactly what is proved about
+it.
 
 ## One authority, several proved representations
 
