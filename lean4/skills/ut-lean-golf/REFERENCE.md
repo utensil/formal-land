@@ -1,21 +1,13 @@
 ---
 name: ut-lean-golf-reference
-description: Reference for ut-lean-golf. The pinned-source mathlib survey procedure, the escalation triggers for a mathlib repository-history survey, and the post-golf boundary recheck.
+description: Reference for ut-lean-golf. The escalation triggers for a mathlib repository-history survey and the post-golf boundary recheck. The pinned-source survey itself belongs to ut-lean-recon.
 ---
 
-# ut-lean-golf reference: search, escalation, and recheck
+# ut-lean-golf reference: escalation and recheck
 
 ## The pinned-source survey
 
-The first survey of any golf or reuse question runs against the checked-out mathlib revision, not memory:
-
-1. Use rg over the checked-out mathlib revision for the candidate declaration and its neighbors.
-2. Inspect current declarations and adjacent source in the relevant domain, for example LinearAlgebra.Quotient, Algebra.DirectSum, LinearAlgebra.Alternating, or LinearAlgebra.TensorProduct.
-3. Write small compilation probes for candidate declarations.
-4. Use removal probes to determine direct imports.
-5. Run targeted and full builds against the pinned revision.
-
-Statements that an API is canonical after this survey mean only that it is the direct current interface in the pinned source and fits the required mathematics. They do not claim knowledge of maintainer intent or future direction.
+The first survey of any golf or reuse question runs against the checked-out mathlib revision, not memory. The survey procedure itself (grep the pinned revision, inspect adjacent source, compile probes, removal probes, targeted and full builds, and the canonical-API caution) is owned by ut-lean-recon; run it before golfing. Golf adds the triggers and the boundary recheck below.
 
 ## Escalation to a mathlib history survey
 

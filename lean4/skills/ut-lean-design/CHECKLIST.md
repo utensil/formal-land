@@ -10,20 +10,11 @@
 | 4. Public behavioral contract: which consumer equations must work without unfolding? | |
 | 5. Proof shape: which named map or composition theorem replaces the elementwise chain? | |
 
-## 2. Ten-gate slice-selection rubric
+## 2. Slice-selection gates (owned by ut-lean-roadmap)
 
-| Gate | Required evidence | Fail condition |
-| --- | --- | --- |
-| Exact target | A named declaration or theorem family | The goal is only a topic |
-| Existing-library boundary | The objects to reuse and the missing theorem are listed | Re-proves an existing construction or duplicates an open pull request |
-| Dependency depth | At most one or two unlanded prerequisites | The proof starts below several unresolved interfaces |
-| One new idea | The central lemma states in one sentence | Combines several structures, actions, and irreducibility claims |
-| Small instance | One low-dimensional or finite example exercises the route | Only the fully general theorem is specified |
-| Reusable output | The general theorem is useful beyond the example | The result is an isolated computation |
-| Acceptance oracle | Build, no-sorry policy, and a named test theorem are fixed | "It should compile" is the only validation plan |
-| Convention lock | Signature, normalization, basis order, action, and operand order are explicit | The target depends on informal convention matching |
-| Stop condition | A useful result exists if the generalization is abandoned | The work is all-or-nothing |
-| Timebox | A short reconnaissance spike has a concrete end | Feasibility is inferred only from the specification |
+- [ ] The candidate was scored against the slice-selection gates (exact target, existing-library boundary, dependency depth, one new idea, concrete probe, reusable output, acceptance oracle, convention lock, stop condition, timebox).
+- [ ] The authoritative gate table and operational algorithm were applied from ut-lean-roadmap/ROUTES.md; not restated here.
+- [ ] The deliverable is the general theorem; any concrete probe is only a feasibility spike, never the deliverable.
 
 ## 3. Convention lock by definitional acceptance tests
 

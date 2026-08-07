@@ -1,13 +1,13 @@
 ---
 name: ut-lean-design
-description: Design of a Lean formalization slice before writing any code. Applies the five-question compact design check, the smallest-instance algorithm, the ten-gate slice-selection rubric, convention locks by definitional acceptance tests, and the characteristic-API rules for public declarations.
+description: Design of a Lean formalization work unit before writing any code: the five-question compact design check, convention locks by definitional acceptance tests, the authoritative-spec principle, and the characteristic-API rules for public declarations. Slice selection (the gates and the operational algorithm) is ut-lean-roadmap's concern.
 ---
 
 # ut-lean-design
 
 ## Purpose
 
-A formalization slice is one coherent unit of Lean work: one topic, one pull request, one reviewable contract. Design is the step that fixes the slice before any code is written. It picks the exact target, the natural statement, the library boundary, the public behavioral contract, and the proof shape, and it pins conventions with small concrete tests. Design consumes the verdict from ut-lean-recon and produces a checklist that the implementation must pass.
+A formalization slice is one coherent unit of Lean work: one topic, one work unit (which may map to a pull request), one reviewable contract. Design is the step that fixes the slice before any code is written. It picks the exact target, the natural statement, the library boundary, the public behavioral contract, and the proof shape, and it pins conventions with small concrete tests. Design consumes the verdict from ut-lean-recon and produces a checklist that the implementation must pass.
 
 ## When to use
 
@@ -28,32 +28,13 @@ Record answers to these five questions before implementation:
 4. Public behavioral contract: for every public definition or equivalence, which consumer equations must work without unfolding it? Test a small downstream import and a bare `simp`, both directions when an equivalence is exposed.
 5. Proof shape: can a named map or composition theorem replace an elementwise equality chain, an ad hoc wrapper, or a carrier-level transition? Keep an essential `change` only with a local explanation.
 
-### 2. Run the operational algorithm
+### 2. Selection comes first
 
-1. Search the repository and open pull requests before selecting the target.
-2. Read the exact library declarations the proof will consume.
-3. Write the smallest concrete instance and its expected normal form.
-4. Test the instance without building the general abstraction.
-5. Extract the one reusable theorem exposed by that test.
-6. Land the theorem and the instance as separate, reviewable milestones when the boundary is real.
-7. Stop or expand only after the acceptance oracle passes.
+Run slice selection before design: the gates and the operational algorithm (concrete probe, general theorem as the deliverable, acceptance oracle) live in ut-lean-roadmap. Design consumes its verdict. The probe is concrete; the deliverable is the general theorem the probe supports.
 
-### 3. Score the slice against the ten gates
+### 3. Score the slice against the gates
 
-Score each candidate before implementation (the full table with evidence and fail conditions is in CHECKLIST.md):
-
-1. Exact target: a named declaration or theorem family.
-2. Existing-library boundary: the objects to reuse and the missing theorem are listed.
-3. Dependency depth: at most one or two unlanded prerequisites.
-4. One new idea: the central lemma states in one sentence.
-5. Small instance: one low-dimensional or finite example exercises the route.
-6. Reusable output: the general theorem is useful beyond the example.
-7. Acceptance oracle: build, no-sorry policy, and a named test theorem are fixed.
-8. Convention lock: signature, normalization, basis order, action, and operand order are explicit.
-9. Stop condition: a useful result exists if the generalization is abandoned.
-10. Timebox: a short reconnaissance spike has a concrete end.
-
-Review rubrics are a separate concern from slice selection. When the slice is under review, use the project's rubric index at TauCetiProject/TauCetiReview/rubrics/ rather than restating it in the design.
+The slice-selection gates (exact target, existing-library boundary, dependency depth, one new idea, concrete probe, reusable output, acceptance oracle, convention lock, stop condition, timebox) are owned by ut-lean-roadmap; score the candidate there before designing. The authoritative table with evidence and fail conditions is ut-lean-roadmap/ROUTES.md. The deliverable is always the general theorem; a concrete probe only exercises the route.
 
 ### 4. Lock conventions by definitional acceptance tests
 
@@ -73,13 +54,14 @@ Ship with every public definition:
 - names that describe conclusions;
 - shared definitions placed in the earliest file that uses them.
 
-### 7. Land one topic per milestone
+### 7. Land one topic per work unit
 
-One pull request, one idea, one reviewable boundary. Ship a prerequisite refactor as its own milestone. Stop when the acceptance oracle passes.
+One work unit, one idea, one reviewable boundary (the unit may map to a pull request). Ship a prerequisite refactor as its own unit. Stop when the acceptance oracle passes.
 
 ## References
 
 - The reconnaissance companion skill: ut-lean-recon
+- The slice-selection owner: ut-lean-roadmap (gates, operational algorithm)
 - The companion golf and review skills: ut-lean-golf, ut-lean-review
 - The Lean theorem prover manual: <https://lean-lang.org/theorem_proving_in_lean4/>
 - Review rubrics (used at review time, not slice selection): <https://github.com/TauCetiProject/TauCetiReview/rubrics/>

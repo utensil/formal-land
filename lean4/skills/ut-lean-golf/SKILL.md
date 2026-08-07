@@ -67,7 +67,7 @@ Generic shapes worth recognizing in ordinary proofs:
 
 ## Public examples
 
-Public TauCeti pull requests illustrate the failure modes and the positive model:
+Public pull requests illustrate the failure modes and the positive model:
 
 - A range-equivalence proof that duplicated Mathlib's LinearEquiv.ofInjective_apply was closed (pull request 1859); searching by structure before writing the lemma would have found the existing declaration.
 - A leading-term construction fixed at degree two although the argument is uniform in every positive degree was re-scoped into an all-degree version (pull request 1772 into pull request 1783).
@@ -75,6 +75,7 @@ Public TauCeti pull requests illustrate the failure modes and the positive model
 
 ## References
 
-- REFERENCE.md in this skill directory: the pinned-source survey procedure, the mathlib-history escalation triggers, and the post-golf boundary recheck.
+- REFERENCE.md in this skill directory: the mathlib-history escalation triggers and the post-golf boundary recheck.
+- The pinned-source survey procedure is owned by ut-lean-recon; run it before golfing.
 - Mathlib source: leanprover-community/mathlib4.
 - For the review-side checks that interact with golf, see the ut-lean-review skill.

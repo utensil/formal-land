@@ -74,3 +74,4 @@ Label the result honestly: a trusted executable oracle, complementary evidence, 
 - nanoda, the independent kernel: https://github.com/ammkrn/nanoda_lib
 - Lean manual on `native_decide`: https://lean-lang.org/lean4/doc/native_decide.html
 - COMPARATOR.md in this directory: the harness anatomy and community context in detail.
+- Related skills: ut-lean-ops (toolchain-level verification), ut-lean-recon (the evidence the checker verifies).

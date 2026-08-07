@@ -75,3 +75,4 @@ For a project with executable content, keep the layers distinct and prove the br
 - Lake documentation: https://github.com/leanprover/lean4/blob/master/src/lake/README.md
 - mathlib: https://github.com/leanprover-community/mathlib4
 - VERIFY.md in this directory: the verification discipline for executable Lean content.
+- Related skills: ut-lean-check (independent-kernel verification), ut-lean-recon (pinned-revision reconnaissance).

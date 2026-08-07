@@ -1,13 +1,13 @@
 ---
 name: ut-lean-review
-description: Lean-specific review for TauCeti pull requests, adding only what the universal rubrics do not carry: exact-head binding, import ownership, naming orientation, docstring-hypothesis traps, the post-revision recheck, and the contest protocol for an iterative review pipeline.
+description: Lean-specific review for Lean pull requests in rubric-driven repositories (such as TauCeti), adding only what the universal rubrics do not carry: exact-head binding, import ownership, naming orientation, docstring-hypothesis traps, the post-revision recheck, and the contest protocol for an iterative review pipeline.
 ---
 
 # ut-lean-review
 
 ## Purpose
 
-TauCeti pull requests are judged against universal and per-change rubrics that live in the TauCetiProject/TauCetiReview repository (see the pointer section below). This skill does not restate those rubrics. It adds the Lean-specific checks the universal rubrics do not carry, and the behavior expected inside an iterative review pipeline where findings arrive one round at a time.
+Pull requests in rubric-driven repositories are judged against universal and per-change rubrics (TauCeti's live at TauCetiProject/TauCetiReview, see the pointer section below). This skill does not restate those rubrics. It adds the Lean-specific checks the universal rubrics do not carry, and the behavior expected inside an iterative review pipeline where findings arrive one round at a time.
 
 ## When to use
 
