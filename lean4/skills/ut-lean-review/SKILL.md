@@ -1,6 +1,6 @@
 ---
 name: ut-lean-review
-description: Lean-specific review for Lean pull requests in rubric-driven repositories (such as TauCeti), adding only what the universal rubrics do not carry: exact-head binding, import ownership, naming orientation, docstring-hypothesis traps, the post-revision recheck, and the contest protocol for an iterative review pipeline.
+description: Lean-specific review for Lean pull requests in rubric-driven repositories (such as TauCeti), applied after the project rubrics: exact-head binding, import ownership, naming orientation, docstring-hypothesis traps, the post-revision recheck, and the contest protocol for an iterative review pipeline.
 ---
 
 # ut-lean-review
@@ -9,11 +9,15 @@ description: Lean-specific review for Lean pull requests in rubric-driven reposi
 
 Pull requests in rubric-driven repositories are judged against universal and per-change rubrics (TauCeti's live at TauCetiProject/TauCetiReview, see the pointer section below). This skill does not restate those rubrics. It adds the Lean-specific checks the universal rubrics do not carry, and the behavior expected inside an iterative review pipeline where findings arrive one round at a time.
 
+The order is fixed: first subject the change to the project rubrics, then run the additional Lean-specific checks below. The rubrics are the floor, the checks in this skill the ceiling on top of them, so a review that follows this skill already passes the TauCeti rubrics and covers the Lean-specific ground those rubrics do not reach.
+
 ## When to use
 
 Use this skill when reviewing a Lean pull request against the project rubrics, when responding to a review finding, or when preparing a change that will go through the review pipeline. It applies to Lean code in TauCeti and similarly run mathlib-based repositories, and it references rather than replaces the project rubrics.
 
 ## Lean-specific checks
+
+Run these after the project rubrics: the rubric verdict comes first, then this pass for what the rubrics do not carry.
 
 ### Exact-head binding
 
@@ -43,9 +47,7 @@ Respond proportionally. An API-surface change runs the full gate: full build, au
 
 ## Pointer section
 
-The universal and per-change rubrics live at TauCetiProject/TauCetiReview/rubrics/. Mathlib naming, style, and contribution documentation lives at leanprover-community.github.io/contribute. Link to these; do not copy their content into this skill. For the golf-side discipline this review side checks, see the ut-lean-golf skill.
-
-## References
+The universal and per-change rubrics live at TauCetiProject/TauCetiReview/rubrics/. Mathlib naming, style, and contribution documentation lives at leanprover-community.github.io/contribute. Link to these; do not copy their content into this skill. For the golf-side discipline this review side checks, see the ut-lean-golf skill.## References
 
 - CHECKLIST.md in this skill directory: the Lean-specific checklist in checkable form.
 - TauCetiProject/TauCetiReview/rubrics/: the universal and per-change rubrics.

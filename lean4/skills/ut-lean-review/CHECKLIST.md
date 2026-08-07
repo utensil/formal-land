@@ -5,6 +5,10 @@ description: Checkable Lean-specific review checklist for ut-lean-review. Bindin
 
 # ut-lean-review checklist
 
+Run in order: first the project rubrics (TauCeti's universal and per-change
+rubrics), then this Lean-specific pass. The rubric verdict is the floor;
+this list covers what the rubrics do not carry.
+
 ## Binding and scope
 
 - [ ] Recorded exact base, head, declared prerequisites, and changed paths.
