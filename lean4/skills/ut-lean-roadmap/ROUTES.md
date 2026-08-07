@@ -1,11 +1,11 @@
-# ROUTES.md: work-unit checklist
+# ROUTES.md: slice checklist
 
-Run this before committing to a roadmap work unit. It is the executable form of the skill's methodology; it does not restate the prose in SKILL.md.
+Run this before committing to a roadmap slice. It is the executable form of the skill's methodology; it does not restate the prose in SKILL.md.
 
-## Unit selection
+## Slice selection
 
 - [ ] Named target in the roadmap, not a topic.
-- [ ] One idea: the central lemma fits in one sentence; a prerequisite refactor is its own unit.
+- [ ] One idea: the central lemma fits in one sentence; a prerequisite refactor is its own slice.
 - [ ] General theorem is the deliverable; any concrete spike is only a probe.
 - [ ] Natural generality: uniform arguments stated for all degrees or structures.
 - [ ] Clear dependencies: at most one or two unlanded prerequisites; library objects to reuse listed.
@@ -34,18 +34,18 @@ Run this before committing to a roadmap work unit. It is the executable form of 
 
 ## Operational algorithm
 
-1. Read the narrative spec and the exact library declarations the unit will consume.
+1. Read the narrative spec and the exact library declarations the slice will consume.
 2. Run a concrete probe: the smallest instance that exercises the route, and its expected normal form.
 3. Test the probe without building the general abstraction.
 4. Deliver the general theorem the probe supports; extract the one reusable result.
-5. Land the theorem and its supporting units separately.
+5. Land the theorem and its supporting slices separately.
 6. Stop or expand only after the acceptance oracle passes.
 
-## Slice, route, and navigation
+## Routes and navigation
 
-- [ ] Slice defined: the attack angle and the principles behind it (generality-first, dependency-first, reusable infrastructure first).
-- [ ] Route defined: the ordered work units and the navigation factors, including steering clear of others' active work where feasible, but not always (avoid over-avoiding proximity).
-- [ ] Route revisited: as work units accumulate, reusable bits (shared criteria, extractable or upstreamable API, conventions to lock) are identified and the next units updated.
+- [ ] Route picked through the roadmap: the attack angle (the principles behind the approach) and the practical plan.
+- [ ] Route navigates in practice: ordering of slices and the navigation factors, including steering clear of others' active work where feasible, but not always (avoid over-avoiding proximity).
+- [ ] Route revisited: as slices accumulate, reusable bits (shared criteria, extractable or upstreamable API, conventions to lock) are identified and the next slices updated.
 
 ## Reading the attack map
 
@@ -54,6 +54,6 @@ Run this before committing to a roadmap work unit. It is the executable form of 
 - [ ] Second-half open targets checked.
 - [ ] Acceptance oracle noted per candidate target.
 
-## Work unit vocabulary
+## Slice vocabulary
 
-- [ ] Work unit may naturally map to a pull request where the project uses them; the checklist applies to the unit either way.
+- [ ] A slice naturally maps to a pull request where the project uses them; the checklist applies to the slice either way.

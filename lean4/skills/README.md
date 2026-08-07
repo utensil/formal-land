@@ -9,12 +9,12 @@ where useful, one reference file.
 | Skill | Owns | References |
 | --- | --- | --- |
 | `ut-lean-recon` | the pinned-revision survey, no-gap manifests, evidence levels | consumed by design, golf, review |
-| `ut-lean-design` | the five-question compact design check, convention locks, the authoritative-spec principle, the characteristic-API rules, the work-unit boundary | slice selection from ut-lean-roadmap; recon verdicts from ut-lean-recon |
+| `ut-lean-design` | the five-question compact design check, convention locks, the authoritative-spec principle, the characteristic-API rules, the slice boundary | slice selection from ut-lean-roadmap; recon verdicts from ut-lean-recon |
 | `ut-lean-golf` | interface-first golf, the mathlib-history escalation triggers, the post-golf boundary recheck | the pinned-source survey from ut-lean-recon |
 | `ut-lean-review` | Lean-specific review checks, the contest protocol; references the TauCeti rubrics | rubrics from TauCetiProject/TauCetiReview; design rules from ut-lean-design |
 | `ut-lean-ops` | toolchain-level setup, cache, audits, the verification chain, float honesty | check for independent-kernel verification |
 | `ut-lean-check` | the comparator / nanoda harness, native-execution oracles | ops for toolchain-level verification |
-| `ut-lean-roadmap` | the definitions (layer, slice, route, work unit), slice-selection gates, the operational algorithm, route dynamics | design for per-unit design; recon for unit selection support |
+| `ut-lean-roadmap` | the definitions (roadmap, layer, route, slice), slice-selection gates, the operational algorithm, route dynamics | design for per-slice design; recon for slice selection support |
 
 ## Deduplication rule
 
@@ -31,10 +31,11 @@ map above is the authority:
 
 ## Vocabulary
 
-The primary unit of work across these skills is the work unit: the concrete
-deliverable of one step in a route, which may naturally map to a pull request
-where a project uses them. See `ut-lean-roadmap` for the definitions of
-roadmap, layer, slice, route, and work unit.
+The primary unit of work across these skills is the slice: the selected next
+slice of work, which naturally maps to a pull request where a project uses
+them. The route is picked through the roadmap and carries the attack angle and
+the practical plan. See `ut-lean-roadmap` for the definitions of roadmap,
+layer, route, and slice.
 
 ## Workflow
 
