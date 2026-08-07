@@ -87,6 +87,16 @@ Record the toolchain and manifest readback, the commands, the exit codes, the bu
 
 This section and SOFTWARE_VERIFICATION.md apply only to projects that carry executable content (computed programs, native oracles, float kernels). Pure formalization projects, whose deliverables are declarations and proofs, skip it entirely. For projects that do have executable content, keep the layers distinct and prove the bridges between them. The full chain is in SOFTWARE_VERIFICATION.md in this directory.
 
+### 6. Bump the pinned toolchain pair
+
+Adopting a new stable pair is itself a checkable operation:
+
+- The ceiling is set by the newest release of every dependency. A dependency that tracks an older Lean, including a release candidate, bounds the whole project: take the latest stable release and settle on the dependency's bound when it cannot go higher.
+- A tagged parent ships with the transitive revisions it was tested against, which need not equal the dependency's matching tag. When two parents pin different revisions of the same transitive package, `lake update` warns and cache hashes break: declare the parent whose pins should win last and re-run `lake update`.
+- After `lake update`, verify the cache actually landed. The automatic post-update cache fetch can report success while package checkouts are not yet in place, leaving an empty build tree: re-run `lake exe cache get` manually and confirm the dependency olean directory has content.
+- A green `lake build` proves only the default target's import closure, and the cache covers only the imports the dependency library itself uses. Files elaborated individually (test drivers that compile every file) reach outside that closure: prefer cached subsets over deprecated umbrella modules, and treat per-file elaboration as the acceptance surface.
+- Between versions expect message-format churn, not only errors: expected-message specs, instance names, namespaces, and quoted identifier output all drift; re-baseline against the new pair rather than porting verbatim. Set `LEAN_ABORT_ON_PANIC=1` when evaluating to surface runtime panics CI-style runners hit, and prefer `#eval!` for IO primitives backed by opaque implementations.
+
 ## References
 
 - Lean manual quickstart: https://lean-lang.org/lean4/doc/quickstart.html
