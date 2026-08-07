@@ -29,6 +29,25 @@ map above is the authority:
 - The TauCeti rubrics are linked, never restated, in `ut-lean-review`.
 - Cross-cutting cautions (re-verify pinned examples before treating a skill as stable, public prose discipline) are one-line reminders, not sections.
 
+## Term ownership
+
+Definitions of the four terms live in exactly one place, `ut-lean-roadmap`
+(the deduplication rule); the slice is the term that flows through the other
+skills because it is the unit of work.
+
+| Term | Defined in | Concept owned by | Consumed by |
+| --- | --- | --- | --- |
+| roadmap | ut-lean-roadmap | ut-lean-roadmap (reading the layers, spine, frontier; acceptance oracles; roadmaps as human intent) | design and recon as context |
+| layer | ut-lean-roadmap | ut-lean-roadmap (logical dependency structure) | roadmap only |
+| route | ut-lean-roadmap | ut-lean-roadmap (picking the route, the attack angle and plan, navigation, route dynamics) | roadmap only, as a term |
+| slice | ut-lean-roadmap | selection and scoping in ut-lean-roadmap; design in ut-lean-design; reconnaissance in ut-lean-recon; delivery in ut-lean-golf; review in ut-lean-review | every skill that works on a contribution |
+
+Per skill, the slice appears as: selected and scoped in ut-lean-roadmap,
+designed in ut-lean-design, supported by reconnaissance in ut-lean-recon,
+delivered in ut-lean-golf, and reviewed in ut-lean-review. ut-lean-ops and
+ut-lean-check are orthogonal to the terms: they verify and check the work
+rather than slice it.
+
 ## Vocabulary
 
 The primary unit of work across these skills is the slice: the selected next
