@@ -65,13 +65,12 @@ Generic shapes worth recognizing in ordinary proofs:
 - Never re-prove AlternatingMap facts: alternation, swap and self behavior, and the universal property live in LinearAlgebra.Alternating.
 - The positive model for a reusable construction is a generic degree-indexed construction, one public defining equation, and one theorem stating its usefulness, for example surjectivity or the universal property. Ship those three together so consumers invoke the lemmas instead of re-deriving the construction.
 
-## Public examples
+## Failure modes
 
-Public pull requests illustrate the failure modes and the positive model:
+Two failure modes are worth recognizing in golfed proofs:
 
-- A range-equivalence proof that duplicated Mathlib's LinearEquiv.ofInjective_apply was closed (pull request 1859); searching by structure before writing the lemma would have found the existing declaration.
-- A leading-term construction fixed at degree two although the argument is uniform in every positive degree was re-scoped into an all-degree version (pull request 1772 into pull request 1783).
-- Pull request 1783 is the positive model: a generic degree-indexed construction, a defining equation, and a surjectivity theorem shipped as one coherent contract.
+- A lemma re-proved from scratch when Mathlib already carries it wastes a review round: the duplicate is closed, not merged. Search by structure before writing the declaration (recon owns the search procedure).
+- A construction fixed at one concrete degree although the argument is uniform in every degree must be re-scoped to the all-degree version. State the general theorem even when a concrete case satisfies the immediate need.
 
 ## References
 

@@ -35,7 +35,7 @@ map above is the authority:
   `ut-lean-roadmap`; design scores candidates there rather than restating the gates.
 - The characteristic-API rules belong to `ut-lean-design`; review checks them and references design.
 - The TauCeti rubrics are linked, never restated, in `ut-lean-review`.
-- Cross-cutting cautions (re-verify pinned examples before treating a skill as stable, public prose discipline) are one-line reminders, not sections.
+- Cross-cutting cautions (re-verify pinned examples before treating a skill as stable, public prose discipline, example citations carry their spirit inline (a bare reference an agent cannot explore is rewritten or dropped)) are one-line reminders, not sections.
 
 ## Term ownership
 
