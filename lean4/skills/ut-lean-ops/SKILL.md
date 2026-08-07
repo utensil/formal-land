@@ -7,7 +7,7 @@ description: "Run and verify a Lean project at the toolchain level: pinned Lean 
 
 ## Purpose
 
-Lean formalization projects have a reproducible toolchain story (toolchain file, Lake manifest, mathlib cache) and an evidence story (audits, reproduction from a fresh checkout). This skill covers the low-level mechanics every mathlib-based project needs: set up a project, pin its dependencies, build from cache, audit the source, and reproduce results from a fresh checkout. A scoped extension (VERIFY.md) adds the extra discipline for the minority of projects that also carry executable content; pure theorem libraries do not need it.
+Lean formalization projects have a reproducible toolchain story (toolchain file, Lake manifest, mathlib cache) and an evidence story (audits, reproduction from a fresh checkout). This skill covers the low-level mechanics every mathlib-based project needs: set up a project, pin its dependencies, build from cache, audit the source, and reproduce results from a fresh checkout. A scoped extension (EXECUTABLE.md) adds the extra discipline for the minority of projects that also carry executable content; pure theorem libraries do not need it.
 
 ## When to use
 
@@ -15,9 +15,9 @@ Lean formalization projects have a reproducible toolchain story (toolchain file,
 - Deciding whether a build result is trustworthy enough to report.
 - Writing the acceptance check for a Lean change: what must pass and what must be recorded.
 - Any time "it builds" would otherwise be the whole story.
-- Only if the project actually carries executable content (`native_decide`, arrays, foreign function interfaces): also read VERIFY.md for the executable verification chain.
+- Only if the project actually carries executable content (`native_decide`, arrays, foreign function interfaces): also read EXECUTABLE.md for the executable verification chain.
 
-Out of scope: coordinating parallel work, managing branches or worktrees, monitoring, scheduling, chat relay, and the verification of executable programs. The last one is an extension (VERIFY.md), not part of the core; most formalization work never reaches it.
+Out of scope: coordinating parallel work, managing branches or worktrees, monitoring, scheduling, chat relay, and the verification of executable programs. The last one is an extension (EXECUTABLE.md), not part of the core; most formalization work never reaches it.
 
 ## Procedure
 
@@ -67,12 +67,12 @@ Record the toolchain and manifest readback, the commands, the exit codes, the bu
 
 ### 5. Executable content only: state what the verification chain proves
 
-This section and VERIFY.md apply only to projects that carry executable content (computed programs, native oracles, float kernels). Pure formalization projects, whose deliverables are declarations and proofs, skip it entirely. For projects that do have executable content, keep the layers distinct and prove the bridges between them. The full chain is in VERIFY.md in this directory.
+This section and EXECUTABLE.md apply only to projects that carry executable content (computed programs, native oracles, float kernels). Pure formalization projects, whose deliverables are declarations and proofs, skip it entirely. For projects that do have executable content, keep the layers distinct and prove the bridges between them. The full chain is in EXECUTABLE.md in this directory.
 
 ## References
 
 - Lean manual quickstart: https://lean-lang.org/lean4/doc/quickstart.html
 - Lake documentation: https://github.com/leanprover/lean4/blob/master/src/lake/README.md
 - mathlib: https://github.com/leanprover-community/mathlib4
-- VERIFY.md in this directory: the executable verification chain, gated on the project carrying executable content.
+- EXECUTABLE.md in this directory: the executable verification chain, gated on the project carrying executable content.
 - Related skills: ut-lean-check (independent-kernel verification), ut-lean-recon (pinned-revision reconnaissance).

@@ -1,4 +1,4 @@
-# VERIFY.md: the verification discipline for executable Lean content
+# EXECUTABLE.md: the verification discipline for executable Lean content
 
 This file expands section 5 of SKILL.md and applies only to projects that
 carry executable content: computed programs, native oracles, or float
