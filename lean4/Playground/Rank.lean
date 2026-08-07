@@ -105,13 +105,13 @@ lemma rank_eq :
     Module.rank R (TensorAlgebra R M) = Cardinal.lift.{uR} (Cardinal.sum fun n ↦ Module.rank R M ^ n) := by
   let ⟨⟨κ, b⟩⟩ := Module.Free.exists_basis (R := R) (M := M)
   rw [(TensorAlgebra.equivFreeAlgebra b).toLinearEquiv.rank_eq, FreeAlgebra.rank_eq, Cardinal.mk_list_eq_sum_pow,
-    Basis.mk_eq_rank'' b]
+    Module.Basis.mk_eq_rank'' b]
 
 -- lemma rank_eq' :
 --     Module.rank R (ExteriorAlgebra R M) = Cardinal.lift.{uR} (Cardinal.sum fun n ↦ Module.rank R M ^ n) := by
 --   let ⟨⟨κ, b⟩⟩ := Module.Free.exists_basis (R := R) (M := M)
 --   rw [(ExteriorAlgebra.equivFreeAlgebra b).toLinearEquiv.rank_eq, FreeAlgebra.rank_eq, Cardinal.mk_list_eq_sum_pow,
---     Basis.mk_eq_rank'' b]
+--     Module.Basis.mk_eq_rank'' b]
 --   done
 
 example : Module.rank R M = Module.rank R M := rfl

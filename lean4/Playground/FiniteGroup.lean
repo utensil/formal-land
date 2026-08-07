@@ -25,7 +25,8 @@ import Mathlib.Data.Matrix.Invertible
 import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.GroupTheory.Index
 import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
-import Mathlib.LinearAlgebra.Matrix.Spectrum
+-- v4.32: the spectrum lemmas moved from `LinearAlgebra/Matrix` to `Analysis/Matrix`
+import Mathlib.Analysis.Matrix.Spectrum
 import Mathlib.GroupTheory.FreeGroup.IsFreeGroup
 -- import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup
 import Mathlib.LinearAlgebra.QuadraticForm.IsometryEquiv
@@ -36,6 +37,9 @@ import Mathlib.GroupTheory.PresentedGroup
 -- import Mathlib.GroupTheory.Commutator
 import Mathlib.GroupTheory.Coprod.Basic
 import Mathlib.Tactic
+
+-- v4.32: `Basis` moved into the `Module` namespace
+open Module (Basis)
 
 -- Inspired by Finite symmetric groups in Physics
 -- Following Representations and Characters of Groups
@@ -58,10 +62,11 @@ import Mathlib.Tactic
 
 #check isCyclic_of_prime_card
 
-variable (p : ℕ) [Fact p.Prime] (F : Type uF) [Field F] (ι : Type uι) [Finite ι] [LT ι] (R : Type uR) [Ring R] -- (fp : ι → F)
+variable (p : ℕ) [Fact p.Prime] (F : Type uF) [Field F] (ι : Type uι) [Finite ι] [Preorder ι] (R : Type uR) [Ring R] -- (fp : ι → F)
 
 -- a list of indices, sorted
-abbrev Model.Index := {l : List ι // l.Sorted (· < ·) }
+-- v4.32: `List.Sorted` was removed; use `SortedLT` from `Mathlib.Data.List.Sort`
+abbrev Model.Index := {l : List ι // l.SortedLT }
 
 def fp := Model.Index ι →₀ F
 
@@ -223,7 +228,8 @@ failed to synthesize instance
 
 #check Module.End
 
-#check Module.End.semiring
+-- v4.32: instance renamed `Module.End.semiring` → `Module.End.instSemiring`
+#check Module.End.instSemiring
 
 -- TODO: PR?
 -- #check Module.End.algebra
@@ -302,12 +308,15 @@ some exponent `k` is contained in the generalized eigenspace for exponents large
 
 #check OrderHom
 
-#check Module.End.eigenspaces_independent
+-- v4.32: `Module.End.eigenspaces_independent` was renamed to `eigenspaces_iSupIndep`
+-- (commit #19409 renamed `CompleteLattice.Independent` to `iSupIndep`)
+#check Module.End.eigenspaces_iSupIndep
 
 #check Module.End.eigenvectors_linearIndependent
 
 #check Module.End.exists_eigenvalue
 
+-- v4.32: `Matrix.IsHermitian.det_eq_prod_eigenvalues` moved with its module; the theorem itself is unchanged
 #check Matrix.IsHermitian.det_eq_prod_eigenvalues
 
 #check Basis.det
@@ -324,7 +333,8 @@ some exponent `k` is contained in the generalized eigenspace for exponents large
 
 #check LinearMap.IsProj
 
-#check LinearMap.isProj_iff_idempotent
+-- v4.32: renamed `LinearMap.isProj_iff_idempotent` → `LinearMap.isProj_iff_isIdempotentElem`
+#check LinearMap.isProj_iff_isIdempotentElem
 
 -- TODO: л is projection of a vector space V. Then V = Im л 0 Ker л.
 

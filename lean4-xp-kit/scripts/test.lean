@@ -56,7 +56,7 @@ def main (args : List String) : IO Unit := do
         if exitCode == 0 then
           if out.stdout.isEmpty && out.stderr.isEmpty then
             IO.println s!"✅ {t} {elapsed}"
-          else if !out.stderr.isEmpty || out.stdout.containsSubstr "warning:" then
+          else if !out.stderr.isEmpty || out.stdout.contains "warning:" then
             IO.println s!"🟨 {t} {elapsed}"
             unless !noNoisy do exitCode := 1
           else

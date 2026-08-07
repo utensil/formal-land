@@ -47,7 +47,7 @@ def works₂ : IO String := do
 
 
 /--
-error: unknown identifier 'opt'
+error: Unknown identifier `opt`
 -/
 #guard_msgs in
 def oops₀ : IO String := do
@@ -67,7 +67,7 @@ def oops₀ : IO String := do
   #### 1.1 expect `<-`, misuse `:=`, gives `unknown identifier`
 -/
 /--
-error: unknown identifier 'ret'
+error: Unknown identifier `ret`
 -/
 #guard_msgs in
 def oops₁₁ : IO String := do
@@ -79,12 +79,12 @@ def oops₁₁ : IO String := do
 -/
 
 /--
-error: type mismatch
+error: Type mismatch
   some ret
 has type
-  Option ?_ : Type
+  Option ?_
 but is expected to have type
-  IO (Option String) : Type
+  IO (Option String)
 -/
 #guard_msgs in
 def oops₁₂ : IO String := do
@@ -104,12 +104,12 @@ def works₁₃ : IO String := do
 -/
 
 /--
-error: type mismatch
+error: Type mismatch
   io
 has type
-  String : Type
+  String
 but is expected to have type
-  IO String : Type
+  IO String
 -/
 #guard_msgs in
 def oops₂ : IO String := do
@@ -133,12 +133,12 @@ def oops₂ : IO String := do
 -/
 
 /--
-error: type mismatch
+error: Type mismatch
   some opt
 has type
-  Option ?_ : Type
+  Option ?_
 but is expected to have type
-  IO (Option String) : Type
+  IO (Option String)
 -/
 #guard_msgs in
 def oops₄₁ : IO String := do
@@ -171,38 +171,28 @@ def works₄₃ : IO String := do
 
 /-!
   ## Cases from https://github.com/leanprover/lean4/pull/2676
+
+  v4.32: both cases below used to fail to elaborate (an `application type mismatch` on the
+  `if` branches, and `unknown identifier 'x'` on the `mut` binding). The underlying do-block
+  elaborator bugs were fixed, so the examples now compile; the guards document the current
+  (fixed) behavior instead of the historical errors.
 -/
 
 /--
-error: application type mismatch
-  pure true
-argument
-  true
-has type
-  Bool : Type
-but is expected to have type
-  Unit : Type
----
-error: application type mismatch
-  pure false
-argument
-  false
-has type
-  Bool : Type
-but is expected to have type
-  Unit : Type
+warning: Variable name `x` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
 -/
+-- v4.32: the `if true then pure true else pure false` branches now unify, so this example
+-- only triggers the unused-variable linter (previously it was an application type mismatch).
 #guard_msgs in
 example : IO Unit := do
   let x ← if true then pure true else pure false
 
-/--
-error: unknown identifier 'x'
----
-error: unknown identifier 'x'
----
-error: unknown identifier 'x'
--/
+-- v4.32: the `Id` do-block now elaborates cleanly, so there are no messages to guard.
+/- -/
 #guard_msgs in
 example : Id Unit := do
   let mut x ← if true then pure true else pure false

@@ -87,10 +87,14 @@ Record the toolchain and manifest readback, the commands, the exit codes, the bu
 
 This section and SOFTWARE_VERIFICATION.md apply only to projects that carry executable content (computed programs, native oracles, float kernels). Pure formalization projects, whose deliverables are declarations and proofs, skip it entirely. For projects that do have executable content, keep the layers distinct and prove the bridges between them. The full chain is in SOFTWARE_VERIFICATION.md in this directory.
 
+### 6. Bump the pinned toolchain pair
+
+Moving to a new Lean + mathlib pair is its own operation: dependency-bounded version ceilings, transitive-pin precedence, cache recovery, changelog-traced API drift, and tooling ports. Owned by **ut-lean-bump**; run this skill's verification (cache-first build, per-file test driver, audits, fresh-checkout reproduction) on the result.
+
 ## References
 
 - Lean manual quickstart: https://lean-lang.org/lean4/doc/quickstart.html
 - Lake documentation: https://github.com/leanprover/lean4/blob/master/src/lake/README.md
 - mathlib: https://github.com/leanprover-community/mathlib4
 - SOFTWARE_VERIFICATION.md in this directory: the verification discipline for executable Lean content, gated on the project carrying executable content.
-- Related skills: ut-lean-check (independent-kernel verification), ut-lean-recon (pinned-revision reconnaissance).
+- Related skills: ut-lean-bump (moving the pinned pair), ut-lean-check (independent-kernel verification), ut-lean-recon (pinned-revision reconnaissance).

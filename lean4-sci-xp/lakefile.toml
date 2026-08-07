@@ -9,7 +9,7 @@ defaultTargets = ["SciXp"]
 [[require]]
 name = "scilean"
 scope = "lecopivo"
-rev = "66ee02bec40d382d634daeb0ca1dce9ef8e3362c"
+rev = "95f8119a2884e9c41f82136523bd5568ea7075c5"
 
 # [[require]]
 # name = "hep_lean"
@@ -19,7 +19,7 @@ rev = "66ee02bec40d382d634daeb0ca1dce9ef8e3362c"
 [[require]]
 name = "verso"
 scope = "leanprover"
-rev = "11903e639bac684b76273287c3293fe4d665f53d"
+rev = "v4.28.0-rc1"
 
 [[lean_lib]]
 name = "SciXp"

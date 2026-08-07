@@ -35,14 +35,42 @@ but is expected to have type
 
 
 def anyway : IO Unit := do
-  let s ← EStateM.get
+  -- v4.32: `IO` is no longer an `EStateM`, so the naive-purity attempt below no longer
+  -- typechecks (see the live `ohNo` guard); the remainder of the experiment just draws
+  -- random bytes without touching any state.
   let x := ← (·.toUInt64BE!.toNat % 256) <$> IO.getRandomBytes 8
-  -- EStateM.set s
   let y := ← (·.toUInt64BE!.toNat % 256) <$> IO.getRandomBytes 8
-  -- EStateM.set s
   let z := ← (·.toUInt64BE!.toNat % 256) <$> IO.getRandomBytes 8
   IO.println f!"{x} {y} {z}"
-#eval anyway
+-- v4.32: `IO.getRandomBytes` depends on a `sorry`-based core definition, so plain `#eval` aborts;
+-- use `#eval!` to force evaluation.
+#eval! anyway
+
+/-!
+The naive-purity attempt itself now fails to typecheck (previously `IO` was an `EStateM`, so
+`EStateM.get`/`EStateM.set` compiled). The guard keeps the failure visible while the file still
+elaborates.
+-/
+/--
+error: Type mismatch
+  IO.println "Oh no"
+has type
+  IO Unit
+but is expected to have type
+  Id Unit
+---
+error: Type mismatch
+  EStateM.set s
+has type
+  EStateM ?m.9 (?m.4 → EStateM.Result ?m.3 ?m.4 ?m.4) PUnit
+but is expected to have type
+  Id Unit
+-/
+#guard_msgs in
+def ohNo : Unit := Id.run do
+  let s ← EStateM.get
+  IO.println "Oh no"
+  EStateM.set s
 
 
 example : 1 + 1 = 2 := by
