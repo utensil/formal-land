@@ -11,7 +11,7 @@ where useful, one reference file.
 | `ut-lean-recon` | the pinned-revision survey, no-gap manifests, evidence levels | consumed by design, golf, review |
 | `ut-lean-design` | the five-question compact design check, convention locks, the authoritative-spec principle, the characteristic-API rules, the slice boundary | slice selection from ut-lean-roadmap; recon verdicts from ut-lean-recon |
 | `ut-lean-golf` | interface-first golf, the mathlib-history escalation triggers, the post-golf boundary recheck | the pinned-source survey from ut-lean-recon |
-| `ut-lean-review` | additional review checks beyond the rubrics, the contest protocol; references the TauCeti rubrics | rubrics from TauCetiProject/TauCetiReview; design rules from ut-lean-design |
+| `ut-lean-review` | review protocol grounded on the repository coordination contract (Tau Ceti COORDINATION.md) and Lean and math quality detection techniques; references the TauCeti rubrics | rubrics from TauCetiProject/TauCetiReview; design rules from ut-lean-design |
 | `ut-lean-ops` | toolchain-level setup, cache, audits, fresh-checkout reproduction; the executable verification chain (SOFTWARE_VERIFICATION.md) is a scoped extension gated on the project carrying executable content | check for independent-kernel verification |
 | `ut-lean-check` | the comparator / nanoda harness, native-execution oracles | ops for toolchain-level verification |
 | `ut-lean-roadmap` | the definitions (roadmap, layer, route, slice), slice-selection gates, the operational algorithm, route dynamics | design for per-slice design; recon for slice selection support |
