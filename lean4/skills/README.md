@@ -37,6 +37,15 @@ map above is the authority:
 - The TauCeti rubrics are linked, never restated, in `ut-lean-review`.
 - Cross-cutting cautions (re-verify pinned examples before treating a skill as stable, public prose discipline, example citations carry their spirit inline (a bare reference an agent cannot explore is rewritten or dropped)) are one-line reminders, not sections.
 
+## Reference repositories
+
+Reference repositories (the source checkouts a skill reads, such as the
+TauCeti rubrics, coordination documents, roadmaps, and mathlib source) are
+read from a local checkout kept across slices: clone once, pull once per
+slice, read locally, never re-clone per task. The pinned mathlib checkout
+inside a project's `.lake/packages/` is Lake-managed and project-local, not
+a reference clone; the source checkout is for history and surveys.
+
 ## Term ownership
 
 Definitions of the four terms live in exactly one place, `ut-lean-roadmap`

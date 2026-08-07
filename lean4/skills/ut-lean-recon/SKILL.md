@@ -21,7 +21,7 @@ Reconnaissance is the exploration step that runs before any Lean theorem is prop
 
 ### 1. Record the exact revision
 
-The pinned mathlib commit, the Lean toolchain, and the project commit are part of every claim. Grep the pinned checkout, not the live master, unless the survey explicitly covers mathlib pull-request history. Record the checkout path in the manifest.
+The pinned mathlib commit, the Lean toolchain, and the project commit are part of every claim. Grep the pinned checkout, not the live master, unless the survey explicitly covers mathlib pull-request history. Record the checkout path in the manifest. The pinned checkout is the project's Lake-managed mathlib under `.lake/packages/`; it is not re-cloned. Surveys that need mathlib source history read the local reference checkout, pulled once per slice (skills README, Reference repositories), never a fresh clone.
 
 ### 2. Search by structure, not by name
 
