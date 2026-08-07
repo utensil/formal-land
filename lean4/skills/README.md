@@ -44,9 +44,9 @@ TauCeti rubrics, coordination documents, roadmaps, and mathlib source) are
 read from a local checkout kept across slices: clone once, pull once per
 slice, read locally, never re-clone per task. The pinned mathlib checkout
 inside a project's `.lake/packages/` is Lake-managed and project-local, not
-a reference clone; the source checkout is for history and surveys. Slices
-are worked in git worktrees under a conventional root, by default
-`~/worktrees/`, one worktree per slice; see ut-lean-ops.
+a reference clone; the source checkout is for history and surveys. Slices can
+be worked in git worktrees under a conventional root, by default
+`~/worktrees/`; see ut-lean-ops.
 
 ## Term ownership
 
