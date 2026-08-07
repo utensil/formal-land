@@ -41,9 +41,19 @@ Run this before committing to a roadmap work unit. It is the executable form of 
 5. Land the theorem and its supporting units separately.
 6. Stop or expand only after the acceptance oracle passes.
 
+## Slice, route, and navigation
+
+- [ ] Slice defined: the attack angle and the principles behind it (generality-first, dependency-first, reusable infrastructure first).
+- [ ] Route defined: the ordered work units and the navigation factors, including steering clear of others' active work where feasible, but not always (avoid over-avoiding proximity).
+- [ ] Route revisited: as work units accumulate, reusable bits (shared criteria, extractable or upstreamable API, conventions to lock) are identified and the next units updated.
+
 ## Reading the attack map
 
 - [ ] Dependency spine identified: which targets unlock which.
 - [ ] Frontier located: the boundary between done and open.
 - [ ] Second-half open targets checked.
 - [ ] Acceptance oracle noted per candidate target.
+
+## Work unit vocabulary
+
+- [ ] Work unit may naturally map to a pull request where the project uses them; the checklist applies to the unit either way.
