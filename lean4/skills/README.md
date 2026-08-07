@@ -40,7 +40,7 @@ skills because it is the unit of work.
 | roadmap | ut-lean-roadmap | ut-lean-roadmap (reading the layers, spine, frontier; acceptance oracles; roadmaps as human intent) | design and recon as context |
 | layer | ut-lean-roadmap | ut-lean-roadmap (logical dependency structure) | roadmap only |
 | route | ut-lean-roadmap | ut-lean-roadmap (picking the route, the attack angle and plan, navigation, route dynamics) | roadmap only, as a term |
-| slice | ut-lean-roadmap | selection and scoping in ut-lean-roadmap; design in ut-lean-design; reconnaissance in ut-lean-recon; delivery in ut-lean-golf; review in ut-lean-review | every skill that works on a contribution |
+| slice | ut-lean-roadmap | selection and scoping in ut-lean-roadmap (a function of that skill, not a separate one); design in ut-lean-design; reconnaissance in ut-lean-recon; delivery in ut-lean-golf; review in ut-lean-review | every skill that works on a contribution |
 
 Per skill, the slice appears as: selected and scoped in ut-lean-roadmap,
 designed in ut-lean-design, supported by reconnaissance in ut-lean-recon,
