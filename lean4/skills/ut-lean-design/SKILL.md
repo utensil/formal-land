@@ -7,12 +7,12 @@ description: Design of a Lean formalization work unit before writing any code: t
 
 ## Purpose
 
-A formalization slice is one coherent unit of Lean work: one topic, one work unit (which may map to a pull request), one reviewable contract. Design is the step that fixes the slice before any code is written. It picks the exact target, the natural statement, the library boundary, the public behavioral contract, and the proof shape, and it pins conventions with small concrete tests. Design consumes the verdict from ut-lean-recon and produces a checklist that the implementation must pass.
+Design operates at the level of a single work unit: one topic, one reviewable contract, which may map to a pull request. It fixes the unit before any code is written: the exact target, the natural statement, the library boundary, the public behavioral contract, and the proof shape, with conventions pinned by small concrete tests. The slice (the attack angle), the route (the plan), and the work unit (the concrete deliverable) are defined in ut-lean-roadmap; design takes one work unit as its input and produces a checklist the implementation must pass. Design consumes the verdict from ut-lean-recon.
 
 ## When to use
 
-- Before the first edit of any new slice.
-- When selecting the next slice from a roadmap or backlog.
+- Before the first edit of any new work unit.
+- When selecting the next work unit from a roadmap or backlog.
 - When a candidate has no named target, no consumer, or no convention test.
 - During review, to check a candidate against its design contract.
 
@@ -22,7 +22,7 @@ A formalization slice is one coherent unit of Lean work: one topic, one work uni
 
 Record answers to these five questions before implementation:
 
-1. Dependency and scope: which authoritative requirement does this slice discharge, what later declaration consumes it, and why is it one coherent slice rather than a fixed-degree or partial copy?
+1. Dependency and scope: which authoritative requirement does this work unit discharge, what later declaration consumes it, and why is it one coherent work unit rather than a fixed-degree or partial copy?
 2. Natural statement: which variables and indices are genuinely arbitrary? If the proof works uniformly in a degree, a form, or a module, state it that way unless a real dependency prevents it.
 3. Existing structure: which pinned library map, equivalence, or composition theorem is the natural starting point? Search by the mathematical structure, not only by a hoped-for theorem name.
 4. Public behavioral contract: for every public definition or equivalence, which consumer equations must work without unfolding it? Test a small downstream import and a bare `simp`, both directions when an equivalence is exposed.
@@ -32,7 +32,7 @@ Record answers to these five questions before implementation:
 
 Run slice selection before design: the gates and the operational algorithm (concrete probe, general theorem as the deliverable, acceptance oracle) live in ut-lean-roadmap. Design consumes its verdict. The probe is concrete; the deliverable is the general theorem the probe supports.
 
-### 3. Score the slice against the gates
+### 3. Score the work unit against the gates
 
 The slice-selection gates (exact target, existing-library boundary, dependency depth, one new idea, concrete probe, reusable output, acceptance oracle, convention lock, stop condition, timebox) are owned by ut-lean-roadmap; score the candidate there before designing. The authoritative table with evidence and fail conditions is ut-lean-roadmap/ROUTES.md. The deliverable is always the general theorem; a concrete probe only exercises the route.
 
@@ -61,8 +61,8 @@ One work unit, one idea, one reviewable boundary (the unit may map to a pull req
 ## References
 
 - The reconnaissance companion skill: ut-lean-recon
-- The slice-selection owner: ut-lean-roadmap (gates, operational algorithm)
+- The definitions and slice-selection owner: ut-lean-roadmap (layer, slice, route, work unit; gates; operational algorithm)
 - The companion golf and review skills: ut-lean-golf, ut-lean-review
 - The Lean theorem prover manual: <https://lean-lang.org/theorem_proving_in_lean4/>
-- Review rubrics (used at review time, not slice selection): <https://github.com/TauCetiProject/TauCetiReview/rubrics/>
+- Review rubrics (used at review time, not unit selection): <https://github.com/TauCetiProject/TauCetiReview/rubrics/>
 - Checklist templates: CHECKLIST.md

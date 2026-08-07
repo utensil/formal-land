@@ -1,4 +1,4 @@
-# Slice Design Checklist
+# Work Unit Design Checklist
 
 ## 1. Compact design check (five questions)
 
@@ -12,7 +12,7 @@
 
 ## 2. Slice-selection gates (owned by ut-lean-roadmap)
 
-- [ ] The candidate was scored against the slice-selection gates (exact target, existing-library boundary, dependency depth, one new idea, concrete probe, reusable output, acceptance oracle, convention lock, stop condition, timebox).
+- [ ] The work unit was scored against the selection gates (exact target, existing-library boundary, dependency depth, one new idea, concrete probe, reusable output, acceptance oracle, convention lock, stop condition, timebox).
 - [ ] The authoritative gate table and operational algorithm were applied from ut-lean-roadmap/ROUTES.md; not restated here.
 - [ ] The deliverable is the general theorem; any concrete probe is only a feasibility spike, never the deliverable.
 

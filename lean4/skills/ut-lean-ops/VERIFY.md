@@ -35,7 +35,7 @@ Performance results are evidence only under a preregistered protocol:
 
 ## Acceptance oracle
 
-Every verification slice ends with a named acceptance oracle: a universal theorem, not examples. "It compiles" and "a few test cases pass" are not acceptance. The oracle is a specific named statement (for example, decode-after-multiply for all well-shaped inputs) that the build must prove, together with the no-sorry and axiom audit from SKILL.md.
+Every verification step ends with a named acceptance oracle: a universal theorem, not examples. "It compiles" and "a few test cases pass" are not acceptance. The oracle is a specific named statement (for example, decode-after-multiply for all well-shaped inputs) that the build must prove, together with the no-sorry and axiom audit from SKILL.md.
 
 ## Rejection list
 

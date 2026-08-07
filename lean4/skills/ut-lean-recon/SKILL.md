@@ -14,7 +14,7 @@ Reconnaissance is the exploration step that runs before any Lean theorem is prop
 - Before proposing or approving any theorem, instance, or notation.
 - Whenever a plan references a mathlib name from memory.
 - Whenever a source-level claim (a paper, a note, a textbook statement) must be checked against the library.
-- As the first step of a formalization slice (see ut-lean-design), of a proof golf, or of a review.
+- As the first step of a formalization work unit (see ut-lean-design and ut-lean-roadmap), of a proof golf, or of a review.
 - Whenever a new type looks like a re-spelling of an existing one.
 
 ## Procedure
