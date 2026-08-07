@@ -25,7 +25,8 @@ import Mathlib.Data.Matrix.Invertible
 import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.GroupTheory.Index
 import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
-import Mathlib.Analysis.InnerProductSpace.Spectrum
+-- v4.32: the spectrum lemmas moved from `LinearAlgebra/Matrix` to `Analysis/Matrix`
+import Mathlib.Analysis.Matrix.Spectrum
 import Mathlib.GroupTheory.FreeGroup.IsFreeGroup
 -- import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup
 import Mathlib.LinearAlgebra.QuadraticForm.IsometryEquiv
@@ -307,15 +308,16 @@ some exponent `k` is contained in the generalized eigenspace for exponents large
 
 #check OrderHom
 
--- v4.32: `Module.End.eigenspaces_independent` was removed; closest survivor is the indexed eigenvector independence theorem
--- #check Module.End.eigenvectors_linearIndependent
+-- v4.32: `Module.End.eigenspaces_independent` was renamed to `eigenspaces_iSupIndep`
+-- (commit #19409 renamed `CompleteLattice.Independent` to `iSupIndep`)
+#check Module.End.eigenspaces_iSupIndep
 
 #check Module.End.eigenvectors_linearIndependent
 
 #check Module.End.exists_eigenvalue
 
--- v4.32: `Matrix.IsHermitian.det_eq_prod_eigenvalues` is now stated for self-adjoint endomorphisms
-#check LinearMap.IsSymmetric.det_eq_prod_eigenvalues
+-- v4.32: `Matrix.IsHermitian.det_eq_prod_eigenvalues` moved with its module; the theorem itself is unchanged
+#check Matrix.IsHermitian.det_eq_prod_eigenvalues
 
 #check Basis.det
 

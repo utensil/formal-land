@@ -106,7 +106,7 @@ theorem mul_inv_rev2 : (A * B)⁻¹ = B⁻¹ * A⁻¹ := by sorry
 
 example {R A : Type} [Monoid α] (a b : α) : a * b = a * b := by rfl
 
-#check RingQuot.mkRingHom -- v4.32: `RingQuot.mk` was removed; use `RingQuot.mkRingHom`
+#check RingQuot.mk
 
 #check RingQuot.Rel
 

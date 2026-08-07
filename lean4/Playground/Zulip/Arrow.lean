@@ -171,6 +171,11 @@ def works₄₃ : IO String := do
 
 /-!
   ## Cases from https://github.com/leanprover/lean4/pull/2676
+
+  v4.32: both cases below used to fail to elaborate (an `application type mismatch` on the
+  `if` branches, and `unknown identifier 'x'` on the `mut` binding). The underlying do-block
+  elaborator bugs were fixed, so the examples now compile; the guards document the current
+  (fixed) behavior instead of the historical errors.
 -/
 
 /--

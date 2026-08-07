@@ -46,8 +46,8 @@ lemma mul_eq_half_add_sub : u * v = ⅟2 * (u * v + v * u) + ⅟2 * (u * v - v *
   Axiom 1. G is a ring with unit.
   The additive identity is called 0 and the multiplicative identity is called 1.
 -/
--- v4.32: the `Ring (CliffordAlgebra Q)` instance is no longer named `instRing`
-#synth Ring (CliffordAlgebra Q)
+-- v4.32: the `Ring (CliffordAlgebra Q)` instance is now the auto-named `instRingCliffordAlgebra`
+#check instRingCliffordAlgebra
 example : 0 + u = u := by rw [zero_add]
 example : u + 0 = u := by rw [add_zero]
 example : 1 * u = u := by rw [one_mul]
@@ -295,8 +295,10 @@ example : finrank ℝ Clℂ = finrank ℝ ℂ := LinearEquiv.finrank_eq Clifford
 -- example : Module.rank R (CliffordAlgebra Q) = 2^(Module.rank R M) := sorry
 
 
--- v4.32: `DirectSum.GradeZero.module` was removed; `evenOdd Q 0` is a submodule so the instance is automatic
-#synth Module R (CliffordAlgebra.evenOdd Q 0)
+-- v4.32: `DirectSum.GradeZero.module` became a scoped instance in the `DirectSum` namespace
+-- (commit #40042); for submodule gradings the grade-zero structure is `SetLike.GradeZero`
+#check SetLike.GradeZero.instSemiring
+#synth Semiring (CliffordAlgebra.evenOdd Q 0)
 
 #check DirectSum.decomposeRingEquiv (CliffordAlgebra.evenOdd Q)
 
