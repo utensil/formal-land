@@ -16,6 +16,14 @@ where useful, one reference file.
 | `ut-lean-check` | the comparator / nanoda harness, native-execution oracles | ops for toolchain-level verification |
 | `ut-lean-roadmap` | the definitions (roadmap, layer, route, slice), slice-selection gates, the operational algorithm, route dynamics | design for per-slice design; recon for slice selection support |
 
+## Interfaces
+
+Reconnaissance runs before design, and golf and review consume its verdict.
+The relationship is sequential with iterative refinement: design may re-invoke
+recon in focused form (a compile probe against the pinned revision) when its
+convention locks or signature choices raise new API questions, and the two
+converge when the design's contracts are pinned against recon evidence.
+
 ## Deduplication rule
 
 A concept is owned by exactly one skill. When another skill needs it, it

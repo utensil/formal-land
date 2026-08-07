@@ -7,7 +7,7 @@ description: Design of a Lean formalization slice before writing any code: the f
 
 ## Purpose
 
-Design operates at the level of a single slice: one topic, one reviewable contract, which may map to a pull request. It fixes the slice before any code is written: the exact target, the natural statement, the library boundary, the public behavioral contract, and the proof shape, with conventions pinned by small concrete tests. The roadmap, layer, route, and slice are defined in ut-lean-roadmap; design takes one selected slice as its input and produces a checklist the implementation must pass. Design consumes the verdict from ut-lean-recon.
+Design operates at the level of a single slice: one topic, one reviewable contract, which may map to a pull request. It fixes the slice before any code is written: the exact target, the natural statement, the library boundary, the public behavioral contract, and the proof shape, with conventions pinned by small concrete tests. The roadmap, layer, route, and slice are defined in ut-lean-roadmap; design takes one selected slice as its input and produces a checklist the implementation must pass. Design consumes the verdict from ut-lean-recon, the main direction being recon before design; when a design decision raises a new API question (a convention to pin, a signature shape, a library boundary), run a focused recon probe against the pinned revision instead of guessing, and iterate until the contracts are pinned.
 
 ## When to use
 

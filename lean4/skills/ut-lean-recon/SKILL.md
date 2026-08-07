@@ -7,7 +7,7 @@ description: Pinned-revision API reconnaissance before proposing any Lean theore
 
 ## Purpose
 
-Reconnaissance is the exploration step that runs before any Lean theorem is proposed. Given a target statement and the project's pinned mathlib revision, it answers one question: which parts of the target already exist, which can be built from what exists, and which need new infrastructure? The answer is a verdict plus a manifest. Design, golf, and review consume that output, so recon must be complete and reproducible before any plan depends on an interface.
+Reconnaissance is the exploration step that runs before any Lean theorem is proposed. Given a target statement and the project's pinned mathlib revision, it answers one question: which parts of the target already exist, which can be built from what exists, and which need new infrastructure? The answer is a verdict plus a manifest. Design, golf, and review consume that output, so recon must be complete and reproducible before any plan depends on an interface. The main direction is recon before design; design may re-invoke recon in focused form (a probe against the pinned revision) when its convention locks or signature choices raise new API questions, and the two iterate until the design's contracts are pinned against recon evidence.
 
 ## When to use
 
