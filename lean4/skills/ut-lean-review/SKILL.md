@@ -1,23 +1,25 @@
 ---
 name: ut-lean-review
-description: Review for Lean pull requests in rubric-driven repositories (such as TauCeti), applied after the project rubrics: a review protocol grounded on the repository's coordination contract, plus Lean and math quality detection techniques (structural, imports, naming, docstrings, reuse-by-structure, robustness probes).
+description: Review for Lean and math formalization pull requests. The latest Tau Ceti rubrics are the default quality gate; the review process follows Tau Ceti coordination unless the project specifies its own rules. Applied after the rubrics: the review protocol plus Lean and math quality detection techniques (structural, imports, naming, docstrings, reuse-by-structure, robustness probes).
 ---
 
 # ut-lean-review
 
 ## Purpose
 
-Pull requests in rubric-driven repositories are judged against universal and per-change rubrics (TauCeti's live at TauCetiProject/TauCetiReview, see the pointer section below). This skill does not restate those rubrics. It adds two things the rubrics do not carry: the review protocol (how a review is bound, rechecked, and contested inside an iterative pipeline), and Lean and math quality detection techniques (how to find the problems the rubrics judge).
+The default quality gate for math formalization is the Tau Ceti review rubrics (TauCetiProject/TauCetiReview): every formalization change is first reviewed against the latest universal and per-change rubrics, whatever repository it lives in. This skill does not restate those rubrics. It adds two things the rubrics do not carry: the review protocol (how a review is bound, rechecked, and contested inside an iterative pipeline), and Lean and math quality detection techniques (how to find the problems the rubrics judge).
 
-The order is fixed: first subject the change to the project rubrics, then run the additional pass below. The rubrics are the floor, the checks in this skill the ceiling on top of them, so a review that follows this skill already passes the TauCeti rubrics and then covers the ground those rubrics do not reach.
+The order is fixed: first the latest Tau Ceti rubrics, then the additional pass below. The rubrics are the floor, the checks in this skill the ceiling on top of them, so a review that follows this skill already passes the Tau Ceti rubrics and then covers the ground those rubrics do not reach.
+
+The review process follows Tau Ceti coordination (COORDINATION.md) whenever applicable, unless the project under review specifies its own coordination rules on the review process. Project-specified rules take precedence; otherwise Tau Ceti first, then this skill's additional checks.
 
 ## When to use
 
-Use this skill when reviewing a Lean pull request against the project rubrics, when responding to a review finding, or when preparing a change that will go through the review pipeline. It applies to Lean code in TauCeti and similarly run mathlib-based repositories, and it references rather than replaces the project rubrics.
+Use this skill when reviewing a Lean or math formalization pull request, when responding to a review finding, or when preparing a change that will go through a review pipeline. It applies to formalization work in any repository: Tau Ceti itself, mathlib-based libraries, and standalone formalizations. The latest Tau Ceti rubrics are the default standard; the skill references rather than replaces them.
 
 ## Review protocol
 
-The process contract is not invented here: it is the repository's coordination contract, followed rather than restated. In Tau Ceti that is COORDINATION.md (Section 2, reading review state) together with the contested-findings protocol in the rubrics' `_common.md`. Other rubric-driven repositories substitute their equivalent coordination document.
+The process contract is Tau Ceti coordination, followed whenever applicable and unless the project under review has specified its own coordination rules on the review process. In Tau Ceti that is COORDINATION.md (Section 2, reading review state) together with the contested-findings protocol in the rubrics' `_common.md`. When the project specifies its own review-process rules, those take precedence over Tau Ceti's, which apply to everything else.
 
 ### Exact-head binding
 
@@ -71,8 +73,8 @@ Probe, do not assume. When an argument is uniform in a parameter (for example ev
 
 ## Pointer section
 
-- TauCetiProject/TauCetiReview/rubrics/: the universal and per-change rubrics, and `_common.md` with the shared protocol (untrusted input, adversarial author, contested findings).
-- TauCeti COORDINATION.md: the agent coordination contract the review protocol follows (Section 2: reading review state, head-bound verdicts).
+- TauCetiProject/TauCetiReview/rubrics/: the latest universal and per-change rubrics, the default quality gate for all math formalization reviews; `_common.md` holds the shared protocol (untrusted input, adversarial author, contested findings).
+- TauCeti COORDINATION.md: the coordination contract the review process follows by default (Section 2: reading review state, head-bound verdicts); project-specified review-process rules take precedence.
 - REVIEWING.md in TauCetiReview: how the rubric review is run, locally or by CI.
 - leanprover-community.github.io/contribute: mathlib naming, style, and contribution documentation.
 - For the golf-side discipline this review side checks, see the ut-lean-golf skill.

@@ -5,11 +5,12 @@ description: Checkable additional review checklist for ut-lean-review, run after
 
 # ut-lean-review checklist
 
-Run in order: first the project rubrics (TauCeti's universal and per-change
-rubrics), then this additional pass. The rubric verdict is the floor;
-this list covers what the rubrics do not carry. The review protocol below
-follows the repository coordination contract (Tau Ceti: COORDINATION.md
-Section 2 and the rubrics' `_common.md`), not an invented procedure.
+Run in order: first the latest Tau Ceti rubrics (the default quality gate for
+all math formalization reviews), then this additional pass. The rubric
+verdict is the floor; this list covers what the rubrics do not carry. The
+review protocol follows Tau Ceti coordination (COORDINATION.md Section 2 and
+the rubrics' `_common.md`) unless the project specifies its own
+review-process rules, which then take precedence.
 
 ## Review protocol
 
