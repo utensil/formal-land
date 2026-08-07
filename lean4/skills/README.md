@@ -12,7 +12,7 @@ where useful, one reference file.
 | `ut-lean-design` | the five-question compact design check, convention locks, the authoritative-spec principle, the characteristic-API rules, the slice boundary | slice selection from ut-lean-roadmap; recon verdicts from ut-lean-recon |
 | `ut-lean-golf` | interface-first golf, the mathlib-history escalation triggers, the post-golf boundary recheck | the pinned-source survey from ut-lean-recon |
 | `ut-lean-review` | the extension layer over the Tau Ceti rubrics and coordination: anchored extensions (one per rubric), lessons and failure modes from actual reviews, cannot-miss flags; structural checks the rubrics do not carry | rubrics from TauCetiProject/TauCetiReview; design rules from ut-lean-design |
-| `ut-lean-ops` | toolchain-level setup, cache, audits, fresh-checkout reproduction; the executable verification chain (SOFTWARE_VERIFICATION.md) is a scoped extension gated on the project carrying executable content | check for independent-kernel verification |
+| `ut-lean-ops` | toolchain-level setup, slice worktrees, cache-first builds with cache reuse, audits, fresh-checkout reproduction; the executable verification chain (SOFTWARE_VERIFICATION.md) is a scoped extension gated on the project carrying executable content | check for independent-kernel verification |
 | `ut-lean-check` | the comparator / nanoda harness, native-execution oracles | ops for toolchain-level verification |
 | `ut-lean-roadmap` | the definitions (roadmap, layer, route, slice), slice-selection gates, the operational algorithm, route dynamics | design for per-slice design; recon for slice selection support |
 
@@ -44,7 +44,9 @@ TauCeti rubrics, coordination documents, roadmaps, and mathlib source) are
 read from a local checkout kept across slices: clone once, pull once per
 slice, read locally, never re-clone per task. The pinned mathlib checkout
 inside a project's `.lake/packages/` is Lake-managed and project-local, not
-a reference clone; the source checkout is for history and surveys.
+a reference clone; the source checkout is for history and surveys. Slices
+are worked in git worktrees under a conventional root, by default
+`~/worktrees/`, one worktree per slice; see ut-lean-ops.
 
 ## Term ownership
 
