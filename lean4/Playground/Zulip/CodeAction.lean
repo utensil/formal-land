@@ -6,8 +6,10 @@ import Mathlib.Data.Nat.Notation
 -- for induction
 import Batteries.Tactic.Init
 import Mathlib.Control.Traversable.Basic
--- for #min_imports
-import ImportGraph.Imports
+-- for #min_imports / #find_home (v4.32: the deprecated `ImportGraph.Imports` umbrella is not in
+-- the mathlib cache, so import the subsets that mathlib itself uses)
+import ImportGraph.Tools.FindHome
+import ImportGraph.Tools.MinImports
 -- import Mathlib
 
 -- https://leanprover.zulipchat.com/#narrow/stream/217875-Is-there-code-for-X.3F/topic/Agda.20style.20interactive.20case.20splitting.3F/near/424179379

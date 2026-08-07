@@ -12,11 +12,13 @@ related:
 -/
 
 import Lean.Meta.Tactic.TryThis
+import Lean.Data.FuzzyMatching
 open Lean.Meta.Tactic
 
 namespace Mathlib.Tactic.imp
 
-open Lean Elab Command FuzzyMatching System
+open Lean Elab Command System
+open Lean.FuzzyMatching
 
 /-- Infer module name of source file name. -/
 def moduleNameOfFileName (fname : FilePath) (rootDir : Option FilePath) : IO Name := do
@@ -25,7 +27,9 @@ def moduleNameOfFileName (fname : FilePath) (rootDir : Option FilePath) : IO Nam
   let rootDir ← match rootDir with
     | some rootDir => pure rootDir
     | none         => IO.currentDir
-  let mut rootDir ← realPathNormalized rootDir
+  let mut rootDir ← IO.FS.realPath rootDir
+  -- v4.32: `realPathNormalized` was removed; normalize explicitly
+  rootDir := rootDir.normalize
   if !rootDir.toString.endsWith System.FilePath.pathSeparator.toString then
     rootDir := ⟨rootDir.toString ++ System.FilePath.pathSeparator.toString⟩
   if !rootDir.toString.isPrefixOf fname.normalize.toString then
@@ -48,7 +52,9 @@ If there is only one candidate, it suggests `import Mathlib.<uniqueCandidate>` a
 Using `imp! <string>` uses fuzzy-matching, rather than exact matching. -/
 elab (name := commandImp!) tk:"imp" fz:("!")? na:(colGt ident) : command => do
   let inp := na.getId.toString
-  let dat := (← IO.FS.lines ".lake/packages/mathlib/Mathlib.lean").map (String.drop · 15)
+  -- v4.32: `String.drop` returns `String.Slice` (convert with `toString`), and mathlib's
+  -- `Mathlib.lean` now uses `public import Mathlib.` (22 chars) instead of `import Mathlib.` (15)
+  let dat := (← IO.FS.lines ".lake/packages/mathlib/Mathlib.lean").map (fun l => (l.drop 22).toString)
   let cands := dat.filter <| (if fz.isSome then fuzzyMatch else String.isPrefixOf) inp
 
   liftTermElabM do
@@ -56,7 +62,8 @@ elab (name := commandImp!) tk:"imp" fz:("!")? na:(colGt ident) : command => do
       let impS ← moduleNameOfFileName (".lake/packages/mathlib/Mathlib/" ++ imp.replace "." "/" ++ ".lean") ".lake/packages/mathlib/"
       let imp : TSyntax `write_me_output_stx ← `(write_me_output_stx| import $(mkIdent impS))
       let stx ← getRef
-      TryThis.addSuggestion stx imp
+      -- v4.32: `addSuggestion` takes a `Suggestion`; wrap the syntax in `SuggestionText`
+      TryThis.addSuggestion stx (TryThis.SuggestionText.tsyntax imp)
 
 
 @[inherit_doc commandImp!]

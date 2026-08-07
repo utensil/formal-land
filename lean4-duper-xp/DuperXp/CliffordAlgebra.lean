@@ -2,7 +2,8 @@ import DuperXp
 import Mathlib.LinearAlgebra.CliffordAlgebra.Contraction
 import Mathlib.Tactic
 import Mathlib.Data.Real.Basic
-import Mathlib.Algebra.BigOperators.Ring
+-- v4.32: `Mathlib.Algebra.BigOperators.Ring` was split into a directory
+import Mathlib.Algebra.BigOperators.Ring.Finset
 
 open QuadraticForm BilinForm ExteriorAlgebra FiniteDimensional
 

@@ -1,9 +1,10 @@
 import Mathlib.Tactic
 import Mathlib.LinearAlgebra.CliffordAlgebra.Basic
 import Mathlib.LinearAlgebra.ExteriorAlgebra.Basic
-import Mathlib.Data.Matrix.Notation
+import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Algebra.Free
 import Mathlib.RingTheory.FreeRing
+import Mathlib.Algebra.RingQuot
 
 -- set_option trace.Meta.synthInstance true
 -- set_option synthInstance.checkSynthOrder false
@@ -36,8 +37,8 @@ example {α : Type} [Monoid α] (a b : α) : a * b = a * b := by rfl
 #check FreeAlgebra.Rel
 
 example [CommSemiring R] [Semiring A] [Algebra R A] (a b : A): a + b = b + a := by
-  ring_nf
-  sorry
+  -- v4.32: `ring`/`ring_nf` refuse a no-op; the goal is pure additive commutativity
+  exact add_comm a b
 
 #check CliffordAlgebra.ι
 
@@ -105,7 +106,7 @@ theorem mul_inv_rev2 : (A * B)⁻¹ = B⁻¹ * A⁻¹ := by sorry
 
 example {R A : Type} [Monoid α] (a b : α) : a * b = a * b := by rfl
 
-#check RingQuot.mk
+#check RingQuot.mkRingHom -- v4.32: `RingQuot.mk` was removed; use `RingQuot.mkRingHom`
 
 #check RingQuot.Rel
 

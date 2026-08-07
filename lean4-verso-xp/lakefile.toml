@@ -15,7 +15,7 @@ defaultTargets = ["VersoXp"]
 [[require]]
 name = "verso"
 scope = "leanprover"
-rev = "main"
+rev = "v4.32.0"
 # rev = "v4.12.0"
 
 [[lean_lib]]

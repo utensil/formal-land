@@ -17,7 +17,7 @@ abbrev ExteriorAlgebra.rMultivector (r : ℕ) : Submodule R (ExteriorAlgebra R M
 namespace CliffordAlgebra
 
 abbrev rMultivector (r : ℕ) : Submodule R (CliffordAlgebra Q) :=
-  (ExteriorAlgebra.rMultivector r).comap (CliffordAlgebra.equivExterior Q)
+  (ExteriorAlgebra.rMultivector r).comap (CliffordAlgebra.equivExterior Q).toLinearMap
 
 abbrev ofGrade {r : ℕ} (mv : rMultivector Q r) : CliffordAlgebra Q := mv
 
@@ -38,8 +38,13 @@ theorem wedge_mv_mem {ra rb} (a : rMultivector Q ra) (b : rMultivector Q rb) :
     a ⋏ b ∈ rMultivector Q (ra + rb) := by
   obtain ⟨a, ha⟩ := a
   obtain ⟨b, hb⟩ := b
-  simp only [wedge, rMultivector, Submodule.mem_comap, LinearEquiv.apply_symm_apply] at *
-  apply SetLike.mul_mem_graded <;> assumption
+  simp only [wedge, rMultivector, Submodule.mem_comap] at *
+  -- v4.32: the semilinear `LinearEquiv` coercion needs an explicit `change` before
+  -- `apply_symm_apply` can fire
+  change (equivExterior Q) ((equivExterior Q).symm ((equivExterior Q) a * (equivExterior Q) b)) ∈
+    ExteriorAlgebra.rMultivector (ra + rb)
+  rw [LinearEquiv.apply_symm_apply]
+  exact SetLike.mul_mem_graded ha hb
 
 -- lemma outer_homo {i j} (u : rMultivector Q i) (v : rMultivector Q j) :
 --   u ⋏ v = proj Q (u * v) (i + j) := sorry

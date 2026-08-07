@@ -3,11 +3,12 @@ import Mathlib.LinearAlgebra.CliffordAlgebra.Grading
 import Mathlib.LinearAlgebra.CliffordAlgebra.Equivs
 import Mathlib.RingTheory.FiniteType
 import Mathlib.Tactic
-import Mathlib.Data.Complex.FiniteDimensional
+import Mathlib.LinearAlgebra.Complex.FiniteDimensional
+import Mathlib.LinearAlgebra.Basis.Basic
 -- import Mathlib.Util.Superscript
 -- import Mathlib.Data.Matrix.Notation
 
-open Module (finrank finrank_eq_card_basis finrank_directSum rank_self)
+open Module (finrank finrank_eq_card_basis finrank_directSum rank_self Basis)
 
 set_option quotPrecheck false
 
@@ -45,7 +46,8 @@ lemma mul_eq_half_add_sub : u * v = ⅟2 * (u * v + v * u) + ⅟2 * (u * v - v *
   Axiom 1. G is a ring with unit.
   The additive identity is called 0 and the multiplicative identity is called 1.
 -/
-#check CliffordAlgebra.instRing
+-- v4.32: the `Ring (CliffordAlgebra Q)` instance is no longer named `instRing`
+#synth Ring (CliffordAlgebra Q)
 example : 0 + u = u := by rw [zero_add]
 example : u + 0 = u := by rw [add_zero]
 example : 1 * u = u := by rw [one_mul]
@@ -293,7 +295,8 @@ example : finrank ℝ Clℂ = finrank ℝ ℂ := LinearEquiv.finrank_eq Clifford
 -- example : Module.rank R (CliffordAlgebra Q) = 2^(Module.rank R M) := sorry
 
 
-#check DirectSum.GradeZero.module
+-- v4.32: `DirectSum.GradeZero.module` was removed; `evenOdd Q 0` is a submodule so the instance is automatic
+#synth Module R (CliffordAlgebra.evenOdd Q 0)
 
 #check DirectSum.decomposeRingEquiv (CliffordAlgebra.evenOdd Q)
 

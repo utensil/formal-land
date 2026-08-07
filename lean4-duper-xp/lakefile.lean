@@ -10,11 +10,11 @@ package «DuperXp» where
 -- require mathlib from git
 --   "https://github.com/leanprover-community/mathlib4" @ leanVersion
 
-require mathlib from git "https://github.com/leanprover-community/mathlib4" @ "v4.16.0"
+require mathlib from git "https://github.com/leanprover-community/mathlib4" @ "v4.32.0"
 
-require "leanprover-community" / "batteries" @ git "v4.16.0" 
+require "leanprover-community" / "batteries" @ git "v4.32.0" 
 
-require Duper from git "https://github.com/leanprover-community/duper.git" @ "v0.0.23"
+require Duper from git "https://github.com/leanprover-community/duper.git" @ "v4.32.0"
 
 require "Lean4XpKit" from ".." / "lean4-xp-kit"
 

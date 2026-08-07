@@ -7,10 +7,10 @@ package «Playground» where
 
 def leanVersion : String := s!"v{Lean.versionString}"
 
-require mathlib from git
-  "https://github.com/leanprover-community/mathlib4" -- @ leanVersion
-
 require "Lean4XpKit" from ".." / "lean4-xp-kit"
+
+require mathlib from git
+  "https://github.com/leanprover-community/mathlib4" @ leanVersion -- last so Mathlib's transitive pins take precedence
 
 @[default_target]
 lean_lib Playground {

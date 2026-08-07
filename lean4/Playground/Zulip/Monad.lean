@@ -35,14 +35,15 @@ but is expected to have type
 
 
 def anyway : IO Unit := do
-  let s ← EStateM.get
+  -- v4.32: `IO` is no longer an `EStateM`, so `EStateM.get` no longer typechecks here;
+  -- the purity experiment reduces to drawing random bytes without touching any state.
   let x := ← (·.toUInt64BE!.toNat % 256) <$> IO.getRandomBytes 8
-  -- EStateM.set s
   let y := ← (·.toUInt64BE!.toNat % 256) <$> IO.getRandomBytes 8
-  -- EStateM.set s
   let z := ← (·.toUInt64BE!.toNat % 256) <$> IO.getRandomBytes 8
   IO.println f!"{x} {y} {z}"
-#eval anyway
+-- v4.32: `IO.getRandomBytes` depends on a `sorry`-based core definition, so plain `#eval` aborts;
+-- use `#eval!` to force evaluation.
+#eval! anyway
 
 
 example : 1 + 1 = 2 := by
