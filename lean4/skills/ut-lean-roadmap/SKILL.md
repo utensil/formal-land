@@ -1,91 +1,55 @@
 ---
 name: ut-lean-roadmap
-description: "Read, evaluate, and select routes on a layered Lean formalization roadmap: the six-checkpoint pipeline, the by-dimension checks, route evaluation, the attack map, and roadmaps as records of human intent."
+description: "Work with a formalization roadmap in any form: read its structure, evaluate routes, and select the next work unit. Generality-first: each unit delivers the general theorem, with concrete probes used only as feasibility spikes."
 ---
 
-# ut-lean-roadmap: working with a Lean formalization roadmap
+# ut-lean-roadmap: working with a formalization roadmap
 
 ## Purpose
 
-A formalization roadmap organizes Lean work into layers with dependency spines: which targets exist, in what order they unlock each other, and which are still open. This skill covers how to read such a roadmap, how to evaluate a candidate slice against it, and how to choose a route through it.
+A formalization roadmap organizes work into layers with dependency spines: which targets exist, in what order they unlock each other, and which are still open. This skill covers how to read such a roadmap in whatever form a project uses, how to evaluate a candidate route, and how to select the next work unit. It is methodology, not policy: the vocabulary is the work unit, not any project's contribution process, and the checks apply to any roadmap shape.
 
 ## When to use
 
-- Choosing the next contribution to a layered formalization roadmap.
-- Evaluating whether a proposed slice is the right size and shape for one pull request.
-- Reading a roadmap's structure to find where the frontier is.
+- Choosing the next work unit on a layered formalization roadmap.
+- Evaluating whether a proposed unit is the right size, shape, and scope.
+- Reading a roadmap to find where the frontier is.
 - Writing or improving a roadmap so it carries usable intent signals.
 
-## Procedure
+## Core principle: generality first
 
-### 1. The six-checkpoint pipeline
+The deliverable is always the general theorem or construction the roadmap names. Concrete cases are probes: a spike on a concrete instance can establish feasibility and pin a convention, but the work unit stays the general result. Never let the probe become the deliverable, and never state a theorem at a fixed case when the argument is uniform: if the proof works for every degree, index, or structural parameter, state it so. The roadmap work unit is the general statement, not its concrete specialization.
 
-A candidate slice becomes a pull request through six checkpoints:
+## Reading a roadmap
 
-1. Roadmap fit: the slice attacks an exact target, a named declaration or theorem family in the roadmap.
-2. Slice shape: one pull request, one idea. The slice has dependency value, a natural generic statement, and a direct downstream consumer, recorded in the research record before any edit.
-3. Reuse and feasibility: the existing library objects to reuse are listed, the missing theorem is named, and the proof route is sketched.
-4. Boundary gate: the slice stays in its lane. Crossing into another work area (application-specific representations, numerical work, generic library extraction) requires an explicit scope decision.
-5. Collision scan: recheck the roadmap, the open pull requests and their claims, and other people's claims before starting.
-6. Human gate: opening a pull request is a human checkpoint, not a default.
+A roadmap can be a narrative README, a blueprint, a set of notes, or a stub file with sorry targets; read the form first:
 
-### 2. The checks by dimension
+- The narrative spec anchors the work. Whatever its form, it is read before the definitions and signatures; a signature-stub file supplies targets but cannot alone establish that a milestone is complete. Matching a stub signature is not completing the milestone.
+- Find the layers and their dependency spine: which layer each layer needs, which targets unlock others, and which are reachable directly from the core.
+- Locate the frontier: classify each area as heavily worked, substrate done, in progress, or untouched. The frontier is the boundary between done and open, and the second half of a roadmap is where the open targets live.
+- Collect the acceptance oracles: concrete named results (a formula, an isomorphism, a counterexample, any check the subject admits) that each layer must reach. Use the vocabulary the subject supports; do not presuppose dimension, finiteness, or any structure the mathematics may not have.
 
-Math, what the theorem is:
+## Selecting the next work unit
 
-- One new idea: the central lemma can be stated in one sentence; the target is not a bundle of several unrelated structures.
-- Small instance first: one low-dimensional or finite example exercises the route before the general theorem.
-- Reusable output: the general theorem is useful beyond the example.
-- Convention lock: signature, normalization, basis order, action, and operand order are explicit up front.
-- Stop condition and timebox: a useful result exists if the generalization is abandoned, and a reconnaissance spike has a concrete end.
+Each work unit is selected as the next unit in a slice or route: scoped, of manageable scale and complexity, with clear dependencies and a clear consumer.
 
-Lean, how it must be built:
+- Named target: the unit attacks a named declaration, theorem family, or milestone in the roadmap, not a topic.
+- One idea: the central lemma can be stated in one sentence; a prerequisite refactor is its own unit.
+- Dependencies: at most one or two unlanded prerequisites; list the library objects the unit will reuse and the missing theorem it supplies.
+- Consumer: the direct downstream consumer of the unit is named.
+- Dependency value: prefer a known unmet prerequisite over nearby but non-enabling work; do not stretch scope to chase a dependency.
+- Natural generality: state the unit at the level the roadmap names; uniform arguments are stated for all degrees or structures.
+- Collisions: recheck the roadmap and the open contributions and claims before starting.
+- Boundary: crossing into another work area (application-specific representations, numerical work, generic library extraction) is an explicit decision, not a default.
+- Convention lock: signature, normalization, direction, and operand order are explicit before the proof, and pinned by small definitional tests where the subject admits them.
+- Feasibility probe: a concrete spike (the smallest instance that exercises the route) can establish the route and the expected normal form; test it without building the general abstraction, then deliver the general theorem it supports.
+- Acceptance oracle and stop condition: build, no-sorry and axiom policy, and a named test theorem are fixed; a useful result exists if the generalization is abandoned; a spike has an end.
 
-- Existing-library boundary: reuse the library's objects; do not re-prove what exists or duplicate an open pull request.
-- Dependency depth: at most one or two unlanded prerequisites.
-- Acceptance oracle: build, no-sorry and axiom policy, and a named test theorem are fixed, not just "it should compile".
-- Consumer probe: a non-unfolding consumer or a bare-simp probe confirms the public API is usable before the first edit.
-- Natural generality: if the proof is uniform in a degree, state it for all degrees.
+## Roadmaps as records of human intent
 
-Roadmap, why it belongs:
-
-- Exact target: a named declaration or theorem family.
-- Definitive spec: the README is definitive; a sorry-target stub is explicitly non-exhaustive.
-- Dependency value: a known unmet prerequisite beats nearby but non-enabling API; no scope stretch to chase a dependency.
-- Downstream consumer: the direct consumer of the slice is named.
-
-Process, the record:
-
-- P0 record, before any edit: dependency value, one-pull-request boundary, collision result, natural generic statement, direct downstream consumer.
-- P1 record, before the first Lean edit: exact public API, reused structural API, consumer probe, intended proof route. The first Lean edit happens after P1.
-
-### 3. Evaluating a route
-
-- The README is definitive: a stub file with sorry targets supplies signatures but cannot alone establish that a layer or prerequisite is complete. Matching a stub signature does not complete a milestone.
-- Dependency-value selection: pick the known unmet prerequisite over nearby but non-enabling API. Never stretch scope to chase a dependency.
-- One-pull-request boundary: one topic per pull request. Ship a prerequisite refactor as its own pull request.
-- Convention locks: an irreconcilable convention difference keeps a result in the project rather than upstream, unless the convention is fixed by an explicit decision.
-- The ten-gate slice rubric: exact target; existing-library boundary; dependency depth; one new idea; small instance; reusable output; acceptance oracle; convention lock; stop condition; timebox. Each gate has an explicit fail condition (see ROUTES.md).
-- Operational algorithm: search the repository and open pull requests; read the exact library declarations; write the smallest concrete instance and its expected normal form; test it without building the general abstraction; extract the one reusable theorem; land theorem and instance as separate milestones; stop or expand only after the acceptance oracle passes.
-
-### 4. Reading the attack map
-
-A roadmap is layers with dependency spines. To see the frontier:
-
-- Read the dependency spine: which layer each layer needs, and which layers are reachable directly from the core. A structure theorem proved forward from the module, a double cover that is the single hardest target, and layers that open the second half of the roadmap all shape the order of work.
-- The second half of the roadmap is where the open targets live. First-half layers get crowded with foundation work; once the spine is in place, later layers are untouched and open.
-- Classify each layer as heavily worked, substrate done, in progress, or untouched. The frontier is the boundary between done and open.
-- Acceptances pin each layer: a concrete named result (a dimension formula, an isomorphism, a specific counterexample) that the layer must reach.
-
-### 5. Roadmaps as records of human intent
-
-A roadmap is a record of human intent, not a corpus of generated prose. It is useful to the extent that it carries clear intent signals and receives quality feedback:
-
-- Commit history and edit rationale carry more intent than polished paragraphs.
-- Short, pointed targets with explicit acceptance oracles beat long descriptive passages.
-- A roadmap without quality feedback (review, correction, contested claims) is noise.
-- When improving a roadmap, aim for signals a newcomer can act on: exact targets, named dependencies, acceptance oracles, and a visible frontier.
+A roadmap is a record of human intent, not a corpus of generated prose. It is useful to the extent that it carries clear intent signals and receives quality feedback: commit history and edit rationale carry more intent than polished paragraphs; short pointed targets with explicit acceptance oracles beat long descriptive passages; a roadmap without review, correction, or contested claims is noise. When improving a roadmap, aim for signals a newcomer can act on: exact targets, named dependencies, acceptance oracles, and a visible frontier.
 
 ## References
 
-- ROUTES.md in this directory: the pipeline and gates as a checklist.
+- ROUTES.md in this directory: the runnable checklist and the gate table.
+- Related skills in this set: ut-lean-design for designing individual units, ut-lean-recon for the API reconnaissance that supports unit selection, ut-lean-review for reviewing the units a roadmap produces.
