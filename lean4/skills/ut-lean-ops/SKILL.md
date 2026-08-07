@@ -96,7 +96,7 @@ Adopting a new stable pair is itself a checkable operation:
 - After `lake update`, verify the cache actually landed. The automatic post-update cache fetch can report success while package checkouts are not yet in place, leaving an empty build tree: re-run `lake exe cache get` manually and confirm the dependency olean directory has content.
 - A green `lake build` proves only the default target's import closure, and the cache covers only the imports the dependency library itself uses. Files elaborated individually (test drivers that compile every file) reach outside that closure: prefer cached subsets over deprecated umbrella modules, and treat per-file elaboration as the acceptance surface.
 - Between versions expect message-format churn, not only errors: expected-message specs, instance names, namespaces, and quoted identifier output all drift; re-baseline against the new pair rather than porting verbatim. Set `LEAN_ABORT_ON_PANIC=1` when evaluating to surface runtime panics CI-style runners hit, and prefer `#eval!` for IO primitives backed by opaque implementations.
-- Tooling that elaborates against the active toolchain (doc/annotation generators) is part of the bump surface and may lag the new pair; gate it to degrade with a warning rather than reddening the run.
+- Tooling that elaborates against the active toolchain (doc/annotation generators) is part of the bump surface: unmaintained tools lag the new pair, so check forks for an updated port first, then port against the changed core APIs; treat the tool's output as a deliverable rather than silently skipping it when it breaks.
 
 ## References
 

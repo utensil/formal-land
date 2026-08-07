@@ -32,7 +32,10 @@ echo "$LEAN_TOOLCHAIN"
 
 # TODO if leanInk exists and is good, skip this
 rm -rf /tmp/leanInk || echo
-git clone https://github.com/leanprover/LeanInk /tmp/leanInk -q
+# upstream leanprover/LeanInk is unmaintained and does not build on current Lean; use the
+# v4.32.2 port (utensil/LeanInk) instead
+# git clone https://github.com/leanprover/LeanInk /tmp/leanInk -q
+git clone -b v4.32.2 https://github.com/utensil/LeanInk /tmp/leanInk -q
 # git clone -b fix-print-path https://github.com/utensil/LeanInk /tmp/leanInk -q
 cd /tmp/leanInk
 # LeanInk must be built no later than the current Lean4 toolchain

@@ -136,19 +136,9 @@ jobs:
         if: >-
           steps.annotate.outputs.annotate == 'true'
         run: |
-          # Annotation depends on LeanInk, which is unmaintained upstream and only builds
-          # against toolchains it supports. When it cannot be built against the active
-          # toolchain, skip annotation and the pages refresh cleanly instead of failing.
-          set +e
           pushd lean4
           just annotate Playground
-          annotate_rc=$?
           popd
-          set -e
-          if [ $annotate_rc -ne 0 ]; then
-            echo "::warning::LeanInk does not build on the active toolchain; skipping annotation and pages refresh"
-            exit 0
-          fi
 
           pushd lean4-duper-xp
           just annotate DuperXp
