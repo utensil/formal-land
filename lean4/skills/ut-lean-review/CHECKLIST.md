@@ -1,12 +1,12 @@
 ---
 name: ut-lean-review-checklist
-description: Checkable Lean-specific review checklist for ut-lean-review. Binding and scope, import ownership, names and docstrings, proof quality, post-revision recheck, and pipeline behavior.
+description: Checkable additional review checklist for ut-lean-review, run after the project rubrics. Binding and scope, import ownership, names and docstrings, proof quality, post-revision recheck, and pipeline behavior.
 ---
 
 # ut-lean-review checklist
 
 Run in order: first the project rubrics (TauCeti's universal and per-change
-rubrics), then this Lean-specific pass. The rubric verdict is the floor;
+rubrics), then this additional pass. The rubric verdict is the floor;
 this list covers what the rubrics do not carry.
 
 ## Binding and scope
