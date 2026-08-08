@@ -61,6 +61,17 @@ structural API before repeated specialization, not a particular repository.
 
 Golf can silently alter public helper declarations, theorem hypotheses, reducibility or simplification behavior, public imports, and downstream availability. After every golf, recheck the boundary and rebuild. See the reference file.
 
+### 9. Golf the elaboration cost, not only the line count
+
+Length is one golf axis; elaboration cost is another. When a short proof is
+slow, the interface-first question applies to the tactic rather than the
+lemma: a heavy search tactic (`simp` blocks, `omega`, `decide`) is often
+rebuilding structure the library names. Prefer the direct term or the
+targeted lemma, and confirm the trade with the elaborator's own instruments:
+`set_option profiler true` around a section, or `count_heartbeats` around a
+declaration. Cost is a symptom check, not a metric: a fast proof is better
+only when the invoked theorem is also the right abstraction.
+
 ## Worked idioms
 
 Generic shapes worth recognizing in ordinary proofs:
@@ -76,6 +87,24 @@ Two failure modes are worth recognizing in golfed proofs:
 
 - A lemma re-proved from scratch when Mathlib already carries it wastes a review round: the duplicate is closed, not merged. Search by structure before writing the declaration (recon owns the search procedure).
 - A construction fixed at one concrete degree although the argument is uniform in every degree must be re-scoped to the all-degree version. State the general theorem even when a concrete case satisfies the immediate need.
+
+## Sources and verification status
+
+External tips adopted into this skill carry a source index until they are
+verified against the pinned mathlib and real review rounds. Unverified tips
+are usable as heuristics, not as citation:
+
+| Adopted tip | Source | File | Adopted |
+| --- | --- | --- | --- |
+| Elaboration-cost golf: expensive-tactic check (`simp`-heavy, `omega`, `decide`) against a direct term or targeted lemma, measured with `set_option profiler true` / `count_heartbeats` | [jstoobysmith/PhyslibAITools](https://github.com/jstoobysmith/PhyslibAITools) | `Tasks/Golf.md` | 2026-08-08 |
+| Mathlib naming conventions as the structure axis of golf | same | `Tasks/Golf.md` | 2026-08-08 |
+
+Status of both: **not yet verified**. Deliberately not adopted from the same
+source: the task's frozen-statement constraint (this skill may re-scope a
+fixed-degree statement to natural generality, step 5; a signature-freeze golf
+mode is a project choice, not a skill rule) and the harness, collision-check,
+and tooling content (orchestration, not mathlib knowledge). Naming-convention
+details are owned by ut-lean-review; golf only points at them.
 
 ## References
 

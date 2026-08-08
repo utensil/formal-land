@@ -41,6 +41,17 @@ Keep concrete calculations where they expose the mathematical content. Use struc
 
 Treat simp volume as a symptom, not a metric. Large simp blocks can indicate that the proof is working below the intended abstraction, but replacing them mechanically is not an objective. A short proof is better only when its invoked theorem accurately communicates the mathematics and has stable hypotheses.
 
+## Elaboration cost
+
+Golf can target elaboration cost as well as line count. Expensive tactics
+(`simp` blocks, `omega`, `decide`) should yield to a direct term or a targeted
+lemma when one names the same mathematics. Confirm rather than assume: profile
+a section with `set_option profiler true`, or wrap the declaration with
+`count_heartbeats`. A costly tactic that carries real content may stay; the
+goal is the right abstraction, not the smallest heartbeat count. (Adopted
+2026-08-08 from jstoobysmith/PhyslibAITools, `Tasks/Golf.md`; not yet
+verified.)
+
 ## Transported structures
 
 Transported equivalences can determine dependent structures, for example a semidirect-product action, without remaining definitionally equal across module boundaries. Do not make later proofs depend on unfolding those constructors. Expose pointwise application lemmas and, when several transports are composed, name the intermediate model equivalence. This keeps the dependency visible and gives rewriting a stable proposition rather than an implementation detail.
