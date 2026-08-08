@@ -64,7 +64,7 @@ jobs:
                 --json databaseId --jq '.[0].databaseId // empty')
               if [ -n "$run_id" ]; then
                 echo "Downloading $artifact from $wf_file run $run_id"
-                gh run download "$run_id" -n "$artifact" -D github-pages --force
+                gh run download "$run_id" -n "$artifact" -D github-pages
               else
                 echo "::warning::No successful run of $wf_file yet; skipping $artifact"
               fi
