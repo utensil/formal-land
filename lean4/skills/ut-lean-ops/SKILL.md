@@ -1,6 +1,6 @@
 ---
 name: ut-lean-ops
-description: "Run and verify a Lean project at the toolchain level: slice worktrees, pinned Lean and mathlib, cache-first builds with cache reuse, no-sorry and axiom audits, fresh-checkout reproduction, and the verification discipline for executable Lean content."
+description: "Run and verify a Lean project at the toolchain level: slice worktrees, safe fork rebases, pinned Lean and mathlib, cache-first builds with cache reuse, no-sorry and axiom audits, fresh-checkout reproduction, and the verification discipline for executable Lean content."
 ---
 
 # ut-lean-ops: running and verifying a Lean project
@@ -45,6 +45,22 @@ Recommended practice:
 - Before creating each new worktree, check the machine can afford it: free disk with `df -h`, and CPU and memory headroom for the builds the slice will run.
 - To limit disk use, keep at most five retained worktrees for the current project (excluding the primary checkout). Five is the default cap; a project's own convention may set a different cap. Retain only the project's live worktrees. Worktrees from every route in the current project count toward this cap; worktrees from other projects do not count and are never removed. Recycle a worktree when its slice finishes: `git worktree remove` a clean, completed, or superseded worktree and preserve its branch; never remove a dirty worktree automatically, report it and obtain a disposition before creating another. Never remove a worktree belonging to another project, whose work must not be broken. `git worktree prune` clears stale bookkeeping.
 - The reproduction rule (section 5) applies per worktree: a reused cache never turns a failing item green, and the fresh-checkout gate runs in a clean worktree.
+
+Before rebasing a fork contribution branch:
+
+1. Inspect `git remote -v` and identify the canonical repository remote. In
+   the commands below it is named `upstream`; `origin` is the fork.
+2. Fetch the target directly with `git fetch upstream main`. Do not pull or
+   merge `origin/main` into the contribution branch.
+3. Before any checkout or rebase, run
+   `python3 <skill-dir>/scripts/check-casefold-collisions.py upstream/main`.
+   On a case-insensitive worktree this scans the fetched Git tree, including
+   directory entries, and stops if distinct paths case-fold to the same name.
+4. Only after the guard passes, run `git rebase upstream/main`.
+
+If the guard reports a collision, stop. Do not treat the resulting checkout
+state as user work and do not try to repair the upstream tree during the
+rebase.
 
 ### 3. Build from cache
 
