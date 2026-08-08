@@ -39,8 +39,10 @@ Extends `_common.md` (contested findings):
 
 - [ ] Implement, contest, or wait ledger kept per finding at an exact head.
 - [ ] Wrong prescriptions contested with a pinned probe (deletion probe, full linter output), not a repair loop.
+- [ ] Contest replies to the exact review comment that raised the finding, names the exact head and compiler evidence, and reproduces the full lint result locally first.
+- [ ] No lint exception added where a named non-simp theorem is retained (for example a `@[simp]` the `simpNF` normal form already reduces).
 - [ ] Interacting requests combined into one candidate; no alternating fix and revert commits.
-- [ ] Response scaled to the change: full gate for API-surface changes; focused build and diff-scoped review for small repairs.
+- [ ] Response scaled to the change: full gate for API-surface changes; focused build and diff-scoped review for small repairs; byte-identical verification, not fresh mathematical review, for source-equivalent rebases and message-only rewrites.
 
 ## Quality extensions, one per rubric
 
