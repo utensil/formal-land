@@ -53,9 +53,11 @@ jobs:
           run: |
             set -euo pipefail
             mkdir -p github-pages
-            # Each project CI uploads its own github-pages subdir as a stable-named
-            # artifact; merge the latest successful build of each here. Artifacts are
-            # not branch-scoped and outlive the cache retention window.
+            # Each project CI uploads its own pages as a stable-named artifact; merge
+            # the latest successful build of each here. Artifacts are not branch-scoped
+            # and outlive the cache retention window. Layout: pages-lean4 contains the
+            # three lean4 directories; pages-aya/pages-tla contain their project's files
+            # (single-path uploads flatten), so those are wrapped in their project dir.
             for spec in "aya.yml pages-aya" "lean4.yml pages-lean4" "tla.yml pages-tla"; do
               set -- $spec
               wf_file=$1
@@ -64,7 +66,12 @@ jobs:
                 --json databaseId --jq '.[0].databaseId // empty')
               if [ -n "$run_id" ]; then
                 echo "Downloading $artifact from $wf_file run $run_id"
-                gh run download "$run_id" -n "$artifact" -D github-pages
+                gh run download "$run_id" -n "$artifact" -D "staging-$artifact"
+                case "$artifact" in
+                  pages-aya)   mkdir -p github-pages/aya;  cp -R "staging-$artifact/." github-pages/aya/ ;;
+                  pages-tla)   mkdir -p github-pages/tla;  cp -R "staging-$artifact/." github-pages/tla/ ;;
+                  pages-lean4) cp -R "staging-$artifact/." github-pages/ ;;
+                esac
               else
                 echo "::warning::No successful run of $wf_file yet; skipping $artifact"
               fi
