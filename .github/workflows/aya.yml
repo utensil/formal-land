@@ -64,3 +64,11 @@ jobs:
             just doc
             cd ..
             just pages aya
+      - name: Upload pages artifact
+        if: >-
+          matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: pages-aya
+          path: github-pages/aya
+          if-no-files-found: error

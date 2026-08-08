@@ -63,3 +63,11 @@ jobs:
             mv pluscal.pdf dist/
             cd ..
             just pages tla
+      - name: Upload pages artifact
+        if: >-
+          steps.annotate.outputs.annotate == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: pages-tla
+          path: github-pages/tla
+          if-no-files-found: error

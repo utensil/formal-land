@@ -151,6 +151,17 @@ jobs:
           just pages lean4
           just pages lean4-duper-xp
           just pages lean4-verso-xp
+      - name: Upload pages artifact
+        if: >-
+          steps.annotate.outputs.annotate == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: pages-lean4
+          path: |
+            github-pages/lean4
+            github-pages/lean4-duper-xp
+            github-pages/lean4-verso-xp
+          if-no-files-found: error
       # - name: Try mk_all
       #   shell: bash
       #   run: |

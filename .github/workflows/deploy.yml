@@ -47,13 +47,28 @@ jobs:
             just jobs
         - name: Setup Pages
           uses: actions/configure-pages@v5
-        - name: Cache github-pages
-          uses: actions/cache@v4
-          with:
-              path: github-pages
-              key: github-pages-${{ github.run_id }}
-              restore-keys: |
-                github-pages
+        - name: Download pages from the three CIs
+          env:
+            GH_TOKEN: ${{ github.token }}
+          run: |
+            set -euo pipefail
+            mkdir -p github-pages
+            # Each project CI uploads its own github-pages subdir as a stable-named
+            # artifact; merge the latest successful build of each here. Artifacts are
+            # not branch-scoped and outlive the cache retention window.
+            for spec in "aya.yml pages-aya" "lean4.yml pages-lean4" "tla.yml pages-tla"; do
+              set -- $spec
+              wf_file=$1
+              artifact=$2
+              run_id=$(gh run list --workflow "$wf_file" --status success --limit 1 \
+                --json databaseId --jq '.[0].databaseId // empty')
+              if [ -n "$run_id" ]; then
+                echo "Downloading $artifact from $wf_file run $run_id"
+                gh run download "$run_id" -n "$artifact" -D github-pages --force
+              else
+                echo "::warning::No successful run of $wf_file yet; skipping $artifact"
+              fi
+            done
         - name: Display structure of downloaded files
           run: ls -R github-pages
         - name: Copy assets
