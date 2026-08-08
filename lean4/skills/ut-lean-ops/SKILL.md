@@ -7,7 +7,7 @@ description: "Run and verify a Lean project at the toolchain level: slice worktr
 
 ## Purpose
 
-Lean formalization projects have a reproducible toolchain story (toolchain file, Lake manifest, mathlib cache) and an evidence story (audits, reproduction from a fresh checkout). This skill covers the low-level mechanics every mathlib-based project needs: set up a project, pin its dependencies, build from cache, audit the source, and reproduce results from a fresh checkout. A scoped extension (SOFTWARE_VERIFICATION.md) adds the extra discipline for the minority of projects that also carry executable content; pure theorem libraries do not need it.
+Lean formalization projects have a reproducible toolchain story (toolchain file, Lake manifest, mathlib cache) and an evidence story (audits, reproduction from a fresh checkout). This skill covers the low-level mechanics every mathlib-based project needs: set up a project, pin its dependencies, build from cache, audit the source, and reproduce results from a fresh checkout. A scoped extension (SOFTWARE.md) adds the extra discipline for the minority of projects that also carry executable content; pure theorem libraries do not need it.
 
 ## When to use
 
@@ -88,7 +88,7 @@ Record the toolchain and manifest readback, the commands, the exit codes, the bu
 
 - **Executable content** — only when the project carries `native_decide`,
   arrays, or foreign function interfaces (rarely met): the verification
-  chain lives in `SOFTWARE_VERIFICATION.md` in this directory.
+  chain lives in `SOFTWARE.md` in this directory.
 - **LSP triage** — optional: `LSP.md` in this directory. Routine slice work
   does not need it; it is for pre-build triage on long builds, semantic
   consumer discovery when text search is noisy, and interactive repair.

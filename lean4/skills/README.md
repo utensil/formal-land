@@ -12,8 +12,7 @@ where useful, one reference file.
 | `ut-lean-design` | the five-question compact design check, convention locks, the authoritative-spec principle, the characteristic-API rules, the slice boundary | slice selection from ut-lean-roadmap; recon verdicts from ut-lean-recon |
 | `ut-lean-golf` | interface-first golf, the mathlib-history escalation triggers, the post-golf boundary recheck | the pinned-source survey from ut-lean-recon |
 | `ut-lean-review` | the extension layer over the Tau Ceti rubrics and coordination: anchored extensions (one per rubric), lessons and failure modes from actual reviews, cannot-miss flags; structural checks the rubrics do not carry | rubrics from TauCetiProject/TauCetiReview; design rules from ut-lean-design |
-| `ut-lean-ops` | toolchain-level setup, slice worktrees, cache-first builds with cache reuse, audits, fresh-checkout reproduction; the executable verification chain (SOFTWARE_VERIFICATION.md) is a scoped extension gated on the project carrying executable content | check for independent-kernel verification; bump hands its result back to ops for verification |
-| `ut-lean-bump` | moving a pinned Lean + mathlib + deps pair: version ceilings, transitive-pin precedence, cache recovery, changelog-traced API drift fixes, tooling ports | ops for the acceptance gate (cache-first build, per-file test driver, audits, fresh-checkout reproduction) |
+| `ut-lean-ops` | toolchain-level setup, slice worktrees, cache-first builds with cache reuse, audits, fresh-checkout reproduction; the executable verification chain (SOFTWARE.md) is a scoped extension gated on the project carrying executable content | check for independent-kernel verification |
 | `ut-lean-check` | the comparator / nanoda harness, native-execution oracles | ops for toolchain-level verification |
 | `ut-lean-roadmap` | the definitions (roadmap, layer, route, slice), slice-selection gates, the operational algorithm, route dynamics | design for per-slice design; recon for slice selection support |
 
@@ -32,7 +31,6 @@ references the owner by name and does not restate the content. The ownership
 map above is the authority:
 
 - The pinned-source survey belongs to `ut-lean-recon`; golf and design point to it.
-- Bumping the pinned pair belongs to `ut-lean-bump`; ops runs the verification gate on the result and does not restate the bump procedure.
 - Slice selection (the gate table and the operational algorithm) belongs to
   `ut-lean-roadmap`; design scores candidates there rather than restating the gates.
 - The characteristic-API rules belong to `ut-lean-design`; review checks them and references design.

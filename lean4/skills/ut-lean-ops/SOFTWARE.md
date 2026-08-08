@@ -1,6 +1,7 @@
-# SOFTWARE_VERIFICATION.md: the verification discipline for executable Lean content
+# SOFTWARE.md: the verification discipline for executable Lean content
 
-This file expands section 6 of SKILL.md and applies only to projects that
+This file is the executable-content extension pointed to from SKILL.md's
+"Conditional and optional extensions" section and applies only to projects that
 carry executable content: computed programs, native oracles, or float
 kernels. Pure formalization projects, whose deliverables are declarations and
 proofs, never need this file; it exists because a few Lean projects embed a
