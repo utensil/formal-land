@@ -46,6 +46,7 @@ The rubric protocol for a contested finding is to engage the quote: restate comp
 - Keep an implement, contest, or wait ledger with one entry per finding, bound to an exact head.
 - The compiler and the linter are the arbiter. Contest a wrong prescription with a pinned probe (a deletion probe, the full linter output), not by a repair loop that mutates the code hoping the finding stops firing. A contest replies to the exact review comment that raised the finding, names the exact head and the compiler evidence, and reproduces the full lint result locally first. Keep a named non-simp theorem rather than adding a lint exception, for example a requested `@[simp]` that the `simpNF` normal form already reduces.
 - Combine interacting requests into one candidate; alternating fix and revert commits makes a finding impossible to verify.
+- If the same logical finding needs a second revision, stop before another public write and reread the whole thread, the previous variants, and the intended consumer contract. Replace comment-by-comment interpretation with one stable combined candidate.
 - Respond proportionally: an API-surface change runs the full gate; a small delimited repair runs a focused build, the affected consumer probes, and a diff-scoped review; a source-equivalent rebase or message-only rewrite verifies byte-identical source and history rather than re-running mathematical review. The failure mode we hit: re-running the entire gate ceremony for a handful of changed lines.
 
 ## Quality extensions, one per rubric
