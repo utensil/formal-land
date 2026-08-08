@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SpinRep route map — dependency graph with goal-colored routes</title>
+<style>
+:root{
+  --bg:#232323; --card:#2b2b2b; --line:#3d3d3d; --fg:#e6e1dc; --muted:#9d9485;
+  --ok:#7fb069; --ok-soft:rgba(127,176,105,.16); --warn:#e5c07b; --warn-soft:rgba(229,192,123,.14);
+  --bad:#e06c75; --bad-soft:rgba(224,108,117,.14); --tau:#61afef;
+  --done:#7fb069; --review:#e5c07b; --open:#9d9485; --branch:#a5c9e8;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1460px;margin:0 auto;padding:28px 26px 60px}
+h1{font-size:22px;margin:0 0 4px}
+.sub{color:var(--muted);font-size:13.5px;margin-bottom:18px}
+h2{font-size:16px;margin:26px 0 10px;color:var(--tau)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin:10px 0 6px;font-size:12.5px;color:var(--muted)}
+.legend .dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px;background:var(--open)}
+.legend .dot.nodest-done{background:var(--done)}
+.legend .dot.nodest-review{background:var(--review)}
+.legend .dot.nodest-branch{background:var(--branch)}
+.legend .st{display:inline-flex;align-items:center;margin-right:4px}
+.legend .gl{cursor:pointer;user-select:none;padding:3px 9px;border:1px solid var(--line);border-radius:999px;background:var(--card)}
+.legend .gl.off{opacity:.35}
+.legend .gl .sw{display:inline-block;width:16px;height:4px;border-radius:2px;margin-right:6px;vertical-align:2px}
+svg{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;width:100%;height:auto}
+.node{cursor:pointer}
+.node circle{stroke:#e6e1dc;stroke-width:1.1}
+.node .nl{font-size:10.5px;fill:#c9c2b4;pointer-events:none}
+.node .ns{font-size:9px;fill:var(--muted);pointer-events:none}
+.node:hover circle{stroke:#fff;stroke-width:2}
+.nodest-done{fill:var(--done)}
+.nodest-review{fill:var(--review)}
+.nodest-open{fill:var(--open)}
+.nodest-branch{fill:var(--branch)}
+.summit-halo{pointer-events:none;transform-box:fill-box;transform-origin:center;animation:breathe 3.4s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.10;transform:scale(1)}50%{opacity:.26;transform:scale(1.22)}}
+@media (prefers-reduced-motion:reduce){.summit-halo{animation:none}}
+.edge{fill:none;stroke-linecap:round}
+.edge-dep{stroke:#555;stroke-width:.9;stroke-dasharray:2.5 4;opacity:.42}
+.edge-goal{stroke-width:2.2;opacity:.5;transition:opacity .12s,stroke-width .12s;pointer-events:stroke}
+.edge-goal.lit{opacity:.98;stroke-width:3.6}
+.goal{transition:border-color .12s,box-shadow .12s}
+.goal.lit{border-color:var(--gc);box-shadow:0 0 0 1px var(--gc),0 8px 26px rgba(0,0,0,.45)}
+.lrow{font-size:11.5px;fill:var(--muted);letter-spacing:.04em}
+#tip{position:fixed;pointer-events:auto;background:#1e1e1e;border:1px solid #555;border-radius:8px;padding:8px 11px;font-size:12.5px;max-width:340px;display:none;z-index:99;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+a.prlink{text-decoration:none;border-bottom:1px dotted rgba(230,225,220,.35);font-weight:600}
+a.prlink:hover{border-bottom-style:solid;border-bottom-color:currentColor}
+a.prlink.pr-merged{color:#9fc37e}
+a.prlink.pr-closed{color:#b98d88;text-decoration:line-through}
+a.prlink.pr-open{color:#e8bc6e}
+a.prlink.pr-neutral{color:var(--tau)}
+#tip b{color:var(--tau)}
+#tip .tstatus{margin-top:3px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:14px;margin-top:8px}
+.goal{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--gc);border-radius:12px;padding:14px 16px}
+.goal h3{margin:0 0 6px;font-size:15px;display:flex;align-items:center;gap:8px}
+.goal h3 .sw{display:inline-block;width:22px;height:7px;border-radius:3px}
+.goal .route-lbl{font-size:11.5px;color:var(--muted);margin:8px 0 4px;text-transform:uppercase;letter-spacing:.06em}
+.goal .route{font-size:12.5px;color:var(--fg)}
+.goal .route .sep{color:var(--muted);margin:0 3px}
+.goal .bar{height:8px;background:#1e1e1e;border-radius:5px;margin:10px 0 6px;overflow:hidden}
+.goal .bar i{display:block;height:100%;border-radius:5px}
+.goal .pct{font-size:12px;color:var(--muted)}
+.goal p{font-size:13px;margin:8px 0 0;color:#d4cdbf}
+.goal .eval{margin-top:8px;border-top:1px dashed var(--line);padding-top:8px;font-size:12.5px;color:var(--muted)}
+.foot{margin-top:26px;color:var(--muted);font-size:12px}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:#333;border-radius:4px;padding:0 .3em}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>SpinRep route map</h1>
+<div class="sub">The SpinRepresentations roadmap as a dependency graph. Gray dashed edges are the dependency spine; each goal draws its route as a subgraph of colored edges toward its summit, and where routes share an edge the edge splits into one tight lane per goal, each in its own color; branches meet at the summit instead of zigzagging. Add a goal by appending one entry to the <code>GOALS</code> array in the source.</div>
+
+<h2>Goals</h2>
+<div class="legend" id="legend"></div>
+<div class="goals" id="goals"></div>
+
+<h2>The map</h2>
+<svg id="map" viewBox="0 0 1420 1180" preserveAspectRatio="xMidYMin meet"></svg>
+
+<div class="foot">The SpinRepresentations roadmap as a dependency graph · node states: merged / in review / unstarted / next up · goal colors follow the legend · rows follow the dependency spine (topological order), not the roadmap's layer numbering: Layer 1's structure theorem sits below the spin module because it is proved forward from it, so every dependency edge points downward and routes never travel upward.</div>
+<div class="foot" style="margin-top:8px">E₈: a scale-specific consumer of the bivector/Lie bridge (route γ), not a target — <a class="prlink pr-neutral" href="https://leanprover.zulipchat.com/#narrow/channel/217875-Is-there-code-for-X.3F/topic/E.E2.82.88.20Lie.20algebra.20formalization.20.2B.20sparse.20Jacobi.20.2B.20scalability" target="_blank" rel="noopener">Zulip thread</a> · <a class="prlink pr-neutral" href="https://leanprover.zulipchat.com/#narrow/channel/217875-Is-there-code-for-X.3F/topic/E.E2.82.88.20Lie.20algebra.20formalization.20.2B.20sparse.20Jacobi.20.2B.20scalability/near/580290449" target="_blank" rel="noopener">msg 580290449</a></div>
+</div>
+
+<div id="tip"></div>
+
+<script>
+/* ================= data ================= */
+const LAYERS = [
+  "L0 · algebra & gradings",
+  "L1 · structure thm",
+  "L2 · Pin/Spin covers",
+  "L3 · so(V) ≅ ⋀²V",
+  "L4 · spin modules",
+  "L5 · B_l/D_l reps",
+  "L6 · low-dim isos",
+  "L7 · real Cliff, Bott",
+  "L8 · Spin_8 triality",
+  "L9 · Lie action, isotypy",
+  "Worked examples"
+];
+const ST = { done:"merged", review:"in review", open:"unstarted", branch:"next up" };
+
+/* id, layer (index into LAYERS), label, short label, status, prs */
+const NODES = [
+  "L0-univ|0|universal property|done|consumed from Mathlib|Universal property · ℤ/2-grading",
+  "L0-filt|0|degree filtration|done|#1473|Degree filtration F0 ⊆ F1 ⊆ ⋯ = ⊤",
+  "L0-dim|0|dimension 2ⁿ|done|#1561|Dimension 2ⁿ",
+  "L0-pbw|0|PBW: gr ≅ ⋀|review|#1772✝ #1783 #1794 #1802 #1804 #1847 #1903 #1971 · total iso open|Associated graded ≅ exterior (PBW)",
+  "L1-struct|1|structure theorem|open|— unclaimed · proved forward from L4|Cliff ≅ M₂(ℂ) structure theorem (over ℂ)",
+  "L2-orth|2|O(Q)|done|#1499|Abstract orthogonal group O(Q)",
+  "L2-vec|2|ιRangeEquiv|done|#1510|Vectors · ιRangeEquiv",
+  "L2-hom|2|spin/pin → SO/O|done|#1611 #1742 · mathlib SpinGroup #9111|Twisted conjugation → O(Q)/SO(Q)",
+  "L2-dc|2|double cover|open|— open|Double cover: Cartan–Dieudonné, kernel ±1, spinor-norm exact seq",
+  "L3-biv|3|quadratic Lie subalgebra|done|#2224 (canonical) · #1708 · #1759✝ #1859✝|Bivectors as a Lie subalgebra (quadratic elements)",
+  "L3-ext|3|⋀²V ↔ quadratic|review|#2335 · supersedes #1972✝|Exterior bivectors identified with quadratic elements",
+  "L3-iso|3|soEquivBivector|open|— open|soEquivBivector : ⋀²V ≃ 𝔰𝔬(V)",
+  "L3-diff|3|d(double cover)|open|— open|Differential of the double cover",
+  "L4-iso|4|maximal isotropic W|open|— open|Maximal isotropic W",
+  "L4-mod|4|spin module S|open|— open|Clifford module S = ⋀·W (wedge + contraction)",
+  "L4-rep|4|spinRep|open|— open|spinRep : Representation ℂ (spinGroup Q) (⋀ W)",
+  "L4-half|4|half-spin S±|open|— open|Half-spin summands S±",
+  "L4-irt|4|irreducibility|open|— open|Irreducibility",
+  "L5-cartan|5|Cartan/Borel|open|— open|Split Cartan/Borel matched to root datum",
+  "L5-w|5|weights|open|— open|Weights ½(±1,…,±1)",
+  "L5-bd|5|S ≅ L(ω_l)|open|— open|S ≅ L(ω_l); S± ≅ L(ω_l), L(ω_{l−1})",
+  "L5-char|5|characters|open|— open|Characters · Weyl construction",
+  "L6-34|6|Spin₃/Spin₄|open|— open|Spin₃ ≅ SL₂ · Spin₄ ≅ SL₂×SL₂",
+  "L6-56|6|Spin₅/Spin₆|open|— open|Spin₅ ≅ Sp₄ · Spin₆ ≅ SL₄",
+  "L7-real|7|Cliff(p,q)|open|— open · no Mathlib substrate|Real forms Cliff(p,q)",
+  "L7-bott|7|Bott periodicity|open|— open · no Mathlib substrate|Bott: Cliff(p+1,q+1) ≅ Cliff(p,q) ⊗ M₂(ℝ) · mod-8 table",
+  "L7-spinq|7|Spin(p,q)|open|— open|Real spin groups Spin(p,q)",
+  "L7-con|7|connectivity|open|— open|Connectivity of the compact spin group",
+  "L8-tri|8|Spin₈ triality|open|— open|Triality for Spin₈ (three stages)",
+  "L9-real|9|quadratic realization|review|LieSubalgebra piece via #2224|Abstract quadratic realization β(a,b) = ½·[ιa,ιb]",
+  "L9-rep|9|𝔤-module machinery|open|— open|Every Clifford module is a 𝔤-module · cliffordInducedRep · adjointSO",
+  "L9-iso|9|Kostant isotypy|open|— open|Kostant's isotypy corollary (summit)",
+  "L9-car|9|CAR instance|branch|branch-only lane (CAR)|CAR worked instance: gl_N on M_N(ℂ)",
+  "W-cliff|10|Cliff(0,1)/Cliff(0,2)|open|— open|Cliff(0,1) ≅ ℂ · Cliff(0,2) ≅ ℍ",
+  "W-spin3|10|Spin₃ spin rep|open|— open|Spin₃ ≅ SL₂ and its spin representation",
+  "W-so2l1|10|𝔰𝔬(2l+1) spin rep|open|— open|2^l-dim spin rep of 𝔰𝔬(2l+1)",
+  "W-tri|10|𝔰𝔬(8) half-spin|open|— open|Half-spin reps of 𝔰𝔬(8) and triality",
+  "W-sla|10|⋀𝔰𝔩₂ example|open|— open|⋀𝔰𝔩₂ under the two actions (L9 non-example)",
+  "W-car|10|CAR N×N|open|— open|CAR on N×N matrices (Shlyakhtenko instance)",
+].map(r => { const [id, L, short, status, prs, label] = r.split("|"); return { id, L: +L, short, status, prs, label }; });
+
+
+/* gray dependency-spine edges [from, to] */
+const DEPS = "L0-filt L0-pbw L0-univ L2-orth L0-univ L2-vec L0-univ L3-biv L0-filt L9-real L0-filt L2-hom L2-orth L2-hom L2-vec L2-hom L2-hom L2-dc L2-orth L2-dc L2-dc L3-diff L3-iso L3-diff L3-biv L3-ext L3-ext L3-iso L3-iso L4-mod L2-dc L4-rep L2-orth L4-iso L0-dim L4-iso L4-iso L4-mod L4-mod L4-rep L4-rep L4-half L4-half L4-irt L4-mod L1-struct L4-irt L5-cartan L5-cartan L5-w L4-rep L5-w L5-w L5-bd L5-bd L5-char L1-struct L6-34 L4-rep L6-34 L4-rep L6-56 L5-bd L6-56 L1-struct L7-real L2-dc L7-real L2-dc L7-con L7-real L7-bott L7-real L7-spinq L7-bott L7-spinq L7-spinq L7-con L5-bd L8-tri L6-34 L8-tri L3-biv L9-real L2-orth L9-real L0-filt L9-real L9-real L9-rep L4-rep L9-rep L9-rep L9-iso L9-iso L9-car L7-real W-cliff L7-bott W-cliff L6-34 W-spin3 L4-rep W-spin3 L5-bd W-so2l1 L4-rep W-so2l1 L8-tri W-tri L4-half W-tri L9-real W-sla L3-iso W-sla L9-car W-car".split(" ").reduce((a, _, i, arr) => (i % 2 === 0 && a.push([arr[i], arr[i + 1]]), a), []);
+
+
+/* goals: add one entry per new goal; color picks from a rotating palette */
+const PALETTE = ["#4da6ff","#7fc97f","#d95f02","#7570b3","#e7298a","#a6cee3","#fdb462"];
+const GOALS = [
+  "alpha|0|Goal α — Bott periodicity table (Layer 7 capstone)|L0-univ L0-filt L0-filt L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L4-iso L4-iso L4-mod L4-mod L1-struct L1-struct L7-real L2-dc L7-real L7-real L7-bott L7-bott L7-spinq L7-spinq L7-con|The Bott table: real Cliff(p,q), Cliff(p+1,q+1) ≅ Cliff(p,q) ⊗ M₂(ℝ), the mod-8 table, Spin(p,q). Substrate landed (L0, mathlib SpinGroup, L2 homomorphisms); everything after is open, and mathlib has no realCliffordAlgebra at all — L7 is greenfield.",
+  "beta|1|Goal β — make use of mathlib SpinGroup (#9111)|L0-univ L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L3-diff L3-diff L4-iso L4-iso L4-mod L4-mod L4-rep L4-rep L4-half L4-half L4-irt L4-irt L5-w L5-w L5-bd L5-bd L6-34 L6-34 L6-56|The spin-representation spine on mathlib's spinGroup (#9111): port landed, first consumers merged (#1611/#1742); the double cover, the L3 differential, the L4 spin module + spinRep, and the L5 weights are open.",
+  "gamma|2|Goal γ — the structural summit: the quadratic layer is 𝔰𝔬(V) over the graded-exterior structure (PBW + Cartan)|L0-filt L0-pbw L0-pbw L3-biv L3-biv L3-ext L3-ext L3-iso|PBW + Cartan over the same degree-2 layer: gr(Cliff) ≅ ⋀V, and that layer with the commutator is 𝔰𝔬(V) ≅ ⋀²V. PBW pieces merged, quadratic package landed (#2224), #2335 in review; the total isomorphism and soEquivBivector open.",
+  "delta|3|Goal δ — the module-side summit: Kostant's isotypy corollary|L0-filt L3-biv L3-biv L9-real L3-biv L4-iso L4-iso L4-mod L4-mod L4-rep L9-real L9-rep L4-rep L9-rep L9-rep L9-iso L9-iso L9-car|Kostant's isotypy: every Clifford module carries the 𝔰𝔬(V)-action (consuming γ) and decomposes isotypically; the CAR instance is the worked case. Realization substrate partial; the machinery, summit, and CAR are open.",
+].map(r => { const [id, color, name, edgeStr, evalText] = r.split("|"); const es = edgeStr.split(" "); const edges = []; for (let i = 0; i < es.length; i += 2) edges.push([es[i], es[i + 1]]); return { id, color: +color, name, edges, eval: evalText }; });
+
+
+/* ================= layout =================
+   Sugiyama-style: nodes ordered within each layer by the barycenter of
+   their neighbors (fewer crossings), then positioned by barycenter, then
+   overlaps pushed apart. The roadmap layer stays the row. */
+const W = 1560, ROW = 120, TOP = 72, H = TOP + (LAYERS.length - 1) * ROW + 170;
+const X0 = 210, X1 = W - 90, MIN_GAP = 78;
+
+const adj = {};
+function link(a, b) { (adj[a] = adj[a] || new Set()).add(b); (adj[b] = adj[b] || new Set()).add(a); }
+DEPS.forEach(([a, b]) => link(a, b));
+GOALS.forEach(g => g.edges.forEach(([a, b]) => link(a, b)));
+
+/* rows follow the dependency spine (topological order), not the roadmap's layer numbering:
+   e.g. Layer 1's structure theorem is proved forward from the spin module, so its row sits
+   below Layer 4. Every dependency edge therefore points downward. */
+const layerDep = {};
+LAYERS.forEach((_, i) => layerDep[i] = new Set());
+const addL = (a, b) => { if (a !== b) layerDep[a].add(b); };
+DEPS.forEach(([x, y]) => addL(NODES.find(n => n.id === x).L, NODES.find(n => n.id === y).L));
+GOALS.forEach(g => g.edges.forEach(([a, b]) => addL(NODES.find(x => x.id === a).L, NODES.find(x => x.id === b).L)));
+const indeg = LAYERS.map((_, i) => 0);
+LAYERS.forEach((_, a) => layerDep[a].forEach(b => indeg[b]++));
+const ready = LAYERS.map((_, i) => i).filter(i => indeg[i] === 0);
+const rowOf = {};
+let placed = 0;
+while (ready.length) {
+  const L = ready.sort((a, b) => a - b).shift();
+  rowOf[L] = placed++;
+  layerDep[L].forEach(b => { if (--indeg[b] === 0) ready.push(b); });
+}
+if (placed < LAYERS.length) LAYERS.forEach((_, i) => { if (rowOf[i] === undefined) rowOf[i] = placed++; });
+
+const byLayer = LAYERS.map((_, L) => NODES.filter(n => n.L === L));
+const posX = {};
+const spread = arr => arr.forEach((n, i) => { posX[n.id] = X0 + (X1 - X0) * (arr.length === 1 ? 0.5 : (i + 1) / (arr.length + 1)); });
+byLayer.forEach(spread);
+
+/* order sweeps: sort each layer by the mean x of its cross-layer neighbors */
+for (let sweep = 0; sweep < 6; sweep++) {
+  const seq = LAYERS.map((_, i) => i);
+  (sweep % 2 ? seq.reverse() : seq).forEach(L => {
+    const arr = byLayer[L];
+    const bc = arr.map(n => {
+      const ns = [...(adj[n.id] || [])].filter(m => NODES.find(x => x.id === m).L !== L).map(m => posX[m]).sort((p, q) => p - q);
+      return ns.length ? ns[Math.floor(ns.length / 2)] : null;
+    });
+    byLayer[L] = arr.map((n, i) => ({ n, i, bc: bc[i] }))
+      .sort((p, q) => (p.bc === null && q.bc === null) ? p.i - q.i : p.bc === null ? 1 : q.bc === null ? -1 : p.bc - q.bc || p.i - q.i)
+      .map(o => o.n);
+    spread(byLayer[L]);
+  });
+}
+
+/* position sweeps: x = mean of neighbors, clamped */
+for (let it = 0; it < 10; it++) {
+  const next = {};
+  NODES.forEach(n => {
+    const ns = [...(adj[n.id] || [])].filter(m => NODES.find(x => x.id === m).L !== n.L).map(m => posX[m]).sort((p, q) => p - q);
+    next[n.id] = ns.length ? ns[Math.floor(ns.length / 2)] : posX[n.id];
+  });
+  NODES.forEach(n => { posX[n.id] = Math.max(X0, Math.min(X1, next[n.id])); });
+}
+
+/* overlap resolution within each layer */
+function resolveOverlaps() {
+  for (let pass = 0; pass < 30; pass++) {
+    let moved = false;
+    for (let L = 0; L < LAYERS.length; L++) {
+      const arr = byLayer[L].slice().sort((a, b) => posX[a.id] - posX[b.id]);
+      for (let i = 1; i < arr.length; i++) {
+        const d = posX[arr[i].id] - posX[arr[i - 1].id];
+        if (d < MIN_GAP) { posX[arr[i].id] = Math.min(X1, posX[arr[i - 1].id] + MIN_GAP); moved = true; }
+      }
+    }
+    if (!moved) break;
+  }
+}
+resolveOverlaps();
+
+/* crossing-minimization: hill-climb each node's x against the straight-chord crossing count */
+const segX = (a, b, c, d) => {
+  const cr = (p, q) => p[0] * q[1] - p[1] * q[0];
+  const r = [b.x - a.x, b.y - a.y], s = [d.x - c.x, d.y - c.y], q = [c.x - a.x, c.y - a.y];
+  const den = cr(r, s);
+  if (Math.abs(den) < 1e-9) return false;
+  const t = cr(q, s) / den, u = cr(q, r) / den;
+  return t > 0 && t < 1 && u > 0 && u < 1;
+};
+const uniqueEdges = (() => {
+  const seen = new Set(), out = [];
+  const add = (a, b) => {
+    const k = [a.id, b.id].sort().join("→");
+    if (!seen.has(k)) { seen.add(k); out.push([a, b]); }
+  };
+  DEPS.forEach(([a, b]) => add(a, b));
+  GOALS.forEach(g => g.edges.forEach(([a, b]) => add(a, b)));
+  return out;
+})();
+const P = n => pos[n.id];
+function crossingCount() {
+  let c = 0;
+  for (let i = 0; i < uniqueEdges.length; i++)
+    for (let j = i + 1; j < uniqueEdges.length; j++)
+      if (segX(P(uniqueEdges[i][0]), P(uniqueEdges[i][1]), P(uniqueEdges[j][0]), P(uniqueEdges[j][1]))) c++;
+  return c;
+}
+function layerOverlaps(L) {
+  const arr = byLayer[L].slice().sort((a, b) => posX[a.id] - posX[b.id]);
+  for (let i = 1; i < arr.length; i++) if (posX[arr[i].id] - posX[arr[i - 1].id] < MIN_GAP * 0.8) return true;
+  return false;
+}
+{
+  let cur = crossingCount();
+  for (let it = 0; it < 80 && cur > 0; it++) {
+    let improved = false;
+    for (let L = 0; L < LAYERS.length; L++) {
+      const arr = byLayer[L].slice().sort((a, b) => posX[a.id] - posX[b.id]);
+      for (const n of arr) {
+        let best = posX[n.id];
+        for (const dx of [-16, -9, -4, 4, 9, 16]) {
+          const nx = Math.max(X0, Math.min(X1, posX[n.id] + dx));
+          if (Math.abs(nx - posX[n.id]) < 1) continue;
+          posX[n.id] = nx;
+          const c = crossingCount();
+          if (c < cur && !layerOverlaps(L)) { cur = c; best = nx; improved = true; }
+          posX[n.id] = best;
+        }
+      }
+    }
+    if (!improved) break;
+  }
+}
+
+const pos = {};
+NODES.forEach(n => { pos[n.id] = { x: posX[n.id], y: TOP + rowOf[n.L] * ROW }; });
+
+const span = (a, b) => Math.abs(a.L - b.L);
+
+/* gentle curves; longer edges get a slightly wider bow so far connections read cleanly */
+function edgePath(a, b) {
+  const dx = b.x - a.x, dy = b.y - a.y;
+  const len = Math.hypot(dx, dy) || 1;
+  const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+  const bend = Math.min(26, 8 + len * 0.10);
+  return `M${a.x.toFixed(1)},${a.y.toFixed(1)} C${(mx - dy / len * bend).toFixed(1)},${(my + dx / len * bend).toFixed(1)} ${(mx + dy / len * bend).toFixed(1)},${(my - dx / len * bend).toFixed(1)} ${b.x.toFixed(1)},${b.y.toFixed(1)}`;
+}
+
+/* one continuous, C1-smooth path per goal route: Catmull-Rom through offset waypoints */
+const LANE = 5.5;
+function norm(dx, dy) { const l = Math.hypot(dx, dy) || 1; return { x: -dy / l, y: dx / l }; }
+function catmullRom(pts) {
+  if (pts.length < 2) return "";
+  if (pts.length === 2) return `M${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)} L${pts[1].x.toFixed(1)},${pts[1].y.toFixed(1)}`;
+  const P = i => pts[Math.max(0, Math.min(pts.length - 1, i))];
+  let d = `M${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)}`;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = P(i - 1), p1 = P(i), p2 = P(i + 1), p3 = P(i + 2);
+    const c1 = { x: p1.x + (p2.x - p0.x) / 6, y: p1.y + (p2.y - p0.y) / 6 };
+    const c2 = { x: p2.x - (p3.x - p1.x) / 6, y: p2.y - (p3.y - p1.y) / 6 };
+    d += ` C${c1.x.toFixed(1)},${c1.y.toFixed(1)} ${c2.x.toFixed(1)},${c2.y.toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)}`;
+  }
+  return d;
+}
+
+/* lane assignment: for every shared edge, each goal gets a tight lane index */
+const edgeLane = {};
+function laneOf(g, k) {
+  if (!edgeLane[k]) edgeLane[k] = { count: 0, lanes: {} };
+  const e = edgeLane[k];
+  if (e.lanes[g] === undefined) e.lanes[g] = e.count++;
+  return (e.lanes[g] - (e.count - 1) / 2) * LANE;
+}
+GOALS.forEach(g => g.edges.forEach(([a, b]) => laneOf(g.id, [a, b].sort().join("→"))));
+
+/* each goal route is a subgraph of colored edges; shared edges split into tight lanes */
+function goalEdgePath(a, b, off) {
+  const dx = b.x - a.x, dy = b.y - a.y;
+  const len = Math.hypot(dx, dy) || 1;
+  const nx = -dy / len, ny = dx / len;
+  const p1 = { x: a.x + nx * off, y: a.y + ny * off };
+  const p2 = { x: b.x + nx * off, y: b.y + ny * off };
+  const mx = (p1.x + p2.x) / 2, my = (p1.y + p2.y) / 2;
+  const bend = Math.min(24, len * 0.12);
+  return `M${p1.x.toFixed(1)},${p1.y.toFixed(1)} C${(mx - dy / len * bend).toFixed(1)},${(my + dx / len * bend).toFixed(1)} ${(mx + dy / len * bend).toFixed(1)},${(my - dx / len * bend).toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)}`;
+}
+
+/* ================= render ================= */
+const svg = document.getElementById("map");
+let inner = "";
+
+/* layer rows */
+for (let L = 0; L < LAYERS.length; L++)
+  inner += `<text class="lrow" x="${X0 - 12}" y="${TOP + L * ROW - 14}" text-anchor="end">${LAYERS[L]}</text>`;
+
+/* dependency edges */
+DEPS.forEach(([a, b]) => {
+  inner += `<path class="edge edge-dep" d="${edgePath(pos[a], pos[b])}"/>`;
+});
+
+/* goal routes: one colored edge per route edge; hovering lights the whole goal's subgraph */
+GOALS.forEach(g => g.edges.forEach(([a, b]) => {
+  inner += `<path class="edge edge-goal" data-goal="${g.id}" stroke="${PALETTE[g.color]}" d="${goalEdgePath(pos[a], pos[b], laneOf(g.id, [a, b].sort().join("→")))}"/>`;
+}));
+
+/* nodes */
+const goalOfNode = {};
+GOALS.forEach(g => g.edges.flat().forEach(id => (goalOfNode[id] = (goalOfNode[id] || []).concat(g.id))));
+/* summit nodes: the terminal node of each goal's subgraph, ringed in that goal's color */
+const summitOf = {};
+GOALS.forEach(g => {
+  const s = g.edges[g.edges.length - 1][1];
+  (summitOf[s] = summitOf[s] || []).push(g.id);
+});
+NODES.forEach(n => {
+  const halo = summitOf[n.id] && summitOf[n.id].length
+    ? `<circle class="summit-halo" r="24" cx="${pos[n.id].x}" cy="${pos[n.id].y}" fill="${PALETTE[GOALS.find(g => g.id === summitOf[n.id][0]).color]}" opacity=".16"/>`
+    : "";
+  inner += `<g class="node" data-id="${n.id}" data-goals="${(goalOfNode[n.id] || []).join(" ")}">
+    ${halo}
+    <circle cx="${pos[n.id].x}" cy="${pos[n.id].y}" r="13" class="nodest-${n.status}"/>
+    <text class="nl" x="${pos[n.id].x}" y="${pos[n.id].y - 18}" text-anchor="middle">${n.short}</text>
+  </g>`;
+});
+svg.innerHTML = inner;
+svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+
+const GREEK = { alpha: "α", beta: "β", gamma: "γ", delta: "δ" };
+const gname = id => GREEK[id] || id;
+
+/* ================= legend ================= */
+const legend = document.getElementById("legend");
+const stl = [["done", ST.done], ["review", ST.review], ["open", ST.open], ["branch", ST.branch]];
+legend.innerHTML = '<span class="st" style="margin-right:10px">node state:</span>' +
+  stl.map(([k, v]) => `<span class="st"><span class="dot nodest-${k}"></span>${v}</span>`).join("") +
+  '<span style="margin:0 10px">|</span><span class="st"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#e6e1dc;box-shadow:0 0 7px 3px rgba(230,225,220,.35);margin-right:6px;vertical-align:-2px"></span>summit (glowing halo)</span><span style="margin:0 10px">|</span>routes: ' +
+  GOALS.map(g => `<span class="gl" data-g="${g.id}"><span class="sw" style="background:${PALETTE[g.color]}"></span>${gname(g.id)}</span>`).join(" ");
+legend.querySelectorAll(".gl").forEach(el => el.addEventListener("click", () => {
+  el.classList.toggle("off");
+  const on = !el.classList.contains("off");
+  svg.querySelectorAll(`.edge-goal[data-goal="${el.dataset.g}"]`).forEach(e => e.style.display = on ? "" : "none");
+}));
+
+/* ================= PR links ================= */
+const PRS = {1473:"m",1561:"m",1708:"m",1783:"m",1794:"m",1802:"m",1804:"m",1847:"m",1903:"m",1971:"m",2224:"m",1772:"c",1759:"c",1859:"c",1972:"c",2335:"o"};
+function linkify(t) {
+  return t.replace(/(?:mathlib)?#(\d+)(\u271d)?/g, (m, n, d) => {
+    const isML = m.indexOf("mathlib") === 0;
+    const st = PRS[n] || (isML ? "m" : "");
+    const cls = st === "m" ? "pr-merged" : st === "c" ? "pr-closed" : st === "o" ? "pr-open" : "pr-neutral";
+    const pre = isML ? "mathlib#" : "#";
+    const href = isML ? `https://github.com/leanprover-community/mathlib4/pull/${n}`
+                      : `https://github.com/TauCetiProject/TauCeti/pull/${n}`;
+    return `<a class="prlink ${cls}" href="${href}" target="_blank" rel="noopener">${pre}${n}</a>` + (d ? "✝" : "");
+  });
+}
+
+/* ================= hover: light the whole route ================= */
+const lit = new Set();
+function refreshLit() {
+  svg.querySelectorAll(".edge-goal").forEach(e => e.classList.toggle("lit", lit.has(e.dataset.goal)));
+  document.querySelectorAll(".goal").forEach(c => c.classList.toggle("lit", lit.has(c.dataset.g)));
+}
+svg.querySelectorAll(".edge-goal").forEach(p => {
+  p.addEventListener("mouseenter", () => { lit.add(p.dataset.goal); refreshLit(); });
+  p.addEventListener("mouseleave", () => { lit.delete(p.dataset.goal); refreshLit(); });
+});
+svg.querySelectorAll(".node").forEach(el => {
+  el.addEventListener("mouseenter", () => { (el.dataset.goals || "").split(" ").filter(Boolean).forEach(g => lit.add(g)); refreshLit(); });
+  el.addEventListener("mouseleave", () => { (el.dataset.goals || "").split(" ").filter(Boolean).forEach(g => lit.delete(g)); refreshLit(); });
+});
+
+/* ================= goal cards ================= */
+const goalsEl = document.getElementById("goals");
+GOALS.forEach(g => {
+  const routeNodes = [...new Set(g.edges.flat())].map(id => NODES.find(n => n.id === id));
+  const weight = { done: 1, review: 0.75, open: 0.05, branch: 0.2 };
+  const prog = routeNodes.reduce((a, n) => a + weight[n.status], 0) / routeNodes.length;
+  const pct = Math.round(prog * 100);
+  goalsEl.insertAdjacentHTML("beforeend", `
+    <div class="goal" data-g="${g.id}" style="--gc:${PALETTE[g.color]}">
+      <h3><span class="sw" style="background:${PALETTE[g.color]}"></span>${g.name}</h3>
+      <div class="bar"><i style="width:${pct}%;background:${PALETTE[g.color]}"></i></div>
+      <div class="pct">${pct}% of the route's milestones progressed (merged = 1, in review = .75)</div>
+      <div class="route-lbl">route</div>
+      <div class="route">${routeNodes.map(n => `<span data-g="${g.id}" style="cursor:default">${n.short}</span>`).join('<span class="sep">→</span>')}</div>
+      <div class="eval">${linkify(g.eval)}</div>
+    </div>`);
+});
+
+/* ================= tooltip ================= */
+const tip = document.getElementById("tip");
+svg.addEventListener("mousemove", e => {
+  const el = e.target.closest(".node");
+  if (!el) {
+    if (tip.style.display !== "none" && !tip.contains(e.target)) scheduleHide();
+    return;
+  }
+  clearTimeout(hideTimer);
+  const n = NODES.find(x => x.id === el.dataset.id);
+  const sum = summitOf[n.id] || [];
+  const goalsOn = GOALS.filter(g => g.edges.flat().includes(n.id) && !sum.includes(g.id)).map(g => `<span style="color:${PALETTE[g.color]}">${gname(g.id)}</span>`).join(", ");
+  const sumTxt = sum.map(gid => `<span style="color:${PALETTE[GOALS.find(g => g.id === gid).color]}">${gname(gid)}</span>`).join(", ");
+  tip.innerHTML = `<b>${n.label}</b><div class="tstatus">state: ${ST[n.status]} · ${linkify(n.prs)}</div>` +
+    (sumTxt ? `<div class="tstatus">summit of: ${sumTxt}</div>` : "") +
+    (goalsOn ? `<div class="tstatus">on routes: ${goalsOn}</div>` : "");
+  tip.style.display = "block";
+  const r = tip.getBoundingClientRect();
+  tip.style.left = Math.min(e.clientX + 14, innerWidth - r.width - 10) + "px";
+  tip.style.top = (e.clientY + 14) + "px";
+});
+let hideTimer = null;
+function scheduleHide() {
+  clearTimeout(hideTimer);
+  hideTimer = setTimeout(() => { if (!tip.matches(":hover")) tip.style.display = "none"; }, 350);
+}
+svg.addEventListener("mouseleave", e => { if (!tip.contains(e.relatedTarget)) { clearTimeout(hideTimer); tip.style.display = "none"; } });
+tip.addEventListener("mouseenter", () => clearTimeout(hideTimer));
+tip.addEventListener("mouseleave", () => { clearTimeout(hideTimer); tip.style.display = "none"; });
+</script>
+</body>
+</html>
