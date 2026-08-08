@@ -87,27 +87,27 @@ Record the toolchain and manifest readback, the commands, the exit codes, the bu
 
 This section and SOFTWARE_VERIFICATION.md apply only to projects that carry executable content (computed programs, native oracles, float kernels). Pure formalization projects, whose deliverables are declarations and proofs, skip it entirely. For projects that do have executable content, keep the layers distinct and prove the bridges between them. The full chain is in SOFTWARE_VERIFICATION.md in this directory.
 
-### LSP triage and semantic lookup
+### LSP triage and semantic lookup (optional)
 
-A Lean language server — for example the `lean-lsp-mcp` server registered
-with the agent harness — reads the built state of a hydrated worktree:
-diagnostics, goal states, hover information, and semantic references. Use it
-as fast triage and precise lookup, never as the acceptance check:
+A Lean language server (for example `lean-lsp-mcp` registered with the agent
+harness) is optional. Routine slice work does not need it: `lake build`
+diagnostics and the audits below are the normal flow. Use it only when it
+earns its keep:
 
-- before a full build, read the changed file's diagnostics to catch obvious
-  errors early;
-- use find-references to locate the affected modules and consumers of a
-  changed declaration, more precisely than text search, for the
-  affected-module and consumer-probe checks;
-- goal states and hover information support repair and golf work inside the
-  slice.
+- before a long or broad full build: read the changed file's diagnostics
+  first to catch obvious errors early;
+- when the affected-module or consumer-probe check needs a precise consumer
+  list and text search is too noisy: find-references locates them
+  semantically;
+- during interactive repair or golf inside a slice: goal states and hover
+  information beat guesswork.
 
-Bounds: the LSP needs the built state, so it does not exist in a fresh
-checkout and it never replaces the authoritative gates — the cache-first
-build, the source audits, and fresh-checkout reproduction remain the bar. A
-green editor is not a green build. (Adopted 2026-08-08 from
-jstoobysmith/PhyslibAITools, `Tasks/Golf.md` and sibling task prompts; not
-yet verified.)
+Bounds: the LSP reads the built state of a hydrated worktree, so it does not
+exist in a fresh checkout and it never replaces the authoritative gates —
+the cache-first build, the source audits, and fresh-checkout reproduction
+remain the bar. A green editor is not a green build. (Adopted 2026-08-08
+from jstoobysmith/PhyslibAITools, `Tasks/Golf.md` and sibling task prompts;
+not yet verified.)
 
 ## References
 
