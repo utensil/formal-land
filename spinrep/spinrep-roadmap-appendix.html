@@ -1,0 +1,757 @@
+<!--
+---
+title: SpinRep annotated roadmap
+repo: utensil/formal-land/spinrep/spinrep-roadmap-appendix.html
+source-repo: cog-land/projects/spinrep/spinrep-roadmap-appendix.html
+public-url: https://utensil.github.io/formal-land/spinrep/spinrep-roadmap-appendix.html
+---
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The SpinRepresentations roadmap — annotated with PR grades</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+
+  :root {
+    --bg: #232323;
+    --card: #2b2b2b;
+    --ink: #e6e1dc;
+    --muted: #9a968f;
+    --line: #3a3a3a;
+    --tau: #6d9cbe;      /* TauCeti in-house */
+    --tau-soft: #2a3441;
+    --mlb: #ffc66d;      /* Mathlib / upstream */
+    --mlb-soft: #3d3322;
+    --ok: #a5c261;
+    --ok-soft: #2a3421;
+    --warn: #da4939;
+    --warn-soft: #3d2522;
+    --code: #1e1e1e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.6;
+    font-size: 1.1rem;
+    padding-bottom: 4rem;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* header */
+  header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #262626 100%);
+    color: #fff; padding: 2.6rem 0 2rem;
+  }
+  header h1 { font-size: 2.1rem; font-weight: 700; letter-spacing: -0.01em; }
+  header .sub { color: #bcb6ae; margin-top: .5rem; font-size: 1.15rem; }
+  header .meta { color: #8a857e; margin-top: 1.2rem; font-size: .92rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+  /* nav */
+  .nav {
+    position: sticky; top: 0; z-index: 100; background: rgba(35,35,35,.92);
+    backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+  }
+  .nav .inner { display: flex; gap: 1.1rem; flex-wrap: wrap; padding: .6rem 1.5rem; max-width: 1080px; margin: 0 auto; font-size: .85rem; }
+  .nav a { color: var(--muted); text-decoration: none; font-weight: 600; }
+  .nav a:hover { color: var(--tau); }
+  .nav a.appx { color: var(--mlb); }
+
+  /* section scaffolding */
+  section { margin-top: 2.8rem; scroll-margin-top: 3.2rem; }
+  .part { border-top: 1px solid var(--line); padding-top: 2.2rem; margin-top: 3.2rem; }
+  .part:first-of-type { border-top: none; padding-top: 0; margin-top: 2.8rem; }
+  .kicker {
+    display: inline-block; font-size: .8rem; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: .5rem;
+  }
+  .kicker .pn { color: var(--tau); margin-right: .4rem; }
+  h2 { font-size: 1.55rem; font-weight: 700; margin-bottom: 1rem; }
+  h3 { font-size: 1.2rem; font-weight: 700; }
+
+  /* the idea strip */
+  .idea { display: flex; align-items: stretch; gap: .75rem; flex-wrap: wrap; }
+  .idea .box {
+    flex: 1 1 220px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 1rem 1.1rem; position: relative;
+  }
+  .idea .box .tag { font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .idea .box p { font-size: 1rem; color: var(--muted); margin-top: .35rem; }
+  .idea .box.one .tag { color: var(--tau); }
+  .idea .box.two .tag { color: var(--mlb); }
+  .idea .box.three .tag { color: var(--ok); }
+  .arrow { align-self: center; font-size: 1.4rem; color: var(--muted); font-weight: 700; }
+  blockquote {
+    margin-top: 1.1rem; background: var(--card); border: 1px solid var(--line);
+    border-left: 4px solid var(--mlb); border-radius: 0 10px 10px 0;
+    padding: 1rem 1.4rem; font-size: 1.02rem; color: #d5cfc8; font-style: italic;
+  }
+  .quote-src { display: block; margin-top: .6rem; font-style: normal; font-size: .9rem; color: var(--muted); }
+  .quote-src a { color: var(--tau); text-decoration: none; }
+  .quote-src a:hover { text-decoration: underline; }
+  .lead { font-size: 1.05rem; color: var(--muted); margin-top: 1rem; }
+  .lead b { color: var(--ink); }
+
+  /* pattern cards */
+  .pats { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: .9rem; margin-top: 1.1rem; }
+  .pat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 1.1rem 1.2rem; display: flex; flex-direction: column; gap: .65rem; }
+  .pat .top { display: flex; align-items: center; gap: .7rem; }
+  .pat .no { flex: 0 0 auto; padding: .2rem .6rem; border-radius: 999px; font-size: .78rem; font-weight: 800; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .pat.tau .no { background: var(--tau-soft); color: var(--tau); }
+  .pat.mlb .no { background: var(--mlb-soft); color: var(--mlb); }
+  .pat.opt .no { background: #333333; color: var(--muted); }
+  .pat h3 { font-size: 1.04rem; line-height: 1.3; }
+  .pat .evi { font-size: .88rem; color: #d5cfc8; background: #262626; border-radius: 8px; padding: .65rem .85rem; }
+  .pat .evi code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .82rem; background: #3a3a3a; color: #e6e1dc; border-radius: 4px; padding: 0 .3em; }
+  .pat .foot { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin-top: auto; }
+  .pat .prtags { display: flex; gap: .35rem; flex-wrap: wrap; }
+  .pat .prtag { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .78rem; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: .1rem .5rem; }
+  .pat .to { font-size: .84rem; font-weight: 700; color: var(--tau); text-decoration: none; white-space: nowrap; }
+  .pat .to:hover { text-decoration: underline; }
+  .pat.mlb .to { color: var(--mlb); }
+  .pat.opt .to { color: var(--muted); }
+
+  /* glance strip */
+  .glance { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: .6rem; margin-top: .4rem; }
+  .gcell { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: .6rem .8rem; }
+  .gcell .gname { font-weight: 700; font-size: .95rem; }
+  .gcell .gstatus { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-top: .2rem; }
+  .gcell .gprs { font-size: .78rem; color: var(--muted); margin-top: .15rem; }
+  .gstatus.hot { color: var(--mlb); }
+  .gstatus.done { color: var(--ok); }
+  .gstatus.idle { color: var(--muted); }
+
+  /* proposal cards */
+  .prop {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 1.4rem 1.6rem; margin-top: 1.2rem;
+    border-left-width: 5px;
+  }
+  .prop.tau { border-left-color: var(--tau); }
+  .prop.mlb { border-left-color: var(--mlb); }
+  .prop.opt { border-left-color: var(--muted); opacity: .92; }
+  .prop .head { display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap; }
+  .prop .head .no { font-family: ui-monospace, monospace; font-weight: 800; font-size: .85rem; }
+  .prop.tau .head .no { color: var(--tau); }
+  .prop.mlb .head .no { color: var(--mlb); }
+  .prop.opt .head .no { color: var(--muted); }
+  .gate {
+    font-size: .78rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+    padding: .22rem .65rem; border-radius: 999px; margin-left: auto;
+  }
+  .gate.tau { background: var(--tau-soft); color: var(--tau); }
+  .gate.mlb { background: var(--mlb-soft); color: var(--mlb); }
+  .gate.opt { background: #333333; color: var(--muted); }
+  .pattern {
+    margin-top: .6rem; font-size: 1rem; background: #262626; border-radius: 8px;
+    padding: .7rem 1rem; color: #d5cfc8;
+  }
+  .pattern code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .92rem; background: #3a3a3a; color: #e6e1dc; border-radius: 4px; padding: 0 .3em; }
+  .stmt {
+    margin-top: .8rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .88rem; background: var(--code); color: #e6e1dc; border-radius: 8px;
+    padding: .9rem 1.2rem; overflow-x: auto; white-space: pre;
+  }
+  .evals { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: .8rem; }
+  .ev { font-size: .88rem; border-radius: 8px; padding: .4rem .75rem; font-weight: 600; }
+  .ev.math { background: var(--ok-soft); color: var(--ok); }
+  .ev.rubric { background: var(--tau-soft); color: #a9cbe8; }
+  .ev.gate { background: var(--mlb-soft); color: var(--mlb); }
+  .ev.warn { background: var(--warn-soft); color: var(--warn); }
+  .payoff { margin-top: .8rem; font-size: .98rem; color: var(--muted); }
+  .payoff b { color: var(--ink); }
+  .payoff code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .85rem; background: #3a3a3a; border-radius: 4px; padding: 0 .3em; }
+
+  /* roadmap table */
+  .rtable { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; font-size: .98rem; }
+  .rtable th { text-align: left; background: #262626; padding: .65rem 1.1rem; font-size: .82rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .rtable td { padding: .7rem 1.1rem; border-top: 1px solid var(--line); vertical-align: top; }
+  .rtable td b { color: var(--ink); }
+  .rtable .verdict { font-weight: 700; }
+  .rtable .verdict.named { color: var(--ok); }
+  .rtable .verdict.req { color: var(--tau); }
+  .rtable .verdict.tool { color: var(--mlb); }
+  .rtable code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .86rem; background: #3a3a3a; border-radius: 4px; padding: 0 .3em; }
+
+  /* roadmap layers / attack map / appendix */
+  .legend { display: flex; gap: .6rem; align-items: center; margin-bottom: 1rem; font-size: .85rem; color: var(--muted); flex-wrap: wrap; }
+  .rmap { display: flex; flex-direction: column; gap: 1rem; }
+  .layer { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 1.05rem 1.3rem; }
+  .layer.idle { opacity: .72; }
+  .layer .lhead { font-weight: 700; font-size: 1.02rem; display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; }
+  .layer .lhead .lstatus { font-size: .7rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; margin-left: auto; }
+  .lstatus.done { color: var(--ok); }
+  .lstatus.active { color: var(--mlb); }
+  .lstatus.idle { color: var(--muted); }
+  .lrow { display: flex; gap: 1rem; align-items: baseline; padding: .45rem 0; border-top: 1px solid #383838; }
+  .lrow .lname { flex: 0 0 250px; font-size: .9rem; color: #d5cfc8; }
+  .lrow .lname .sub { display: block; font-size: .76rem; color: var(--muted); }
+  .lrow .chips { display: flex; flex-wrap: wrap; gap: .45rem; }
+  .appx .lrow { align-items: flex-start; }
+  .appx .lrow .lname { flex: 0 0 300px; }
+  .appx .lrow .ldesc { font-size: .85rem; color: var(--muted); }
+  .appx .lrow .ldesc code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .8rem; background: #3a3a3a; border-radius: 4px; padding: 0 .3em; }
+  .appx .lrow .chips { margin-top: .15rem; }
+  .rm-chip {
+    position: relative; cursor: default; border-radius: 999px; padding: .28rem .7rem;
+    font-size: .8rem; font-weight: 600; border: 1px solid;
+  }
+  .rm-chip.me { background: rgba(165,194,97,.14); border-color: var(--ok); color: #b8d488; }
+  .rm-chip.other { background: rgba(109,156,190,.16); border-color: var(--tau); color: #a9cbe8; }
+  .rm-chip.open { background: rgba(255,198,109,.14); border-color: var(--mlb); color: #ffc66d; }
+  .rm-chip.closed { background: rgba(218,73,57,.10); border-color: #4d3f3d; color: #c08f8a; text-decoration: line-through; }
+  a.rm-chip { cursor: pointer; text-decoration: none; }
+  a.rm-chip:hover { filter: brightness(1.18); border-color: currentColor; }
+  .rm-chip::after {
+    content: attr(data-tip); position: absolute; bottom: calc(100% + 10px); left: 50%;
+    transform: translateX(-50%) translateY(4px); background: #1e1e1e; color: #e6e1dc;
+    border: 1px solid #3a3a3a; border-radius: 10px; padding: .55rem .8rem; font-size: .78rem;
+    line-height: 1.45; white-space: normal; width: max-content; max-width: 400px; text-align: left;
+    font-weight: 400; text-decoration: none; opacity: 0; pointer-events: none;
+    transition: opacity .15s, transform .15s; z-index: 60;
+  }
+  .rm-chip:hover::after, .rm-chip:focus::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* route analysis */
+  .routes { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: .8rem; }
+  .route { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.2rem; font-size: .9rem; }
+  .route .who { color: var(--muted); font-size: .78rem; margin-bottom: .4rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .route .verdict { display: inline-block; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; border-radius: 999px; padding: .15rem .55rem; margin-top: .55rem; }
+  .route .verdict.ok { background: var(--ok-soft); color: var(--ok); }
+  .route .verdict.warn { background: var(--mlb-soft); color: var(--mlb); }
+  .better { margin-top: 1.2rem; counter-reset: better; }
+  .better .item { display: flex; gap: .8rem; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: .85rem 1.1rem; margin-top: .6rem; font-size: .92rem; }
+  .better .item .n { counter-increment: better; flex: 0 0 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--tau); color: #fff; font-weight: 800; font-size: .85rem; display: flex; align-items: center; justify-content: center; margin-top: .1rem; }
+  .better .item code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .82rem; background: #3a3a3a; border-radius: 4px; padding: 0 .3em; }
+
+  /* anti proposals */
+  .anti { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: .7rem; }
+  .anti .item {
+    background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--warn);
+    border-radius: 10px; padding: .9rem 1.2rem; font-size: .96rem;
+  }
+  .anti .item b { color: var(--warn); }
+  .anti .item .pr { font-family: ui-monospace, monospace; font-size: .85rem; color: var(--muted); }
+  .anti .item code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .85rem; background: #3a3a3a; border-radius: 4px; padding: 0 .3em; }
+
+  /* sequence */
+  .seq { display: flex; gap: .7rem; flex-wrap: wrap; counter-reset: step; margin-top: 1.5rem; }
+  .seq .step {
+    flex: 1 1 190px; background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: .95rem 1.05rem; position: relative;
+  }
+  .seq .step::before {
+    counter-increment: step; content: counter(step);
+    position: absolute; top: -.55rem; left: 1rem;
+    background: var(--tau); color: #fff; font-weight: 800; font-size: .75rem;
+    width: 1.4rem; height: 1.4rem; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  }
+  .seq .step h3 { font-size: 1.05rem; }
+  .seq .step p { font-size: .92rem; color: var(--muted); margin-top: .3rem; }
+  .seq .step code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .82rem; background: #3a3a3a; border-radius: 4px; padding: 0 .3em; }
+
+  /* roadmap edits */
+  .redit { margin-top: .9rem; background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--ok); border-radius: 10px; padding: .9rem 1.2rem; font-size: .92rem; }
+  .redit .rh { font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--ok); margin-bottom: .4rem; }
+  .redit p { color: #d5cfc8; margin: .4rem 0 0; }
+  .redit code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .84rem; background: #3a3a3a; border-radius: 4px; padding: 0 .3em; }
+
+  /* appendix bullets: plain-language summary visible, full wording on hover */
+  .appx .lbullet { position: relative; border-top: 1px solid #383838; padding: .6rem 0; }
+  .appx .lbullet:first-of-type { border-top: none; }
+  .appx .ltitle { font-size: .98rem; font-weight: 700; color: var(--ink); display: flex; align-items: baseline; gap: .55rem; flex-wrap: wrap; }
+  .appx .lsummary { font-size: .95rem; color: #d5cfc8; margin-top: .25rem; }
+  .appx .lsummary code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .84rem; background: #3a3a3a; border-radius: 4px; padding: 0 .3em; }
+  .appx .ldetail {
+    position: absolute; left: -10000px; top: 0; width: 920px; z-index: 80;
+    opacity: 0; pointer-events: none;
+    background: #1c1c1c; border: 1px solid #3a3a3a; border-radius: 10px;
+    padding: .95rem 1.2rem; font-size: .9rem; color: #d5cfc8; line-height: 1.6;
+    box-shadow: 0 14px 36px rgba(0,0,0,.55);
+  }
+  .appx .lbullet:hover .ldetail {
+    left: 0; right: 0; top: 100%; width: auto;
+    opacity: 1; pointer-events: auto;
+  }
+  .appx .ldetail code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .82rem; background: #3a3a3a; border-radius: 4px; padding: 0 .3em; }
+  .appx .lhead .lbrief { font-weight: 400; color: var(--muted); font-size: .9rem; }
+  .appx .ldetail ul.reflist { margin: .2rem 0 0; padding-left: 1.25rem; }
+  .appx .ldetail ul.reflist li { margin-top: .4rem; }
+  .appx .ldetail ul.reflist li:first-child { margin-top: 0; }
+  .appx .ldetail ul.reflist i { color: #bcb6ae; }
+  .appx .note { font-size: .82rem; color: var(--muted); margin-top: .5rem; }
+  .prtags { display: inline-flex; gap: .35rem; flex-wrap: wrap; }
+  mjx-container { color: #e6e1dc; }
+
+  /* Prism lean4 tokens, VSCode Dark+ palette on the dark theme */
+  .stmt { background: var(--code); }
+  .stmt .token.comment { color: #bc9458; font-style: italic; }
+  .stmt .token.keyword { color: #cc7833; }
+  .stmt .token.type { color: #6d9cbe; }
+  .stmt .token.number { color: #6d9cbe; }
+  .stmt .token.string { color: #a5c261; }
+  .stmt .token.operator { color: #e6e1dc; }
+  .stmt .token.punctuation { color: #d6d0c9; }
+  .stmt .token.attr-name { color: #b6b3eb; }
+
+  /* proposal roadmap status chips */
+  .rst { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .8rem; }
+  .rs { font-size: .8rem; font-weight: 600; border-radius: 8px; padding: .3rem .65rem; border: 1px solid var(--line); background: #262626; color: #d5cfc8; }
+  .rs.rm-named { border-color: var(--ok); color: #b8d488; }
+  .rs.rm-req { border-color: var(--tau); color: #a9cbe8; }
+  .rs.rm-tool { border-color: var(--mlb); color: #ffc66d; }
+  .rs.im-refactor { border-color: var(--tau); color: #a9cbe8; }
+  .rs.im-mlb { border-color: var(--mlb); color: #ffc66d; }
+  .rs.im-opt { border-color: var(--muted); color: var(--muted); }
+  .rs.im-gated { border-color: var(--mlb); color: #ffc66d; }
+  .rs.ed-yes { border-color: var(--mlb); color: #ffc66d; }
+  .rs.ed-none { border-color: var(--ok); color: #b8d488; }
+
+  /* PR links: subtle, tinted by PR state */
+  a.prlink { text-decoration: none; border-bottom: 1px dotted rgba(230,225,220,.35); font-weight: 600; }
+  a.prlink:hover { border-bottom-style: solid; border-bottom-color: currentColor; }
+  a.prlink.pr-merged { color: #9fc37e; }
+  a.prlink.pr-closed { color: #b98d88; text-decoration: line-through; }
+  a.prlink.pr-open { color: #e8bc6e; }
+
+  /* Part 4: surgical-edit diffs */
+  .df { background: var(--card); border: 1px solid var(--line); border-radius: 12px; margin-top: .9rem; overflow: hidden; }
+  .dfh { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; background: #262626; padding: .5rem .9rem; font-size: .82rem; font-weight: 700; color: #bcb6ae; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .dftag { margin-left: auto; font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--tau); background: var(--tau-soft); border-radius: 999px; padding: .12rem .55rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+  .dfb { padding: .6rem .9rem .8rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .82rem; line-height: 1.5; overflow-x: auto; }
+  .dfb .ln { display: block; white-space: pre; }
+  .dfb .ln.add { color: #a5c261; background: rgba(165,194,97,.07); }
+  .dfb .ln.del { color: #da4939; background: rgba(218,73,57,.07); text-decoration: line-through; }
+  .dfb .ln.ctx { color: #9a968f; }
+
+  footer { margin-top: 3rem; color: var(--muted); font-size: .9rem; text-align: center; }
+  footer code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .84rem; }
+  .div-arrow { text-align: center; color: var(--muted); font-size: 1.3rem; margin: .6rem 0 -.2rem; }
+
+  /* selection-criteria annotations */
+  .rm-chip:has(.ctags) { border-radius: 10px; padding: .35rem .7rem; align-items: flex-start; }
+  .rm-chip .kw { display: flex; align-items: center; gap: .3rem; font-weight: 600; }
+  .rm-chip .kw::before { content: ""; width: .55rem; height: .55rem; border-radius: 50%; }
+  .rm-chip.g-meets .kw::before { background: #a5c261; }
+  .rm-chip.g-part .kw::before { background: #ffc66d; }
+  .rm-chip.g-fail .kw::before { background: #da4939; }
+  .rm-chip.g-open .kw::before { background: #9a968f; }
+  .ctags { display: flex; flex-wrap: wrap; gap: .2rem; margin-top: .1rem; }
+  .ct { font-size: .6rem; font-weight: 700; border-radius: 4px; padding: .05rem .32rem; line-height: 1.5; }
+  .ct.on { color: #b8d488; background: rgba(165,194,97,.12); }
+  .ct.off { color: #9a968f; background: rgba(154,150,143,.1); }
+  .slegend { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: .9rem 1.1rem; margin-bottom: 1rem; }
+  .slh { font-size: .8rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--mlb); }
+  .slrow { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; margin-top: .5rem; font-size: .85rem; }
+  .slk { font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .gdot { font-size: .82rem; }
+  .gdot.g-meets { color: #a5c261; }
+  .gdot.g-part { color: #ffc66d; }
+  .gdot.g-fail { color: #da4939; }
+  .gdot.g-open { color: #9a968f; }
+  .slsep { color: var(--muted); font-size: .8rem; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>The SpinRepresentations roadmap — annotated</h1>
+    <div class="sub">Every layer, every bullet, with the PRs that landed on them — each graded against the selection criteria.</div>
+    <div class="meta">shared document · linked from the <a href="spinrep-clifford-reuse-proposal.html">reuse report</a> and the selection-criteria map · 2026-08-06</div>
+  </div>
+</header>
+
+<nav class="nav">
+  <div class="inner">
+    <a href="spinrep-clifford-reuse-proposal.html">← reuse report</a>
+    <a href="spinrep-selection-criteria.html">← selection criteria</a>
+    <a href="#top">the roadmap</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="part appx" id="top">
+    <span class="kicker">The roadmap</span>
+    <h2>Every layer, every bullet, annotated with who built it and how well it fits the criteria</h2>
+    <p class="lead">A faithful render of the roadmap README — all layers, all bullets — with the mathematics typeset. Hover a bullet for the full technical wording; click a chip to open its PR. <b>The chips are now graded against the selection criteria</b>: a colored dot for the grade, and per-PR criteria tags (colored = met, gray = missed).</p>
+    <div class="slegend">
+      <div class="slh">Selection-criteria satisfaction — graded against the criteria as they stand now (2026-08-06)</div>
+      <div class="slrow"><span class="slk">Grade</span>
+        <span class="gdot g-meets">● meets</span>
+        <span class="gdot g-part">● partial</span>
+        <span class="gdot g-fail">● fail · closed</span>
+        <span class="gdot g-open">● open</span>
+      </div>
+      <div class="slrow"><span class="slk">Criteria</span>
+        <span class="ct on">roadmap fit</span><span class="ct on">one idea</span><span class="ct on">reuse</span><span class="ct on">generality</span><span class="ct on">characteristic API</span><span class="ct on">consumer probe</span><span class="ct on">scope-orthogonal</span><span class="ct on">upstream potential</span>
+        <span class="slsep">— colored = the criteria the PR focused on meeting · gray = the criteria it did not meet</span>
+      </div>
+      <div class="slrow" style="margin-top:.4rem"><span class="slk">Note</span><span style="color:#9a968f">Most PRs predate the current criteria; the grade is retrospective, from the review history.</span></div>
+    </div>
+    <div class="legend">
+      <span class="rm-chip me">mine</span>
+      <span class="rm-chip other">others</span>
+      <span class="rm-chip open">open</span>
+      <span class="rm-chip closed">closed · dead end</span>
+      <span style="margin-left:.3rem">— click a chip to open its PR (hover for the title) · hover a bullet for the technical detail</span>
+    </div>
+    <div class="rmap">
+      <div class="layer">
+        <div class="lhead">Layer 0 — the Clifford algebra, its universal property, and the two gradings<span class="lbrief"> · the algebra, its universal property, the ℤ/2-grading, the degree filtration, and the PBW bridge to the exterior algebra</span> <span class="lstatus active">heavily worked</span></div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The universal property, consumed and packaged.</b></div>
+          <div class="lsummary">The Clifford algebra is pinned by a universal property: a map out of it is a map of the generators whose squares land in the scalars, and an isometry of forms induces an algebra isomorphism — over \(\mathbb{C}\) only the rank matters.</div>
+          <div class="ldetail">The universal property is the tool that makes the Clifford algebra usable: <code>CliffordAlgebra.lift</code> and <code>hom_ext</code> say that a map out of <code>CliffordAlgebra Q</code> into an algebra <code>A</code> is exactly a linear map <code>f : M →ₗ A</code> with <code>f m * f m = algebraMap R A (Q m)</code> for every vector \(m\). The file records the two working identities — the Clifford square <code>ι_sq_scalar</code>, and the polarization <code>ι_mul_ι_add_swap</code>, which reads \(\iota a \cdot \iota b + \iota b \cdot \iota a = \mathrm{polar}\,Q\,a\,b\), so that orthogonal vectors anticommute (<code>ι_mul_ι_comm_of_isOrtho</code>). It also records the functor <code>CliffordAlgebra.map</code> and <code>equivOfIsometry</code>: an isometry of quadratic forms induces an algebra isomorphism, and consequently over \(\mathbb{C}\) the Clifford algebra depends only on the rank of the form.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The \(\mathbb{Z}/2\)-grading.</b></div>
+          <div class="lsummary">Products of generators carry parity, splitting the algebra into even and odd parts; the grade involution is \(+1\) on even, \(-1\) on odd — the grading that separates Pin from Spin.</div>
+          <div class="ldetail">Mathlib's <code>evenOdd Q : ZMod 2 → Submodule R (CliffordAlgebra Q)</code> is a genuine <code>GradedAlgebra</code>: the Clifford relation preserves parity, so the grading descends to the quotient. The file consumes <code>evenOdd Q</code>, the <code>GradedAlgebra</code> instance, <code>evenOdd_isCompl</code> (the two halves are complementary), and the even subalgebra <code>even Q</code>. The grade involution <code>involute</code> acts as \(+1\) on <code>evenOdd Q 0</code> and \(-1\) on <code>evenOdd Q 1</code>; the records <code>spinGroup.mem_even</code> and <code>spinGroup.involute_eq</code> say the spin group sits in the even part and is fixed by <code>involute</code>. This grading is what distinguishes <code>pinGroup</code> from <code>spinGroup</code>.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The degree filtration.</b> <span class="prtags"><span class="chip" data-p="1473"></span></span></div>
+          <div class="lsummary">\(F_k\) collects products of at most \(k\) generators: \(F_0\) the scalars, \(F_1\) the scalars plus the vectors, multiplicative (\(F_i \cdot F_j \le F_{i+j}\)) and exhausting the algebra.</div>
+          <div class="ldetail"><code>filtration Q k</code> is the span of the products of at most \(k\) generators: <code>Submodule.span R {x | ∃ n ≤ k, ∃ v : Fin n → M, x = ∏ i, ι Q (v i)}</code>, an increasing filtration with <code>filtration Q 0 = range (algebraMap R _)</code> (the scalars, the empty product), <code>filtration Q 1</code> the scalars together with <code>range ι</code>, and union <code>⊤</code> (<code>iSup_ι_range_eq_top</code>). Multiplicativity <code>filtration Q i · filtration Q j ≤ filtration Q (i + j)</code> must be proved before anything downstream; this is deliberately not a power of a submodule — powers of submodules of a noncommutative algebra would collect products of <i>exactly</i> \(k\) generators, not at most \(k\).</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>Dimension \(2^n\).</b> <span class="prtags"><span class="chip" data-p="1561"></span></span></div>
+          <div class="lsummary">Over a finite free module the Clifford algebra has rank \(2^{\dim M}\), the count of the exterior powers — independent of the form.</div>
+          <div class="ldetail">For finite free \(M\), <code>finrank (CliffordAlgebra Q) = 2 ^ finrank M</code>, matching \(\sum_k \binom{\mathrm{finrank}\,M}{k}\). This is read off the module isomorphism <code>equivExterior</code> (valid in characteristic not two), which identifies the underlying module of the Clifford algebra with that of the exterior algebra: deforming the form deforms the multiplication and nothing else.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The associated graded is the exterior algebra (a PBW-type theorem).</b> <span class="prtags">
+            <span class="chip" data-p="1772"></span>
+            <span class="chip" data-p="1783"></span>
+            <span class="chip" data-p="1794"></span>
+            <span class="chip" data-p="1802"></span>
+            <span class="chip" data-p="1804"></span>
+            <span class="chip" data-p="1847"></span>
+            <span class="chip" data-p="1903"></span>
+            <span class="chip" data-p="1971"></span>
+          </span></div>
+          <div class="lsummary">The successive quotients \(F_{k+1}/F_k\) are the exterior powers \(\bigwedge^{k+1} M\), and \(\mathrm{gr}\,\mathrm{Cliff}(V,Q) \cong \mathrm{ExteriorAlgebra}\,R\,M\) — a PBW-type theorem that requires proving \(\mathrm{equivExterior}\) respects the filtration.</div>
+          <div class="ldetail">The graded-algebra isomorphism \(\mathrm{gr}\,\mathrm{Cliff}(V, Q) \cong \mathrm{ExteriorAlgebra}\,R\,M\) is a distinct milestone. Its graded pieces give <code>filtrationGradedEquiv</code>: \((\mathrm{filtration}\,Q\,(k+1) \big/ \mathrm{filtration}\,Q\,k) \simeq_{\mathbb{R}} \bigwedge_R^{\,k+1} M\) in characteristic not two. It is proved either from the universal property and the filtration directly, or by proving that <code>CliffordAlgebra.equivExterior</code> carries \(\mathrm{filtration}\,Q\,k\) onto \(\bigoplus_{i \le k} \bigwedge^{\,i} M\) and reading off the \(k\)-th quotient; <code>equivExterior</code> alone is only a module isomorphism, so the filtration-compatibility is content that must be proved, not assumed. In particular <code>finrank (CliffordAlgebra Q) = 2 ^ finrank M</code> for finite free \(M\), matching \(\sum_k \binom{\mathrm{finrank}\,M}{k}\).</div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="lhead">Layer 1 — the structure theorem (over \(\mathbb{C}\))<span class="lbrief"> · over ℂ the Clifford algebra is a matrix algebra (or a product of two), proved forward from the spin module</span> <span class="lstatus idle">untouched</span></div>
+        <div class="lbullet">
+          <div class="ltitle"><b>Nondegeneracy and diagonalization.</b></div>
+          <div class="lsummary">Over a field of characteristic not two a nondegenerate form becomes diagonal, and over \(\mathbb{C}\) the standard sum of squares — so the Clifford algebra depends only on the rank.</div>
+          <div class="ldetail">Consume <code>QuadraticForm.Nondegenerate</code>; build the reduction of a nondegenerate \(Q\) over a field of characteristic not two to an orthogonal basis (a diagonal form), and over \(\mathbb{C}\) to the standard form \(\sum x_i^2\), so \(\mathrm{Cliff}(V, Q) \cong \mathrm{Cliff}(\sum x_i^2)\). This is where <code>equivOfIsometry</code> does its work; it also fixes the hyperbolic decomposition \(V = W \oplus W'\) used to build \(S\).</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The even-dimensional case.</b></div>
+          <div class="lsummary">For \(Q\) nondegenerate on a \(2l\)-space, \(\mathrm{Cliff}(V,Q) \cong M_{2^l}(\mathbb{C})\), and the even subalgebra splits as two matrix factors — the actions on the half-spin spaces.</div>
+          <div class="ldetail">For \(Q\) nondegenerate on a \(2l\)-dimensional \(V\) over an algebraically closed field, <code>CliffordAlgebra Q ≃ₐ[K] Matrix (Fin (2^l)) (Fin (2^l)) K</code>, and the even subalgebra <code>even Q ≃ₐ[K] Matrix (Fin (2^(l-1))) _ K × Matrix (Fin (2^(l-1))) _ K</code>. This isomorphism <i>is</i> <code>spinAction</code>, the Clifford action on the spin module \(S = \bigwedge\! W\) of Layer 4, identified with a matrix algebra by the dimension count; the even subalgebra's two factors are the actions on the half-spin summands \(S^+, S^-\).</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The odd-dimensional case.</b></div>
+          <div class="lsummary">In odd dimension \(\mathrm{Cliff}(V,Q)\) is a product of two matrix algebras — the source of the two inequivalent Pin restrictions; the center is \(K\) or \(K \times K\).</div>
+          <div class="ldetail">For \(Q\) nondegenerate on a \((2l+1)\)-dimensional \(V\), <code>CliffordAlgebra Q ≃ₐ[K] Matrix (Fin (2^l)) _ K × Matrix (Fin (2^l)) _ K</code>, while the even subalgebra is a single <code>Matrix (Fin (2^l)) _ K</code>. The center is \(K\) (even case) or \(K \times K\) (odd case); the two central idempotents in the odd case are the source of the two inequivalent restrictions to Pin.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The seed of periodicity.</b></div>
+          <div class="lsummary">\(\mathrm{Cliff}(Q) \cong \mathrm{even}(Q \oplus \langle -1 \rangle)\) and the graded tensor product of forms seed both the complex structure theorem and Bott periodicity.</div>
+          <div class="ldetail">Consume <code>CliffordAlgebra.equivEven</code> (\(\mathrm{Cliff}(Q) \cong \mathrm{even}(Q \oplus \langle -1 \rangle)\)) and <code>CliffordAlgebra.prodEquiv</code> (the graded tensor product over a direct sum of forms); these are the algebraic inputs the complex structure theorem and the real Bott periodicity of Layer 7 both rest on.</div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="lhead">Layer 2 — the Pin and Spin groups and the double covers<span class="lbrief"> · the Pin and Spin groups and the double covers Pin → O and Spin → SO</span> <span class="lstatus done">substrate done</span></div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The abstract orthogonal group.</b> <span class="prtags"><span class="chip" data-p="1499"></span></span></div>
+          <div class="lsummary">\(O(Q)\) is the group of \(Q\)-preserving automorphisms of \(M\); under a diagonalizing basis it agrees with the matrix orthogonal group.</div>
+          <div class="ldetail"><code>orthogonalGroup Q : Subgroup (M ≃ₗ[R] M)</code> — \(\mathrm{orthogonalGroup}\,Q \le \mathrm{Subgroup}\,(M \simeq_{\mathbb{R}} M)\) — the linear automorphisms \(f\) with \(Q(f\,x) = Q\,x\) for all \(x\) (equivalently <code>Nonempty (Q.IsometryEquiv Q)</code> realized as a bundled automorphism group), and <code>specialOrthogonalGroup Q</code> its determinant-one subgroup. Prove the isomorphism with <code>Matrix.orthogonalGroup (Fin n) K</code> under a basis diagonalizing \(Q\) (for the standard form), so the abstract and matrix presentations agree.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>Vectors from the Clifford algebra.</b> <span class="prtags"><span class="chip" data-p="1510"></span></span></div>
+          <div class="lsummary">Over a field \(\iota Q\) is injective, so \(M \cong \mathrm{range}(\iota Q)\) — the bridge that turns Mathlib's conjugation lemmas into automorphisms of \(M\).</div>
+          <div class="ldetail">Before the conjugation is an automorphism of \(M\), one needs the linear equivalence <code>ιRangeEquiv Q : M ≃ₗ[R] range (ι Q)</code>, which over a field with nondegenerate \(Q\) comes from injectivity of \(\iota Q\). This is a named milestone, not a phrase; the conjugation action on \(M\) is defined by transporting <code>spinGroup.involute_act_ι_mem_range_ι</code> through <code>ιRangeEquiv</code>.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The twisted-conjugation homomorphism.</b> <span class="prtags">
+            <span class="chip" data-p="1611"></span>
+            <span class="chip" data-p="1742"></span>
+          </span></div>
+          <div class="lsummary">Twisted conjugation \(v \mapsto \mathrm{involute}(x) \cdot \iota v \cdot x^{-1}\) by Pin or Spin elements preserves \(Q\); a unit vector acts by the reflection in its hyperplane.</div>
+          <div class="ldetail"><code>pinToOrthogonal Q : pinGroup Q →* orthogonalGroup Q</code>, sending \(x\) to the automorphism \(v \mapsto \mathrm{ιRangeEquiv}^{-1}\,(\mathrm{involute}\,x \cdot \iota v \cdot x^{-1})\) of \(M\) (well-defined by <code>spinGroup.involute_act_ι_mem_range_ι</code>, and \(Q\)-preserving because \(\iota v \cdot \iota v = Q v\) is central). Its restriction <code>spinToSpecialOrthogonal Q</code> lands in the determinant-one subgroup (the spin group is generated by even products of unit vectors, each contributing two reflections). Prove functoriality and that a unit vector \(\iota v\) (with \(Q v\) a unit) maps to the <b>reflection</b> in \(v^{\perp}\).</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The double cover (the summit of the layer), over \(\mathbb{C}\).</b></div>
+          <div class="lsummary">Over \(\mathbb{C}\), Pin → O and Spin → SO are onto with kernel \(\{\pm 1\}\) (Cartan–Dieudonné); over general fields the image is the spinor-norm kernel.</div>
+          <div class="ldetail">For finite-dimensional \(V\) over an algebraically closed field (\(\mathbb{C}\) here) with nondegenerate \(Q\), <code>pinToOrthogonal Q</code> and <code>spinToSpecialOrthogonal Q</code> are <b>surjective</b> (Cartan–Dieudonné: every isometry is a product of reflections, each realized by a unit vector), with <b>kernel</b> \(\{\pm 1\}\) of order two (<code>MonoidHom.ker (spinToSpecialOrthogonal Q)</code> generated by \(-1\), <code>Nat.card = 2</code>). Assemble the short exact sequences \(1 \to \mathbb{Z}/2 \to \mathrm{Pin}(V) \to O(V) \to 1\) and \(1 \to \mathbb{Z}/2 \to \mathrm{Spin}(V) \to SO(V) \to 1\). Over a <b>general field</b>, pointwise surjectivity onto \(SO(Q)\) fails: the image is the kernel of the <b>spinor norm</b> \(SO(Q) \to K^*/(K^*)^2\), so state the general-field result as that spinor-norm exact sequence, and the algebraically closed and real cases separately.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>Simple-connectivity is a separate topological statement, not a prerequisite here.</b></div>
+          <div class="lsummary">The universal-cover claims are topological, split by case, and not needed to construct the spin representations.</div>
+          <div class="ldetail">The claim that <code>Spin(V)</code> is <i>the</i> universal cover of \(SO(V)\) is topological and split by case, out of the main dependency chain: the compact real case (<code>Spin(n) → SO(n)</code> universal covering for \(n \ge 3\), <code>Spin(n)</code> connected for \(n \ge 2\), simply connected for \(n \ge 3\), proved from path-connectedness of the sphere, with the real forms of Layer 7); the complex algebraic case (<code>Spin(V)</code> over \(\mathbb{C}\) is the <i>algebraically</i> simply connected group with root datum of type \(B_l/D_l\), distinct from topological simple-connectivity); and the indefinite real case (connectivity of <code>Spin(p, q)</code> for \(p, q > 0\), deferred to a later topology roadmap). None of these is needed to construct the spin representations.</div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="lhead">Layer 3 — the Lie algebra \(\mathfrak{so}(V) \cong \bigwedge^2 V\) inside the Clifford algebra<span class="lbrief"> · 𝔰𝔬(V) realized as the bivectors ⋀²V inside the even Clifford algebra</span> <span class="lstatus active">in progress</span></div>
+        <div class="lbullet">
+          <div class="ltitle"><b>Bivectors as a Lie subalgebra.</b> <span class="prtags">
+            <span class="chip" data-p="1859"></span>
+            <span class="chip" data-p="1708"></span>
+            <span class="chip" data-p="2224"></span>
+            <span class="chip" data-p="1759"></span>
+            <span class="chip" data-p="1972"></span>
+            <span class="chip" data-p="2335"></span>
+          </span></div>
+          <div class="lsummary">The image of \(\bigwedge^2 M\) in the even Clifford algebra is a Lie subalgebra isomorphic to \(\mathfrak{so}(V)\); the bivector \(\beta(u,v)\) acts by the infinitesimal rotation \(B(v,x)u - B(u,x)v\).</div>
+          <div class="ldetail">Status: the Lie-subalgebra bullet landed canonically as <code>quadraticLieSubalgebra Q</code> by <a href="https://github.com/TauCetiProject/TauCeti/pull/2224" target="_blank">#2224</a> (chrisromanmiller); the exterior-bivector identification sits in review in <a href="https://github.com/TauCetiProject/TauCeti/pull/2335" target="_blank">#2335</a> (utensil), successor to the closed #1972. The image of \(\bigwedge_R^{\,2} M\) in <code>even Cliff(V, Q)</code> is closed under the commutator bracket; equip \(\bigwedge^2 V\) with the induced Lie-algebra structure. <code>soEquivBivector</code>: this is a Lie-algebra isomorphism \(\bigwedge_R^{\,2} M \simeq^{\mathrm{Lie}} \mathfrak{so}(V)\) onto the skew-adjoint endomorphisms, identified with <code>LieAlgebra.Orthogonal.so</code> under a basis. The defining property is the action, not a hard-coded scalar: the bivector \(\beta(u, v)\) acts on a vector \(x\) by \(\mathrm{ad}(\beta(u, v))(x) = B(v, x) \cdot u - B(u, x) \cdot v\), where \(B = \mathrm{QuadraticMap.polar}\,Q\). Choose the Clifford formula and scalar normalization (a multiple of \(\iota u \cdot \iota v - \iota v \cdot \iota u\)) so as to prove this identity against Mathlib's <code>polar</code> convention; do not fix the factor \(\frac12\) before the convention is pinned. The bracket of a bivector with \(\iota v\) is the infinitesimal rotation of \(v\), which is the differential of the Layer-2 conjugation. Stated here for the standard form on <code>Fin n → R</code>; Layer 9 restates the realization for an arbitrary nondegenerate \(Q\), as <code>soEquivQuadratic</code> against Mathlib's <code>skewAdjointLieSubalgebra</code>, pinned to the same action formula.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The differential of the double cover.</b></div>
+          <div class="lsummary">Differentiating the group action gives the bivector action: \(d(\mathrm{conjugation}) = \mathrm{ad}(\mathrm{bivector})\) — the double cover and the Lie algebra are one object.</div>
+          <div class="ldetail">The Lie-algebra homomorphism differentiating <code>spinToSpecialOrthogonal</code> is the isomorphism <code>soEquivBivector</code> composed with the adjoint action; state the compatibility \(d(\mathrm{conjugation}) = \mathrm{ad}(\mathrm{bivector})\) as a named lemma, so the group double cover and the Lie-algebra identification are two views of one object. This is the hook that lets a <code>spinGroup</code> representation differentiate to an \(\mathfrak{so}(V)\)-module and be compared with the highest-weight roadmap.</div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="lhead">Layer 4 — the spin and half-spin representations (over \(\mathbb{C}\))<span class="lbrief"> · the spin module S = ⋀·W and its group representation; the half-spins and simplicity</span> <span class="lstatus idle">untouched</span></div>
+        <div class="lbullet">
+          <div class="ltitle"><b>A maximal isotropic subspace.</b></div>
+          <div class="lsummary">Over \(\mathbb{C}\) a nondegenerate form has a maximal isotropic \(W\) of half the dimension, with \(V = W \oplus W'\) in even dimension — the hyperbolic decomposition behind \(S\).</div>
+          <div class="ldetail">Over \(\mathbb{C}\), a nondegenerate \(Q\) on a \(2l\)- or \((2l+1)\)-dimensional \(V\) has an isotropic subspace \(W\) with \(\mathrm{finrank}_{\mathbb{C}}\,W = l\) and (in even dimension) a complementary isotropic \(W'\) pairing with \(W\) by \(Q\), so \(V = W \oplus W'\) (even) or \(V = W \oplus W' \oplus \langle e \rangle\) (odd). Build \(W\), the pairing \(W' \simeq \mathrm{Module.Dual}_{\mathbb{C}}\,W\) induced by \(\mathrm{QuadraticMap.polar}\,Q\), and the isotropy <code>Q.IsOrtho</code> witnesses.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The Clifford module \(S = \bigwedge\! W\).</b></div>
+          <div class="lsummary">Wedge on \(W\) and contraction on \(W'\) make \(S = \bigwedge W\) a Clifford module, pinned by the anticommutator \(c(x)c(y) + c(y)c(x) = \mathrm{polar}\,x\,y \cdot 1\).</div>
+          <div class="ldetail"><code>spinAction Q W : CliffordAlgebra Q →ₐ[ℂ] Module.End ℂ (ExteriorAlgebra ℂ W)</code>, the algebra homomorphism from the universal property, sending \(\iota w\) (for \(w \in W\)) to exterior multiplication \(w \wedge -\), and \(\iota w'\) (for \(w' \in W'\)) to the contraction <code>contractLeft</code> by the functional \(\mathrm{QuadraticMap.polar}\,Q\,w'\) restricted to \(W\). The defining check is the anticommutator identity \(c(x) \circ c(y) + c(y) \circ c(x) = \mathrm{polar}\,Q\,x\,y \cdot 1\) on \(V = W \oplus W'\) (\(w \wedge (w \wedge -) = 0\) gives the isotropy of \(W\), and the wedge/contraction anticommutator on mixed pairs gives the pairing), from which the Clifford relation \(\iota v \cdot \iota v = Q v\) follows via \(\mathrm{polar}\,Q\,v\,v = 2 \cdot Q v\). Pin the coefficient to <code>polar</code>, not a prose "twice". In <b>even</b> dimension it is an isomorphism onto <code>End S</code> (\(\dim S = 2^l\)), proved by exhibiting matrix units from wedge and contraction operators and a dimension count — exactly the Layer-1 structure theorem. In <b>odd</b> dimension <code>spinAction</code> is <i>not</i> injective: \(\dim \mathrm{Cliff}(V, Q) = 2 \cdot (2^l)^2\) exceeds \(\dim \mathrm{End}\,S = (2^l)^2\), so it factors through one of the two central-idempotent summands. Fix the action of the extra anisotropic vector \(e\) as the parity operator scaled so that \(c(e) \circ c(e) = Q e \cdot 1\); the faithful Clifford module in odd dimension is the direct sum of the two inequivalent spinor modules, not the single \(S\).</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The spin representation of the group.</b></div>
+          <div class="lsummary">Restricting the Clifford action to the spin group gives \(\mathrm{spinRep}\), the representation of the double cover.</div>
+          <div class="ldetail"><code>spinRep Q W : Representation ℂ (spinGroup Q) (ExteriorAlgebra ℂ W)</code>, the restriction of <code>spinAction</code> along <code>spinGroup.toUnits</code>; likewise <code>pinRep</code> for <code>pinGroup</code>. State the compatibility that <code>spinRep</code> differentiates to the \(\mathfrak{so}(V)\)-module of Layer 3 on \(S\).</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The half-spin summands.</b></div>
+          <div class="lsummary">Parity splits \(S = S^+ \oplus S^-\); in even dimension these are the two inequivalent half-spins of dimension \(2^{l-1}\), in odd dimension \(S\) is irreducible.</div>
+          <div class="ldetail">The \(\mathbb{Z}/2\)-grading of the exterior algebra splits \(S = S^+ \oplus S^-\) (even and odd exterior degree); <code>spinPlus Q W</code>, <code>spinMinus Q W</code>, each of dimension \(2^{l-1}\) in even dimension, are <code>spinGroup</code>-subrepresentations (the spin group is even, so it preserves exterior parity). In <b>odd</b> dimension \(S\) is irreducible and does not split; in <b>even</b> dimension \(S^+\) and \(S^-\) are the two inequivalent half-spin representations.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>Irreducibility.</b></div>
+          <div class="lsummary">Once \(\mathrm{spinAction}\) is onto a full matrix algebra, simplicity of the modules follows immediately.</div>
+          <div class="ldetail"><code>spinRep</code> is irreducible in odd dimension, and <code>spinPlus</code>, <code>spinMinus</code> are irreducible and inequivalent in even dimension. This is immediate once <code>spinAction</code> is known to be surjective onto the full matrix algebra (Layer 1, proved forward from this module): a module on which a full matrix algebra acts is simple, and the even subalgebra's two matrix factors act as the two simple modules \(S^+, S^-\).</div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="lhead">Layer 5 — the fundamental representations of \(B_l\) and \(D_l\)<span class="lbrief"> · S and S± identified with the Bₗ / Dₗ fundamental representations</span> <span class="lstatus idle">untouched</span></div>
+        <div class="lbullet">
+          <div class="ltitle"><b>A split Cartan and Borel, matched to the abstract root datum.</b></div>
+          <div class="lsummary">The Cartan of \(\mathfrak{so}(V)\) is spanned by bivectors of dual isotropic pairs; matching its roots to the abstract \(B_l/D_l\) root datum is a named milestone.</div>
+          <div class="ldetail">Choose the Cartan subalgebra of \(\mathfrak{so}(V)\) spanned by the bivectors \(\beta(w_i, w_i')\) of dual isotropic pairs, and a compatible Borel; identify its roots with the abstract \(B_l/D_l\) root system of the root-systems roadmap, and prove the fundamental weights computed here correspond to the abstract fundamental weights. Without this explicit identification the highest-weight statement is only informal; it is a named milestone.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>Weights of the spin module.</b></div>
+          <div class="lsummary">The weights of \(S = \bigwedge W\) are the \(2^l\) half-integer sign vectors \(\frac12(\pm 1, \ldots, \pm 1)\), the highest \(\omega_l = \frac12(1, \ldots, 1)\).</div>
+          <div class="ldetail">Diagonalize the chosen Cartan on \(S = \bigwedge\! W\); the weight of a basis vector \(w_{i_1} \wedge \cdots \wedge w_{i_k}\) is \(\tfrac12(\pm 1, \ldots, \pm 1)\) with the signs recording which \(w_i\) occur. The weights of \(S\) are exactly the \(2^l\) half-integer sign vectors; the <b>highest</b> is \(\omega_l = \tfrac12(1, \ldots, 1)\).</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>Type \(B_l\): \(\mathfrak{so}(2l+1)\).</b></div>
+          <div class="lsummary">In odd dimension \(S \cong L(\omega_l)\) is the last \(B_l\) fundamental of dimension \(2^l\), outside the tensor-power lattice.</div>
+          <div class="ldetail">\(S\) (odd dimension) is the irreducible \(\mathfrak{so}(2l+1)\)-module with highest weight \(\omega_l\), the <b>last fundamental weight</b>; state \(S \cong L(\omega_l)\) as a <code>LieModule</code>, with <code>finrank = 2^l</code>, and separately that <code>spinRep Q W</code> differentiates to it. This is the fundamental representation of \(B_l\) whose weights lie in the half-integral coset, outside the lattice generated by the vector weights \(\pm e_i\), so it is not a constituent of any tensor power (in particular any \(\bigwedge^k V\)) of the standard \(\mathfrak{so}(2l+1)\)-module; it completes the classical-groups roadmap's \(B_l\) fundamentals.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>Type \(D_l\): \(\mathfrak{so}(2l)\).</b></div>
+          <div class="lsummary">In even dimension \(S^\pm \cong L(\omega_l), L(\omega_{l-1})\) are the fork-node \(D_l\) fundamentals; swapping them is the diagram automorphism, the seed of triality.</div>
+          <div class="ldetail">\(S^+, S^-\) (even dimension) are the irreducible \(\mathfrak{so}(2l)\)-modules with highest weights \(\omega_l = \tfrac12(1, \ldots, 1)\) and \(\omega_{l-1} = \tfrac12(1, \ldots, 1, -1)\), the <b>two fork-node fundamental weights</b> of \(D_l\); state \(S^+ \cong L(\omega_l)\), \(S^- \cong L(\omega_{l-1})\) as <code>LieModule</code>s, each of dimension \(2^{l-1}\). Their sum \(S\) is the restriction of the \(B_l\) spin module. The exchange \(\omega_l \leftrightarrow \omega_{l-1}\) is the \(D_l\) diagram automorphism, the seed of triality at \(l = 4\).</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>Characters and the Weyl construction, cross-referenced.</b></div>
+          <div class="lsummary">The character of \(S\) is the Weyl formula \(\sum_{\varepsilon = \pm 1} e^{\frac12 \sum \varepsilon_i e_i}\); the product form needs the spin maximal torus first.</div>
+          <div class="ldetail">State the character of \(S\) as an element of the group algebra of the weight lattice, \(\sum_{\varepsilon_i = \pm 1} e^{\frac12 \sum_i \varepsilon_i e_i}\) (the Weyl character formula specialized); the familiar product form \(\prod_i (t_i^{1/2} + t_i^{-1/2})\) is its evaluation on a maximal torus, valid only after the spin maximal torus and its character lattice are defined (half-powers of adjoint-torus coordinates are not functions on the adjoint torus). Record that the <i>other</i> \(B_l/D_l\) fundamentals \(\bigwedge^k V\) are built in the classical-groups roadmap; together they are a full set of fundamental representations.</div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="lhead">Layer 6 — the low-dimensional exceptional isomorphisms<span class="lbrief"> · the low-dimensional exceptional isomorphisms</span> <span class="lstatus idle">untouched</span></div>
+        <div class="lbullet">
+          <div class="ltitle"><b>Three milestones per case.</b></div>
+          <div class="lsummary">Each exceptional isomorphism needs three steps: identify the even Clifford algebra as a matrix algebra, identify the spin condition inside it, and prove the image is exact.</div>
+          <div class="ldetail">Each is an isomorphism of the spin group with a small classical group. <code>spinGroup Q</code> is a subgroup of the units of <code>even Cliff(V, Q)</code>, so an isomorphism onto a bundled matrix group is not read off from the representation landing in that group; it needs three explicit milestones per case: (1) identify the even Clifford algebra with a matrix algebra (<code>even Cliff₃ ≅ M₂(ℂ)</code>, <code>even Cliff₆ ≅ M₄(ℂ)</code>, and so on), so <code>spinGroup Q</code> sits inside its units; (2) identify the defining condition of <code>spinGroup</code> (the reversal/Clifford-norm-one condition <code>reverse x · x = 1</code>) with the classical group's condition on that matrix algebra: determinant one for \(SL_n\), preservation of the reversal-induced symplectic form for \(Sp_4\); (3) prove the image is exactly the classical group, both directions, not merely that <code>spinAction</code> lands in it.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>\(\mathrm{Spin}_3 \cong SL_2\).</b></div>
+          <div class="lsummary">\(V = \mathbb{C}^3\): the even algebra is \(M_2(\mathbb{C})\) and the spin group is \(SL_2\); over \(\mathbb{R}\), \(\mathrm{Spin}(3) \cong SU(2)\), the double cover of \(SO(3)\).</div>
+          <div class="ldetail">For \(V = \mathbb{C}^3\) (type \(B_1 = A_1\)), <code>even Cliff(V, Q) ≅ M₂(ℂ)</code> with \(\dim W = 1\), and the spinor-norm-one subgroup <code>spinGroup Q</code> is the determinant-one subgroup, giving <code>spinGroup Q ≃* SL(2, ℂ)</code>; the \(2\)-dimensional spin representation \(S\) is the standard representation of \(SL_2\). Over \(\mathbb{R}\) this is \(\mathrm{Spin}(3) \cong SU(2)\).</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>\(\mathrm{Spin}_4 \cong SL_2 \times SL_2\).</b></div>
+          <div class="lsummary">\(V = \mathbb{C}^4\): \(\mathrm{Spin}(4) \cong SL_2 \times SL_2\), with \(S^+, S^-\) the two standard factors.</div>
+          <div class="ldetail">For \(V = \mathbb{C}^4\) (type \(D_2 = A_1 \times A_1\)), <code>spinGroup Q ≃* SL(2, ℂ) × SL(2, ℂ)</code>, with \(S^+\) and \(S^-\) the standard representations of the two factors; this is the reducibility of the \(D_2\) spin module into the two \(A_1\) standards.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>\(\mathrm{Spin}_5 \cong Sp_4\).</b></div>
+          <div class="lsummary">\(V = \mathbb{C}^5\): \(\mathrm{Spin}(5) \cong Sp_4\), with the 4-dimensional spin module the standard representation.</div>
+          <div class="ldetail">For \(V = \mathbb{C}^5\) (type \(B_2 = C_2\)), <code>spinGroup Q ≃* Sp(4, ℂ)</code> (<code>Matrix.symplecticGroup</code>), with the \(4\)-dimensional spin representation \(S\) the standard representation of \(Sp_4\); the symplectic form on \(S\) comes from the reversal antiautomorphism.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>\(\mathrm{Spin}_6 \cong SL_4\).</b></div>
+          <div class="lsummary">\(V = \mathbb{C}^6\): \(\mathrm{Spin}(6) \cong SL_4\), \(S^+\) the standard \(\mathbb{C}^4\), \(S^-\) its dual, \(V \cong \bigwedge^2 \mathbb{C}^4\).</div>
+          <div class="ldetail">For \(V = \mathbb{C}^6\) (type \(D_3 = A_3\)), <code>spinGroup Q ≃* SL(4, ℂ)</code>, with \(S^+ \cong \mathbb{C}^4\) the standard representation and \(S^- \cong (\mathbb{C}^4)^*\) its dual; \(V \cong \bigwedge^2 (\mathbb{C}^4)\). These four exhaust the coincidences of the \(B_l/D_l\) diagrams with the \(A_l/C_l\) diagrams.</div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="lhead">Layer 7 — real Clifford algebras, Bott periodicity, and \(\mathrm{Spin}(p, q)\)<span class="lbrief"> · the real Clifford algebras, the mod-8 Bott table, and the real spin groups</span> <span class="lstatus idle">untouched</span></div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The real forms \(\mathrm{Cliff}(p, q)\).</b></div>
+          <div class="lsummary">The signature forms \(\mathrm{Cliff}(p, q)\) are pinned by four base-entry tests: \((1,0) \cong \mathbb{R}\times\mathbb{R}\), \((0,1) \cong \mathbb{C}\), \((0,2) \cong \mathbb{H}\), \((1,1) \cong M_2(\mathbb{R})\).</div>
+          <div class="ldetail"><code>realCliffordForm p q : QuadraticForm ℝ (Fin (p+q) → ℝ)</code>, the diagonal form with \(p\) entries \(+1\) and \(q\) entries \(-1\), and <code>Cliff(p, q) = CliffordAlgebra (realCliffordForm p q)</code>. The sign convention is fixed by four base entries stated as <b>definitional acceptance tests</b>, so the indexing of the periodicity table is unambiguous: \(\mathrm{Cliff}(1,0) \cong \mathbb{R} \times \mathbb{R}\), \(\mathrm{Cliff}(0,1) \cong \mathbb{C}\), \(\mathrm{Cliff}(0,2) \cong \mathbb{H}\), \(\mathrm{Cliff}(1,1) \cong M_2(\mathbb{R})\). Here \(\mathrm{Cliff}(0,1) \cong \mathbb{C}\) is Mathlib's <code>CliffordAlgebraComplex.equiv</code> (its \(Q r = -(r \cdot r)\) matches the \(q\) entry \(-1\)), and \(\mathrm{Cliff}(0,2) \cong \mathbb{H}\) is <code>CliffordAlgebraQuaternion.equiv</code>.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>Bott periodicity.</b></div>
+          <div class="lsummary">\(\mathrm{Cliff}(p+1, q+1) \cong \mathrm{Cliff}(p, q) \otimes M_2(\mathbb{R})\) and the mod-8 table classify the real Clifford algebras — the eightfold way.</div>
+          <div class="ldetail">The isomorphisms \(\mathrm{Cliff}(p+1, q+1) \cong \mathrm{Cliff}(p, q) \otimes_{\mathbb{R}} M_2(\mathbb{R})\), \(\mathrm{Cliff}(p+8, q) \cong \mathrm{Cliff}(p, q) \otimes_{\mathbb{R}} M_{16}(\mathbb{R})\) (mod-\(8\) periodicity), built from <code>CliffordAlgebra.equivEven</code> and <code>CliffordAlgebra.prodEquiv</code>; the resulting <b>classification table</b> of \(\mathrm{Cliff}(p, q)\) as a matrix algebra over \(\mathbb{R}\), \(\mathbb{C}\), or \(\mathbb{H}\) (the eightfold way), stated as a function of \((q - p) \bmod 8\) in the convention fixed by the four base entries above (references that make generators square to \(+1\) index by \((p - q) \bmod 8\) instead; the base-entry tests pin which is meant).</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The real spin groups.</b></div>
+          <div class="lsummary">\(\mathrm{Spin}(p, q)\) is the double cover of \(SO(p, q)\) for the real form; the compact \(\mathrm{Spin}(n)\) is \(\mathrm{Spin}(n, 0)\).</div>
+          <div class="ldetail"><code>spinPQ p q := spinGroup (realCliffordForm p q)</code>, the double cover of \(SO(p, q)\) from Layer 2 applied to the real form; the compact \(\mathrm{Spin}(n) = \mathrm{spinPQ}\,n\,0\) and the split and Lorentzian forms \(\mathrm{Spin}(p, q)\).</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>Connectivity of the compact spin group.</b></div>
+          <div class="lsummary">Compact \(\mathrm{Spin}(n)\) is connected for \(n \ge 2\) and simply connected for \(n \ge 3\), hence the universal cover of \(SO(n)\).</div>
+          <div class="ldetail">For the compact \(\mathrm{Spin}(n)\), prove \(\mathrm{Spin}(n)\) connected for \(n \ge 2\) and simply connected for \(n \ge 3\), so \(\mathrm{Spin}(n) \to SO(n)\) is the universal covering, from path-connectedness of the sphere in \(\mathbb{R}^n\). The indefinite \(\mathrm{Spin}(p, q)\) (both \(p, q > 0\)) has its own connectivity subtleties and is deferred to a later topology roadmap; it is not a prerequisite for the representation theory.</div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="lhead">Layer 8 — triality for \(\mathrm{Spin}_8\)<span class="lbrief"> · the order-3 symmetry of Spin₈ permuting V, S⁺, S⁻</span> <span class="lstatus idle">untouched</span></div>
+        <div class="lbullet">
+          <div class="ltitle"><b>Stage one: representation-level triality (the root datum).</b></div>
+          <div class="lsummary">The \(D_4\) diagram has an order-three symmetry permuting the three 8-dimensional modules \(V, S^+, S^-\) — needs only Layer 5.</div>
+          <div class="ldetail">The \(D_4\) Dynkin diagram has an <b>order-three</b> symmetry cyclically permuting its three outer nodes; consume the graph automorphism from the root-systems roadmap and lift it to an order-three automorphism of the root datum of \(\mathfrak{so}(8)\) permuting the three fundamental weights \(\omega_1\) (the vector node) and \(\omega_3, \omega_4\) (the two spinor nodes). At this level triality is the statement that the three \(8\)-dimensional highest-weight modules \(V \cong S^0\), \(S^+\), \(S^-\) are cyclically permuted by the outer automorphism; this needs only Layer 5 and the diagram symmetry.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>Stage two: triality as an outer automorphism of \(\mathrm{Spin}_8\).</b></div>
+          <div class="lsummary">Lifting it to an order-three automorphism \(\mathrm{trialityAut}\) of \(\mathrm{Spin}_8\) needs the simply-connected integration theorem — the summit.</div>
+          <div class="ldetail">Realizing the diagram automorphism as an actual group automorphism <code>trialityAut : spinGroup Q₈ ≃* spinGroup Q₈</code> (order three, \(\mathrm{trialityAut}^3 = 1\), and not inner) requires lifting a root-datum automorphism to the simply connected group, an integration/classification theorem for simply connected semisimple groups that is not supplied by the diagram symmetry alone. Its induced action on representations cyclically permutes the three \(8\)-dimensional irreducibles \(V \cong S^0\), \(S^+\), \(S^-\) (all of dimension \(8\), the numerical coincidence that makes triality possible). State the permutation as isomorphisms <code>spinRep ∘ trialityAut ≅</code> (the vector representation), and so on around the cycle.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The consequences.</b></div>
+          <div class="lsummary">The \(\mathrm{Spin}_8\)-invariant trilinear form \(S^0 \otimes S^+ \otimes S^- \to \mathbb{C}\) permuted by triality is the octonion multiplication.</div>
+          <div class="ldetail">The order-\(3\) symmetry of the three \(8\)-dimensional representations, the \(\mathrm{Spin}_8\)-invariant trilinear form \(S^0 \otimes S^+ \otimes S^- \to \mathbb{C}\) permuted by triality, and the relation to the octonions (the multiplication \(\mathbb{O} \otimes \mathbb{O} \to \mathbb{O}\) as the triality form); state the trilinear form and its invariance as the concrete outcome, cross-referencing the octonion structure where it is available.</div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="lhead">Layer 9 — Lie algebras acting through the Clifford algebra, and Kostant's isotypy corollary<span class="lbrief"> · the quadratic realization for abstract forms, the module-making machinery, Kostant isotypy, and the CAR instance</span> <span class="lstatus idle">untouched</span></div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The abstract quadratic realization.</b></div>
+          <div class="lsummary">The half-commutator \(\beta(a,b) = \frac12[\iota a, \iota b]\) realizes \(\mathfrak{so}(V,Q)\) as the quadratic elements for any nondegenerate form, pinned by its bracket identity.</div>
+          <div class="ldetail">Landed in part via <a href="https://github.com/TauCetiProject/TauCeti/pull/2224" target="_blank">#2224</a> (Layer 3’s canonical package): the quadratic elements as a <code>LieSubalgebra</code> of <code>Cliff(V, Q)</code> (contained in <code>even Q</code> and in <code>filtration Q 2</code>). The quadratic element \(\beta(a, b) = \frac12 \cdot [\iota Q\,a, \iota Q\,b]\), pinned by the bracket identity \([\beta(a, b), \iota Q\,x] = \iota Q\,(\mathrm{polar}\,Q\,b\,x \cdot a - \mathrm{polar}\,Q\,a\,x \cdot b)\) with <code>polar</code> Mathlib's, exactly Layer 3's normalization; the quadratic elements as a <code>LieSubalgebra</code> of <code>Cliff(V, Q)</code> (contained in <code>even Q</code> and in <code>filtration Q 2</code>); and <code>soEquivQuadratic</code>, the Lie isomorphism from <code>skewAdjointLieSubalgebra (polarBilin Q)</code> onto them for nondegenerate \(Q\) on a finite-dimensional space, pinned by its own generator-action identity so no automorphism of \(\mathfrak{so}\) can be silently composed in.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>Every Clifford module is a \(\mathfrak{g}\)-module.</b></div>
+          <div class="lsummary">Any \(\theta : \mathfrak{g} \to \mathfrak{so}(V,Q)\) makes every Clifford module a \(\mathfrak{g}\)-module; the commutator and left-regular actions are kept apart.</div>
+          <div class="ldetail">A homomorphism \(\theta : \mathfrak{g} \to \mathfrak{so}(V, Q)\) composed with the quadratic realization and any Clifford action \(\rho : \mathrm{Cliff}(V, Q) \to_{\mathrm{alg}} \mathrm{End}(S)\) gives \(\mathfrak{g} \to \mathrm{End}(S)\) (<code>cliffordInducedRep</code>). The two actions on <code>Cliff(V, Q)</code> itself are named apart: the <b>commutator action</b> (<code>cliffordDerivationRep</code>, the exterior extension of the \(V\)-action under <code>equivExterior</code>, <b>not</b> isotypic) and the <b>left-regular action</b> (via <code>Algebra.lmul</code>, the isotypic one). The worked non-example pinning the distinction: \(\bigwedge \mathfrak{sl}_2 \cong 1 \oplus V(2) \oplus V(2) \oplus 1\) under the commutator action, against the four copies of the \(2\)-dimensional simple under left multiplication.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The adjoint embedding and the rank bookkeeping.</b></div>
+          <div class="lsummary">\(\mathrm{ad} : \mathfrak{g} \to \mathfrak{so}(\mathfrak{g}, B)\) embeds the Lie algebra; the rank and parity pins \(d = l + 2\,\#\Delta^+\) make the multiplicities exact.</div>
+          <div class="ldetail">For a symmetric invariant nondegenerate \(B\) (the Killing form of a semisimple \(\mathfrak{g}\), or the trace form of a faithful representation where the Killing form is degenerate), \(\mathrm{ad} : \mathfrak{g} \to \mathfrak{so}(\mathfrak{g}, B)\) (<code>adjointSO</code>), pinned by \((\mathrm{adjointSO}\,\ldots\,x)\,y = [x, y]\). Two bookkeeping pins absent from Mathlib precede the multiplicity statements: <code>LieAlgebra.rank ℂ 𝔤 = dim H</code> for a Cartan subalgebra \(H\), and the parity identity \(d = l + 2 \cdot \#\Delta^+\), stated additively so the exponents \((d \pm l)/2\) below are exact divisions.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>Kostant's isotypy corollary (the summit).</b></div>
+          <div class="lsummary">The left-regular \(\mathrm{Cliff}(\mathfrak{g}, \kappa)\) of a Killing-semisimple \(\mathfrak{g}\) is isotypic: \(2^{(d+l)/2}\) copies of a \(2^{(d-l)/2}\)-simple; the spin variant has multiplicity \(2^{\lfloor l/2 \rfloor}\).</div>
+          <div class="ldetail">For Killing-semisimple \(\mathfrak{g}\) over \(\mathbb{C}\), the left-regular <code>Cliff(𝔤, κ)</code> (carrier the Clifford algebra of the Killing quadratic form, \([x, c] = q(\mathrm{ad}\,x) \cdot c\), identified with \(\bigwedge \mathfrak{g}\) by <code>equivExterior</code> and of dimension \(2^d\) by Layer 0): any two simple submodules are isomorphic, and the pinned decomposition equivalence exhibits \(2^{(d+l)/2}\) copies of one simple of dimension \(2^{(d-l)/2}\). In the vocabulary of the highest-weight roadmap the simple constituent is \(L(\rho)\), the irreducible of highest weight the half-sum of positive roots; that name is prose here (the Layer 5 device), and the Lean statements carry the content without it. Kostant's full \(\rho\)-decomposition \(C(\mathfrak{g}) \cong \mathrm{End}(V_\rho) \otimes C(P)\) (with the primitive subspace \(P\)) is strictly stronger and is a possible later strengthening, deliberately not pinned. The <b>spin-module variant</b>: the full spinor module \(\bigwedge\! W\) of <code>Cliff(𝔤, κ)</code> (Layer 4's <code>spinAction</code> composed with the adjoint quadratic lift; in even dimension it is \(S^+ \oplus S^-\), and the half-spin summands separately are smaller by a factor of two) is isotypic with multiplicity \(2^{\lfloor l/2 \rfloor}\).</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The worked instance: \(\mathfrak{gl}_N\) on \(M_N(\mathbb{C})\) (the CAR algebra).</b></div>
+          <div class="lsummary">For \(\mathfrak{gl}_N\) with the trace form, the Clifford generators satisfy the CAR relations; the left-regular Fock space splits into \(2^{N(N+1)/2}\) simples with weight \(\nu = (N-\frac12, \ldots, \frac12)\).</div>
+          <div class="ldetail">\(\mathfrak{g} = \mathfrak{gl}_N\) is <b>reductive, not Killing-semisimple</b>, so its form is the <b>trace form</b> \(Q X = \mathrm{tr}(X^2)\) (nondegenerate where the Killing form is not), and its highest weight carries a half-integral central component. The generators \(d_{ab} = \iota (E_{ab})\) satisfy the CAR relations \(d_{ab} d_{cd} + d_{cd} d_{ab} = 2\,\delta_{bc}\,\delta_{ad}\) (pinned as the polar-form equation); the <b>normal-ordered quadratics</b> \(F_{ij} = \frac12 \sum_k d_{ik} d_{kj}\) form a Lie homomorphism <code>glCliffordHom</code> with \([F_{ij}, d_{kl}] = \delta_{jk} d_{il} - \delta_{li} d_{kj}\) (basis-free: bracketing a generator is the adjoint action), and differ from the antisymmetrized quadratic elements by the <b>normal-ordering constant</b> \(\frac{N}{2}\,\delta_{ij}\), the source of the half-integral central weight. The left-regular <code>Cliff(M_N)</code> (the fermionic Fock space \(\bigwedge (M_N)\) via <code>equivExterior</code>, dimension \(2^{N^2}\)) is isotypic with \(2^{N(N+1)/2}\) simple summands of dimension \(2^{N(N-1)/2}\), each containing a highest weight vector of weight \(\nu = (N - \tfrac12, \ldots, \tfrac12)\) for the matrix-unit positive system. This is Panyushev's Prop. 2.4 and Ex. 2.5(1), and the decomposition behind the CAR-matrix analysis of Shlyakhtenko (arXiv:2606.28648); the companion decomposition \(V^* \otimes L(\nu) \cong \bigoplus_{t=1}^{N} L(\nu - \varepsilon_t)\) is the dual-standard Pieri rule of the highest-weight roadmap, uniform in \(t\) because every \(\nu - \varepsilon_t\) stays dominant.</div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="lhead">Worked examples (acceptance criteria)<span class="lbrief"> · the acceptance tests that pin the definitions and the arithmetic</span> <span class="lstatus idle">mostly open</span></div>
+        <div class="lbullet">
+          <div class="ltitle"><b>\(\mathrm{Cliff}(0,1) \cong \mathbb{C}\) and \(\mathrm{Cliff}(0,2) \cong \mathbb{H}\).</b></div>
+          <div class="lsummary">The first two Bott entries are in Mathlib — \(\mathbb{C}\) and \(\mathbb{H}\) — plus \(\mathrm{Cliff}(1,1) \cong M_2(\mathbb{R})\), the periodicity step.</div>
+          <div class="ldetail">The \(\mathbb{R}\)-algebra isomorphisms <code>CliffordAlgebraComplex.equiv</code> (consumed) and <code>Cliff(realCliffordForm 0 2) ≃ₐ[ℝ] ℍ[ℝ]</code> (Layer 7), the first two entries of the Bott table; and \(\mathrm{Cliff}(1,1) \cong M_2(\mathbb{R})\), the periodicity step.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>\(\mathrm{Spin}_3 \cong SL_2\) and its spin representation.</b></div>
+          <div class="lsummary">The smallest instance of the theory: \(\mathrm{Spin}(3) \cong SU(2)\) double-covers \(SO(3)\), and \(S\) is the standard of \(SL_2\).</div>
+          <div class="ldetail">For \(V = \mathbb{C}^3\), <code>spinGroup Q ≃* SL(2, ℂ)</code> (Layer 6), with the \(2\)-dimensional spin representation <code>spinRep Q W</code> the standard representation of \(SL_2\) (<code>finrank ℂ (ExteriorAlgebra ℂ W) = 2</code>, \(\dim W = 1\)). Over \(\mathbb{R}\), <code>Spin(3) ≅ SU(2)</code>, the double cover of \(SO(3)\) with kernel \(\{\pm 1\}\) (Layer 2), the smallest instance of the whole theory.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The \(2^l\)-dimensional spin representation of \(\mathfrak{so}(2l+1)\).</b></div>
+          <div class="lsummary">Acceptance: \(\mathrm{finrank}\,S = 2^l\), highest weight the last \(B_l\) fundamental, outside the tensor-power lattice.</div>
+          <div class="ldetail">For type \(B_l\), <code>spinRep Q W</code> is irreducible of dimension \(2^l\) with highest weight \(\omega_l = \tfrac12(1, \ldots, 1)\) (Layers 4-5), and its weights are exactly the \(2^l\) half-integer sign vectors \(\tfrac12(\pm 1, \ldots, \pm 1)\). Acceptance: <code>finrank ℂ (ExteriorAlgebra ℂ W) = 2 ^ l</code>, and the highest weight is the last fundamental weight of \(B_l\), lying in the half-integral coset and outside the lattice generated by the vector weights \(\pm e_i\) (the lattice containing every weight of every tensor power of the standard module), which is the precise obstruction to being a tensor-power constituent.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The half-spin representations of \(\mathfrak{so}(8)\) and triality.</b></div>
+          <div class="lsummary">Acceptance: \(\mathrm{trialityAut}^3 = 1 \ne \mathrm{trialityAut}\), and the three 8-dimensionals are cyclically permuted.</div>
+          <div class="ldetail">For \(V = \mathbb{C}^8\) (type \(D_4\)), \(S^+\) and \(S^-\) are irreducible of dimension \(8\), equal to \(\dim V\); <code>trialityAut</code> (Layer 8) is an order-three automorphism of <code>Spin₈</code> cyclically permuting \(V, S^+, S^-\), and the trilinear form \(V \otimes S^+ \otimes S^- \to \mathbb{C}\) is <code>Spin₈</code>-invariant. Acceptance: <code>trialityAut ^ 3 = 1</code>, <code>trialityAut ≠ 1</code>, and the three \(8\)-dimensional representations are cyclically permuted.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>\(\bigwedge \mathfrak{sl}_2\) under the two actions (the Layer 9 non-example and smallest example).</b></div>
+          <div class="lsummary">The check that the two actions stay apart: \(1 \oplus V(2) \oplus V(2) \oplus 1\) under the commutator vs four copies of the 2-simple under left multiplication.</div>
+          <div class="ldetail">Under the <b>commutator</b> action, \(\bigwedge \mathfrak{sl}_2 \cong 1 \oplus V(2) \oplus V(2) \oplus 1\) (dimensions \(1 + 3 + 3 + 1 = 8 = 2^3\)), not isotypic; under <b>left multiplication</b>, <code>Cliff(𝔰𝔩₂, κ)</code> is four copies of one \(2\)-dimensional simple (\(d = 3\), \(l = 1\): simple dimension \(2^{(3-1)/2} = 2\), multiplicity \(2^{(3+1)/2} = 4\)). The pair is the acceptance check that the two actions are truly kept apart.</div>
+        </div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The CAR algebra on \(N \times N\) matrices (the Shlyakhtenko instance).</b></div>
+          <div class="lsummary">Acceptance arithmetic: \(2^{N(N-1)/2} \cdot 2^{N(N+1)/2} = 2^{N^2} = \dim \bigwedge (M_N)\).</div>
+          <div class="ldetail">For \(\mathfrak{g} = \mathfrak{gl}_N\) with the trace form: the CAR relations from the polar-form pin (\(2\,\delta_{bc}\,\delta_{ad}\)), the \(\mathfrak{gl}_N\) relations \([F_{ij}, F_{kl}] = \delta_{jk} F_{il} - \delta_{li} F_{kj}\) from <code>glCliffordHom</code>, the normal-ordering constant \(\frac{N}{2}\,\delta_{ij}\), and the isotypic decomposition of the left-regular <code>Cliff(M_N)</code> into \(2^{N(N+1)/2}\) simples of dimension \(2^{N(N-1)/2}\) with highest weight \(\nu = (N - \tfrac12, \ldots, \tfrac12)\). Acceptance arithmetic: \(2^{N(N-1)/2} \cdot 2^{N(N+1)/2} = 2^{N^2} = \dim \bigwedge (M_N)\), and the \(d \pm l\) bookkeeping \(d + l = N^2 + N\), \(d - l = N^2 - N = 2 \cdot \#\Delta^+\).</div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="lhead">Ordering<span class="lbrief"> · the dependency spine of the ten layers</span> <span class="lstatus idle">for reference</span></div>
+        <div class="lbullet">
+          <div class="ltitle"><b>The dependency spine.</b></div>
+          <div class="lsummary">Layer 0 first; the core summit is Layers 3-5; Layer 2's double cover is the single hardest target; Layer 9 is reachable directly from the core.</div>
+          <div class="ldetail">The <b>core summit</b> of this roadmap is the complex spin representation theory: the hyperbolic Clifford module \(\bigwedge\! W\) (Layer 4), the \(\mathfrak{so}(V)\)-action through bivectors (Layer 3), irreducibility and the half-spin splitting (Layer 4), and the highest weights for \(B_l/D_l\) (Layer 5). Layer 0 (the algebra and the two gradings) is the algebraic foundation and comes first; the filtration and the PBW-type associated graded are used throughout. The structure theorem of Layer 1 is proved <b>forward from the spin module</b>; there is no reverse dependency and no circular use of a separately proved structure theorem. Layer 2 (the Pin/Spin double covers) needs Layer 0's grading, the vector equivalence <code>ιRangeEquiv</code>, and Cartan–Dieudonné diagonalization; its surjectivity (over \(\mathbb{C}\)) is the single hardest target. Layer 3 (\(\mathfrak{so}(V) \cong \bigwedge^2 V\)) needs Layer 0 and gives the differential of Layer 2; it is the interface to the highest-weight roadmap. Layer 5 needs Layers 3-4 and the highest-weight theory; Layer 6 needs Layers 4-5; Layer 7 needs Layer 1 and Layer 2, specialized to \(\mathbb{R}\); Layer 8 needs Layer 5 and the \(D_4\) diagram automorphism; Layer 9 needs Layer 0's filtration vocabulary, restates Layer 3's realization for an abstract nondegenerate form, consumes Layer 4's <code>spinAction</code> for its spin-module variant, and is independent of Layers 6-8 — so a contributor can reach Kostant's isotypy corollary directly from the core summit.</div>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="lhead">References<span class="lbrief"> · the primary sources</span> <span class="lstatus idle">for reference</span></div>
+        <div class="lbullet">
+          <div class="ltitle"><b>Primary sources.</b></div>
+          <div class="lsummary">Ten sources, one per line in the hover: Fulton–Harris, Goodman–Wallach, Lawson–Michelsohn, Chevalley, Cartan, Adams, Kostant, Panyushev, Meinrenken, Shlyakhtenko.</div>
+          <div class="ldetail"><ul class="reflist"><li>W. Fulton, J. Harris, <i>Representation Theory: A First Course</i>, Springer GTM 129 (1991), Lecture 20 — the primary reference: the Clifford algebra, the Pin and Spin groups and the double cover, the spin representations \(S, S^+, S^-\), their highest weights, the low-dimensional isomorphisms, and triality.</li><li>R. Goodman, N. R. Wallach, <i>Symmetry, Representations, and Invariants</i>, Springer GTM 255 (2009), Chapter 6 — the spin representations of \(\\mathfrak{so}(n)\) uniformly and the Clifford-algebra construction of the spin module.</li><li>H. B. Lawson, M.-L. Michelsohn, <i>Spin Geometry</i>, Princeton (1989), Chapter I — the definitive account of \(\\mathrm{Cliff}(p,q)\), the Bott-periodic classification, the double covers, and the spinor representations.</li><li>C. Chevalley, <i>The Algebraic Theory of Spinors</i>, Columbia (1954) — the algebraic construction of the spin representation from a maximal isotropic subspace.</li><li>É. Cartan, <i>The Theory of Spinors</i>, Hermann (1966) — the original discovery of spinors, isotropic subspaces, and triality for \(\\mathrm{Spin}_8\).</li><li>J. F. Adams, <i>Lectures on Exceptional Lie Groups</i>, Chicago (1996) — triality, the octonions, and the trilinear form \(S^0 \\otimes S^+ \\otimes S^- \\to \\mathbb{C}\).</li><li>B. Kostant, <i>Clifford algebra analogue of the Hopf–Koszul–Samelson theorem, the \(\\rho\)-decomposition \(C(\\mathfrak{g}) = \\mathrm{End}\\,V_\\rho \\otimes C(P)\), and the \(\\mathfrak{g}\)-module structure of \(\\bigwedge \\mathfrak{g}\)</i>, Adv. Math. 125 (1997), 275–350 — the source for Layer 9's isotypy corollary.</li><li>D. Panyushev, <i>The exterior algebra and “spin” of an orthogonal \(\\mathfrak{g}\)-module</i>, Transform. Groups 6 (2001), 371–396 — Prop. 2.4 and Ex. 2.5(1) are exactly the \(\\mathfrak{gl}_N\)-on-\(M_N\) worked instance.</li><li>E. Meinrenken, <i>Clifford Algebras and Lie Theory</i>, Springer Ergebnisse 58 (2013), Chapters 5–10 — the modern textbook account of the quadratic realization and the Kostant theory.</li><li>D. Shlyakhtenko, arXiv:2606.28648 — the CAR-matrix analysis whose \(\\mathfrak{gl}_N\) representation theory is the motivating application of the Layer 9 worked instance.</li></ul></div>
+        </div>
+      </div>
+    </div>
+    <p class="note">(✝ closed · ◐ open. The summaries are one-line readings; the hover text carries the roadmap's exact statements, with the mathematics typeset on load. Grade and criteria tags are retrospective against the 2026-08-06 criteria.)</p>
+  </section>
+
+  Siblings: <a class="prlink pr-neutral" href="spinrep-route-map.html">route map</a> · <a class="prlink pr-neutral" href="spinrep-clifford-reuse-proposal.html">reuse proposal</a></div>
+  <footer>
+    Shared roadmap document · linked from the
+    <a href="spinrep-clifford-reuse-proposal.html">reuse report</a> and the
+    selection-criteria map ·
+    roadmap text follows TauCetiRoadmap/.../SpinRepresentations/README.md
+  </footer>
+
+</div>
+<script>
+/* generated chips: data-driven, kept byte-identical with the hand-written markup */
+const PRS = {"1473": ["rm-chip other g-part", "#1473 \u00b7 kim-em \u00b7 merged 2026-07-30 \u00b7 feat: add the degree filtration of a Clifford algebra \u00b7 grade: partial \u00b7 met: roadmap fit, one idea, reuse, characteristic API, scope-orthogonal \u00b7 missed: generality, consumer probe", "<span class=\"kw\">degree filtration</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct on\">reuse</span><span class=\"ct on\">characteristic API</span><span class=\"ct on\">scope-orthogonal</span><span class=\"ct off\">generality</span><span class=\"ct off\">consumer probe</span></span>"], "1561": ["rm-chip other g-meets", "#1561 \u00b7 kim-em \u00b7 merged 2026-07-31 \u00b7 feat: compute the dimension of a Clifford algebra \u00b7 grade: meets \u00b7 met: roadmap fit, one idea, reuse, characteristic API, scope-orthogonal \u00b7 missed: none", "<span class=\"kw\">dimension 2\u207f</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct on\">reuse</span><span class=\"ct on\">characteristic API</span><span class=\"ct on\">scope-orthogonal</span></span>"], "1772": ["rm-chip closed g-fail", "#1772 \u00b7 utensil \u00b7 closed 2026-08-02 \u00b7 feat: add degree-two Clifford leading-term map \u2014 re-scoped to the generic #1783 \u00b7 grade: fail \u00b7 closed \u00b7 met: roadmap fit, one idea \u00b7 missed: generality, consumer probe", "<span class=\"kw\">degree-2 leading term</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct off\">generality</span><span class=\"ct off\">consumer probe</span></span>"], "1783": ["rm-chip me g-meets", "#1783 \u00b7 utensil \u00b7 merged 2026-08-02 \u00b7 feat: add generic Clifford filtration leading terms \u00b7 grade: meets \u00b7 met: roadmap fit, one idea, reuse, generality, characteristic API, consumer probe, scope-orthogonal, upstream potential \u00b7 missed: none", "<span class=\"kw\">leading terms</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct on\">reuse</span><span class=\"ct on\">generality</span><span class=\"ct on\">characteristic API</span><span class=\"ct on\">consumer probe</span><span class=\"ct on\">scope-orthogonal</span><span class=\"ct on\">upstream potential</span></span>"], "1794": ["rm-chip me g-part", "#1794 \u00b7 utensil \u00b7 merged 2026-08-02 \u00b7 feat: preserve Clifford filtrations under change of form \u00b7 grade: partial \u00b7 met: roadmap fit, one idea, reuse, scope-orthogonal \u00b7 missed: generality, naming", "<span class=\"kw\">change of form</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct on\">reuse</span><span class=\"ct on\">scope-orthogonal</span><span class=\"ct off\">generality</span><span class=\"ct off\">naming</span></span>"], "1802": ["rm-chip me g-part", "#1802 \u00b7 utensil \u00b7 merged 2026-08-02 \u00b7 feat: add zero-form Clifford filtration quotients \u00b7 grade: partial \u00b7 met: roadmap fit, one idea, scope-orthogonal \u00b7 missed: reuse, characteristic API", "<span class=\"kw\">zero-form quotients</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct on\">scope-orthogonal</span><span class=\"ct off\">reuse</span><span class=\"ct off\">characteristic API</span></span>"], "1804": ["rm-chip other g-meets", "#1804 \u00b7 CBirkbeck \u00b7 merged 2026-08-02 \u00b7 refactor(CliffordAlgebra): decompose filtrationLeadingTerm_surjective \u00b7 grade: meets \u00b7 met: one idea, reuse, characteristic API \u00b7 missed: none", "<span class=\"kw\">surjectivity split</span><span class=\"ctags\"><span class=\"ct on\">one idea</span><span class=\"ct on\">reuse</span><span class=\"ct on\">characteristic API</span></span>"], "1847": ["rm-chip me g-part", "#1847 \u00b7 utensil \u00b7 merged 2026-08-03 \u00b7 feat: add Clifford filtration graded equivalence \u00b7 grade: partial \u00b7 met: roadmap fit, one idea, scope-orthogonal \u00b7 missed: characteristic API, reuse", "<span class=\"kw\">graded equivalence</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct on\">scope-orthogonal</span><span class=\"ct off\">characteristic API</span><span class=\"ct off\">reuse</span></span>"], "1903": ["rm-chip me g-part", "#1903 \u00b7 utensil \u00b7 merged 2026-08-04 \u00b7 feat: add homogeneous Clifford filtration multiplication \u00b7 grade: partial \u00b7 met: roadmap fit, one idea, reuse, scope-orthogonal \u00b7 missed: characteristic API, placement, naming, proof quality", "<span class=\"kw\">homogeneous product</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct on\">reuse</span><span class=\"ct on\">scope-orthogonal</span><span class=\"ct off\">characteristic API</span><span class=\"ct off\">placement</span><span class=\"ct off\">naming</span><span class=\"ct off\">proof quality</span></span>"], "1971": ["rm-chip me g-part", "#1971 \u00b7 utensil \u00b7 merged 2026-08-04 \u00b7 feat: package the Clifford associated graded algebra \u00b7 grade: partial \u00b7 met: roadmap fit, one idea, scope-orthogonal \u00b7 missed: reuse, characteristic API, attribution, proof quality", "<span class=\"kw\">associated graded algebra</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct on\">scope-orthogonal</span><span class=\"ct off\">reuse</span><span class=\"ct off\">characteristic API</span><span class=\"ct off\">attribution</span><span class=\"ct off\">proof quality</span></span>"], "1499": ["rm-chip other g-meets", "#1499 \u00b7 kim-em \u00b7 merged 2026-07-30 \u00b7 feat: add the orthogonal group of a quadratic form \u2014 the substrate both action PRs consume \u00b7 grade: meets \u00b7 met: roadmap fit, one idea, reuse, characteristic API, scope-orthogonal, upstream potential \u00b7 missed: none", "<span class=\"kw\">orthogonal group</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct on\">reuse</span><span class=\"ct on\">characteristic API</span><span class=\"ct on\">scope-orthogonal</span><span class=\"ct on\">upstream potential</span></span>"], "1510": ["rm-chip other g-meets", "#1510 \u00b7 eohjelle \u00b7 merged 2026-07-31 \u00b7 feat: identify the vectors inside a Clifford algebra \u00b7 grade: meets \u00b7 met: roadmap fit, one idea, reuse, characteristic API, scope-orthogonal \u00b7 missed: none", "<span class=\"kw\">vectors \u00b7 \u03b9RangeEquiv</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct on\">reuse</span><span class=\"ct on\">characteristic API</span><span class=\"ct on\">scope-orthogonal</span></span>"], "1611": ["rm-chip other g-part", "#1611 \u00b7 rudygt \u00b7 merged 2026-08-01 \u00b7 feat: act on quadratic spaces by the spin group \u00b7 grade: partial \u00b7 met: roadmap fit, one idea, scope-orthogonal \u00b7 missed: reuse, characteristic API, generality", "<span class=\"kw\">spin \u2192 O(Q)</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct on\">scope-orthogonal</span><span class=\"ct off\">reuse</span><span class=\"ct off\">characteristic API</span><span class=\"ct off\">generality</span></span>"], "1742": ["rm-chip other g-meets", "#1742 \u00b7 kim-em \u00b7 merged 2026-08-02 \u00b7 feat: act on a quadratic space by the Pin group \u00b7 grade: meets \u00b7 met: roadmap fit, one idea, reuse, characteristic API, scope-orthogonal \u00b7 missed: generality", "<span class=\"kw\">pin \u2192 O(Q)</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct on\">reuse</span><span class=\"ct on\">characteristic API</span><span class=\"ct on\">scope-orthogonal</span><span class=\"ct off\">generality</span></span>"], "1859": ["rm-chip closed g-fail", "#1859 \u00b7 utensil \u00b7 closed 2026-08-04 \u00b7 feat: add Clifford bivector exterior map \u2014 rebuilt from the Mathlib abstraction as #1708 \u00b7 grade: fail \u00b7 closed \u00b7 met: roadmap fit, one idea \u00b7 missed: reuse, characteristic API, naming", "<span class=\"kw\">bivector exterior map</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct off\">reuse</span><span class=\"ct off\">characteristic API</span><span class=\"ct off\">naming</span></span>"], "1708": ["rm-chip me g-meets", "#1708 \u00b7 utensil \u00b7 merged 2026-08-01 \u00b7 feat: add normalized Clifford bivector exterior map \u00b7 grade: meets \u00b7 met: roadmap fit, one idea, characteristic API, scope-orthogonal, upstream potential \u00b7 missed: reuse", "<span class=\"kw\">bivector exterior map</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct on\">characteristic API</span><span class=\"ct on\">scope-orthogonal</span><span class=\"ct on\">upstream potential</span><span class=\"ct off\">reuse</span></span>"], "2224": ["rm-chip me g-meets", "#2224 \u00b7 chrisromanmiller \u00b7 merged 2026-08-07 \u00b7 feat: the quadratic elements of a Clifford algebra as a Lie subalgebra \u00b7 grade: meets \u00b7 met: roadmap fit, one idea, reuse, generality, characteristic API, consumer probe, scope-orthogonal, upstream potential \u00b7 missed: none", "<span class=\"kw\">quadratic Lie subalgebra</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct on\">reuse</span><span class=\"ct on\">generality</span><span class=\"ct on\">characteristic API</span><span class=\"ct on\">consumer probe</span><span class=\"ct on\">scope-orthogonal</span><span class=\"ct on\">upstream potential</span></span>"], "1759": ["rm-chip closed g-fail", "#1759 \u00b7 utensil \u00b7 closed 2026-08-04 \u00b7 feat: close Clifford bivector image under commutator \u2014 roadmap-scope contest, closed \u00b7 grade: fail \u00b7 closed \u00b7 met: roadmap fit, one idea \u00b7 missed: scope, characteristic API, consumer probe", "<span class=\"kw\">image closure</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct off\">scope</span><span class=\"ct off\">characteristic API</span><span class=\"ct off\">consumer probe</span></span>"], "1972": ["rm-chip closed g-fail", "#1972 \u00b7 utensil \u00b7 closed 2026-08-08 \u00b7 feat: add faithful Clifford bivector exterior map \u2014 superseded by the canonical #2335 on #2224 \u00b7 grade: fail \u00b7 closed \u00b7 met: roadmap fit, one idea, reuse \u00b7 missed: consumer probe", "<span class=\"kw\">faithful bivector map</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct on\">reuse</span><span class=\"ct off\">consumer probe</span></span>"], "2335": ["rm-chip open g-open", "#2335 \u00b7 utensil \u00b7 open \u00b7 feat: identify exterior bivectors with quadratic elements \u00b7 grade: open \u00b7 met: roadmap fit, one idea, reuse, characteristic API, consumer probe \u00b7 missed: none", "<span class=\"kw\">exterior bivectors \u2194 quadratic</span><span class=\"ctags\"><span class=\"ct on\">roadmap fit</span><span class=\"ct on\">one idea</span><span class=\"ct on\">reuse</span><span class=\"ct on\">characteristic API</span><span class=\"ct on\">consumer probe</span></span>"]};
+document.querySelectorAll("span.chip").forEach(sp => {
+  const d = PRS[sp.dataset.p];
+  if (d) sp.outerHTML = `<a class="${d[0]}" href="https://github.com/TauCetiProject/TauCeti/pull/${sp.dataset.p}" target="_blank" rel="noopener" data-tip="${d[1]}">${d[2]}</a>`;
+});
+</script></body>
+</html>
