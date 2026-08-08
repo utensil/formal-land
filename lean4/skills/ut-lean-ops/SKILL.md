@@ -87,9 +87,27 @@ Record the toolchain and manifest readback, the commands, the exit codes, the bu
 
 This section and SOFTWARE_VERIFICATION.md apply only to projects that carry executable content (computed programs, native oracles, float kernels). Pure formalization projects, whose deliverables are declarations and proofs, skip it entirely. For projects that do have executable content, keep the layers distinct and prove the bridges between them. The full chain is in SOFTWARE_VERIFICATION.md in this directory.
 
-### 6. Bump the pinned toolchain pair
+### LSP triage and semantic lookup
 
-Moving to a new Lean + mathlib pair is its own operation: dependency-bounded version ceilings, transitive-pin precedence, cache recovery, changelog-traced API drift, and tooling ports. Owned by **ut-lean-bump**; run this skill's verification (cache-first build, per-file test driver, audits, fresh-checkout reproduction) on the result.
+A Lean language server — for example the `lean-lsp-mcp` server registered
+with the agent harness — reads the built state of a hydrated worktree:
+diagnostics, goal states, hover information, and semantic references. Use it
+as fast triage and precise lookup, never as the acceptance check:
+
+- before a full build, read the changed file's diagnostics to catch obvious
+  errors early;
+- use find-references to locate the affected modules and consumers of a
+  changed declaration, more precisely than text search, for the
+  affected-module and consumer-probe checks;
+- goal states and hover information support repair and golf work inside the
+  slice.
+
+Bounds: the LSP needs the built state, so it does not exist in a fresh
+checkout and it never replaces the authoritative gates — the cache-first
+build, the source audits, and fresh-checkout reproduction remain the bar. A
+green editor is not a green build. (Adopted 2026-08-08 from
+jstoobysmith/PhyslibAITools, `Tasks/Golf.md` and sibling task prompts; not
+yet verified.)
 
 ## References
 
@@ -97,4 +115,4 @@ Moving to a new Lean + mathlib pair is its own operation: dependency-bounded ver
 - Lake documentation: https://github.com/leanprover/lean4/blob/master/src/lake/README.md
 - mathlib: https://github.com/leanprover-community/mathlib4
 - SOFTWARE_VERIFICATION.md in this directory: the verification discipline for executable Lean content, gated on the project carrying executable content.
-- Related skills: ut-lean-bump (moving the pinned pair), ut-lean-check (independent-kernel verification), ut-lean-recon (pinned-revision reconnaissance).
+- Related skills: ut-lean-check (independent-kernel verification), ut-lean-recon (pinned-revision reconnaissance).
