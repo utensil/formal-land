@@ -1,6 +1,6 @@
 ---
 name: ut-lean-review
-description: Review for Lean and math formalization pull requests. The latest Tau Ceti rubrics are the default quality gate; the review process follows Tau Ceti coordination unless the project specifies its own rules. This skill is the extension layer on top: what the rubric wording does not say, learned from actual reviews.
+description: 'Review for Lean and math formalization pull requests. The latest Tau Ceti rubrics are the default quality gate; the review process follows Tau Ceti coordination unless the project specifies its own rules. This skill is the extension layer on top: what the rubric wording does not say, learned from actual reviews.'
 ---
 
 # ut-lean-review
@@ -37,7 +37,7 @@ The rule: a review applies only to the head commit it names; a new commit needs 
 
 ### Extends COORDINATION.md Section 2: the post-revision recheck
 
-A revision is a new head, hence a new review. What we learned to recheck every time: the old and new public declarations, the consumers of moved or renamed names, direct imports with targeted builds, the complete build, the exact aggregate diff, and the remote branch state.
+A revision is a new head, hence a new review. Recheck the old and new public declarations, consumers of moved or renamed names, direct imports, the exact aggregate diff, and the remote branch state. Scale execution to the change: use the complete build for an API-surface or final candidate, focused builds and affected probes for a delimited repair, and byte-identical source/history verification for a source-equivalent rebase.
 
 ### Extends `_common.md`: contested findings
 

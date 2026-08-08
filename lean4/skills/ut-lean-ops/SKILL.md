@@ -42,7 +42,7 @@ Recommended practice:
 
 - Work on each slice in its own git worktree at a conventional root, by default `~/worktrees/` unless the user specifies another location. The main checkout holds the canonical branches and is not a slice workspace.
 - Before creating each new worktree, check the machine can afford it: free disk with `df -h`, and CPU and memory headroom for the builds the slice will run.
-- To limit disk use, keep at most five retained worktrees for the current project (excluding the primary checkout) and retain only the live worktrees from the same route (see ut-lean-roadmap for route). Worktrees from other routes or projects are never counted against the cap and never removed. Recycle a worktree when its slice finishes: `git worktree remove` a clean, completed, or superseded worktree and preserve its branch; never remove a dirty worktree automatically, report it and obtain a disposition before creating another. Never remove a worktree belonging to another route or another project, whose work must not be broken. `git worktree prune` clears stale bookkeeping.
+- To limit disk use, keep at most five retained worktrees for the current project (excluding the primary checkout) and retain only its live worktrees. Worktrees from every route in the current project count toward this cap; worktrees from other projects do not count and are never removed. Recycle a worktree when its slice finishes: `git worktree remove` a clean, completed, or superseded worktree and preserve its branch; never remove a dirty worktree automatically, report it and obtain a disposition before creating another. Never remove a worktree belonging to another project, whose work must not be broken. `git worktree prune` clears stale bookkeeping.
 - The reproduction rule (section 5) applies per worktree: a reused cache never turns a failing item green, and the fresh-checkout gate runs in a clean worktree.
 
 ### 3. Build from cache
@@ -55,9 +55,9 @@ lake build             # compile only your project against cached .olean files
 lake build --iofail    # fail on any error reported by a command in an IO macro
 ```
 
-- Run `lake exe cache get` before every build. Its exit code, not the later `lake build` result, determines whether the cache was available.
+- Run `lake exe cache get` before the first build in a new worktree, after a manifest change, or when the build shows that the pinned cache is missing or incomplete. Once that exact worktree and pin have a verified cache, a focused incremental rebuild need not fetch it again. Its exit code, not a later `lake build` result, determines whether a requested cache refresh was available.
 - Your project compiles from source; mathlib does not. If a mathlib source target appears in the build log, the cache did not cover the pin and the run must stop and be redone.
-- Clean your own build artifacts before rebuilding (`lake clean`), and confirm your own `.olean` and `.ilean` files are gone before `lake build`. A stale artifact from a previous source state must not be able to make a change look green.
+- Clean your own build artifacts for a fresh-checkout or final clean-reproduction gate, after a toolchain or manifest change, or when stale artifacts are a concrete concern. Do not turn every focused repair build into a clean rebuild: Lake's dependency tracking is part of the normal incremental workflow. When a clean gate applies, confirm the project's own `.olean` and `.ilean` files are gone before `lake build` so stale artifacts cannot make the result look green.
 - Cache reuse across worktrees and projects: the compressed mathlib cache archives that `lake exe cache get` downloads are shared through the cache directory (by default `~/.cache/mathlib`), so the same pinned manifest downloads them once. The unpacked dependency products under `.lake/packages` and `.lake/build` are per-checkout, several gigabytes each, and are not shared.
 - Do not symlink or hardlink another worktree's `.lake/packages` into your own to fake sharing: it creates hidden lifecycle coupling and a cleanup failure, since the target can be removed and the link then silently serves a stale tree. Hydrate each worktree normally.
 
@@ -71,9 +71,9 @@ A proof accepted by the kernel still deserves a source-level audit:
 - `#print axioms <theorem>` reports the axiom closure of a single theorem and works everywhere, even where sandboxed tooling does not.
 - Record the commands and their exit codes with the results. An audit that cannot be reproduced is not an audit.
 
-### 5. Reproduce from a fresh checkout
+### 5. Reproduce from a fresh checkout when the gate requires it
 
-The reproduction rule: a cache hit can never turn a failing item green. The cache only removes mathlib compile time; your project still compiles from source every time. A claim holds only when, from a fresh checkout:
+The reproduction rule: a cache hit can never turn a failing item green. The cache only removes mathlib compile time; your project still compiles from source. Use a fresh checkout for the project's full/final reproduction gate, after a toolchain or dependency-pin change, or when the existing worktree's state is in doubt. A small delimited repair or source-equivalent rebase follows the project's proportional gate instead of automatically repeating this one. When a fresh-checkout gate applies, the claim holds only when:
 
 - dependencies are restored with `lake exe cache get`,
 - only the intended targets are built,

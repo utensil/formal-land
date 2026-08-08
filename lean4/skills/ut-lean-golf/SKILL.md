@@ -1,6 +1,6 @@
 ---
 name: ut-lean-golf
-description: Shorten Lean proofs at the mathematical interface by replacing locally rebuilt machinery with the mathlib abstraction that already names the object. Survey the pinned mathlib revision, search by structure before writing lemmas, state at natural generality, extract shared criteria on first reuse, and upstream structural API before specializing.
+description: Shorten Lean proofs at the mathematical interface by replacing locally rebuilt machinery with the library abstraction that already names the object. Survey the pinned revision, search by structure before writing lemmas, state at natural generality, extract shared criteria on first reuse, and land structural API at the project's permitted boundary before specializing.
 ---
 
 # ut-lean-golf
@@ -48,9 +48,14 @@ If the proof works uniformly in a degree, state the theorem for all degrees inst
 
 Ship the criterion lemma with the pull request that first repeats the proof shape. When the second occurrence of a pattern appears, extract the shared lemma in that same pull request, so the third occurrence and every later one consume the API and reviewers do not re-litigate the shape.
 
-### 7. Upstream structural API first
+### 7. Land structural API at the permitted boundary first
 
-When the reusable piece is mathlib-shaped (a generic construction, a criterion stated over an existing mathlib interface), land the mathlib addition before the specialization. That turns later specializations into thin consumers instead of boilerplate that the reuse rubric later peels. Do the generic addition before the specialization, not after.
+When the reusable piece is generic, land it at the earliest boundary the
+project permits before the specialization. In a project that welcomes a
+Mathlib contribution, that may be Mathlib first; in a project that keeps its
+roadmap work local, it means a generic project-local declaration. Never infer
+permission to open an upstream pull request from this skill. The invariant is
+structural API before repeated specialization, not a particular repository.
 
 ### 8. Recheck the boundary after golf
 
