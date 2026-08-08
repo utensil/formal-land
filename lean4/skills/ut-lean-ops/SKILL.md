@@ -16,9 +16,10 @@ Lean formalization projects have a reproducible toolchain story (toolchain file,
 - Deciding whether a build result is trustworthy enough to report.
 - Writing the acceptance check for a Lean change: what must pass and what must be recorded.
 - Any time "it builds" would otherwise be the whole story.
-- Only if the project actually carries executable content (`native_decide`, arrays, foreign function interfaces): also read SOFTWARE_VERIFICATION.md for the executable verification chain.
 
-Out of scope: coordinating parallel work across agents (claims, leases, task queues), monitoring, scheduling, chat relay, and the verification of executable programs. The last one is an extension (SOFTWARE_VERIFICATION.md), not part of the core; most formalization work never reaches it.
+Out of scope: coordinating parallel work across agents (claims, leases, task
+queues), monitoring, scheduling, chat relay, and executable-program
+verification (rare; see the conditional extensions below).
 
 ## Procedure
 
@@ -83,36 +84,18 @@ The reproduction rule: a cache hit can never turn a failing item green. The cach
 
 Record the toolchain and manifest readback, the commands, the exit codes, the build logs, and hashes of produced artifacts. Report any environmental deviation. Cache unavailability, an incomplete cache, or a mathlib source compilation fails the reproduction gate.
 
-### 6. Executable content only: state what the verification chain proves
+## Conditional and optional extensions
 
-This section and SOFTWARE_VERIFICATION.md apply only to projects that carry executable content (computed programs, native oracles, float kernels). Pure formalization projects, whose deliverables are declarations and proofs, skip it entirely. For projects that do have executable content, keep the layers distinct and prove the bridges between them. The full chain is in SOFTWARE_VERIFICATION.md in this directory.
-
-### LSP triage and semantic lookup (optional)
-
-A Lean language server (for example `lean-lsp-mcp` registered with the agent
-harness) is optional. Routine slice work does not need it: `lake build`
-diagnostics and the audits below are the normal flow. Use it only when it
-earns its keep:
-
-- before a long or broad full build: read the changed file's diagnostics
-  first to catch obvious errors early;
-- when the affected-module or consumer-probe check needs a precise consumer
-  list and text search is too noisy: find-references locates them
-  semantically;
-- during interactive repair or golf inside a slice: goal states and hover
-  information beat guesswork.
-
-Bounds: the LSP reads the built state of a hydrated worktree, so it does not
-exist in a fresh checkout and it never replaces the authoritative gates —
-the cache-first build, the source audits, and fresh-checkout reproduction
-remain the bar. A green editor is not a green build. (Adopted 2026-08-08
-from jstoobysmith/PhyslibAITools, `Tasks/Golf.md` and sibling task prompts;
-not yet verified.)
+- **Executable content** — only when the project carries `native_decide`,
+  arrays, or foreign function interfaces (rarely met): the verification
+  chain lives in `SOFTWARE_VERIFICATION.md` in this directory.
+- **LSP triage** — optional: `LSP.md` in this directory. Routine slice work
+  does not need it; it is for pre-build triage on long builds, semantic
+  consumer discovery when text search is noisy, and interactive repair.
 
 ## References
 
 - Lean manual quickstart: https://lean-lang.org/lean4/doc/quickstart.html
 - Lake documentation: https://github.com/leanprover/lean4/blob/master/src/lake/README.md
 - mathlib: https://github.com/leanprover-community/mathlib4
-- SOFTWARE_VERIFICATION.md in this directory: the verification discipline for executable Lean content, gated on the project carrying executable content.
 - Related skills: ut-lean-check (independent-kernel verification), ut-lean-recon (pinned-revision reconnaissance).
