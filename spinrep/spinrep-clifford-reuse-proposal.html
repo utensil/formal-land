@@ -242,6 +242,7 @@ document.addEventListener('DOMContentLoaded', function () {
     transition: opacity .15s, transform .15s; z-index: 60;
   }
   .rm-chip:hover::after, .rm-chip:focus::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .legend .rm-chip::after { content: none; }
 
   /* route analysis */
   .routes { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: .8rem; }
@@ -344,6 +345,11 @@ document.addEventListener('DOMContentLoaded', function () {
   a.prlink.pr-merged { color: #9fc37e; }
   a.prlink.pr-closed { color: #b98d88; text-decoration: line-through; }
   a.prlink.pr-open { color: #e8bc6e; }
+a:not(.rm-chip):not(.prlink){color:#8ba8c7;text-decoration:none;border-bottom:1px dotted rgba(230,225,220,.3)}
+  a:not(.rm-chip):not(.prlink):hover{color:#e6e1dc;border-bottom-style:solid}
+.foot:not(.pat .foot){margin-top:24px;color:var(--muted);font-size:12px;line-height:1.8}
+  .foot:not(.pat .foot) a{color:#8ba8c7;text-decoration:none;border-bottom:1px dotted rgba(230,225,220,.3);font-weight:500}
+  .foot:not(.pat .foot) a:hover{color:#e6e1dc;border-bottom-style:solid}
 
   /* Part 4: surgical-edit diffs */
   .df { background: var(--card); border: 1px solid var(--line); border-radius: 12px; margin-top: .9rem; overflow: hidden; }
