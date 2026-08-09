@@ -1,4 +1,4 @@
-# Independent Lean review evidence
+# Internal review scoreboard
 
 - Reviewed: YYYY-MM-DD
 - Subject: PR number or pre-PR arc and exact candidate hash

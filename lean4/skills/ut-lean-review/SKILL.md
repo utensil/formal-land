@@ -92,7 +92,7 @@ General Lean structural additions, not extensions of any single rubric:
 
 ## Evidence gate
 
-Write the independent review as Markdown using
+Write the independent review as an internal review scoreboard in Markdown using
 [templates/review-evidence.md](templates/review-evidence.md). Keep one scoreboard
 row per required rubric id with four fields: rubric id, verdict, evidence, and
 comment. Use Tau Ceti's verdict vocabulary: `approve`, `request_changes`, or

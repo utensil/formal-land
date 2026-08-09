@@ -12,7 +12,7 @@ what CI and the linters enforce (build, axiom audit, linter set, import
 boundary).
 
 Every checklist group below has the stable rubric id recorded in
-`RUBRICS.md`. The review evidence must contain one scoreboard row for every id.
+`RUBRICS.md`. The internal review scoreboard must contain one row for every id.
 
 ## Cannot miss
 
@@ -84,7 +84,7 @@ Every checklist group below has the stable rubric id recorded in
 - [ ] Module boundaries justified by a real planned consumer needing one without the other; the four pre-split questions answered.
 - [ ] Import-free root not turned into a rolling re-export; aggregators have an explicit ownership contract.
 
-## Evidence acceptance
+## Internal review scoreboard acceptance
 
 - [ ] One Markdown scoreboard row exists for every id in `RUBRICS.md`.
 - [ ] Every row has a verdict, concrete evidence, and a rubric-specific comment.

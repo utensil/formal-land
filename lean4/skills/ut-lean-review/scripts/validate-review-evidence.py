@@ -13,6 +13,18 @@ PLACEHOLDERS = {"", "replace", "todo", "tbd", "n/a"}
 METADATA = ("Reviewed", "Subject", "Base", "Head", "Reviewer")
 
 
+def is_placeholder(value: str) -> bool:
+    normalized = value.strip().lower()
+    return (
+        normalized in PLACEHOLDERS
+        or "yyyy-mm-dd" in normalized
+        or normalized.startswith("pr number or pre-pr")
+        or normalized.startswith("exact base commit")
+        or normalized.startswith("exact reviewed commit")
+        or normalized.startswith("independent reviewer identity")
+    )
+
+
 def split_row(line: str) -> list[str]:
     cells = re.split(r"(?<!\\)\|", line.strip().strip("|"))
     return [cell.replace(r"\|", "|").strip().strip("`") for cell in cells]
@@ -55,7 +67,7 @@ def main() -> int:
 
     for key in METADATA:
         match = re.search(rf"^- {re.escape(key)}:\s*(.+)$", text, re.MULTILINE)
-        if not match or match.group(1).strip().lower() in PLACEHOLDERS:
+        if not match or is_placeholder(match.group(1)):
             errors.append(f"missing or placeholder metadata: {key}")
 
     seen: dict[str, int] = {}
@@ -65,9 +77,9 @@ def main() -> int:
             errors.append(f"{rubric}: invalid verdict {verdict!r}")
         elif verdict != "approve":
             errors.append(f"{rubric}: non-passing verdict {verdict!r}")
-        if evidence.strip().lower() in PLACEHOLDERS:
+        if is_placeholder(evidence):
             errors.append(f"{rubric}: missing concrete evidence")
-        if comment.strip().lower() in PLACEHOLDERS:
+        if is_placeholder(comment):
             errors.append(f"{rubric}: missing reviewer comment")
 
     missing = [rubric for rubric in required if rubric not in seen]
