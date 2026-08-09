@@ -83,6 +83,23 @@ jobs:
             done
         - name: Display structure of downloaded files
           run: ls -R github-pages
+        - name: Check pages completeness
+          run: |
+            set -euo pipefail
+            # Never deploy a partial site. Every section must end up in the tree
+            # either from a fresh artifact or from the restored github-pages cache;
+            # a missing section means the cache was absent or expired for it.
+            # Force a complete redeploy: re-run that project's CI with an
+            # [annotate] tag in the commit message so cache and artifact are
+            # rebuilt, then retry this deploy.
+            missing=0
+            for d in aya tla spinrep lean4 lean4-duper-xp lean4-verso-xp; do
+              if [ ! -d "github-pages/$d" ]; then
+                echo "::error::github-pages/$d is missing: no fresh artifact and no cached content. Re-run the project CIs with an [annotate] commit to rebuild the pages cache, then retry the deploy."
+                missing=1
+              fi
+            done
+            [ "$missing" -eq 0 ]
         - name: Copy assets
           run: |
             just copy-assets
