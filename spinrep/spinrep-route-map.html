@@ -145,7 +145,7 @@ const NODES = [
   "L6-34|6|Spin₃/Spin₄|open|— open|Spin₃ ≅ SL₂ · Spin₄ ≅ SL₂×SL₂",
   "L6-56|6|Spin₅/Spin₆|open|— open|Spin₅ ≅ Sp₄ · Spin₆ ≅ SL₄",
   "L7-real|7|Cliff(p,q)|open|— open · no Mathlib substrate|Real forms Cliff(p,q)",
-  "L7-bott|7|Bott periodicity|open|— open · no Mathlib substrate|Bott: Cliff(p+1,q+1) ≅ Cliff(p,q) ⊗ M₂(ℝ) · mod-8 table",
+  "L7-bott|7|Bott periodicity|review|#2501 · mod-8 table open|Bott: Cliff(p+1,q+1) ≅ Cliff(p,q) ⊗ M₂(ℝ) · mod-8 table",
   "L7-spinq|7|Spin(p,q)|open|— open|Real spin groups Spin(p,q)",
   "L7-con|7|connectivity|open|— open|Connectivity of the compact spin group",
   "L8-tri|8|Spin₈ triality|open|— open|Triality for Spin₈ (three stages)",
@@ -173,7 +173,7 @@ const DEPS = "L0-filt L0-pbw L0-univ L2-orth L0-univ L2-vec L0-univ L3-biv L0-fi
    colors must keep that rule. */
 const PALETTE = ["#6d9cbe","#6b8e23","#cc7833","#7570b3","#a5c261","#bc9458","#da4939"];
 const GOALS = [
-  "alpha|0|Goal α — Bott periodicity: the real Clifford algebras and the real spin groups|L0-univ L0-filt L0-filt L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L4-iso L4-iso L4-mod L4-mod L1-struct L1-struct L7-real L2-dc L7-real L7-real L7-bott L7-bott L7-spinq L7-spinq L7-con|The Bott table: real Cliff(p,q), Cliff(p+1,q+1) ≅ Cliff(p,q) ⊗ M₂(ℝ), the mod-8 table, Spin(p,q). Substrate landed (L0, mathlib SpinGroup, L2 homomorphisms); the double cover is under way (#2404/#2410 merged, #2470 draft), everything after it open, and mathlib has no realCliffordAlgebra at all — L7 is greenfield.",
+  "alpha|0|Goal α — Bott periodicity: the real Clifford algebras and the real spin groups|L0-univ L0-filt L0-filt L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L4-iso L4-iso L4-mod L4-mod L1-struct L1-struct L7-real L2-dc L7-real L7-real L7-bott L7-bott L7-spinq L7-spinq L7-con|The Bott table: real Cliff(p,q), Cliff(p+1,q+1) ≅ Cliff(p,q) ⊗ M₂(ℝ), the mod-8 table, Spin(p,q). Substrate landed (L0, mathlib SpinGroup, L2 homomorphisms); the double cover is under way (#2404/#2410 merged, #2470 draft), and the first Bott step is in review (#2501); mathlib has no realCliffordAlgebra at all — the rest of L7 is greenfield.",
   "beta|1|Goal β — the spin representations of the Spin groups, from the double cover to triality|L0-univ L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L3-diff L3-diff L4-iso L4-iso L4-mod L4-mod L4-rep L4-rep L4-half L4-half L4-irt L4-irt L5-w L5-w L5-bd L5-bd L6-34 L6-34 L6-56 L6-56 L8-tri|The spin representations of the Spin groups: the double cover and its differential, the Clifford module S = ⋀·W with spinRep and half-spins, the B_l/D_l weights, and Spin₈ triality. Substrate: mathlib's spinGroup (mathlib#9111) with the homomorphisms merged (#1611/#1742); the double cover is being landed (#2404/#2410 merged, #2470 draft); the module and weights open.",
   "gamma|2|Goal γ — the quadratic layer is 𝔰𝔬(V) ≅ ⋀²V, with its quadratic action (PBW + Cartan)|L0-filt L0-pbw L0-pbw L3-biv L3-biv L3-ext L3-ext L3-iso L3-iso L9-real|PBW + Cartan over the same degree-2 layer: gr(Cliff) ≅ ⋀V, and that layer with the commutator is 𝔰𝔬(V) ≅ ⋀²V. PBW pieces merged, quadratic package landed (#2224), #2335 merged, the standard bridge #2397 in review, the Lie-transport draft #2343 stacked; the summit is the quadratic realization (in flight: #2413, #2411), with the soEquivBivector composition still open.",
   "delta|3|Goal δ — Kostant's isotypy: Clifford modules decompose isotypically under the 𝔰𝔬(V)-action|L0-filt L3-biv L3-biv L4-iso L4-iso L4-mod L4-mod L4-rep L4-rep L9-rep L9-rep L9-iso L9-iso L9-car|Kostant's isotypy: every Clifford module carries the 𝔰𝔬(V)-action (consuming γ's realization) and decomposes isotypically; the CAR instance is the worked case. The induced-rep machinery draft #2419 is in review; the summit and CAR open.",
@@ -443,7 +443,7 @@ legend.querySelectorAll(".gl").forEach(el => el.addEventListener("click", () => 
 }));
 
 /* ================= PR links ================= */
-const PRS = {1473:"m",1499:"m",1510:"m",1561:"m",1611:"m",1708:"m",1742:"m",1783:"m",1794:"m",1802:"m",1804:"m",1847:"m",1903:"m",1971:"m",2224:"m",2335:"m",2404:"m",2410:"m",1772:"c",1759:"c",1859:"c",1972:"c",2343:"o",2397:"o",2411:"o",2413:"o",2419:"o",2470:"o",2492:"o"};
+const PRS = {1473:"m",1499:"m",1510:"m",1561:"m",1611:"m",1708:"m",1742:"m",1783:"m",1794:"m",1802:"m",1804:"m",1847:"m",1903:"m",1971:"m",2224:"m",2335:"m",2404:"m",2410:"m",1772:"c",1759:"c",1859:"c",1972:"c",2343:"o",2397:"o",2411:"o",2413:"o",2419:"o",2470:"o",2492:"o",2501:"o"};
 function linkify(t) {
   return t.replace(/(?:mathlib)?#(\d+)(\u271d)?/g, (m, n, d) => {
     const isML = m.indexOf("mathlib") === 0;
