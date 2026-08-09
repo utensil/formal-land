@@ -68,10 +68,8 @@ jobs:
             contains(github.event.head_commit.message, '[annotate]')
           )
         run: echo "annotate=true" >> "$GITHUB_OUTPUT"
-      - name: Cache github-pages
-        if: >-
-          steps.annotate.outputs.annotate == 'true'
-        uses: actions/cache@v4
+      - name: Restore github-pages cache
+        uses: actions/cache/restore@v4
         with:
             path: github-pages
             key: github-pages-${{ github.run_id }}
@@ -151,6 +149,13 @@ jobs:
           just pages lean4
           just pages lean4-duper-xp
           just pages lean4-verso-xp
+      - name: Save github-pages cache
+        if: >-
+          steps.annotate.outputs.annotate == 'true'
+        uses: actions/cache/save@v4
+        with:
+            path: github-pages
+            key: github-pages-${{ github.run_id }}
       - name: Upload pages artifact
         if: >-
           steps.annotate.outputs.annotate == 'true'
