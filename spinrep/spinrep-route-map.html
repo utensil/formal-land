@@ -36,7 +36,7 @@ h2{font-size:16px;margin:26px 0 10px;color:var(--tau)}
 svg{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;width:100%;height:auto}
 .node{cursor:pointer}
 .node circle{stroke:#e6e1dc;stroke-width:1.1}
-.node .nl{font-size:10.5px;fill:#c9c2b4;pointer-events:none}
+.node .nl{font-size:16.8px;fill:#c9c2b4;pointer-events:none}
 .node .ns{font-size:9px;fill:var(--muted);pointer-events:none}
 .node:hover circle{stroke:#fff;stroke-width:2}
 .nodest-done{fill:var(--done)}
@@ -52,7 +52,7 @@ svg{display:block;background:var(--card);border:1px solid var(--line);border-rad
 .edge-goal.lit{opacity:.98;stroke-width:3.6}
 .goal{transition:border-color .12s,box-shadow .12s}
 .goal.lit{border-color:var(--gc);box-shadow:0 0 0 1px var(--gc),0 8px 26px rgba(0,0,0,.45)}
-.lrow{font-size:11.5px;fill:var(--muted);letter-spacing:.04em}
+.lrow{font-size:23px;fill:var(--muted);letter-spacing:.04em}
 #tip{position:fixed;pointer-events:auto;background:#1e1e1e;border:1px solid #555;border-radius:8px;padding:8px 11px;font-size:12.5px;max-width:340px;display:none;z-index:99;box-shadow:0 6px 24px rgba(0,0,0,.5)}
 a.prlink{text-decoration:none;border-bottom:1px dotted rgba(230,225,220,.35);font-weight:600}
 a.prlink:hover{border-bottom-style:solid;border-bottom-color:currentColor}
@@ -128,10 +128,10 @@ const NODES = [
   "L2-orth|2|O(Q)|done|#1499|Abstract orthogonal group O(Q)",
   "L2-vec|2|ιRangeEquiv|done|#1510|Vectors · ιRangeEquiv",
   "L2-hom|2|spin/pin → SO/O|done|#1611 #1742 · mathlib SpinGroup #9111|Twisted conjugation → O(Q)/SO(Q)",
-  "L2-dc|2|double cover|open|— open|Double cover: Cartan–Dieudonné, kernel ±1, spinor-norm exact seq",
+  "L2-dc|2|double cover|review|#2404 #2410 · kernel ±1, spinor-norm open|Double cover: Cartan–Dieudonné, kernel ±1, spinor-norm exact seq",
   "L3-biv|3|quadratic Lie subalgebra|done|#2224 (canonical) · #1708 · #1759✝ #1859✝|Bivectors as a Lie subalgebra (quadratic elements)",
-  "L3-ext|3|⋀²V ↔ quadratic|review|#2335 · supersedes #1972✝|Exterior bivectors identified with quadratic elements",
-  "L3-iso|3|soEquivBivector|open|— open|soEquivBivector : ⋀²V ≃ 𝔰𝔬(V)",
+  "L3-ext|3|⋀²V ↔ quadratic|review|#2335 #2343 · supersedes #1972✝|Exterior bivectors identified with quadratic elements",
+  "L3-iso|3|soEquivBivector|review|#2397 · composition open|soEquivBivector : ⋀²V ≃ 𝔰𝔬(V)",
   "L3-diff|3|d(double cover)|open|— open|Differential of the double cover",
   "L4-iso|4|maximal isotropic W|open|— open|Maximal isotropic W",
   "L4-mod|4|spin module S|open|— open|Clifford module S = ⋀·W (wedge + contraction)",
@@ -149,8 +149,8 @@ const NODES = [
   "L7-spinq|7|Spin(p,q)|open|— open|Real spin groups Spin(p,q)",
   "L7-con|7|connectivity|open|— open|Connectivity of the compact spin group",
   "L8-tri|8|Spin₈ triality|open|— open|Triality for Spin₈ (three stages)",
-  "L9-real|9|quadratic realization|review|LieSubalgebra piece via #2224|Abstract quadratic realization β(a,b) = ½·[ιa,ιb]",
-  "L9-rep|9|𝔤-module machinery|open|— open|Every Clifford module is a 𝔤-module · cliffordInducedRep · adjointSO",
+  "L9-real|9|quadratic realization|review|#2224 (subalgebra) · #2413 #2411|Abstract quadratic realization β(a,b) = ½·[ιa,ιb]",
+  "L9-rep|9|𝔤-module machinery|review|#2419 · adjointSO open|Every Clifford module is a 𝔤-module · cliffordInducedRep · adjointSO",
   "L9-iso|9|Kostant isotypy|open|— open|Kostant's isotypy corollary (summit)",
   "L9-car|9|CAR instance|branch|branch-only lane (CAR)|CAR worked instance: gl_N on M_N(ℂ)",
   "W-cliff|10|Cliff(0,1)/Cliff(0,2)|open|— open|Cliff(0,1) ≅ ℂ · Cliff(0,2) ≅ ℍ",
@@ -169,10 +169,10 @@ const DEPS = "L0-filt L0-pbw L0-univ L2-orth L0-univ L2-vec L0-univ L3-biv L0-fi
 /* goals: add one entry per new goal; color picks from a rotating palette */
 const PALETTE = ["#4da6ff","#7fc97f","#d95f02","#7570b3","#e7298a","#a6cee3","#fdb462"];
 const GOALS = [
-  "alpha|0|Goal α — Bott periodicity table (Layer 7 capstone)|L0-univ L0-filt L0-filt L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L4-iso L4-iso L4-mod L4-mod L1-struct L1-struct L7-real L2-dc L7-real L7-real L7-bott L7-bott L7-spinq L7-spinq L7-con|The Bott table: real Cliff(p,q), Cliff(p+1,q+1) ≅ Cliff(p,q) ⊗ M₂(ℝ), the mod-8 table, Spin(p,q). Substrate landed (L0, mathlib SpinGroup, L2 homomorphisms); everything after is open, and mathlib has no realCliffordAlgebra at all — L7 is greenfield.",
-  "beta|1|Goal β — make use of mathlib SpinGroup (#9111)|L0-univ L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L3-diff L3-diff L4-iso L4-iso L4-mod L4-mod L4-rep L4-rep L4-half L4-half L4-irt L4-irt L5-w L5-w L5-bd L5-bd L6-34 L6-34 L6-56|The spin-representation spine on mathlib's spinGroup (#9111): port landed, first consumers merged (#1611/#1742); the double cover, the L3 differential, the L4 spin module + spinRep, and the L5 weights are open.",
-  "gamma|2|Goal γ — the structural summit: the quadratic layer is 𝔰𝔬(V) over the graded-exterior structure (PBW + Cartan)|L0-filt L0-pbw L0-pbw L3-biv L3-biv L3-ext L3-ext L3-iso|PBW + Cartan over the same degree-2 layer: gr(Cliff) ≅ ⋀V, and that layer with the commutator is 𝔰𝔬(V) ≅ ⋀²V. PBW pieces merged, quadratic package landed (#2224), #2335 in review; the total isomorphism and soEquivBivector open.",
-  "delta|3|Goal δ — the module-side summit: Kostant's isotypy corollary|L0-filt L3-biv L3-biv L9-real L3-biv L4-iso L4-iso L4-mod L4-mod L4-rep L9-real L9-rep L4-rep L9-rep L9-rep L9-iso L9-iso L9-car|Kostant's isotypy: every Clifford module carries the 𝔰𝔬(V)-action (consuming γ) and decomposes isotypically; the CAR instance is the worked case. Realization substrate partial; the machinery, summit, and CAR are open.",
+  "alpha|0|Goal α — Bott periodicity table (Layer 7 capstone)|L0-univ L0-filt L0-filt L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L4-iso L4-iso L4-mod L4-mod L1-struct L1-struct L7-real L2-dc L7-real L7-real L7-bott L7-bott L7-spinq L7-spinq L7-con|The Bott table: real Cliff(p,q), Cliff(p+1,q+1) ≅ Cliff(p,q) ⊗ M₂(ℝ), the mod-8 table, Spin(p,q). Substrate landed (L0, mathlib SpinGroup, L2 homomorphisms); the double cover is under way (#2404 merged, #2410 in review), everything after it open, and mathlib has no realCliffordAlgebra at all — L7 is greenfield.",
+  "beta|1|Goal β — make use of mathlib SpinGroup (#9111)|L0-univ L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L3-diff L3-diff L4-iso L4-iso L4-mod L4-mod L4-rep L4-rep L4-half L4-half L4-irt L4-irt L5-w L5-w L5-bd L5-bd L6-34 L6-34 L6-56|The spin-representation spine on mathlib's spinGroup (#9111): port landed, first consumers merged (#1611/#1742); the double cover is being landed (#2404 merged, #2410 in review), the L3 differential, the L4 spin module + spinRep, and the L5 weights open.",
+  "gamma|2|Goal γ — the structural summit: the quadratic layer is 𝔰𝔬(V) over the graded-exterior structure (PBW + Cartan)|L0-filt L0-pbw L0-pbw L3-biv L3-biv L3-ext L3-ext L3-iso|PBW + Cartan over the same degree-2 layer: gr(Cliff) ≅ ⋀V, and that layer with the commutator is 𝔰𝔬(V) ≅ ⋀²V. PBW pieces merged, quadratic package landed (#2224), #2335 and the standard bridge #2397 in review, the Lie-transport draft #2343 stacked; the total isomorphism and the soEquivBivector composition open.",
+  "delta|3|Goal δ — the module-side summit: Kostant's isotypy corollary|L0-filt L3-biv L3-biv L9-real L3-biv L4-iso L4-iso L4-mod L4-mod L4-rep L9-real L9-rep L4-rep L9-rep L9-rep L9-iso L9-iso L9-car|Kostant's isotypy: every Clifford module carries the 𝔰𝔬(V)-action (consuming γ) and decomposes isotypically; the CAR instance is the worked case. Realization partial (#2224; #2413 in review, #2411 draft), the induced-rep machinery draft #2419 in review; the summit and CAR open.",
 ].map(r => { const [id, color, name, edgeStr, evalText] = r.split("|"); const es = edgeStr.split(" "); const edges = []; for (let i = 0; i < es.length; i += 2) edges.push([es[i], es[i + 1]]); return { id, color: +color, name, edges, eval: evalText }; });
 
 
@@ -181,7 +181,26 @@ const GOALS = [
    their neighbors (fewer crossings), then positioned by barycenter, then
    overlaps pushed apart. The roadmap layer stays the row. */
 const W = 1560, ROW = 120, TOP = 72, H = TOP + (LAYERS.length - 1) * ROW + 170;
-const X0 = 210, X1 = W - 90, MIN_GAP = 78;
+/* measure label widths offscreen at render font sizes, so the overlap
+   resolution below keeps the doubled node labels apart and the left layer
+   labels fit in their own column */
+const { nodeW, lrowW } = (() => {
+  const ms = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  ms.style.cssText = "position:absolute;left:-9999px;top:0;width:2000px;height:120px;visibility:hidden";
+  const mt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  mt.style.fontFamily = "ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";
+  ms.appendChild(mt);
+  document.body.appendChild(ms);
+  const m = (txt, font, ls) => { mt.style.fontSize = font + "px"; mt.style.letterSpacing = ls + "em"; mt.textContent = txt; return mt.getComputedTextLength() || txt.length * 0.6 * font; };
+  const cache = {};
+  return {
+    nodeW: id => { if (cache[id] === undefined) { const n = NODES.find(x => x.id === id); cache[id] = m(n.short, 16.8, 0); } return cache[id]; },
+    lrowW: l => m(l, 23, 0.04),
+  };
+})();
+const X0 = Math.max(220, Math.ceil(Math.max(...LAYERS.map(lrowW))) + 22);
+const X1 = W - 90, MIN_GAP = 78;
+const pairGap = (a, b) => Math.max(MIN_GAP, (nodeW(a.id) + nodeW(b.id)) / 2 + 16);
 
 const adj = {};
 function link(a, b) { (adj[a] = adj[a] || new Set()).add(b); (adj[b] = adj[b] || new Set()).add(a); }
@@ -246,8 +265,9 @@ function resolveOverlaps() {
     for (let L = 0; L < LAYERS.length; L++) {
       const arr = byLayer[L].slice().sort((a, b) => posX[a.id] - posX[b.id]);
       for (let i = 1; i < arr.length; i++) {
+        const need = pairGap(arr[i - 1], arr[i]);
         const d = posX[arr[i].id] - posX[arr[i - 1].id];
-        if (d < MIN_GAP) { posX[arr[i].id] = Math.min(X1, posX[arr[i - 1].id] + MIN_GAP); moved = true; }
+        if (d < need) { posX[arr[i].id] = Math.min(X1, posX[arr[i - 1].id] + need); moved = true; }
       }
     }
     if (!moved) break;
@@ -284,7 +304,7 @@ function crossingCount() {
 }
 function layerOverlaps(L) {
   const arr = byLayer[L].slice().sort((a, b) => posX[a.id] - posX[b.id]);
-  for (let i = 1; i < arr.length; i++) if (posX[arr[i].id] - posX[arr[i - 1].id] < MIN_GAP * 0.8) return true;
+  for (let i = 1; i < arr.length; i++) if (posX[arr[i].id] - posX[arr[i - 1].id] < pairGap(arr[i - 1], arr[i]) * 0.85) return true;
   return false;
 }
 {
@@ -419,7 +439,7 @@ legend.querySelectorAll(".gl").forEach(el => el.addEventListener("click", () => 
 }));
 
 /* ================= PR links ================= */
-const PRS = {1473:"m",1561:"m",1708:"m",1783:"m",1794:"m",1802:"m",1804:"m",1847:"m",1903:"m",1971:"m",2224:"m",1772:"c",1759:"c",1859:"c",1972:"c",2335:"o"};
+const PRS = {1473:"m",1561:"m",1708:"m",1783:"m",1794:"m",1802:"m",1804:"m",1847:"m",1903:"m",1971:"m",2224:"m",2404:"m",1772:"c",1759:"c",1859:"c",1972:"c",2335:"o",2343:"o",2397:"o",2410:"o",2411:"o",2413:"o",2419:"o"};
 function linkify(t) {
   return t.replace(/(?:mathlib)?#(\d+)(\u271d)?/g, (m, n, d) => {
     const isML = m.indexOf("mathlib") === 0;
