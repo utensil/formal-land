@@ -128,7 +128,7 @@ const NODES = [
   "L2-orth|2|O(Q)|done|#1499|Abstract orthogonal group O(Q)",
   "L2-vec|2|ιRangeEquiv|done|#1510|Vectors · ιRangeEquiv",
   "L2-hom|2|spin/pin → SO/O|done|#1611 #1742 · mathlib SpinGroup #9111|Twisted conjugation → O(Q)/SO(Q)",
-  "L2-dc|2|double cover|review|#2404 #2410 · kernel ±1, spinor-norm open|Double cover: Cartan–Dieudonné, kernel ±1, spinor-norm exact seq",
+  "L2-dc|2|double cover|review|#2404 #2410 #2470 · kernel ±1, spinor-norm open|Double cover: Cartan–Dieudonné, kernel ±1, spinor-norm exact seq",
   "L3-biv|3|quadratic Lie subalgebra|done|#2224 (canonical) · #1708 · #1759✝ #1859✝|Bivectors as a Lie subalgebra (quadratic elements)",
   "L3-ext|3|⋀²V ↔ quadratic|review|#2335 #2343 · supersedes #1972✝|Exterior bivectors identified with quadratic elements",
   "L3-iso|3|soEquivBivector|review|#2397 · composition open|soEquivBivector : ⋀²V ≃ 𝔰𝔬(V)",
@@ -169,10 +169,10 @@ const DEPS = "L0-filt L0-pbw L0-univ L2-orth L0-univ L2-vec L0-univ L3-biv L0-fi
 /* goals: add one entry per new goal; color picks from a rotating palette */
 const PALETTE = ["#4da6ff","#7fc97f","#d95f02","#7570b3","#e7298a","#a6cee3","#fdb462"];
 const GOALS = [
-  "alpha|0|Goal α — Bott periodicity table (Layer 7 capstone)|L0-univ L0-filt L0-filt L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L4-iso L4-iso L4-mod L4-mod L1-struct L1-struct L7-real L2-dc L7-real L7-real L7-bott L7-bott L7-spinq L7-spinq L7-con|The Bott table: real Cliff(p,q), Cliff(p+1,q+1) ≅ Cliff(p,q) ⊗ M₂(ℝ), the mod-8 table, Spin(p,q). Substrate landed (L0, mathlib SpinGroup, L2 homomorphisms); the double cover is under way (#2404 merged, #2410 in review), everything after it open, and mathlib has no realCliffordAlgebra at all — L7 is greenfield.",
-  "beta|1|Goal β — make use of mathlib SpinGroup (#9111)|L0-univ L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L3-diff L3-diff L4-iso L4-iso L4-mod L4-mod L4-rep L4-rep L4-half L4-half L4-irt L4-irt L5-w L5-w L5-bd L5-bd L6-34 L6-34 L6-56|The spin-representation spine on mathlib's spinGroup (#9111): port landed, first consumers merged (#1611/#1742); the double cover is being landed (#2404 merged, #2410 in review), the L3 differential, the L4 spin module + spinRep, and the L5 weights open.",
-  "gamma|2|Goal γ — the structural summit: the quadratic layer is 𝔰𝔬(V) over the graded-exterior structure (PBW + Cartan)|L0-filt L0-pbw L0-pbw L3-biv L3-biv L3-ext L3-ext L3-iso|PBW + Cartan over the same degree-2 layer: gr(Cliff) ≅ ⋀V, and that layer with the commutator is 𝔰𝔬(V) ≅ ⋀²V. PBW pieces merged, quadratic package landed (#2224), #2335 and the standard bridge #2397 in review, the Lie-transport draft #2343 stacked; the total isomorphism and the soEquivBivector composition open.",
-  "delta|3|Goal δ — the module-side summit: Kostant's isotypy corollary|L0-filt L3-biv L3-biv L9-real L3-biv L4-iso L4-iso L4-mod L4-mod L4-rep L9-real L9-rep L4-rep L9-rep L9-rep L9-iso L9-iso L9-car|Kostant's isotypy: every Clifford module carries the 𝔰𝔬(V)-action (consuming γ) and decomposes isotypically; the CAR instance is the worked case. Realization partial (#2224; #2413 in review, #2411 draft), the induced-rep machinery draft #2419 in review; the summit and CAR open.",
+  "alpha|0|Goal α — Bott periodicity: the real Clifford algebras and the real spin groups|L0-univ L0-filt L0-filt L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L4-iso L4-iso L4-mod L4-mod L1-struct L1-struct L7-real L2-dc L7-real L7-real L7-bott L7-bott L7-spinq L7-spinq L7-con|The Bott table: real Cliff(p,q), Cliff(p+1,q+1) ≅ Cliff(p,q) ⊗ M₂(ℝ), the mod-8 table, Spin(p,q). Substrate landed (L0, mathlib SpinGroup, L2 homomorphisms); the double cover is under way (#2404 merged, #2410 in review), everything after it open, and mathlib has no realCliffordAlgebra at all — L7 is greenfield.",
+  "beta|1|Goal β — the spin representations of the Spin groups, from the double cover to triality|L0-univ L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L3-diff L3-diff L4-iso L4-iso L4-mod L4-mod L4-rep L4-rep L4-half L4-half L4-irt L4-irt L5-w L5-w L5-bd L5-bd L6-34 L6-34 L6-56 L6-56 L8-tri|The spin representations of the Spin groups: the double cover and its differential, the Clifford module S = ⋀·W with spinRep and half-spins, the B_l/D_l weights, and Spin₈ triality. Substrate: mathlib's spinGroup (#9111) with the homomorphisms merged (#1611/#1742); the double cover is being landed (#2404 merged, #2410 in review); the module and weights open.",
+  "gamma|2|Goal γ — the quadratic layer is 𝔰𝔬(V) ≅ ⋀²V, with its quadratic action (PBW + Cartan)|L0-filt L0-pbw L0-pbw L3-biv L3-biv L3-ext L3-ext L3-iso L3-iso L9-real|PBW + Cartan over the same degree-2 layer: gr(Cliff) ≅ ⋀V, and that layer with the commutator is 𝔰𝔬(V) ≅ ⋀²V. PBW pieces merged, quadratic package landed (#2224), #2335 and the standard bridge #2397 in review, the Lie-transport draft #2343 stacked; the summit is the quadratic realization (in flight: #2413, #2411), with the soEquivBivector composition still open.",
+  "delta|3|Goal δ — Kostant's isotypy: Clifford modules decompose isotypically under the 𝔰𝔬(V)-action|L0-filt L3-biv L3-biv L4-iso L4-iso L4-mod L4-mod L4-rep L4-rep L9-rep L9-rep L9-iso L9-iso L9-car|Kostant's isotypy: every Clifford module carries the 𝔰𝔬(V)-action (consuming γ's realization) and decomposes isotypically; the CAR instance is the worked case. The induced-rep machinery draft #2419 is in review; the summit and CAR open.",
 ].map(r => { const [id, color, name, edgeStr, evalText] = r.split("|"); const es = edgeStr.split(" "); const edges = []; for (let i = 0; i < es.length; i += 2) edges.push([es[i], es[i + 1]]); return { id, color: +color, name, edges, eval: evalText }; });
 
 
@@ -439,7 +439,7 @@ legend.querySelectorAll(".gl").forEach(el => el.addEventListener("click", () => 
 }));
 
 /* ================= PR links ================= */
-const PRS = {1473:"m",1561:"m",1708:"m",1783:"m",1794:"m",1802:"m",1804:"m",1847:"m",1903:"m",1971:"m",2224:"m",2404:"m",1772:"c",1759:"c",1859:"c",1972:"c",2335:"o",2343:"o",2397:"o",2410:"o",2411:"o",2413:"o",2419:"o"};
+const PRS = {1473:"m",1561:"m",1708:"m",1783:"m",1794:"m",1802:"m",1804:"m",1847:"m",1903:"m",1971:"m",2224:"m",2404:"m",1772:"c",1759:"c",1859:"c",1972:"c",2335:"o",2343:"o",2397:"o",2410:"o",2411:"o",2413:"o",2419:"o",2470:"o"};
 function linkify(t) {
   return t.replace(/(?:mathlib)?#(\d+)(\u271d)?/g, (m, n, d) => {
     const isML = m.indexOf("mathlib") === 0;
