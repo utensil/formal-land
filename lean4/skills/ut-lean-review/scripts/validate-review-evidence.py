@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate a Markdown ut-lean-review scoreboard against RUBRICS.md."""
+"""Validate an internal review scoreboard against live and additional rubrics."""
 
 from __future__ import annotations
 
@@ -13,32 +13,37 @@ PLACEHOLDERS = {"", "replace", "todo", "tbd", "n/a"}
 METADATA = ("Reviewed", "Subject", "Base", "Head", "Reviewer")
 
 
-def is_placeholder(value: str) -> bool:
-    normalized = value.strip().lower()
-    return (
-        normalized in PLACEHOLDERS
-        or "yyyy-mm-dd" in normalized
-        or normalized.startswith("pr number or pre-pr")
-        or normalized.startswith("exact base commit")
-        or normalized.startswith("exact reviewed commit")
-        or normalized.startswith("independent reviewer identity")
-    )
-
-
 def split_row(line: str) -> list[str]:
     cells = re.split(r"(?<!\\)\|", line.strip().strip("|"))
     return [cell.replace(r"\|", "|").strip().strip("`") for cell in cells]
 
 
-def registry_ids(path: Path) -> list[str]:
-    ids: list[str] = []
+def additional_ids(path: Path) -> list[str]:
+    ids = []
     for line in path.read_text().splitlines():
         cells = split_row(line) if line.lstrip().startswith("|") else []
-        if len(cells) == 3 and re.fullmatch(r"[a-z][a-z0-9-]*", cells[0]):
+        if len(cells) == 2 and re.fullmatch(r"ut-[a-z0-9-]+", cells[0]):
             ids.append(cells[0])
     if not ids:
-        raise ValueError(f"no rubric ids found in {path}")
+        raise ValueError(f"no additional rubric ids found in {path}")
     return ids
+
+
+def tau_ids(path: Path) -> list[str]:
+    if not path.is_dir():
+        raise ValueError(f"Tau Ceti rubric directory not found: {path}")
+    ids = sorted(
+        item.stem
+        for item in path.glob("*.md")
+        if item.stem not in {"_common", "README"}
+    )
+    if not ids:
+        raise ValueError(f"no Tau Ceti rubric files found in {path}")
+    return ids
+
+
+def is_placeholder(value: str) -> bool:
+    return value.strip().lower() in PLACEHOLDERS
 
 
 def evidence_rows(text: str) -> list[tuple[str, str, str, str]]:
@@ -47,28 +52,30 @@ def evidence_rows(text: str) -> list[tuple[str, str, str, str]]:
         if not line.lstrip().startswith("|"):
             continue
         cells = split_row(line)
-        if len(cells) != 4 or cells[0] in {"rubric id", "---"}:
-            continue
-        if re.fullmatch(r"[a-z][a-z0-9-]*", cells[0]):
+        if len(cells) == 4 and re.fullmatch(r"[a-z][a-z0-9-]*", cells[0]):
             rows.append(tuple(cells))
     return rows
 
 
 def main() -> int:
-    if len(sys.argv) not in (2, 3):
-        print("usage: validate-review-evidence.py REVIEW.md [RUBRICS.md]", file=sys.stderr)
+    if len(sys.argv) != 3:
+        print(
+            "usage: validate-review-evidence.py REVIEW.md TAUCETI_RUBRICS_DIR",
+            file=sys.stderr,
+        )
         return 2
     review = Path(sys.argv[1])
-    registry = Path(sys.argv[2]) if len(sys.argv) == 3 else Path(__file__).parent.parent / "RUBRICS.md"
+    tau_dir = Path(sys.argv[2])
+    registry = Path(__file__).parent.parent / "RUBRICS.md"
     text = review.read_text()
-    required = registry_ids(registry)
+    required = tau_ids(tau_dir) + additional_ids(registry)
     rows = evidence_rows(text)
     errors: list[str] = []
 
     for key in METADATA:
         match = re.search(rf"^- {re.escape(key)}:\s*(.+)$", text, re.MULTILINE)
         if not match or is_placeholder(match.group(1)):
-            errors.append(f"missing or placeholder metadata: {key}")
+            errors.append(f"missing metadata: {key}")
 
     seen: dict[str, int] = {}
     for rubric, verdict, evidence, comment in rows:
