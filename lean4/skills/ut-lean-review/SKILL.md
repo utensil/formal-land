@@ -39,6 +39,8 @@ The rule: a review applies only to the head commit it names; a new commit needs 
 
 A revision is a new head, hence a new review. Recheck the old and new public declarations, consumers of moved or renamed names, direct imports, the exact aggregate diff, and the remote branch state. Scale execution to the change: use the complete build for an API-surface or final candidate, focused builds and affected probes for a delimited repair, and byte-identical source/history verification for a source-equivalent rebase.
 
+If a finding changes prerequisite order, minimal hypotheses, construction strategy, the exported API, or module ownership, classify it as architectural. Stop the local repair cycle, return the slice to reconnaissance and design, and invalidate dependent provisional reviews until their consumer probes pass against the revised contract. After a material repair, review the full aggregate proof surface again rather than only the named findings.
+
 ### Extends `_common.md`: contested findings
 
 The rubric protocol for a contested finding is to engage the quote: restate compatibly, withdraw, or let it stand. What we learned around it:
@@ -62,6 +64,8 @@ generality.md requires the natural level and general-first. The concrete failure
 ### Extends proof-quality.md: robustness probes
 
 proof-quality.md flags brittle proofs and undocumented definitional equality. The detection technique: perturb and rebuild. Change a hypothesis, rename a lemma, or move a definition; a proof that breaks on such a change rests on an implementation accident (a specific eliminator shape, an unfolding-heavy `simpa`, a hidden defeq) and needs an explicit lemma or comment. A short-but-brittle proof is not a good proof.
+
+Scan every public proof in the aggregate diff for `change`, `show`, and bare `rfl` across private definitions or equivalences. A public theorem needs an explicit application or conversion lemma at that boundary; documenting the reshaping does not make the consumer contract robust.
 
 ### Extends documentation.md: docstring-hypothesis traps
 

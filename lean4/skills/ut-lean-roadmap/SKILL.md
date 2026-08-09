@@ -35,6 +35,7 @@ Read the form first:
 
 - The narrative spec anchors the work. Whatever its form, it is read before the definitions and signatures; a signature-stub file supplies targets but cannot alone establish that a milestone is complete. Matching a stub signature is not completing the milestone.
 - Find the layers and their dependency spine: which layer each layer needs, which targets unlock others, and which are reachable directly from the core.
+- Compute the live prerequisite closure for the candidate target. Classify every prerequisite as merged, an explicit active dependency, or absent; an absent ordered prerequisite blocks ordinary publication even when the branch is technically independent.
 - Locate the frontier: classify each area as heavily worked, substrate done, in progress, or untouched. The frontier is the boundary between done and open, and the second half of a roadmap is where the open targets live.
 - Collect the acceptance oracles: concrete named results (a formula, an isomorphism, a counterexample, any check the subject admits) that each layer must reach. Use the vocabulary the subject supports; do not presuppose dimension, finiteness, or any structure the mathematics may not have.
 
@@ -53,6 +54,8 @@ Each slice is selected as the next unit in a route: scoped, of manageable scale 
 - Convention lock: signature, normalization, direction, and operand order are explicit before the proof, and pinned by small definitional tests where the subject admits them.
 - Feasibility probe: a concrete spike (the smallest instance that exercises the route) can establish the route and the expected normal form; test it without building the general abstraction, then deliver the general theorem it supports.
 - Acceptance oracle and stop condition: build, no-sorry and axiom policy, and a named test theorem are fixed; a useful result exists if the generalization is abandoned; a spike has an end.
+
+A slice stacked on an unlanded prerequisite has a provisional contract. If review materially changes that prerequisite's hypotheses, construction strategy, exported API, or module ownership, reopen selection and design for every dependent slice before treating its previous review as current.
 
 ## Routes, picked and navigated
 

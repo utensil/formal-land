@@ -9,6 +9,7 @@ Run this before committing to a roadmap slice. It is the executable form of the 
 - [ ] General theorem is the deliverable; any concrete spike is only a probe.
 - [ ] Natural generality: uniform arguments stated for all degrees or structures.
 - [ ] Clear dependencies: at most one or two unlanded prerequisites; library objects to reuse listed.
+- [ ] Live prerequisite closure recorded: every prerequisite is merged, an explicit active dependency, or absent; no absent ordered prerequisite is crossed.
 - [ ] Named downstream consumer.
 - [ ] Dependency value: an unmet prerequisite beats non-enabling nearby work; no scope stretch.
 - [ ] Collision scan: no duplicate of an open contribution or claim.
@@ -16,6 +17,7 @@ Run this before committing to a roadmap slice. It is the executable form of the 
 - [ ] Convention lock: signature, normalization, direction, operand order explicit, pinned by definitional tests where the subject admits them.
 - [ ] Acceptance oracle: build, no-sorry and axiom policy, named test theorem fixed.
 - [ ] Stop condition and timebox: a useful result exists if the generalization is abandoned; the spike has an end.
+- [ ] A material prerequisite-contract change reopens selection and design for every provisional dependent slice.
 
 ## The gate table
 
@@ -23,7 +25,7 @@ Run this before committing to a roadmap slice. It is the executable form of the 
 | --- | --- | --- |
 | Exact target | Named declaration, theorem family, or milestone in the roadmap | The goal is only a topic |
 | Existing-library boundary | Library objects to reuse and the missing theorem listed | Re-proves existing objects or duplicates an open contribution |
-| Dependency depth | At most one or two unlanded prerequisites | The proof starts below several unresolved interfaces |
+| Dependency depth | At most one or two explicit unlanded prerequisites and no absent ordered prerequisite | The proof starts below several unresolved interfaces or crosses an absent prerequisite |
 | One new idea | The central lemma stated in one sentence | Combines several unrelated structures |
 | Concrete probe | A concrete instance exercises the route before the general theorem | The probe becomes the deliverable instead of the general theorem |
 | Reusable output | The general theorem is useful beyond the example | The result is an isolated computation |

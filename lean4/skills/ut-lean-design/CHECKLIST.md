@@ -5,10 +5,10 @@
 | Question | Answer |
 | --- | --- |
 | 1. Dependency and scope: which authoritative requirement does this discharge, and what later declaration consumes it? | |
-| 2. Natural statement: which variables and indices are genuinely arbitrary? | |
+| 2. Natural statement: which variables and indices are genuinely arbitrary, and which hypotheses survive compiled deletion probes? | |
 | 3. Existing structure: which pinned library map, equivalence, or composition theorem is the starting point? | |
-| 4. Public behavioral contract: which consumer equations must work without unfolding? | |
-| 5. Proof shape: which named map or composition theorem replaces the elementwise chain? | |
+| 4. Public behavioral contract: which application, membership, forward, inverse, and canonical-coordinate equations must work without unfolding? | |
+| 5. Proof shape: which named map or explicit boundary lemma replaces the elementwise chain or private-construction defeq? | |
 
 ## 2. Slice-selection gates (owned by ut-lean-roadmap)
 
@@ -30,10 +30,13 @@ Examples: a signature convention pinned by four base-entry tests; a bivector nor
 - [ ] Exact declarations read from the pinned checkout.
 - [ ] Smallest concrete instance drafted with its expected normal form.
 - [ ] Consumer probe written (downstream import plus bare `simp`) and passed.
+- [ ] Every relevant forward, inverse, and canonical-coordinate consumer compiled with public imports and opaque definitions.
+- [ ] Nontrivial hypotheses passed deletion/generalization probes; an equivalence did not inherit finiteness merely from the first bijectivity proof.
 - [ ] One reusable theorem extracted from the probe.
 - [ ] Theorem and instance split into separate milestones when the boundary is real.
 - [ ] Characteristic-API rules applied: `mem_*_iff`, apply and computation equations, linter-decided `@[simp]` orientation, no unconditional `@[expose]`, conclusion-describing names, earliest-file placement.
 - [ ] Specification check: the claim matches the authoritative narrative specification, not only a stub-file signature.
+- [ ] Public proofs do not cross private constructions through unexplained `change`, `show`, or bare `rfl`; an explicit boundary lemma covers the transition.
 
 ## 5. Acceptance oracle
 

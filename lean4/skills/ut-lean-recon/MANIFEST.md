@@ -28,6 +28,12 @@ Attach this manifest to every recon verdict. Fill one row per requirement and la
 
 Classification values: `direct` (suitable declaration already present), `local lemma` (buildable from present APIs without new general theory), `infrastructure blocker` (reusable construction or equivalence needed before the result can be stated honestly).
 
+## Minimal hypotheses and consumer contract
+
+| Item | Deletion/generalization probe | Construction and inverse routes | Required public computations | Evidence |
+| --- | --- | --- | --- | --- |
+| | | | | |
+
 ## Failed-probe journal
 
 | Remembered (wrong) name | Failure | Correct route | Evidence |

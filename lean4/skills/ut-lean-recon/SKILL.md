@@ -31,6 +31,8 @@ Grep the pinned checkout for the mathematical structure and the types involved (
 
 For every candidate declaration, read the statement, assumptions, universe levels, and namespace. A name is not evidence. Record what the declaration actually states, including hidden typeclass assumptions.
 
+Before accepting the first construction that compiles, test the natural boundary. Remove each nontrivial hypothesis in a scratch probe, search the resulting naked conclusion, and try both the construction and inverse routes when the target is an equivalence. Record which hypothesis is mathematically necessary and which is only required by the chosen proof. Apply the same exact-conclusion search to substantial private helpers; private code is not exempt from reuse.
+
 ### 4. Classify reachability
 
 For each requirement of the target, record one of:
@@ -68,7 +70,7 @@ Every claim in the manifest carries one label:
 
 ### 10. Run disposable scratch probes
 
-Probes live in a scratch directory outside every repository and are never committed. A cache-backed build imports the pinned library and elaborates the candidate signatures or the minimal concrete instance. A spike may use a named sorry boundary only to test interface shape; a successful elaboration is not evidence that the postponed theorem is easy.
+Probes live in a scratch directory outside every repository and are never committed. A cache-backed build imports the pinned library and elaborates the candidate signatures or the minimal concrete instance. Include deletion or generalization probes for nontrivial hypotheses and record the public computations the downstream consumer will need, in both directions for an equivalence. A spike may use a named sorry boundary only to test interface shape; a successful elaboration is not evidence that the postponed theorem is easy.
 
 ### 11. Emit the verdict and manifest
 

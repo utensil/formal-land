@@ -34,6 +34,8 @@ Extends COORDINATION.md Section 2 (post-revision recheck) — after every revisi
 - [ ] Consumers of moved or renamed names searched.
 - [ ] Direct imports verified with targeted builds.
 - [ ] Complete build run; exact aggregate diff and remote branch state read back.
+- [ ] A finding that changed prerequisite order, minimal hypotheses, construction, exported API, or module ownership returned the slice to recon/design and invalidated dependent provisional reviews.
+- [ ] After a material repair, the full aggregate proof surface was reviewed again, not only the findings being repaired.
 
 Extends `_common.md` (contested findings):
 
@@ -59,6 +61,7 @@ Extends generality.md:
 Extends proof-quality.md:
 
 - [ ] Proofs perturbed and rebuilt (hypothesis change, lemma rename, definition move); brittle proofs given an explicit lemma or comment.
+- [ ] Every public `change`, `show`, or bare `rfl` crossing a private construction is covered by an explicit public application or conversion lemma.
 
 Extends documentation.md:
 

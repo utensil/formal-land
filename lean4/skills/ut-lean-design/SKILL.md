@@ -23,10 +23,10 @@ Design operates at the level of a single slice: one topic, one reviewable contra
 Record answers to these five questions before implementation:
 
 1. Dependency and scope: which authoritative requirement does this slice discharge, what later declaration consumes it, and why is it one coherent slice rather than a fixed-degree or partial copy?
-2. Natural statement: which variables and indices are genuinely arbitrary? If the proof works uniformly in a degree, a form, or a module, state it that way unless a real dependency prevents it.
+2. Natural statement: which variables and indices are genuinely arbitrary? Compile deletion probes for nontrivial hypotheses. If an equivalence currently needs finiteness only to obtain bijectivity, try an explicit inverse or generator-extensionality route before accepting that assumption.
 3. Existing structure: which pinned library map, equivalence, or composition theorem is the natural starting point? Search by the mathematical structure, not only by a hoped-for theorem name.
-4. Public behavioral contract: for every public definition or equivalence, which consumer equations must work without unfolding it? Test a small downstream import and a bare `simp`, both directions when an equivalence is exposed.
-5. Proof shape: can a named map or composition theorem replace an elementwise equality chain, an ad hoc wrapper, or a carrier-level transition? Keep an essential `change` only with a local explanation.
+4. Public behavioral contract: for every public definition or equivalence, inventory the application, membership, forward, inverse, and canonical-coordinate equations that its first real consumer needs. Test each relevant direction in a small downstream import with the definition kept opaque and bare `simp` where appropriate.
+5. Proof shape: can a named map or composition theorem replace an elementwise equality chain, an ad hoc wrapper, or a carrier-level transition? A public theorem that crosses a private construction by `change`, `show`, or bare `rfl` needs an explicit boundary lemma; a comment alone is not the API.
 
 ### 2. Selection comes first
 
