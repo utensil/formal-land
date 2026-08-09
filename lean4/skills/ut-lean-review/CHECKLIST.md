@@ -11,6 +11,9 @@ coordination for the process, then this extension checklist. Do not re-report
 what CI and the linters enforce (build, axiom audit, linter set, import
 boundary).
 
+Every checklist group below has the stable rubric id recorded in
+`RUBRICS.md`. The review evidence must contain one scoreboard row for every id.
+
 ## Cannot miss
 
 - [ ] Verdict bound to one exact head; a new commit received a fresh review.
@@ -22,13 +25,13 @@ boundary).
 
 ## Review process extensions
 
-Extends COORDINATION.md Section 2 (head-bound verdicts):
+`ut-review-head-binding` — extends COORDINATION.md Section 2:
 
 - [ ] Exact base, head, declared prerequisites, and changed paths recorded.
 - [ ] Complete aggregate diff inspected; findings classified blocking, nonblocking, or optional.
 - [ ] No unperformed check converted into a pass.
 
-Extends COORDINATION.md Section 2 (post-revision recheck) — after every revision:
+`ut-review-revision` — extends COORDINATION.md Section 2 after every revision:
 
 - [ ] Old and new public declarations compared.
 - [ ] Consumers of moved or renamed names searched.
@@ -37,7 +40,7 @@ Extends COORDINATION.md Section 2 (post-revision recheck) — after every revisi
 - [ ] A finding that changed prerequisite order, minimal hypotheses, construction, exported API, or module ownership returned the slice to recon/design and invalidated dependent provisional reviews.
 - [ ] After a material repair, the full aggregate proof surface was reviewed again, not only the findings being repaired.
 
-Extends `_common.md` (contested findings):
+`ut-review-contest` — extends `_common.md` contested findings:
 
 - [ ] Implement, contest, or wait ledger kept per finding at an exact head.
 - [ ] Wrong prescriptions contested with a pinned probe (deletion probe, full linter output), not a repair loop.
@@ -49,34 +52,41 @@ Extends `_common.md` (contested findings):
 
 ## Quality extensions, one per rubric
 
-Extends reuse.md:
+`ut-reuse-search-before-writing` — extends reuse.md:
 
 - [ ] New declarations searched by structure before writing (ut-lean-recon owns the procedure), not first at review time.
 - [ ] No lemma re-proved from scratch that Mathlib or the library already carries.
 
-Extends generality.md:
+`ut-generality-uniformity` — extends generality.md:
 
 - [ ] Uniform arguments stated uniformly; fixed-degree or fixed-case specializations probed by generalizing and recompiling.
 
-Extends proof-quality.md:
+`ut-proof-robustness` — extends proof-quality.md:
 
 - [ ] Proofs perturbed and rebuilt (hypothesis change, lemma rename, definition move); brittle proofs given an explicit lemma or comment.
 - [ ] Every public `change`, `show`, or bare `rfl` crossing a private construction is covered by an explicit public application or conversion lemma.
 
-Extends documentation.md:
+`ut-documentation-dependency-claims` — extends documentation.md:
 
 - [ ] No docstring calls an arbitrary element central, an endomorphism a projection before idempotence, or a construction canonical when it depends on selected data.
 
-Extends naming.md:
+`ut-naming-future-models` — extends naming.md:
 
 - [ ] Public names tested against the next planned models and equivalences, not only the current files.
 
-Extends placement.md:
+`ut-placement-import-probes` — extends placement.md:
 
 - [ ] Suspect imports decided by removal probes or import-only compile probes, not guessing; no generic module imports a later specialization.
 
-## Checks the rubrics do not carry
+## `ut-structural-boundaries`: checks the rubrics do not carry
 
 - [ ] Stack separated from the change: GitHub-visible diff and the change's own diff against its integration base both recorded.
 - [ ] Module boundaries justified by a real planned consumer needing one without the other; the four pre-split questions answered.
 - [ ] Import-free root not turned into a rolling re-export; aggregators have an explicit ownership contract.
+
+## Evidence acceptance
+
+- [ ] One Markdown scoreboard row exists for every id in `RUBRICS.md`.
+- [ ] Every row has a verdict, concrete evidence, and a rubric-specific comment.
+- [ ] `scripts/validate-review-evidence.py REVIEW.md` exits zero.
+- [ ] Every verdict is `approve`; no omitted or unperformed rubric is treated as passing.

@@ -18,6 +18,9 @@ This skill does not restate any of that. It is an extension layer: every section
 3. Tau Ceti coordination for the review process, when applicable.
 4. The extensions in this skill.
 
+Read [RUBRICS.md](RUBRICS.md) before starting a review. It is the required-id
+registry for both the Tau Ceti rubrics and this skill's extensions.
+
 Do not re-report what CI or the linters already enforce: the build, the axiom audit, the Mathlib linter set, and the import boundary are checked mechanically, and the rubric agents do not re-check them either.
 
 ## What you cannot miss
@@ -31,17 +34,17 @@ Do not re-report what CI or the linters already enforce: the build, the axiom au
 
 ## Review process extensions
 
-### Extends COORDINATION.md Section 2: head-bound verdicts
+### `ut-review-head-binding`: extends COORDINATION.md Section 2
 
 The rule: a review applies only to the head commit it names; a new commit needs a fresh review. The extension from our reviews: when the PR accumulated several commits, compare against the aggregate diff rather than trusting the latest commit alone, and classify each finding as blocking, nonblocking, or optional. Never convert an unperformed check into a pass.
 
-### Extends COORDINATION.md Section 2: the post-revision recheck
+### `ut-review-revision`: extends COORDINATION.md Section 2
 
 A revision is a new head, hence a new review. Recheck the old and new public declarations, consumers of moved or renamed names, direct imports, the exact aggregate diff, and the remote branch state. Scale execution to the change: use the complete build for an API-surface or final candidate, focused builds and affected probes for a delimited repair, and byte-identical source/history verification for a source-equivalent rebase.
 
 If a finding changes prerequisite order, minimal hypotheses, construction strategy, the exported API, or module ownership, classify it as architectural. Stop the local repair cycle, return the slice to reconnaissance and design, and invalidate dependent provisional reviews until their consumer probes pass against the revised contract. After a material repair, review the full aggregate proof surface again rather than only the named findings.
 
-### Extends `_common.md`: contested findings
+### `ut-review-contest`: extends `_common.md`
 
 The rubric protocol for a contested finding is to engage the quote: restate compatibly, withdraw, or let it stand. What we learned around it:
 
@@ -53,39 +56,59 @@ The rubric protocol for a contested finding is to engage the quote: restate comp
 
 ## Quality extensions, one per rubric
 
-### Extends reuse.md: search before writing
+### `ut-reuse-search-before-writing`: extends reuse.md
 
 reuse.md specifies the search protocol and the defects to detect. The lesson from our reviews: a duplicate discovered at review time (for example a proof re-deriving a declaration Mathlib already carries) wastes a whole round; the search belongs before writing, and ut-lean-recon owns the procedure. Run it before the declaration exists, not after the reviewer finds it.
 
-### Extends generality.md: uniform arguments stated uniformly
+### `ut-generality-uniformity`: extends generality.md
 
 generality.md requires the natural level and general-first. The concrete failure mode we hit: a construction fixed at one degree although the argument is uniform in every degree, re-scoped into the all-degree version. The probe: generalize the statement and recompile; if the proof survives, the fixed-case statement is a scope defect.
 
-### Extends proof-quality.md: robustness probes
+### `ut-proof-robustness`: extends proof-quality.md
 
 proof-quality.md flags brittle proofs and undocumented definitional equality. The detection technique: perturb and rebuild. Change a hypothesis, rename a lemma, or move a definition; a proof that breaks on such a change rests on an implementation accident (a specific eliminator shape, an unfolding-heavy `simpa`, a hidden defeq) and needs an explicit lemma or comment. A short-but-brittle proof is not a good proof.
 
 Scan every public proof in the aggregate diff for `change`, `show`, and bare `rfl` across private definitions or equivalences. A public theorem needs an explicit application or conversion lemma at that boundary; documenting the reshaping does not make the consumer contract robust.
 
-### Extends documentation.md: docstring-hypothesis traps
+### `ut-documentation-dependency-claims`: extends documentation.md
 
 documentation.md treats overclaiming as a finding even when the theorem is correct. The concrete traps we keep seeing: calling an arbitrary element central, an endomorphism a projection before idempotence is proved, or a construction canonical when it depends on selected data. Overclaimed docstrings are how a review misses a real dependency.
 
-### Extends naming.md: name against the next model
+### `ut-naming-future-models`: extends naming.md
 
 naming.md requires conclusion-describing names and adjacent consistency. The extension: test public names against known future constructions, not only the current file. An equivalence named for its current source became ambiguous when a second natural equivalence for the same objects was planned; the role-based name, recording the direction it establishes, left room for the later bridge.
 
-### Extends placement.md: probe imports instead of guessing
+### `ut-placement-import-probes`: extends placement.md
 
 placement.md reports only evidently wrong imports and leaves the mechanical boundary to CI and `shake`. When imports are suspect, decide with removal probes and small import-only compile probes rather than by guessing from the current build, and watch for a generic module importing a later specialization.
 
-## Checks the rubrics do not carry
+## `ut-structural-boundaries`: checks the rubrics do not carry
 
 General Lean structural additions, not extensions of any single rubric:
 
 - Separate the stack from the change: record both the GitHub-visible diff against the integration branch and the change's own diff against its integration base. The first determines the human dependency order; the second whether the change is structurally too large. Do not split a coherent change merely because GitHub includes prerequisite files.
 - Organize around downstream consumers: two groups of declarations deserve separate modules when later work needs one without the other. Before a split, ask whether it removes a real dependency for a planned consumer, whether each module has a stable mathematical responsibility, whether the higher layer can import the lower one without a cycle, and whether the split would remain sensible if this PR did not exist.
 - Roots and aggregators as policy: an import-free root avoids a transitive catch-all; a feature PR must not turn it into a rolling re-export, and aggregators need an explicit ownership and import contract rather than arising from whichever feature touched the root last.
+
+## Evidence gate
+
+Write the independent review as Markdown using
+[templates/review-evidence.md](templates/review-evidence.md). Keep one scoreboard
+row per required rubric id with four fields: rubric id, verdict, evidence, and
+comment. Use Tau Ceti's verdict vocabulary: `approve`, `request_changes`, or
+`block`.
+
+Run the bundled validator before accepting a review:
+
+```bash
+python3 scripts/validate-review-evidence.py /path/to/review.md
+```
+
+The validator fails on a missing, duplicate, or unknown rubric id; a missing
+verdict, evidence, or comment; or any verdict other than `approve`. A complete
+`request_changes` review remains useful evidence, but it does not pass the
+private approval gate. After repairing source, create a fresh exact-head review
+and validate it again. Never infer an omitted rubric's verdict from prose.
 
 ## Pointer section
 
