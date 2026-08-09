@@ -67,7 +67,10 @@ jobs:
                 --json databaseId --jq '.[0].databaseId // empty')
               if [ -n "$run_id" ]; then
                 echo "Downloading $artifact from $wf_file run $run_id"
-                gh run download "$run_id" -n "$artifact" -D "staging-$artifact"
+                if ! gh run download "$run_id" -n "$artifact" -D "staging-$artifact"; then
+                  echo "::warning::No $artifact uploaded in run $run_id; keeping the current $artifact deployment"
+                  continue
+                fi
                 case "$artifact" in
                   pages-aya)     mkdir -p github-pages/aya;     cp -R "staging-$artifact/." github-pages/aya/ ;;
                   pages-tla)     mkdir -p github-pages/tla;     cp -R "staging-$artifact/." github-pages/tla/ ;;
