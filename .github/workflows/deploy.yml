@@ -39,8 +39,8 @@ jobs:
     steps:
         - name: Checkout
           uses: actions/checkout@v4
-        - name: Cache github-pages
-          uses: actions/cache@v4
+        - name: Restore github-pages cache
+          uses: actions/cache/restore@v4
           with:
               path: github-pages
               key: github-pages-${{ github.run_id }}
@@ -66,9 +66,11 @@ jobs:
             # three lean4 directories; pages-aya/pages-tla/pages-spinrep contain their
             # project's files (single-path uploads flatten), so those are wrapped in
             # their project dir. The restored github-pages cache above is the base:
-            # every CI updates it on every run, so a section whose latest successful
-            # run uploaded no artifact (e.g. lean4 without an [annotate] tag) keeps
-            # its last cached content instead of being dropped from the deployed site.
+            # each CI saves it explicitly right after generating its pages (so the
+            # update lands even if the job later fails or the deploy gate rejects),
+            # and a section whose latest successful run uploaded no artifact
+            # (e.g. lean4 without an [annotate] tag) keeps its last cached content
+            # instead of being dropped from the deployed site.
             for spec in "aya.yml pages-aya" "lean4.yml pages-lean4" "tla.yml pages-tla" "spinrep.yml pages-spinrep"; do
               set -- $spec
               wf_file=$1
