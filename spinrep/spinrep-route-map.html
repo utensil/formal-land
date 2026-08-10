@@ -611,7 +611,11 @@ const TL_STNAME = { D: "draft", R: "open", V: "review", T: "ready to merge", M: 
     const key = t.getFullYear() + "-" + String(t.getMonth() + 1).padStart(2, "0") + "-" + String(t.getDate()).padStart(2, "0") + " " + h;
     (byb[key] = byb[key] || []).push(ev);
   });
-  const slots = Object.keys(byb).sort();
+  /* sort by time, not lexicographically: "6" must come after "12"/"18" */
+  const slots = Object.keys(byb).sort((a, b) => {
+    const ka = a.split(" "), kb = b.split(" ");
+    return ka[0] === kb[0] ? +ka[1] - +kb[1] : (ka[0] < kb[0] ? -1 : 1);
+  });
   const GAP = 6, PER = 9;
   const BW = Math.max(12, Math.floor((1380 - 90) / slots.length) - GAP);
   const W = 90 + slots.length * (BW + GAP);
