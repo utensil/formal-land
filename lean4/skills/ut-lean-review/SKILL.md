@@ -13,7 +13,8 @@ description: 'Review Lean formalizations against the live Tau Ceti rubrics plus 
    invalidates it.
 3. Run the three additional rubrics in [RUBRICS.md](RUBRICS.md). Record the
    requested artifact, not a general assurance.
-4. Write one internal review scoreboard row per Tau Ceti and additional rubric:
+4. Write the scoreboard under `~/tmp/` until project archival, never `/tmp/`.
+   Record one row per Tau Ceti and additional rubric:
 
    ```md
    - Reviewed: YYYY-MM-DD
