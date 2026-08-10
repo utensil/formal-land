@@ -52,7 +52,7 @@ svg{display:block;background:var(--card);border:1px solid var(--line);border-rad
 .edge-dep{stroke:#555;stroke-width:.9;stroke-dasharray:2.5 4;opacity:.42}
 .edge-goal{stroke-width:2.2;opacity:.5;transition:opacity .12s,stroke-width .12s;pointer-events:stroke}
   #prtl { margin: .6rem 0 0; }
-  #prtl svg { display: block; width: 100%; max-width: 500px; height: auto; }
+  #prtl svg { display: block; width: 100%; height: auto; }
   #prtl .tlp { cursor: default; }
   .tllegend { margin-top: .3rem; font-size: .78rem; color: var(--muted); display: flex; gap: 1rem; flex-wrap: wrap; }
   .tllegend .s { display: inline-flex; align-items: center; gap: .35rem; }
@@ -102,7 +102,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 <div class="goals" id="goals"></div>
 
 <h2>PR timeline</h2>
-<div class="sub" style="margin-top:6px">23 merged PRs on the roadmap (13 by utensil, 10 by upstream authors) · 6 drafts · 7 closed · column height = PR count that day, hover a column for the PR list</div>
+<div class="sub" style="margin-top:6px">23 merged PRs on the roadmap (13 by utensil, 10 by upstream authors) · 6 drafts · 7 closed · column height = state transitions in a 6-hour window, hover a column for the activity list</div>
 <div id="prtl"></div>
 
 <h2>The map</h2>
@@ -489,11 +489,12 @@ const gname = id => GREEK[id] || id;
 const legend = document.getElementById("legend");
 const stl = [["open", ST.open], ["branch", ST.branch], ["review", ST.review], ["incomplete", ST.incomplete], ["done", ST.done]];
 legend.innerHTML = '<span class="st" style="margin-right:10px">node state:</span>' + stl.map(([k, v]) => `<span class="st"><span class="dot nodest-${k}"></span>${v}</span>`).join("") + '<span style="margin:0 10px">|</span><span class="st"><span style="display:inline-block;width:16px;height:16px;border-radius:50%;border:2.8px solid #e6e1dc;margin-right:5px;vertical-align:-4px"></span>summit</span>' + '<span style="margin:0 10px">|</span><span class="st"><span style="display:inline-block;width:13px;height:13px;border-radius:50%;border:1.2px solid #e6e1dc;background:transparent;margin-right:5px;vertical-align:-2px"></span>junction · routes meet</span>' + '<span style="margin:0 10px">|</span>routes: ' + GOALS.map(g => `<span class="gl" data-g="${g.id}"><span class="sw" style="background:${PALETTE[g.color]}"></span>${gname(g.id)}</span>`).join(" ") +
-  '<span style="margin:0 10px">|</span><span class="st" style="margin-right:4px">PR state:</span>' +
-  '<span class="st"><span class="dot" style="background:#7fb069"></span>merged</span>' +
-  '<span class="st"><span class="dot" style="background:#e5c07b"></span>in review</span>' +
-  '<span class="st"><span class="dot" style="background:#8fa3b8"></span>draft</span>' +
-  '<span class="st"><span class="dot" style="background:#c97b7b"></span>closed</span>';
+  '<span style="margin:0 10px">|</span><span class="st" style="margin-right:4px">PR activity:</span>' +
+  '<span class="st"><span class="dot" style="background:#8fa3b8"></span>draft open</span>' +
+  '<span class="st"><span class="dot" style="background:#6d9cbe"></span>ready open</span>' +
+  '<span class="st"><span class="dot" style="background:#e5c07b"></span>review</span>' +
+  '<span class="st"><span class="dot" style="background:#cc7833"></span>ready to merge</span>' +
+  '<span class="st"><span class="dot" style="background:#7fb069"></span>merged</span>';
 legend.querySelectorAll(".gl").forEach(el => el.addEventListener("click", () => {
   el.classList.toggle("off");
   const on = !el.classList.contains("off");
@@ -587,52 +588,63 @@ tip.addEventListener("mouseleave", () => { clearTimeout(hideTimer); tip.style.di
 </script>
 <script>
 /* PR timeline: state-colored dots by date, goal letters, hover = digest */
-const PR_TL = [["1473", "2026-07-30", "M", "αδγ", "feat: add the degree filtration of a Clifford algebra"],["1499", "2026-07-30", "M", "", "feat: add the orthogonal group of a quadratic form"],["1510", "2026-07-31", "M", "αβ", "feat: identify the vectors inside a Clifford algebra"],["1561", "2026-07-31", "M", "", "feat: compute the dimension of a Clifford algebra"],["1611", "2026-08-01", "M", "αβ", "feat: act on quadratic spaces by the spin group"],["1708", "2026-08-01", "M", "δγ", "feat: add normalized Clifford bivector exterior map"],["1742", "2026-08-02", "M", "αβ", "feat: act on a quadratic space by the Pin group"],["1759", "2026-08-02", "C", "δγ", "feat: close Clifford bivector image under commutator"],["1772", "2026-08-02", "C", "γ", "feat: add degree-two Clifford leading-term map"],["1783", "2026-08-02", "M", "γ", "feat: add generic Clifford filtration leading terms"],["1794", "2026-08-02", "M", "γ", "feat: preserve Clifford filtrations under change of form"],["1802", "2026-08-02", "M", "γ", "feat: add zero-form Clifford filtration quotients"],["1804", "2026-08-02", "M", "γ", "refactor(CliffordAlgebra): decompose filtrationLeadingTerm_surjective"],["1847", "2026-08-03", "M", "γ", "feat: add Clifford filtration graded equivalence"],["1859", "2026-08-03", "C", "δγ", "feat: add Clifford bivector exterior map"],["1903", "2026-08-04", "M", "γ", "feat: add homogeneous Clifford filtration multiplication"],["1971", "2026-08-04", "M", "γ", "feat: package the Clifford associated graded algebra"],["1972", "2026-08-04", "C", "", "feat: add faithful Clifford bivector exterior map"],["2224", "2026-08-07", "M", "δγ", "feat: the quadratic elements of a Clifford algebra as a Lie subalgebra"],["2334", "2026-08-08", "M", "α", "feat: the real Clifford forms Cliff(p, q) and the base entries of the "],["2347", "2026-08-08", "M", "γ", "refactor: name the Clifford graded-piece denominator"],["2404", "2026-08-08", "M", "αβ", "feat: lift reflections through Pin and Spin groups"],["2411", "2026-08-08", "D", "δγ", "feat: identify quadratic Clifford elements with skew adjoints"],["2413", "2026-08-08", "C", "δγ", "feat: add the canonical quadratic Lie action"],["2419", "2026-08-08", "D", "δ", "feat: induce Lie representations from Clifford modules"],["2335", "2026-08-09", "M", "βγ", "feat: identify exterior bivectors with quadratic elements"],["2343", "2026-08-09", "M", "βγ", "feat: transport the Lie structure to exterior bivectors"],["2397", "2026-08-09", "M", "βγ", "feat: identify the standard skew-adjoint Lie algebra"],["2410", "2026-08-09", "M", "αβ", "feat: add a one-step Cartan-Dieudonne reduction"],["2470", "2026-08-09", "C", "αβ", "feat: extend Pin corrections over fixed subspaces"],["2492", "2026-08-09", "D", "αβ", "feat: prove Cartan-Dieudonne generation and Pin surjectivity"],["2511", "2026-08-09", "M", "δγ", "refactor(CliffordAlgebra): drop the cliffordBivector namespace stutter"],["2523", "2026-08-09", "D", "αβ", "feat: prove surjectivity of the Spin action"],["2524", "2026-08-09", "D", "α", "feat: iterate and apply hyperbolic Bott reduction"],["2530", "2026-08-09", "D", "α", "feat: add a real Clifford pure-axis recurrence"],["2553", "2026-08-09", "R", "αβ", "feat: extend Pin corrections over fixed subspaces"],["2550", "2026-08-10", "M", "α", "feat: add hyperbolic Clifford periodicity"],["2563", "2026-08-10", "M", "βγ", "feat: identify standard bivectors with the orthogonal Lie algebra"]];
-const TL_STATE = { M: "#7fb069", R: "#e5c07b", D: "#8fa3b8", C: "#c97b7b" };
-const TL_GOAL = { α: "#6d9cbe", β: "#6b8e23", γ: "#cc7833", δ: "#7570b3" };
-const TL_STNAME = { M: "merged", R: "in review", D: "draft", C: "closed" };
+const PR_META = {"1473":["αδγ", "feat: add the degree filtration of a Clifford algebra"],"1499":["", "feat: add the orthogonal group of a quadratic form"],"1510":["αβ", "feat: identify the vectors inside a Clifford algebra"],"1561":["", "feat: compute the dimension of a Clifford algebra"],"1611":["αβ", "feat: act on quadratic spaces by the spin group"],"1708":["δγ", "feat: add normalized Clifford bivector exterior map"],"1742":["αβ", "feat: act on a quadratic space by the Pin group"],"1759":["δγ", "feat: close Clifford bivector image under commutator"],"1772":["γ", "feat: add degree-two Clifford leading-term map"],"1783":["γ", "feat: add generic Clifford filtration leading terms"],"1794":["γ", "feat: preserve Clifford filtrations under change of form"],"1802":["γ", "feat: add zero-form Clifford filtration quotients"],"1804":["γ", "refactor(CliffordAlgebra): decompose filtrationLeadingTerm_surjective"],"1847":["γ", "feat: add Clifford filtration graded equivalence"],"1859":["δγ", "feat: add Clifford bivector exterior map"],"1903":["γ", "feat: add homogeneous Clifford filtration multiplication"],"1971":["γ", "feat: package the Clifford associated graded algebra"],"1972":["", "feat: add faithful Clifford bivector exterior map"],"2224":["δγ", "feat: the quadratic elements of a Clifford algebra as a Lie subalgebra"],"2334":["α", "feat: the real Clifford forms Cliff(p, q) and the base entries of the "],"2347":["γ", "refactor: name the Clifford graded-piece denominator"],"2404":["αβ", "feat: lift reflections through Pin and Spin groups"],"2411":["δγ", "feat: identify quadratic Clifford elements with skew adjoints"],"2413":["δγ", "feat: add the canonical quadratic Lie action"],"2419":["δ", "feat: induce Lie representations from Clifford modules"],"2335":["βγ", "feat: identify exterior bivectors with quadratic elements"],"2343":["βγ", "feat: transport the Lie structure to exterior bivectors"],"2397":["βγ", "feat: identify the standard skew-adjoint Lie algebra"],"2410":["αβ", "feat: add a one-step Cartan-Dieudonne reduction"],"2470":["αβ", "feat: extend Pin corrections over fixed subspaces"],"2492":["αβ", "feat: prove Cartan-Dieudonne generation and Pin surjectivity"],"2511":["δγ", "refactor(CliffordAlgebra): drop the cliffordBivector namespace stutter"],"2523":["αβ", "feat: prove surjectivity of the Spin action"],"2524":["α", "feat: iterate and apply hyperbolic Bott reduction"],"2530":["α", "feat: add a real Clifford pure-axis recurrence"],"2553":["αβ", "feat: extend Pin corrections over fixed subspaces"],"2550":["α", "feat: add hyperbolic Clifford periodicity"],"2563":["βγ", "feat: identify standard bivectors with the orthogonal Lie algebra"]};
+const PR_EV = [["2026-07-30T12:54:33Z", "R", "1473"],["2026-07-30T13:42:09Z", "V", "1473"],["2026-07-30T14:38:50Z", "V", "1473"],["2026-07-30T15:15:26Z", "V", "1473"],["2026-07-30T15:20:16Z", "T", "1473"],["2026-07-30T16:14:45Z", "M", "1473"],["2026-07-30T18:15:09Z", "R", "1499"],["2026-07-30T18:26:20Z", "V", "1499"],["2026-07-30T20:02:22Z", "R", "1510"],["2026-07-30T20:11:24Z", "V", "1510"],["2026-07-30T21:12:45Z", "V", "1499"],["2026-07-30T21:48:00Z", "V", "1499"],["2026-07-30T23:43:58Z", "V", "1499"],["2026-07-30T23:50:03Z", "T", "1499"],["2026-07-30T23:54:28Z", "M", "1499"],["2026-07-31T04:15:56Z", "V", "1510"],["2026-07-31T05:47:13Z", "V", "1510"],["2026-07-31T08:42:02Z", "R", "1561"],["2026-07-31T08:49:45Z", "V", "1561"],["2026-07-31T09:58:05Z", "V", "1561"],["2026-07-31T10:33:43Z", "V", "1561"],["2026-07-31T10:37:29Z", "T", "1561"],["2026-07-31T10:42:52Z", "M", "1561"],["2026-07-31T11:57:12Z", "V", "1510"],["2026-07-31T12:02:03Z", "T", "1510"],["2026-07-31T12:07:44Z", "M", "1510"],["2026-07-31T20:31:46Z", "R", "1611"],["2026-07-31T20:40:07Z", "V", "1611"],["2026-07-31T21:28:31Z", "V", "1611"],["2026-07-31T23:11:12Z", "V", "1611"],["2026-07-31T23:43:53Z", "V", "1611"],["2026-08-01T00:02:15Z", "V", "1611"],["2026-08-01T11:52:21Z", "V", "1611"],["2026-08-01T11:56:36Z", "T", "1611"],["2026-08-01T14:14:38Z", "M", "1611"],["2026-08-01T15:39:40Z", "R", "1708"],["2026-08-01T16:44:28Z", "V", "1708"],["2026-08-01T19:16:45Z", "M", "1708"],["2026-08-01T21:34:56Z", "R", "1742"],["2026-08-01T21:41:11Z", "V", "1742"],["2026-08-01T22:51:22Z", "V", "1742"],["2026-08-01T23:09:19Z", "V", "1742"],["2026-08-02T00:24:45Z", "V", "1742"],["2026-08-02T00:29:10Z", "T", "1742"],["2026-08-02T00:33:50Z", "M", "1742"],["2026-08-02T02:54:42Z", "R", "1759"],["2026-08-02T03:31:39Z", "V", "1759"],["2026-08-02T04:38:12Z", "V", "1759"],["2026-08-02T06:25:11Z", "R", "1772"],["2026-08-02T07:33:04Z", "V", "1772"],["2026-08-02T10:05:15Z", "R", "1783"],["2026-08-02T10:10:13Z", "V", "1783"],["2026-08-02T10:15:41Z", "T", "1783"],["2026-08-02T10:20:41Z", "M", "1783"],["2026-08-02T12:01:12Z", "R", "1794"],["2026-08-02T12:20:47Z", "V", "1794"],["2026-08-02T13:15:26Z", "V", "1794"],["2026-08-02T13:48:56Z", "V", "1794"],["2026-08-02T13:52:22Z", "T", "1794"],["2026-08-02T13:57:17Z", "M", "1794"],["2026-08-02T15:33:57Z", "R", "1802"],["2026-08-02T15:46:53Z", "D", "1804"],["2026-08-02T15:51:26Z", "V", "1804"],["2026-08-02T16:07:27Z", "R", "1804"],["2026-08-02T16:09:14Z", "V", "1804"],["2026-08-02T16:14:07Z", "T", "1804"],["2026-08-02T16:14:46Z", "V", "1802"],["2026-08-02T16:18:59Z", "M", "1804"],["2026-08-02T17:18:33Z", "V", "1802"],["2026-08-02T18:05:55Z", "V", "1802"],["2026-08-02T18:10:41Z", "T", "1802"],["2026-08-02T18:15:29Z", "M", "1802"],["2026-08-03T00:50:59Z", "R", "1847"],["2026-08-03T00:59:39Z", "V", "1847"],["2026-08-03T01:37:04Z", "V", "1847"],["2026-08-03T01:50:28Z", "V", "1847"],["2026-08-03T02:40:50Z", "V", "1847"],["2026-08-03T04:00:29Z", "V", "1847"],["2026-08-03T04:03:04Z", "R", "1859"],["2026-08-03T04:04:15Z", "T", "1847"],["2026-08-03T04:09:22Z", "V", "1859"],["2026-08-03T04:45:51Z", "V", "1847"],["2026-08-03T04:50:22Z", "T", "1847"],["2026-08-03T04:55:14Z", "M", "1847"],["2026-08-03T05:30:05Z", "V", "1859"],["2026-08-03T07:23:02Z", "T", "1759"],["2026-08-03T07:40:01Z", "V", "1859"],["2026-08-03T08:24:20Z", "V", "1859"],["2026-08-03T10:10:23Z", "V", "1759"],["2026-08-03T11:24:40Z", "R", "1903"],["2026-08-03T22:21:41Z", "V", "1759"],["2026-08-04T05:29:19Z", "V", "1903"],["2026-08-04T06:09:35Z", "V", "1859"],["2026-08-04T06:21:43Z", "V", "1903"],["2026-08-04T06:27:19Z", "T", "1903"],["2026-08-04T06:32:09Z", "M", "1903"],["2026-08-04T10:23:31Z", "R", "1971"],["2026-08-04T10:57:43Z", "R", "1972"],["2026-08-04T12:08:28Z", "V", "1971"],["2026-08-04T14:04:31Z", "V", "1971"],["2026-08-04T15:03:54Z", "V", "1971"],["2026-08-04T17:44:53Z", "V", "1971"],["2026-08-04T18:36:28Z", "V", "1971"],["2026-08-04T21:13:57Z", "V", "1971"],["2026-08-04T23:07:41Z", "V", "1971"],["2026-08-04T23:12:34Z", "T", "1971"],["2026-08-04T23:17:18Z", "M", "1971"],["2026-08-07T08:14:38Z", "R", "2224"],["2026-08-07T09:23:58Z", "V", "2224"],["2026-08-07T10:35:01Z", "V", "2224"],["2026-08-07T11:41:26Z", "V", "2224"],["2026-08-07T13:17:16Z", "V", "2224"],["2026-08-07T13:21:55Z", "T", "2224"],["2026-08-07T15:52:16Z", "M", "2224"],["2026-08-08T05:49:49Z", "R", "2334"],["2026-08-08T06:00:01Z", "R", "2335"],["2026-08-08T07:38:07Z", "V", "2334"],["2026-08-08T07:53:44Z", "D", "2343"],["2026-08-08T08:17:15Z", "R", "2347"],["2026-08-08T09:14:32Z", "V", "2347"],["2026-08-08T11:05:16Z", "V", "2335"],["2026-08-08T12:29:40Z", "V", "2334"],["2026-08-08T12:55:58Z", "V", "2335"],["2026-08-08T16:14:08Z", "R", "2397"],["2026-08-08T16:21:53Z", "M", "2347"],["2026-08-08T16:32:34Z", "R", "2404"],["2026-08-08T17:17:01Z", "D", "2410"],["2026-08-08T17:17:20Z", "R", "2411"],["2026-08-08T17:21:13Z", "R", "2413"],["2026-08-08T17:45:58Z", "R", "2419"],["2026-08-08T18:03:34Z", "V", "2404"],["2026-08-08T19:24:31Z", "M", "2334"],["2026-08-08T19:38:25Z", "V", "2413"],["2026-08-08T19:45:19Z", "V", "2404"],["2026-08-08T20:58:20Z", "V", "2397"],["2026-08-08T22:40:51Z", "M", "2404"],["2026-08-08T23:03:28Z", "R", "2410"],["2026-08-08T23:46:23Z", "V", "2410"],["2026-08-09T00:33:30Z", "V", "2397"],["2026-08-09T01:34:28Z", "D", "2470"],["2026-08-09T03:16:24Z", "V", "2410"],["2026-08-09T03:22:03Z", "T", "2410"],["2026-08-09T03:31:29Z", "M", "2410"],["2026-08-09T04:26:04Z", "R", "2470"],["2026-08-09T05:20:08Z", "V", "2335"],["2026-08-09T05:25:49Z", "T", "2335"],["2026-08-09T05:34:11Z", "M", "2335"],["2026-08-09T05:40:07Z", "V", "2397"],["2026-08-09T05:50:05Z", "R", "2492"],["2026-08-09T06:35:10Z", "R", "2343"],["2026-08-09T06:50:48Z", "V", "2343"],["2026-08-09T08:50:44Z", "M", "2343"],["2026-08-09T09:19:02Z", "R", "2511"],["2026-08-09T09:23:24Z", "M", "2397"],["2026-08-09T09:54:08Z", "V", "2470"],["2026-08-09T10:10:52Z", "V", "2511"],["2026-08-09T10:18:17Z", "T", "2511"],["2026-08-09T10:31:52Z", "V", "2470"],["2026-08-09T10:43:57Z", "R", "2523"],["2026-08-09T11:05:52Z", "R", "2524"],["2026-08-09T12:21:43Z", "R", "2530"],["2026-08-09T13:48:28Z", "V", "2511"],["2026-08-09T13:53:25Z", "T", "2511"],["2026-08-09T15:59:43Z", "M", "2511"],["2026-08-09T16:38:13Z", "R", "2550"],["2026-08-09T16:42:42Z", "D", "2550"],["2026-08-09T16:51:10Z", "R", "2550"],["2026-08-09T16:58:39Z", "D", "2553"],["2026-08-09T17:17:27Z", "R", "2553"],["2026-08-09T18:26:55Z", "D", "2563"],["2026-08-09T19:41:45Z", "R", "2563"],["2026-08-09T20:09:28Z", "V", "2553"],["2026-08-09T20:11:16Z", "V", "2550"],["2026-08-09T21:09:31Z", "V", "2563"],["2026-08-09T21:44:41Z", "V", "2550"],["2026-08-09T22:13:05Z", "V", "2553"],["2026-08-09T22:20:05Z", "T", "2553"],["2026-08-09T22:40:22Z", "V", "2550"],["2026-08-09T22:50:23Z", "V", "2563"],["2026-08-10T00:03:15Z", "V", "2550"],["2026-08-10T00:08:08Z", "T", "2550"],["2026-08-10T00:08:55Z", "D", "2550"],["2026-08-10T00:43:44Z", "R", "2550"],["2026-08-10T02:09:32Z", "V", "2563"],["2026-08-10T02:21:50Z", "T", "2563"],["2026-08-10T03:05:00Z", "V", "2553"],["2026-08-10T04:14:47Z", "M", "2550"],["2026-08-10T04:57:20Z", "M", "2563"],["2026-08-10T08:01:01Z", "V", "2553"]];
+const TL_STATE = { D: "#8fa3b8", R: "#6d9cbe", V: "#e5c07b", T: "#cc7833", M: "#7fb069" };
+const TL_STNAME = { D: "draft open", R: "ready open", V: "review", T: "ready to merge", M: "merged" };
 (function () {
   const host = document.getElementById("prtl");
   const tip = document.getElementById("tip");
   if (!host) return;
-  const byDay = {};
-  PR_TL.forEach(p => { (byDay[p[1]] = byDay[p[1]] || []).push(p); });
-  const days = Object.keys(byDay).sort();
-  const BW = 24, GAP = 7, PER = 10;
-  const W = 70 + days.length * (BW + GAP);
-  const maxN = Math.max(...days.map(d => byDay[d].length));
-  const Y0 = 30 + maxN * PER + 12;   /* baseline low enough that the tallest column plus its label fits */
-  const H = Y0 + 32;
-  const ORDER = ["M", "R", "D", "C"];
-  let svg = `<svg viewBox="0 0 ${W} ${H + 48}" preserveAspectRatio="xMidYMin meet">`;
+  const byb = {};
+  PR_EV.forEach(ev => {
+    const t = new Date(ev[0]);
+    const h = Math.floor(t.getUTCHours() / 6) * 6;
+    const key = t.toISOString().slice(0, 10) + " " + h;
+    (byb[key] = byb[key] || []).push(ev);
+  });
+  const slots = Object.keys(byb).sort();
+  const GAP = 6, PER = 9;
+  const BW = Math.max(12, Math.floor((1380 - 90) / slots.length) - GAP);
+  const W = 90 + slots.length * (BW + GAP);
+  const maxN = Math.max(...slots.map(k => byb[k].length));
+  const Y0 = 34 + maxN * PER + 12;
+  const H = Y0 + 34;
+  const ORDER = ["D", "R", "V", "T", "M"];
+  let svg = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMin meet">`;
   svg += `<line x1="40" y1="${Y0}" x2="${W - 10}" y2="${Y0}" stroke="#444" stroke-dasharray="2 4"/>`;
-  days.forEach((d, i) => {
+  slots.forEach((k, i) => {
     const x = 60 + i * (BW + GAP);
-    const prs = byDay[d];
+    const evs = byb[k];
+    const [day, h] = k.split(" ");
     let base = Y0;
     for (const st of ORDER) {
-      const n = prs.filter(p => p[2] === st).length;
+      const n = evs.filter(e => e[1] === st).length;
       if (!n) continue;
       base -= n * PER;
       svg += `<rect x="${x}" y="${base}" width="${BW}" height="${n * PER}" fill="${TL_STATE[st]}" opacity=".85"/>`;
     }
-    svg += `<text x="${x + BW / 2}" y="${Y0 + 14}" font-size="8" fill="#8a857e" text-anchor="middle">${d.slice(5)}</text>`;
-    svg += `<text x="${x + BW / 2}" y="${base - 6}" font-size="8" fill="#e6e1dc" text-anchor="middle" font-weight="700">${prs.length}</text>`;
-    svg += `<g class="tlcol" data-day="${d}"><rect x="${x - 3}" y="${base - 20}" width="${BW + 6}" height="${Y0 - base + 34}" fill="transparent"/></g>`;
+    svg += `<text x="${x + BW / 2}" y="${Y0 + 13}" font-size="9.5" fill="#8a857e" text-anchor="middle">${day.slice(5)} ${h}h</text>`;
+    svg += `<text x="${x + BW / 2}" y="${base - 6}" font-size="11" fill="#e6e1dc" text-anchor="middle" font-weight="700">${evs.length}</text>`;
+    svg += `<g class="tlcol" data-k="${k}"><rect x="${x - 3}" y="${base - 20}" width="${BW + 6}" height="${Y0 - base + 34}" fill="transparent"/></g>`;
   });
   svg += '</svg>';
   host.innerHTML = svg;
   host.querySelectorAll(".tlcol").forEach(col => {
     col.addEventListener("mouseenter", () => {
-      const d = col.dataset.day;
-      const prs = byDay[d];
-      const rows = prs.map(p => `<div class="tstatus">${linkify("#" + p[0])} · <span style="color:${TL_STATE[p[2]]}">${TL_STNAME[p[2]]}</span> · <span style="color:${(TL_GOAL[p[3][0]] || "#9d9485")}">${p[3] || "—"}</span> · ${p[4]}</div>`).join("");
-      tip.innerHTML = `<b>${d} — ${prs.length} PR${prs.length > 1 ? "s" : ""}</b>${rows}`;
+      const k = col.dataset.k;
+      const evs = byb[k];
+      const rows = evs.map(ev => {
+        const t = ev[0].slice(11, 16);
+        const nm = PR_META[ev[2]] ? PR_META[ev[2]][1] : "";
+        const nm2 = nm.length > 46 ? nm.slice(0, 45) + "…" : nm;
+        return `<div class="tstatus"><span style="color:#a9a29b">${t}</span> · <a class="prlink pr-neutral" href="https://github.com/TauCetiProject/TauCeti/pull/${ev[2]}">#${ev[2]}</a> → <span style="color:${TL_STATE[ev[1]]}">${TL_STNAME[ev[1]]}</span> · ${nm2}</div>`;
+      }).join("");
+      tip.innerHTML = `<b>${k.split(" ")[0].slice(5)} ${k.split(" ")[1]}h–${Number(k.split(" ")[1]) + 6}h UTC — ${evs.length} transition${evs.length > 1 ? "s" : ""}</b>${rows}`;
       tip.style.display = "block";
     });
     col.addEventListener("mouseleave", () => { tip.style.display = "none"; });
   });
-})();
-</script>
+})();</script>
 </body>
 </html>
