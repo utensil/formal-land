@@ -51,6 +51,8 @@ svg{display:block;background:var(--card);border:1px solid var(--line);border-rad
 .edge{fill:none;stroke-linecap:round}
 .edge-dep{stroke:#555;stroke-width:.9;stroke-dasharray:2.5 4;opacity:.42}
 .edge-goal{stroke-width:2.2;opacity:.5;transition:opacity .12s,stroke-width .12s;pointer-events:stroke}
+.edge-rail{stroke-dasharray:7 6;opacity:.5}
+.junction{fill:none;stroke:#e6e1dc;stroke-width:1.2;opacity:.85}
 .edge-goal.lit{opacity:.98;stroke-width:3.6}
 .goal{transition:border-color .12s,box-shadow .12s}
 .goal.lit{border-color:var(--gc);box-shadow:0 0 0 1px var(--gc),0 8px 26px rgba(0,0,0,.45)}
@@ -405,8 +407,19 @@ DEPS.forEach(([a, b]) => {
 });
 
 /* goal routes: one colored edge per route edge; hovering lights the whole goal's subgraph */
+const railSides = { alpha: "r", delta: "l" };
 GOALS.forEach(g => g.edges.forEach(([a, b]) => {
-  inner += `<path class="edge edge-goal" data-goal="${g.id}" stroke="${PALETTE[g.color]}" d="${goalEdgePath(pos[a], pos[b], laneOf(g.id, [a, b].sort().join("→")))}"/>`;
+  const A = NODES.find(x => x.id === a), B = NODES.find(x => x.id === b);
+  let d;
+  if (Math.abs(rowOf[A.L] - rowOf[B.L]) >= 5 && railSides[g.id]) {
+    const side = railSides[g.id];
+    const rx = side === "r" ? X1 + 62 : X0 - 100;
+    d = `M${pos[a].x.toFixed(1)},${pos[a].y.toFixed(1)} C${rx.toFixed(1)},${pos[a].y.toFixed(1)} ${rx.toFixed(1)},${pos[b].y.toFixed(1)} ${pos[b].x.toFixed(1)},${pos[b].y.toFixed(1)}`;
+    inner += `<path class="edge edge-goal edge-rail" data-goal="${g.id}" stroke="${PALETTE[g.color]}" d="${d}"/>`;
+  } else {
+    d = goalEdgePath(pos[a], pos[b], laneOf(g.id, [a, b].sort().join("→")));
+    inner += `<path class="edge edge-goal" data-goal="${g.id}" stroke="${PALETTE[g.color]}" d="${d}"/>`;
+  }
 }));
 
 /* nodes */
@@ -422,9 +435,13 @@ NODES.forEach(n => {
   const halo = summitOf[n.id] && summitOf[n.id].length
     ? `<circle class="summit-halo" r="24" cx="${pos[n.id].x}" cy="${pos[n.id].y}" fill="${PALETTE[GOALS.find(g => g.id === summitOf[n.id][0]).color]}" opacity=".16"/>`
     : "";
+  const junction = (goalOfNode[n.id] || []).length >= 2 && MEET[n.id]
+    ? `<circle class="junction" r="4" cx="${pos[n.id].x}" cy="${pos[n.id].y}"/>`
+    : "";
   inner += `<g class="node" data-id="${n.id}" data-goals="${(goalOfNode[n.id] || []).join(" ")}">
     ${halo}
     <circle cx="${pos[n.id].x}" cy="${pos[n.id].y}" r="13" class="nodest-${n.status}"/>
+    ${junction}
     <text class="nl" x="${pos[n.id].x}" y="${pos[n.id].y - 18}" text-anchor="middle">${n.short}</text>
   </g>`;
 });
@@ -437,17 +454,7 @@ const gname = id => GREEK[id] || id;
 /* ================= legend ================= */
 const legend = document.getElementById("legend");
 const stl = [["open", ST.open], ["branch", ST.branch], ["review", ST.review], ["incomplete", ST.incomplete], ["done", ST.done]];
-legend.innerHTML = '<span class="st" style="margin-right:10px">node state:</span>' +
-  stl.map(([k, v]) => `<span class="st"><span class="dot nodest-${k}"></span>${v}</span>`).join("") +
-  '<span style="margin:0 10px">|</span><span class="st" style="margin-right:10px">PR:</span>' +
-  '<span class="st"><span class="dot" style="background:#8aa0b8"></span>draft</span>' +
-  '<span class="st"><span class="dot" style="background:#e8bc6e"></span>in review</span>' +
-  '<span class="st"><span class="dot" style="background:#9fc37e"></span>merged</span>' +
-  '<span class="st"><span class="dot" style="background:#5f9e8f"></span>merged by others</span>' +
-  '<span class="st"><span class="dot" style="background:#b98d88"></span>closed</span>' +
-  '<span style="flex-basis:100%;height:0;margin:0"></span>' +
-  '<span class="st"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#e6e1dc;box-shadow:0 0 7px 3px rgba(230,225,220,.35);margin-right:6px;vertical-align:-2px"></span>summit (glowing halo)</span><span style="margin:0 10px">|</span>routes: ' +
-  GOALS.map(g => `<span class="gl" data-g="${g.id}"><span class="sw" style="background:${PALETTE[g.color]}"></span>${gname(g.id)}</span>`).join(" ");
+legend.innerHTML = '<span class="st" style="margin-right:10px">node state:</span>' + stl.map(([k, v]) => `<span class="st"><span class="dot nodest-${k}"></span>${v}</span>`).join("") + '<span style="margin:0 10px">|</span><span class="st"><span style="display:inline-block;width:16px;height:16px;border-radius:50%;border:2.8px solid #e6e1dc;margin-right:5px;vertical-align:-4px"></span>summit</span>' + '<span style="margin:0 10px">|</span><span class="st"><span style="display:inline-block;width:13px;height:13px;border-radius:50%;border:1.2px solid #e6e1dc;background:transparent;margin-right:5px;vertical-align:-2px"></span>junction - routes meet</span>' + '<span style="margin:0 10px">|</span>long route edges rail along the gutters · routes: ' + GOALS.map(g => `<span class="gl" data-g="${g.id}"><span class="sw" style="background:${PALETTE[g.color]}"></span>${gname(g.id)}</span>`).join(" ");
 legend.querySelectorAll(".gl").forEach(el => el.addEventListener("click", () => {
   el.classList.toggle("off");
   const on = !el.classList.contains("off");
@@ -519,9 +526,19 @@ svg.addEventListener("mousemove", e => {
   const sum = summitOf[n.id] || [];
   const goalsOn = GOALS.filter(g => g.edges.flat().includes(n.id) && !sum.includes(g.id)).map(g => `<span style="color:${PALETTE[g.color]}">${gname(g.id)}</span>`).join(", ");
   const sumTxt = sum.map(gid => `<span style="color:${PALETTE[GOALS.find(g => g.id === gid).color]}">${gname(gid)}</span>`).join(", ");
+  const MEET = {
+    "L2-dc": "β's double cover feeds α's real Spin-group branch",
+    "L4-mod": "the spin module (β) is the module both α's structure theorem and δ consume",
+    "L4-rep": "spinRep (β) hands the module to δ's induced-rep machinery",
+    "L3-biv": "γ's quadratic layer is the realization δ restates",
+    "L9-real": "γ's summit realization feeds δ",
+    "L1-struct": "α and β both consume the structure theorem, proved forward from the spin module"
+  };
   tip.innerHTML = `<b>${n.label}</b><div class="tstatus">state: ${ST[n.status]} · ${linkify(n.prs)}</div>` +
     (sumTxt ? `<div class="tstatus">summit of: ${sumTxt}</div>` : "") +
-    (goalsOn ? `<div class="tstatus">on routes: ${goalsOn}</div>` : "");
+    (goalsOn && (goalOfNode[n.id] || []).length >= 2 ? `<div class="tstatus">meeting of: ${goalsOn}</div>` : "") +
+    (MEET[n.id] ? `<div class="tstatus" style="font-size:11px">${MEET[n.id]}</div>` : "") +
+    (goalsOn && (goalOfNode[n.id] || []).length < 2 ? `<div class="tstatus">on routes: ${goalsOn}</div>` : "");
   tip.style.display = "block";
   const r = tip.getBoundingClientRect();
   tip.style.left = Math.min(e.clientX + 14, innerWidth - r.width - 10) + "px";
