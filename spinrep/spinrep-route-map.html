@@ -646,17 +646,15 @@ const TL_STNAME = { D: "draft", R: "open", V: "review", T: "ready to merge", M: 
   });
   svg += '</svg>';
   host.innerHTML = svg;
-  /* mirror the graph's tooltip pattern: the card follows the cursor and only
-     hides through the shared 350ms grace timer, so it never vanishes while the
-     cursor rests on a column or crosses onto the card to click a PR link */
+  /* The card is anchored below the chart, aligned with the hovered column, and
+     never chases the cursor (a following card crosses into the next column when
+     the user reaches for it, so it can never be caught). Content switches only
+     after 250ms of hover-intent, so sliding straight down into the card keeps
+     the column's card latched. */
   const svgEl = host.querySelector("svg");
-  let lastK = "";
-  function positionTip(x, y) {
-    const r = tip.getBoundingClientRect();
-    tip.style.left = Math.min(x + 14, innerWidth - r.width - 10) + "px";
-    tip.style.top = (y + 14) + "px";
-  }
-  function fillCard(k, x, y) {
+  let curK = "", intentTimer = null;
+  function showCard(k) {
+    const col = [...svgEl.querySelectorAll(".tlcol")].find(c => c.dataset.k === k);
     const evs = byb[k];
     const grp = {};
     evs.forEach(ev => { const g = grp[ev[2] + "|" + ev[1]] = grp[ev[2] + "|" + ev[1]] || []; g.push(ev); });
@@ -670,7 +668,11 @@ const TL_STNAME = { D: "draft", R: "open", V: "review", T: "ready to merge", M: 
     }).join("");
     tip.innerHTML = `<b>${k.split(" ")[0].slice(5)} ${k.split(" ")[1]}:00–${Number(k.split(" ")[1]) + 6}:00 — ${evs.length} transition${evs.length > 1 ? "s" : ""}</b>${rows}`;
     tip.style.display = "block";
-    positionTip(x, y);
+    const cr = col.getBoundingClientRect();
+    const sr = svgEl.getBoundingClientRect();
+    const r = tip.getBoundingClientRect();
+    tip.style.left = Math.max(10, Math.min(cr.left, innerWidth - r.width - 10)) + "px";
+    tip.style.top = Math.min(sr.bottom + 8, innerHeight - r.height - 10) + "px";
   }
   svgEl.addEventListener("mousemove", e => {
     const col = e.target.closest(".tlcol");
@@ -680,12 +682,19 @@ const TL_STNAME = { D: "draft", R: "open", V: "review", T: "ready to merge", M: 
     }
     clearTimeout(hideTimer);
     const k = col.dataset.k;
-    if (lastK !== k) { lastK = k; fillCard(k, e.clientX, e.clientY); }
-    else { tip.style.display = "block"; positionTip(e.clientX, e.clientY); }
+    if (k !== curK) {
+      if (!tip.style.display || tip.style.display === "none") { curK = k; showCard(k); }
+      else {
+        clearTimeout(intentTimer);
+        const kk = k;
+        intentTimer = setTimeout(() => { intentTimer = null; curK = kk; showCard(kk); }, 250);
+      }
+    }
   });
   svgEl.addEventListener("mouseleave", e => {
-    if (!tip.contains(e.relatedTarget)) { clearTimeout(hideTimer); tip.style.display = "none"; }
+    if (!tip.contains(e.relatedTarget)) { clearTimeout(hideTimer); clearTimeout(intentTimer); tip.style.display = "none"; }
   });
+  tip.addEventListener("mouseenter", () => clearTimeout(intentTimer));
 })();</script>
 </body>
 </html>
