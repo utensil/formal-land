@@ -425,6 +425,14 @@ GOALS.forEach(g => g.edges.forEach(([a, b]) => {
 /* nodes */
 const goalOfNode = {};
 GOALS.forEach(g => g.edges.flat().forEach(id => (goalOfNode[id] = (goalOfNode[id] || []).concat(g.id))));
+const MEET = {
+  "L2-dc": "β's double cover feeds α's real Spin-group branch",
+  "L4-mod": "the spin module (β) is the module both α's structure theorem and δ consume",
+  "L4-rep": "spinRep (β) hands the module to δ's induced-rep machinery",
+  "L3-biv": "γ's quadratic layer is the realization δ restates",
+  "L9-real": "γ's summit realization feeds δ",
+  "L1-struct": "α and β both consume the structure theorem, proved forward from the spin module"
+};
 /* summit nodes: the terminal node of each goal's subgraph, ringed in that goal's color */
 const summitOf = {};
 GOALS.forEach(g => {
@@ -526,14 +534,6 @@ svg.addEventListener("mousemove", e => {
   const sum = summitOf[n.id] || [];
   const goalsOn = GOALS.filter(g => g.edges.flat().includes(n.id) && !sum.includes(g.id)).map(g => `<span style="color:${PALETTE[g.color]}">${gname(g.id)}</span>`).join(", ");
   const sumTxt = sum.map(gid => `<span style="color:${PALETTE[GOALS.find(g => g.id === gid).color]}">${gname(gid)}</span>`).join(", ");
-  const MEET = {
-    "L2-dc": "β's double cover feeds α's real Spin-group branch",
-    "L4-mod": "the spin module (β) is the module both α's structure theorem and δ consume",
-    "L4-rep": "spinRep (β) hands the module to δ's induced-rep machinery",
-    "L3-biv": "γ's quadratic layer is the realization δ restates",
-    "L9-real": "γ's summit realization feeds δ",
-    "L1-struct": "α and β both consume the structure theorem, proved forward from the spin module"
-  };
   tip.innerHTML = `<b>${n.label}</b><div class="tstatus">state: ${ST[n.status]} · ${linkify(n.prs)}</div>` +
     (sumTxt ? `<div class="tstatus">summit of: ${sumTxt}</div>` : "") +
     (goalsOn && (goalOfNode[n.id] || []).length >= 2 ? `<div class="tstatus">meeting of: ${goalsOn}</div>` : "") +
