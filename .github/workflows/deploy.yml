@@ -86,7 +86,7 @@ jobs:
                 case "$artifact" in
                   pages-aya)     mkdir -p github-pages/aya;     cp -R "staging-$artifact/." github-pages/aya/ ;;
                   pages-tla)     mkdir -p github-pages/tla;     cp -R "staging-$artifact/." github-pages/tla/ ;;
-                  pages-spinrep) mkdir -p github-pages/spinrep; cp -R "staging-$artifact/." github-pages/spinrep/ ;;
+                  pages-spinrep) rm -rf github-pages/spinrep; mkdir -p github-pages/spinrep; cp -R "staging-$artifact/." github-pages/spinrep/ ;;
                   pages-lean4) cp -R "staging-$artifact/." github-pages/ ;;
                 esac
               else
