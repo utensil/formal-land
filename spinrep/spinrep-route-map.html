@@ -136,8 +136,7 @@ const NODES = [
   "L2-hom|2|spin/pin → SO/O|done|#1611 #1742 · mathlib#9111 SpinGroup|Twisted conjugation → O(Q)/SO(Q)",
   "L2-dc|2|double cover|review|#2404 #2410 #2553 #2492 #2523 · #2470 closed · kernel ±1, spinor-norm open|Double cover: Cartan–Dieudonné, kernel ±1, spinor-norm exact seq",
   "L3-biv|3|quadratic Lie subalgebra|done|#2224 (canonical) · #1708 · #1759 #1859 · #2511|Bivectors as a Lie subalgebra (quadratic elements)",
-  "L3-ext|3|⋀²V ↔ quadratic|done|#2335 · supersedes #1972|Exterior bivectors identified with quadratic elements",
-  "L3-iso|3|soEquivBivector|incomplete|#2563 #2397 #2343 · composition open|soEquivBivector : ⋀²V ≃ 𝔰𝔬(V)",
+  "L3-iso|3|soEquivBivector|incomplete|#2335 #2563 #2343 #2397 #1972✝ · composition open|soEquivBivector : ⋀²V ≃ 𝔰𝔬(V) via the quadratic elements",
   "L3-diff|3|d(double cover)|open|— open|Differential of the double cover",
   "L4-iso|4|maximal isotropic W|open|— open|Maximal isotropic W",
   "L4-mod|4|spin module S|open|— open|Clifford module S = ⋀·W (wedge + contraction)",
@@ -169,7 +168,7 @@ const NODES = [
 
 
 /* gray dependency-spine edges [from, to] */
-const DEPS = "L0-filt L0-pbw L0-univ L2-orth L0-univ L2-vec L0-univ L3-biv L0-filt L9-real L0-filt L2-hom L2-orth L2-hom L2-vec L2-hom L2-hom L2-dc L2-orth L2-dc L2-dc L3-diff L3-iso L3-diff L3-biv L3-ext L3-ext L3-iso L3-iso L4-mod L2-dc L4-rep L2-orth L4-iso L0-dim L4-iso L4-iso L4-mod L4-mod L4-rep L4-rep L4-half L4-half L4-irt L4-mod L1-struct L4-irt L5-cartan L5-cartan L5-w L4-rep L5-w L5-w L5-bd L5-bd L5-char L1-struct L6-34 L4-rep L6-34 L4-rep L6-56 L5-bd L6-56 L1-struct L7-real L2-dc L7-real L2-dc L7-con L7-real L7-bott L7-real L7-spinq L7-bott L7-spinq L7-spinq L7-con L5-bd L8-tri L6-34 L8-tri L3-biv L9-real L2-orth L9-real L0-filt L9-real L9-real L9-rep L4-rep L9-rep L9-rep L9-iso L9-iso L9-car L7-real W-cliff L7-bott W-cliff L6-34 W-spin3 L4-rep W-spin3 L5-bd W-so2l1 L4-rep W-so2l1 L8-tri W-tri L4-half W-tri L9-real W-sla L3-iso W-sla L9-car W-car".split(" ").reduce((a, _, i, arr) => (i % 2 === 0 && a.push([arr[i], arr[i + 1]]), a), []);
+const DEPS = "L0-filt L0-pbw L0-univ L2-orth L0-univ L2-vec L0-univ L3-biv L0-filt L9-real L0-filt L2-hom L2-orth L2-hom L2-vec L2-hom L2-hom L2-dc L2-orth L2-dc L2-dc L3-diff L3-iso L3-diff L3-biv L3-iso L3-iso L4-mod L2-dc L4-rep L2-orth L4-iso L0-dim L4-iso L4-iso L4-mod L4-mod L4-rep L4-rep L4-half L4-half L4-irt L4-mod L1-struct L4-irt L5-cartan L5-cartan L5-w L4-rep L5-w L5-w L5-bd L5-bd L5-char L1-struct L6-34 L4-rep L6-34 L4-rep L6-56 L5-bd L6-56 L1-struct L7-real L2-dc L7-real L2-dc L7-con L7-real L7-bott L7-real L7-spinq L7-bott L7-spinq L7-spinq L7-con L5-bd L8-tri L6-34 L8-tri L3-biv L9-real L2-orth L9-real L0-filt L9-real L9-real L9-rep L4-rep L9-rep L9-rep L9-iso L9-iso L9-car L7-real W-cliff L7-bott W-cliff L6-34 W-spin3 L4-rep W-spin3 L5-bd W-so2l1 L4-rep W-so2l1 L8-tri W-tri L4-half W-tri L9-real W-sla L3-iso W-sla L9-car W-car".split(" ").reduce((a, _, i, arr) => (i % 2 === 0 && a.push([arr[i], arr[i + 1]]), a), []);
 
 
 /* goals: add one entry per new goal; color picks from the rotating palette
@@ -181,7 +180,7 @@ const PALETTE = ["#6d9cbe","#6b8e23","#cc7833","#7570b3","#a5c261","#bc9458","#d
 const GOALS = [
   "alpha|0|Goal α — Bott periodicity: the real Clifford algebras and the real spin groups|L0-univ L0-filt L0-filt L7-real L7-real L7-bott L0-univ L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L4-iso L4-iso L4-mod L4-mod L1-struct L1-struct L7-spinq L7-spinq L7-con|The Bott table: real Cliff(p,q), the hyperbolic step Cliff(p+1,q+1) ≅ Cliff(p,q) ⊗ M₂(ℝ) (landed #2550), the mod-8 table, the real spin groups, connectivity. The Bott-algebra branch is independent of Layers 1-2; only the real Spin-group milestones consume the double cover and the spin module. Remaining math: the mod-8 table (iteration #2524 then pure-axis #2530), Spin(p,q), connectivity.",
   "beta|1|Goal β — the spin representations of the Spin groups, from the double cover to triality|L0-univ L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L3-diff L3-diff L4-iso L4-iso L4-mod L4-mod L4-rep L4-rep L4-half L4-half L4-irt L4-irt L5-w L5-w L5-bd L5-bd L6-34 L6-34 L6-56 L6-56 L8-tri|The spin representations of the Spin groups: the double cover and its differential, the Clifford module S = ⋀·W with spinRep and half-spins, the B_l/D_l weights, and Spin₈ triality. Substrate: mathlib's spinGroup (mathlib#9111) with the homomorphisms merged (#1611/#1742); the double cover is being landed (#2404/#2410 merged, #2553 in review, #2492 draft); the module and weights open.",
-  "gamma|2|Goal γ — the quadratic layer is 𝔰𝔬(V) ≅ ⋀²V, with its quadratic action (PBW + Cartan)|L0-filt L0-pbw L0-pbw L3-biv L3-biv L3-ext L3-ext L3-iso L3-iso L9-real|PBW + Cartan over the same degree-2 layer: gr(Cliff) ≅ ⋀V, and that layer with the commutator is 𝔰𝔬(V) ≅ ⋀²V. PBW pieces and the standard-form soEquivBivector capstone are merged through #2563; the summit is the generic quadratic realization: one exterior-square/skew-adjoint bridge and the canonical soEquivQuadratic composition (#2411).",
+  "gamma|2|Goal γ — the quadratic layer is 𝔰𝔬(V) ≅ ⋀²V, with its quadratic action (PBW + Cartan)|L0-filt L0-pbw L0-pbw L3-biv L3-biv L3-iso L3-iso L9-real|PBW + Cartan over the same degree-2 layer: gr(Cliff) ≅ ⋀V, and that layer with the commutator is 𝔰𝔬(V) ≅ ⋀²V. PBW pieces and the standard-form soEquivBivector capstone are merged through #2563; the summit is the generic quadratic realization: one exterior-square/skew-adjoint bridge and the canonical soEquivQuadratic composition (#2411).",
   "delta|3|Goal δ — Kostant's isotypy: Clifford modules decompose isotypically under the 𝔰𝔬(V)-action|L0-filt L3-biv L3-biv L4-iso L4-iso L4-mod L4-mod L4-rep L4-rep L9-rep L9-rep L9-iso L9-iso L9-car|Kostant's isotypy: every Clifford module carries the 𝔰𝔬(V)-action (consuming γ's realization) and decomposes isotypically; the CAR instance is the worked case. First the math it needs: the generic finite hyperbolic decomposition behind SpinPolarizationData and spinAction, with the induced-rep machinery (#2419) preserved until those dependencies stabilize; then the isotypy corollary and the CAR instance.",
 ].map(r => { const [id, color, name, edgeStr, evalText] = r.split("|"); const es = edgeStr.split(" "); const edges = []; for (let i = 0; i < es.length; i += 2) edges.push([es[i], es[i + 1]]); return { id, color: +color, name, edges, eval: evalText }; });
 
@@ -247,12 +246,29 @@ for (let sweep = 0; sweep < 6; sweep++) {
   const seq = LAYERS.map((_, i) => i);
   (sweep % 2 ? seq.reverse() : seq).forEach(L => {
     const arr = byLayer[L];
+    /* within-layer chain edges flow left-to-right: a chain order key precedes the barycenter.
+       Built from the directed edge data (DEPS + goal edges), since adj is undirected. */
+    const chainPred = {};
+    arr.forEach(n => chainPred[n.id] = new Set());
+    const sameL = id => NODES.find(x => x.id === id).L === L;
+    DEPS.forEach(([a, b]) => { if (sameL(a) && sameL(b)) chainPred[b].add(a); });
+    GOALS.forEach(g => g.edges.forEach(([a, b]) => { if (sameL(a) && sameL(b)) chainPred[b].add(a); }));
+    const inChain = id => chainPred[id].size > 0 || arr.some(x => chainPred[x.id].has(id));
+    let orderCount = 0;
+    const chainKey = {};
+    const visit = id => {
+      if (chainKey[id] !== undefined) return;
+      const preds = [...chainPred[id]].filter(inChain);
+      if (!preds.length) { chainKey[id] = orderCount++; }
+      else { visit(preds[0]); chainKey[id] = chainKey[preds[0]] + 1; }
+    };
+    arr.forEach(n => visit(n.id));
     const bc = arr.map(n => {
       const ns = [...(adj[n.id] || [])].filter(m => NODES.find(x => x.id === m).L !== L).map(m => posX[m]).sort((p, q) => p - q);
       return ns.length ? ns[Math.floor(ns.length / 2)] : null;
     });
-    byLayer[L] = arr.map((n, i) => ({ n, i, bc: bc[i] }))
-      .sort((p, q) => (p.bc === null && q.bc === null) ? p.i - q.i : p.bc === null ? 1 : q.bc === null ? -1 : p.bc - q.bc || p.i - q.i)
+    byLayer[L] = arr.map((n, i) => ({ n, i, bc: bc[i], ck: chainKey[n.id] ?? 1e9 }))
+      .sort((p, q) => (p.bc === null && q.bc === null) ? p.ck - q.ck || p.i - q.i : p.bc === null ? 1 : q.bc === null ? -1 : p.ck - q.ck || p.bc - q.bc || p.i - q.i)
       .map(o => o.n);
     spread(byLayer[L]);
   });
@@ -338,6 +354,19 @@ function layerOverlaps(L) {
     if (!improved) break;
   }
 }
+
+/* enforce within-layer chain order on the final positions (the barycenter phase can scramble it) */
+const sameLayerEdges = [];
+DEPS.forEach(([a, b]) => { const A = NODES.find(x => x.id === a), B = NODES.find(x => x.id === b); if (A.L === B.L) sameLayerEdges.push([a, b]); });
+GOALS.forEach(g => g.edges.forEach(([a, b]) => { const A = NODES.find(x => x.id === a), B = NODES.find(x => x.id === b); if (A.L === B.L) sameLayerEdges.push([a, b]); }));
+for (let pass = 0; pass < 20; pass++) {
+  let moved = false;
+  for (const [a, b] of sameLayerEdges) {
+    if (posX[a] > posX[b] + 2) { const t = posX[a]; posX[a] = posX[b]; posX[b] = t; moved = true; }
+  }
+  if (!moved) break;
+}
+resolveOverlaps();
 
 const pos = {};
 NODES.forEach(n => { pos[n.id] = { x: posX[n.id], y: TOP + rowOf[n.L] * ROW }; });
