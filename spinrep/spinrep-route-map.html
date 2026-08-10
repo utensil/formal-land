@@ -137,14 +137,14 @@ const NODES = [
   "L0-univ|0|universal property|done|consumed from Mathlib|Universal property · ℤ/2-grading",
   "L0-filt|0|degree filtration|done|#1473|Degree filtration F0 ⊆ F1 ⊆ ⋯ = ⊤",
   "L0-dim|0|dimension 2ⁿ|done|#1561|Dimension 2ⁿ",
-  "L0-pbw|0|PBW: gr ≅ ⋀|incomplete|#1772 #1783 #1794 #1802 #1804 #1847 #1903 #1971 #2347 · +refactors #2506 #2512 #2513 #2525 #2562 #2606 #2670 · total iso open|Associated graded ≅ exterior (PBW)",
+  "L0-pbw|0|PBW: gr ≅ ⋀|incomplete|#1772 #1783 #1794 #1802 #1804 #1847 #1903 #1971 #2347 · total iso open|Associated graded ≅ exterior (PBW)",
   "L1-struct|1|structure theorem|open|— unclaimed · proved forward from L4|Cliff ≅ M₂(ℂ) structure theorem (over ℂ)",
   "L2-orth|2|O(Q)|done|#1499|Abstract orthogonal group O(Q)",
   "L2-vec|2|ιRangeEquiv|done|#1510|Vectors · ιRangeEquiv",
   "L2-hom|2|spin/pin → SO/O|done|#1611 #1742 · mathlib#9111 SpinGroup|Twisted conjugation → O(Q)/SO(Q)",
-  "L2-dc|2|double cover|review|#2404 #2410 #2553 #2492 #2523 · #2470 closed · +refactors #2503 #2505 #2518 #2604 · kernel ±1, spinor-norm open|Double cover: Cartan–Dieudonné, kernel ±1, spinor-norm exact seq",
-  "L3-biv|3|quadratic Lie subalgebra|done|#2224 (canonical) · #1708 · #1759 #1859 · #2511 · +refactors #2510 #2546|Bivectors as a Lie subalgebra (quadratic elements)",
-  "L3-iso|3|soEquivBivector|done|#2335 #2563 #2343 #2397 merged · +refactor #2547|soEquivBivector : ⋀²V ≃ 𝔰𝔬(V) via the quadratic elements",
+  "L2-dc|2|double cover|review|#2404 #2410 #2553 #2492 #2523 · #2470 closed · kernel ±1, spinor-norm open|Double cover: Cartan–Dieudonné, kernel ±1, spinor-norm exact seq",
+  "L3-biv|3|quadratic Lie subalgebra|done|#2224 (canonical) · #1708 · #1759 #1859 · #2511|Bivectors as a Lie subalgebra (quadratic elements)",
+  "L3-iso|3|soEquivBivector|done|#2335 #2563 #2343 #2397 merged|soEquivBivector : ⋀²V ≃ 𝔰𝔬(V) via the quadratic elements",
   "L3-diff|3|d(double cover)|open|— open|Differential of the double cover",
   "L4-iso|4|maximal isotropic W|open|— open|Maximal isotropic W",
   "L4-mod|4|spin module S|open|— open|Clifford module S = ⋀·W (wedge + contraction)",
@@ -510,9 +510,9 @@ legend.querySelectorAll(".gl").forEach(el => el.addEventListener("click", () => 
 }));
 
 /* ================= PR links ================= */
-const PRS = {1473:"m",1499:"m",1510:"m",1561:"m",1611:"m",1708:"m",1742:"m",1783:"m",1794:"m",1802:"m",1804:"m",1847:"m",1903:"m",1971:"m",2224:"m",2334:"m",2335:"m",2343:"m",2347:"m",2397:"m",2404:"m",2410:"m",2511:"m",1772:"c",1759:"c",1859:"c",1972:"c",2413:"c",2470:"c",2501:"c",2411:"o",2419:"d",2492:"d",2523:"d",2524:"o",2530:"d",2550:"o",2553:"o",2563:"o","2553":"o","2563":"o",2503:"m",2505:"m",2506:"m",2510:"m",2512:"m",2513:"m",2518:"m",2525:"m",2546:"m",2547:"m",2562:"m",2604:"m",2606:"m",2670:"o"};
+const PRS = {1473:"m",1499:"m",1510:"m",1561:"m",1611:"m",1708:"m",1742:"m",1783:"m",1794:"m",1802:"m",1804:"m",1847:"m",1903:"m",1971:"m",2224:"m",2334:"m",2335:"m",2343:"m",2347:"m",2397:"m",2404:"m",2410:"m",2511:"m",1772:"c",1759:"c",1859:"c",1972:"c",2413:"c",2470:"c",2501:"c",2411:"o",2419:"d",2492:"d",2523:"d",2524:"o",2530:"d",2550:"o",2553:"o",2563:"o"};
 /* roadmap PRs merged by upstream authors; every other merged PR is utensil's */
-const UPSTREAM = {1473:"kim-em",1499:"kim-em",1510:"eohjelle",1561:"kim-em",1611:"rudygt",1742:"kim-em",1804:"CBirkbeck",2224:"chrisromanmiller",2334:"chrisromanmiller",2511:"kim-em","2503":"kim-em","2505":"kim-em","2506":"kim-em","2510":"kim-em","2512":"kim-em","2513":"kim-em","2518":"kim-em","2525":"kim-em","2546":"kim-em","2547":"kim-em","2562":"kim-em","2604":"kim-em","2606":"kim-em","2670":"kim-em"};
+const UPSTREAM = {1473:"kim-em",1499:"kim-em",1510:"eohjelle",1561:"kim-em",1611:"rudygt",1742:"kim-em",1804:"CBirkbeck",2224:"chrisromanmiller",2334:"chrisromanmiller",2511:"kim-em"};
 function linkify(t) {
   return t.replace(/(?:mathlib)?#(\d+)(\u271d)?/g, (m, n, d) => {
     const isML = m.indexOf("mathlib") === 0;
