@@ -52,7 +52,7 @@ svg{display:block;background:var(--card);border:1px solid var(--line);border-rad
 .edge-dep{stroke:#555;stroke-width:.9;stroke-dasharray:2.5 4;opacity:.42}
 .edge-goal{stroke-width:2.2;opacity:.5;transition:opacity .12s,stroke-width .12s;pointer-events:stroke}
   #prtl { margin: .6rem 0 0; }
-  #prtl svg { display: block; width: 100%; height: auto; }
+  #prtl svg { display: block; width: 100%; max-width: 500px; height: auto; }
   #prtl .tlp { cursor: default; }
   .tllegend { margin-top: .3rem; font-size: .78rem; color: var(--muted); display: flex; gap: 1rem; flex-wrap: wrap; }
   .tllegend .s { display: inline-flex; align-items: center; gap: .35rem; }
@@ -598,9 +598,11 @@ const TL_STNAME = { M: "merged", R: "in review", D: "draft", C: "closed" };
   const byDay = {};
   PR_TL.forEach(p => { (byDay[p[1]] = byDay[p[1]] || []).push(p); });
   const days = Object.keys(byDay).sort();
-  const BW = 38, GAP = 14, PER = 24;
+  const BW = 24, GAP = 7, PER = 10;
   const W = 70 + days.length * (BW + GAP);
-  const Y0 = 60, H = 26 + Math.max(...days.map(d => byDay[d].length)) * PER;
+  const maxN = Math.max(...days.map(d => byDay[d].length));
+  const Y0 = 30 + maxN * PER + 12;   /* baseline low enough that the tallest column plus its label fits */
+  const H = Y0 + 32;
   const ORDER = ["M", "R", "D", "C"];
   let svg = `<svg viewBox="0 0 ${W} ${H + 48}" preserveAspectRatio="xMidYMin meet">`;
   svg += `<line x1="40" y1="${Y0}" x2="${W - 10}" y2="${Y0}" stroke="#444" stroke-dasharray="2 4"/>`;
@@ -614,8 +616,8 @@ const TL_STNAME = { M: "merged", R: "in review", D: "draft", C: "closed" };
       base -= n * PER;
       svg += `<rect x="${x}" y="${base}" width="${BW}" height="${n * PER}" fill="${TL_STATE[st]}" opacity=".85"/>`;
     }
-    svg += `<text x="${x + BW / 2}" y="${Y0 + 14}" font-size="9.5" fill="#8a857e" text-anchor="middle">${d.slice(5)}</text>`;
-    svg += `<text x="${x + BW / 2}" y="${base - 6}" font-size="10" fill="#e6e1dc" text-anchor="middle" font-weight="700">${prs.length}</text>`;
+    svg += `<text x="${x + BW / 2}" y="${Y0 + 14}" font-size="8" fill="#8a857e" text-anchor="middle">${d.slice(5)}</text>`;
+    svg += `<text x="${x + BW / 2}" y="${base - 6}" font-size="8" fill="#e6e1dc" text-anchor="middle" font-weight="700">${prs.length}</text>`;
     svg += `<g class="tlcol" data-day="${d}"><rect x="${x - 3}" y="${base - 20}" width="${BW + 6}" height="${Y0 - base + 34}" fill="transparent"/></g>`;
   });
   svg += '</svg>';
