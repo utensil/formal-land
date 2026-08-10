@@ -633,8 +633,8 @@ const TL_STNAME = { D: "draft", R: "open", V: "review", T: "ready to merge", M: 
       base -= n * PER;
       svg += `<rect x="${x}" y="${base}" width="${BW}" height="${n * PER}" fill="${TL_STATE[st]}" opacity=".85"/>`;
     }
-    /* date label only at the beginning of each UTC date, bare hour after that */
-    const lbl = day !== prevDay ? day.slice(5) + " " + h + "h" : h + "h";
+    /* date label only at the beginning of each date, clock time after that */
+    const lbl = day !== prevDay ? day.slice(5) : h + ":00";
     svg += `<text x="${x + BW / 2}" y="${Y0 + 13}" font-size="9.5" fill="#8a857e" text-anchor="middle">${lbl}</text>`;
     svg += `<text x="${x + BW / 2}" y="${base - 6}" font-size="11" fill="#e6e1dc" text-anchor="middle" font-weight="700">${evs.length}</text>`;
     svg += `<g class="tlcol" data-k="${k}"><rect x="${x - 3}" y="${base - 20}" width="${BW + 6}" height="${Y0 - base + 34}" fill="transparent"/></g>`;
@@ -656,7 +656,7 @@ const TL_STNAME = { D: "draft", R: "open", V: "review", T: "ready to merge", M: 
         const rep = g.length > 1 ? ` <span style="color:#8a857e">×${g.length}</span>` : "";
         return `<div class="tstatus"><span style="color:#a9a29b">${t}</span> · <a class="prlink pr-neutral" href="https://github.com/TauCetiProject/TauCeti/pull/${ev[2]}">#${ev[2]}</a> → <span style="color:${TL_STATE[ev[1]]}">${TL_STNAME[ev[1]]}</span>${rep} · ${nm2}</div>`;
       }).join("");
-      tip.innerHTML = `<b>${k.split(" ")[0].slice(5)} ${k.split(" ")[1]}h–${Number(k.split(" ")[1]) + 6}h — ${evs.length} transition${evs.length > 1 ? "s" : ""}</b>${rows}`;
+      tip.innerHTML = `<b>${k.split(" ")[0].slice(5)} ${k.split(" ")[1]}:00–${Number(k.split(" ")[1]) + 6}:00 — ${evs.length} transition${evs.length > 1 ? "s" : ""}</b>${rows}`;
       tip.style.display = "block";
       const r = tip.getBoundingClientRect();
       tip.style.left = Math.min(e.clientX + 14, innerWidth - r.width - 10) + "px";
