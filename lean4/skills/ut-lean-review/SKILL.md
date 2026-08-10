@@ -16,6 +16,12 @@ description: 'Review Lean formalizations against the live Tau Ceti rubrics plus 
 4. Write one internal review scoreboard row per Tau Ceti and additional rubric:
 
    ```md
+   - Reviewed: YYYY-MM-DD
+   - Subject: exact candidate
+   - Base: commit
+   - Head: commit or content hash
+   - Reviewer: independent agent
+
    | rubric id | verdict | evidence | comment |
    |---|---|---|---|
    | `correctness` | `approve` | concrete inspection or probe | rubric-specific conclusion |
@@ -29,7 +35,8 @@ description: 'Review Lean formalizations against the live Tau Ceti rubrics plus 
    python3 scripts/validate-review-evidence.py REVIEW.md /path/to/TauCetiReview/rubrics
    ```
 
-   Only a validator pass satisfies the private review gate.
+   A pass is the all-green private gate. A negative review is complete but
+   fails this gate until its findings are resolved.
 
 ## Rules
 
