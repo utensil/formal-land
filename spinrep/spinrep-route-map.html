@@ -102,7 +102,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 <div class="goals" id="goals"></div>
 
 <h2>PR timeline</h2>
-<div class="sub" style="margin-top:6px">37 merged PRs on the roadmap (14 by utensil, 23 by others) · 4 drafts · 7 closed · column height = state transitions in a 6-hour window, hover a column for the activity list</div>
+<div class="sub" style="margin-top:6px">39 merged PRs on the roadmap · feat × 24 (15 by utensil, 9 by others) · refactor × 13 (1 by utensil, 12 by others) · other × 2 (2 by others) · 4 drafts · 7 closed · column height = state transitions in a 6-hour window, hover a column for the activity list</div>
 <div id="prtl"></div>
 
 <h2>The map</h2>
@@ -510,7 +510,7 @@ legend.querySelectorAll(".gl").forEach(el => el.addEventListener("click", () => 
 }));
 
 /* ================= PR links ================= */
-const PRS = {1473:"m",1499:"m",1510:"m",1561:"m",1611:"m",1708:"m",1742:"m",1783:"m",1794:"m",1802:"m",1804:"m",1847:"m",1903:"m",1971:"m",2224:"m",2334:"m",2335:"m",2343:"m",2347:"m",2397:"m",2404:"m",2410:"m",2511:"m",1772:"c",1759:"c",1859:"c",1972:"c",2413:"c",2470:"c",2501:"c",2411:"o",2419:"d",2492:"d",2523:"d",2524:"o",2530:"d",2550:"o",2553:"m",2563:"o","2553":"m","2563":"m",2503:"m",2505:"m",2506:"m",2510:"m",2512:"m",2513:"m",2518:"m",2525:"m",2546:"m",2547:"m",2562:"m",2604:"m",2606:"m",2670:"o"};
+const PRS = {1473:"m",1499:"m",1510:"m",1561:"m",1611:"m",1708:"m",1742:"m",1783:"m",1794:"m",1802:"m",1804:"m",1847:"m",1903:"m",1971:"m",2224:"m",2334:"m",2335:"m",2343:"m",2347:"m",2397:"m",2404:"m",2410:"m",2511:"m",1772:"c",1759:"c",1859:"c",1972:"c",2413:"c",2470:"c",2501:"c",2411:"o",2419:"d",2492:"d",2523:"d",2524:"o",2530:"d",2550:"m",2553:"m",2563:"m","2553":"m","2563":"m",2503:"m",2505:"m",2506:"m",2510:"m",2512:"m",2513:"m",2518:"m",2525:"m",2546:"m",2547:"m",2562:"m",2604:"m",2606:"m",2670:"o"};
 /* roadmap PRs merged by upstream authors; every other merged PR is utensil's */
 const UPSTREAM = {1473:"kim-em",1499:"kim-em",1510:"eohjelle",1561:"kim-em",1611:"rudygt",1742:"kim-em",1804:"CBirkbeck",2224:"chrisromanmiller",2334:"chrisromanmiller",2511:"kim-em","2503":"kim-em","2505":"kim-em","2506":"kim-em","2510":"kim-em","2512":"kim-em","2513":"kim-em","2518":"kim-em","2525":"kim-em","2546":"kim-em","2547":"kim-em","2562":"kim-em","2604":"kim-em","2606":"kim-em","2670":"kim-em"};
 function linkify(t) {
