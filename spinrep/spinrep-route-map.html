@@ -522,11 +522,12 @@ svg.addEventListener("mousemove", e => {
   const sum = summitOf[n.id] || [];
   const goalsOn = GOALS.filter(g => g.edges.flat().includes(n.id) && !sum.includes(g.id)).map(g => `<span style="color:${PALETTE[g.color]}">${gname(g.id)}</span>`).join(", ");
   const sumTxt = sum.map(gid => `<span style="color:${PALETTE[GOALS.find(g => g.id === gid).color]}">${gname(gid)}</span>`).join(", ");
+  const isJunction = MEET[n.id] != null;
   tip.innerHTML = `<b>${n.label}</b><div class="tstatus">state: ${ST[n.status]} · ${linkify(n.prs)}</div>` +
     (sumTxt ? `<div class="tstatus">summit of: ${sumTxt}</div>` : "") +
-    (goalsOn && (goalOfNode[n.id] || []).length >= 2 ? `<div class="tstatus">meeting of: ${goalsOn}</div>` : "") +
-    (MEET[n.id] ? `<div class="tstatus" style="font-size:11px">${MEET[n.id]}</div>` : "") +
-    (goalsOn && (goalOfNode[n.id] || []).length < 2 ? `<div class="tstatus">on routes: ${goalsOn}</div>` : "");
+    (isJunction ? `<div class="tstatus">meeting of: ${goalsOn}</div>` : "") +
+    (isJunction ? `<div class="tstatus" style="font-size:11px">${MEET[n.id]}</div>` : "") +
+    (goalsOn && !isJunction ? `<div class="tstatus">on routes: ${goalsOn}</div>` : "");
   tip.style.display = "block";
   const r = tip.getBoundingClientRect();
   tip.style.left = Math.min(e.clientX + 14, innerWidth - r.width - 10) + "px";
