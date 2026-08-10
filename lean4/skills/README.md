@@ -14,7 +14,7 @@ where useful, one reference file.
 | `ut-lean-review` | the extension layer over the Tau Ceti rubrics and coordination: anchored extensions (one per rubric), lessons and failure modes from actual reviews, cannot-miss flags; structural checks the rubrics do not carry | rubrics from TauCetiProject/TauCetiReview; design rules from ut-lean-design |
 | `ut-lean-ops` | toolchain-level setup, slice worktrees, cache-first builds with cache reuse, audits, fresh-checkout reproduction; the executable verification chain (SOFTWARE.md) is a scoped extension gated on the project carrying executable content | check for independent-kernel verification |
 | `ut-lean-check` | the comparator / nanoda harness, native-execution oracles | ops for toolchain-level verification |
-| `ut-lean-roadmap` | the definitions (roadmap, layer, route, slice), slice-selection gates, the operational algorithm, route dynamics | design for per-slice design; recon for slice selection support |
+| `ut-lean-roadmap` | roadmap terms, summit and dependency-subgraph routes, prerequisite closure, slice selection and route revision | design for per-slice design; recon for library-boundary evidence |
 
 ## Interfaces
 
@@ -31,8 +31,8 @@ references the owner by name and does not restate the content. The ownership
 map above is the authority:
 
 - The pinned-source survey belongs to `ut-lean-recon`; golf and design point to it.
-- Slice selection (the gate table and the operational algorithm) belongs to
-  `ut-lean-roadmap`; design scores candidates there rather than restating the gates.
+- Route and slice selection belongs to `ut-lean-roadmap`; design consumes its
+  milestone, prerequisite closure, consumer, and natural-generality decision.
 - The characteristic-API rules belong to `ut-lean-design`; review checks them and references design.
 - The TauCeti rubrics are linked, never restated, in `ut-lean-review`.
 - Cross-cutting cautions (re-verify pinned examples before treating a skill as stable, public prose discipline, example citations carry their spirit inline (a bare reference an agent cannot explore is rewritten or dropped)) are one-line reminders, not sections.
@@ -58,7 +58,7 @@ skills because it is the unit of work.
 | --- | --- | --- | --- |
 | roadmap | ut-lean-roadmap | ut-lean-roadmap (reading the layers, spine, frontier; acceptance oracles; roadmaps as human intent) | design and recon as context |
 | layer | ut-lean-roadmap | ut-lean-roadmap (logical dependency structure) | roadmap only |
-| route | ut-lean-roadmap | ut-lean-roadmap (picking the route, the attack angle and plan, navigation, route dynamics) | roadmap only, as a term |
+| route | ut-lean-roadmap | ut-lean-roadmap (a revisable dependency subgraph toward a named summit, including branches and handoffs) | roadmap only, as a term |
 | slice | ut-lean-roadmap | selection and scoping in ut-lean-roadmap (a function of that skill, not a separate one); design in ut-lean-design; reconnaissance in ut-lean-recon; delivery in ut-lean-golf; review in ut-lean-review | every skill that works on a contribution |
 
 Per skill, the slice appears as: selected and scoped in ut-lean-roadmap,
@@ -69,11 +69,10 @@ rather than slice it.
 
 ## Vocabulary
 
-The primary unit of work across these skills is the slice: the selected next
-slice of work, which naturally maps to a pull request where a project uses
-them. The route is picked through the roadmap and carries the attack angle and
-the practical plan. See `ut-lean-roadmap` for the definitions of roadmap,
-layer, route, and slice.
+The primary unit of work across these skills is the slice: one coherent
+schedulable milestone, which may map to a pull request. A route is the
+revisable dependency subgraph toward its named summit. See `ut-lean-roadmap`
+for the definitions of roadmap, layer, route, and slice.
 
 ## Workflow
 

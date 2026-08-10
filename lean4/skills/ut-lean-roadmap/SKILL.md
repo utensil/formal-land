@@ -1,75 +1,87 @@
 ---
 name: ut-lean-roadmap
-description: "Work with a formalization roadmap: layers as logical dependency structure, routes picked through the roadmap (the attack angle and the practical plan, evolving as slices accumulate), and slices as the selected next unit of work, naturally mapping to a pull request. Generality-first: each slice delivers the general theorem, with concrete probes only as feasibility spikes."
+description: "Select and revise formalization routes and slices from a roadmap: name the mathematical summit, trace the live dependency subgraph, identify branches and handoffs, and choose one coherent schedulable milestone with a stable prerequisite closure and a real downstream consumer."
 ---
 
-# ut-lean-roadmap: working with a formalization roadmap
+# `ut-lean-roadmap`
 
-## Definitions
+## Terms
 
-The key terms are used throughout; define them up front.
+- **Roadmap:** the human-maintained account of the formalization's goals and
+  mathematical dependencies. It may combine narrative, declarations, and
+  examples.
+- **Layer:** targets occupying a shared position in the logical dependency
+  structure. Thematic numbering need not be proof order.
+- **Route:** a revisable dependency subgraph toward a named mathematical
+  summit. It may branch, share junctions with other routes, and reconverge.
+- **Slice:** one coherent schedulable milestone selected from a route, with a
+  stable prerequisite closure and a named downstream consumer.
 
-- **Roadmap**: the organizing document of a formalization effort. It consists of layers, and you pick a route through it. Its form varies (a narrative README, a blueprint, a set of notes, a stub file with sorry targets).
-- **Layer**: a logical dependency structure in a roadmap: a group of targets that share a position in the dependency order and unlock the layers above them.
-- **Route**: the route picked through the roadmap: the attack angle (chosen from your principles and preferences: generality-first, dependency-first, a preference for reusable infrastructure) together with the practical plan that works it. A route navigates by more factors than the angle alone, including steering clear of others' active work where feasible (but not always: avoid over-avoiding proximity). A route is a plan, not a contract; it evolves as slices accumulate.
-- **Slice**: the next slice of work, selected from the route and designed: scoped, of manageable scale and complexity, with clear dependencies and a clear consumer. A slice naturally maps to a pull request where the project uses them.
+## Procedure
 
-## Purpose
+Project policy may supply private route maps, goal registries, or decisions as
+context. Read them in place and use them to constrain selection; do not copy
+their project-specific content into the reusable skill or unrelated output.
 
-A formalization roadmap organizes work into layers with dependency spines: which targets exist, in what order they unlock each other, and which are still open. You pick a route through the roadmap and select the next slice of work along it. This skill covers how to read such a roadmap in whatever form a project uses, how to pick and navigate a route, and how to select and scope the next slice. It is methodology, not policy: the vocabulary is the slice, not any project's contribution process, and the checks apply to any roadmap shape.
+### 1. Establish authority and live state
 
-## When to use
+Read the narrative roadmap, its relevant declarations, and current human
+decisions. Treat declaration stubs as targets, not proof that a milestone is
+complete. Reconcile merged work, active work, and known collisions.
 
-- Selecting the next slice of work on a layered formalization roadmap.
-- Evaluating whether a proposed slice is the right size, shape, and scope.
-- Reading a roadmap to find where the frontier is.
-- Writing or improving a roadmap so it carries usable intent signals.
+### 2. Trace the route
 
-## Core principle: generality first
+Name the summit. Trace the dependency subgraph that reaches it in topological
+proof order. Record material parallel branches, shared junctions, and what is
+handed off at each junction. Do not infer proof order from layer numbers or
+avoid shared prerequisites merely because another route also uses them.
 
-The deliverable is always the general theorem or construction the roadmap names. Concrete cases are probes: a spike on a concrete instance can establish feasibility and pin a convention, but the slice delivers the general result. Never let the probe become the deliverable, and never state a theorem at a fixed case when the argument is uniform: if the proof works for every degree, index, or structural parameter, state it so.
+### 3. Compute the prerequisite closure
 
-## Reading a roadmap
+For each candidate milestone, classify every prerequisite as stable and
+available, an explicit active dependency, or absent. An absent ordered
+prerequisite blocks the slice. An active dependency makes its public contract
+provisional; if that contract changes materially, reopen selection and design
+for its consumers.
 
-Read the form first:
+### 4. Select the slice
 
-- The narrative spec anchors the work. Whatever its form, it is read before the definitions and signatures; a signature-stub file supplies targets but cannot alone establish that a milestone is complete. Matching a stub signature is not completing the milestone.
-- Find the layers and their dependency spine: which layer each layer needs, which targets unlock others, and which are reachable directly from the core.
-- Compute the live prerequisite closure for the candidate target. Classify every prerequisite as merged, an explicit active dependency, or absent; an absent ordered prerequisite blocks ordinary publication even when the branch is technically independent.
-- Locate the frontier: classify each area as heavily worked, substrate done, in progress, or untouched. The frontier is the boundary between done and open, and the second half of a roadmap is where the open targets live.
-- Collect the acceptance oracles: concrete named results (a formula, an isomorphism, a counterexample, any check the subject admits) that each layer must reach. Use the vocabulary the subject supports; do not presuppose dimension, finiteness, or any structure the mathematics may not have.
+Choose a named roadmap milestone that:
 
-## Selecting the next slice
+- directly advances the route toward its summit;
+- has a concrete downstream consumer;
+- forms one reviewable mathematical boundary, including inseparable supporting
+  results but excluding independent reusable work;
+- uses the natural generality justified by the target, proof, and consumer;
+- has an explicit, stable prerequisite closure.
 
-Each slice is selected as the next unit in a route: scoped, of manageable scale and complexity, with clear dependencies and a clear consumer. A slice naturally maps to a pull request.
+Do not schedule a theorem's internal proof step as a separate milestone unless
+it is independently reusable and consumed. Do not select nearby API that does
+not reduce a route dependency.
 
-- Named target: the slice attacks a named declaration, theorem family, or milestone in the roadmap, not a topic.
-- One idea: the central lemma can be stated in one sentence; a prerequisite refactor is its own slice.
-- Dependencies: at most one or two unlanded prerequisites; list the library objects the slice will reuse and the missing theorem it supplies.
-- Consumer: the direct downstream consumer of the slice is named.
-- Dependency value: prefer a known unmet prerequisite over nearby but non-enabling work; do not stretch scope to chase a dependency.
-- Natural generality: state the slice at the level the roadmap names; uniform arguments are stated for all degrees or structures.
-- Collisions: recheck the roadmap and the open contributions and claims before starting.
-- Boundary: crossing into another work area (application-specific representations, numerical work, generic library extraction) is an explicit decision, not a default.
-- Convention lock: signature, normalization, direction, and operand order are explicit before the proof, and pinned by small definitional tests where the subject admits them.
-- Feasibility probe: a concrete spike (the smallest instance that exercises the route) can establish the route and the expected normal form; test it without building the general abstraction, then deliver the general theorem it supports.
-- Acceptance oracle and stop condition: build, no-sorry and axiom policy, and a named test theorem are fixed; a useful result exists if the generalization is abandoned; a spike has an end.
+### 5. Hand off to recon and design
 
-A slice stacked on an unlanded prerequisite has a provisional contract. If review materially changes that prerequisite's hypotheses, construction strategy, exported API, or module ownership, reopen selection and design for every dependent slice before treating its previous review as current.
+Use `ut-lean-recon` to verify the existing-library boundary, current APIs, and
+collisions. Use `ut-lean-design` to fix hypotheses, conventions, the public
+contract, proof shape, and consumer tests. Run a feasibility probe only when
+one of those points is genuinely uncertain.
 
-## Routes, picked and navigated
+### 6. Revisit
 
-The route is picked through the roadmap; the slice is selected from it. Keep the two apart:
+The roadmap and route are records of current human intent, not immutable
+contracts. Recompute the route when mathematics, accepted interfaces, or goals
+change. Stop scheduling once the summit is landed; treat worked examples or
+acceptance tails as separate goals when they matter.
 
-- The route carries the attack angle: the principles behind your approach (generality-first, dependency-first, reusable infrastructure first). It may overlap with what others are doing; the roadmap does not have to be carved into disjoint angles.
-- The route navigates in practice: it orders the slices, and it steers around more factors than the angle alone. When others are actively working nearby, steer clear slightly where feasible, but not always: proximity is sometimes exactly right (building on their work, converging on a shared abstraction), and over-avoiding is its own cost.
-- A route is revisited from time to time. As slices accumulate, the reusable bits gradually surface: the criterion shared by several slices, the structural API worth extracting or upstreaming, the conventions that should have been locked earlier. Each revisit updates the next slices. The route evolves; the roadmap stays.
+## Output
 
-## Roadmaps as records of human intent
+Record the summit, route subgraph, selected milestone, prerequisite closure,
+consumer, natural generality, and any junction handoff. Project-specific
+fronts, pull-request gates, monitors, and approval rules belong in project
+policy.
 
-A roadmap is a record of human intent, not a corpus of generated prose. It is useful to the extent that it carries clear intent signals and receives quality feedback: commit history and edit rationale carry more intent than polished paragraphs; short pointed targets with explicit acceptance oracles beat long descriptive passages; a roadmap without review, correction, or contested claims is noise. When improving a roadmap, aim for signals a newcomer can act on: exact targets, named dependencies, acceptance oracles, and a visible frontier.
+## Related skills
 
-## References
-
-- ROUTES.md in this directory: the runnable checklist and the gate table.
-- Related skills in this set: ut-lean-design for designing a selected slice, ut-lean-recon for the API reconnaissance that supports slice selection, ut-lean-review for reviewing the slices a roadmap produces.
+- `ut-lean-recon`: pinned API and library-boundary reconnaissance
+- `ut-lean-design`: detailed declaration and proof design for the selected slice
+- `ut-lean-review`: independent review after implementation
