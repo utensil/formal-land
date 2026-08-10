@@ -599,8 +599,8 @@ const TL_STNAME = { D: "draft open", R: "ready open", V: "review", T: "ready to 
   const byb = {};
   PR_EV.forEach(ev => {
     const t = new Date(ev[0]);
-    const h = Math.floor(t.getUTCHours() / 6) * 6;
-    const key = t.toISOString().slice(0, 10) + " " + h;
+    const h = Math.floor(t.getHours() / 6) * 6;
+    const key = t.getFullYear() + "-" + String(t.getMonth() + 1).padStart(2, "0") + "-" + String(t.getDate()).padStart(2, "0") + " " + h;
     (byb[key] = byb[key] || []).push(ev);
   });
   const slots = Object.keys(byb).sort();
@@ -638,13 +638,17 @@ const TL_STNAME = { D: "draft open", R: "ready open", V: "review", T: "ready to 
     col.addEventListener("mouseenter", () => {
       const k = col.dataset.k;
       const evs = byb[k];
-      const rows = evs.map(ev => {
+      const grp = {};
+      evs.forEach(ev => { const g = grp[ev[2] + "|" + ev[1]] = grp[ev[2] + "|" + ev[1]] || []; g.push(ev); });
+      const rows = Object.values(grp).map(g => {
+        const ev = g[0];
         const t = ev[0].slice(11, 16);
         const nm = PR_META[ev[2]] ? PR_META[ev[2]][1] : "";
         const nm2 = nm.length > 46 ? nm.slice(0, 45) + "…" : nm;
-        return `<div class="tstatus"><span style="color:#a9a29b">${t}</span> · <a class="prlink pr-neutral" href="https://github.com/TauCetiProject/TauCeti/pull/${ev[2]}">#${ev[2]}</a> → <span style="color:${TL_STATE[ev[1]]}">${TL_STNAME[ev[1]]}</span> · ${nm2}</div>`;
+        const rep = g.length > 1 ? ` <span style="color:#8a857e">×${g.length}</span>` : "";
+        return `<div class="tstatus"><span style="color:#a9a29b">${t}</span> · <a class="prlink pr-neutral" href="https://github.com/TauCetiProject/TauCeti/pull/${ev[2]}">#${ev[2]}</a> → <span style="color:${TL_STATE[ev[1]]}">${TL_STNAME[ev[1]]}</span>${rep} · ${nm2}</div>`;
       }).join("");
-      tip.innerHTML = `<b>${k.split(" ")[0].slice(5)} ${k.split(" ")[1]}h–${Number(k.split(" ")[1]) + 6}h UTC — ${evs.length} transition${evs.length > 1 ? "s" : ""}</b>${rows}`;
+      tip.innerHTML = `<b>${k.split(" ")[0].slice(5)} ${k.split(" ")[1]}h–${Number(k.split(" ")[1]) + 6}h — ${evs.length} transition${evs.length > 1 ? "s" : ""}</b>${rows}`;
       tip.style.display = "block";
     });
     col.addEventListener("mouseleave", () => { tip.style.display = "none"; });
