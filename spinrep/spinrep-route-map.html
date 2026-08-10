@@ -646,27 +646,45 @@ const TL_STNAME = { D: "draft", R: "open", V: "review", T: "ready to merge", M: 
   });
   svg += '</svg>';
   host.innerHTML = svg;
-  host.querySelectorAll(".tlcol").forEach(col => {
-    col.addEventListener("mouseenter", e => {
-      const k = col.dataset.k;
-      const evs = byb[k];
-      const grp = {};
-      evs.forEach(ev => { const g = grp[ev[2] + "|" + ev[1]] = grp[ev[2] + "|" + ev[1]] || []; g.push(ev); });
-      const rows = Object.values(grp).map(g => {
-        const ev = g[0];
-        const t = ev[0].slice(11, 16);
-        const nm = PR_META[ev[2]] ? PR_META[ev[2]][1] : "";
-        const nm2 = nm.length > 46 ? nm.slice(0, 45) + "…" : nm;
-        const rep = g.length > 1 ? ` <span style="color:#8a857e">×${g.length}</span>` : "";
-        return `<div class="tstatus"><span style="color:#a9a29b">${t}</span> · <a class="prlink pr-neutral" href="https://github.com/TauCetiProject/TauCeti/pull/${ev[2]}">#${ev[2]}</a> → <span style="color:${TL_STATE[ev[1]]}">${TL_STNAME[ev[1]]}</span>${rep} · ${nm2}</div>`;
-      }).join("");
-      tip.innerHTML = `<b>${k.split(" ")[0].slice(5)} ${k.split(" ")[1]}:00–${Number(k.split(" ")[1]) + 6}:00 — ${evs.length} transition${evs.length > 1 ? "s" : ""}</b>${rows}`;
-      tip.style.display = "block";
-      const r = tip.getBoundingClientRect();
-      tip.style.left = Math.min(e.clientX + 14, innerWidth - r.width - 10) + "px";
-      tip.style.top = (e.clientY + 14) + "px";
-    });
-    col.addEventListener("mouseleave", () => scheduleHide());
+  /* mirror the graph's tooltip pattern: the card follows the cursor and only
+     hides through the shared 350ms grace timer, so it never vanishes while the
+     cursor rests on a column or crosses onto the card to click a PR link */
+  const svgEl = host.querySelector("svg");
+  let lastK = "";
+  function positionTip(x, y) {
+    const r = tip.getBoundingClientRect();
+    tip.style.left = Math.min(x + 14, innerWidth - r.width - 10) + "px";
+    tip.style.top = (y + 14) + "px";
+  }
+  function fillCard(k, x, y) {
+    const evs = byb[k];
+    const grp = {};
+    evs.forEach(ev => { const g = grp[ev[2] + "|" + ev[1]] = grp[ev[2] + "|" + ev[1]] || []; g.push(ev); });
+    const rows = Object.values(grp).map(g => {
+      const ev = g[0];
+      const t = ev[0].slice(11, 16);
+      const nm = PR_META[ev[2]] ? PR_META[ev[2]][1] : "";
+      const nm2 = nm.length > 46 ? nm.slice(0, 45) + "…" : nm;
+      const rep = g.length > 1 ? ` <span style="color:#8a857e">×${g.length}</span>` : "";
+      return `<div class="tstatus"><span style="color:#a9a29b">${t}</span> · <a class="prlink pr-neutral" href="https://github.com/TauCetiProject/TauCeti/pull/${ev[2]}">#${ev[2]}</a> → <span style="color:${TL_STATE[ev[1]]}">${TL_STNAME[ev[1]]}</span>${rep} · ${nm2}</div>`;
+    }).join("");
+    tip.innerHTML = `<b>${k.split(" ")[0].slice(5)} ${k.split(" ")[1]}:00–${Number(k.split(" ")[1]) + 6}:00 — ${evs.length} transition${evs.length > 1 ? "s" : ""}</b>${rows}`;
+    tip.style.display = "block";
+    positionTip(x, y);
+  }
+  svgEl.addEventListener("mousemove", e => {
+    const col = e.target.closest(".tlcol");
+    if (!col) {
+      if (tip.style.display !== "none" && !tip.contains(e.target)) scheduleHide();
+      return;
+    }
+    clearTimeout(hideTimer);
+    const k = col.dataset.k;
+    if (lastK !== k) { lastK = k; fillCard(k, e.clientX, e.clientY); }
+    else { tip.style.display = "block"; positionTip(e.clientX, e.clientY); }
+  });
+  svgEl.addEventListener("mouseleave", e => {
+    if (!tip.contains(e.relatedTarget)) { clearTimeout(hideTimer); tip.style.display = "none"; }
   });
 })();</script>
 </body>
