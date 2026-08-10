@@ -682,10 +682,13 @@ const TL_STNAME = { D: "draft", R: "open", V: "review", T: "ready to merge", M: 
     }
     clearTimeout(hideTimer);
     const k = col.dataset.k;
-    if (k !== curK) { curK = k; showCard(k); }
+    if (k !== curK || !tip.style.display || tip.style.display === "none") { curK = k; showCard(k); }
   });
+  /* leaving the svg only starts the grace timer: the card lives just below the
+     chart, so the slide from a column into it crosses the svg boundary and must
+     not be cut off instantly */
   svgEl.addEventListener("mouseleave", e => {
-    if (!tip.contains(e.relatedTarget)) { clearTimeout(hideTimer); tip.style.display = "none"; }
+    if (!tip.contains(e.relatedTarget)) scheduleHide();
   });
 })();</script>
 </body>
