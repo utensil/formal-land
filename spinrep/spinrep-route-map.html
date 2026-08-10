@@ -51,6 +51,12 @@ svg{display:block;background:var(--card);border:1px solid var(--line);border-rad
 .edge{fill:none;stroke-linecap:round}
 .edge-dep{stroke:#555;stroke-width:.9;stroke-dasharray:2.5 4;opacity:.42}
 .edge-goal{stroke-width:2.2;opacity:.5;transition:opacity .12s,stroke-width .12s;pointer-events:stroke}
+  #prtl { margin: .6rem 0 0; }
+  #prtl svg { display: block; width: 100%; height: auto; }
+  #prtl .tlp { cursor: default; }
+  .tllegend { margin-top: .3rem; font-size: .78rem; color: var(--muted); display: flex; gap: 1rem; flex-wrap: wrap; }
+  .tllegend .s { display: inline-flex; align-items: center; gap: .35rem; }
+  .tllegend .d { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
 .junction{fill:none;stroke:#e6e1dc;stroke-width:1.2;opacity:.85}
 .edge-goal.lit{opacity:.98;stroke-width:3.6}
 .goal{transition:border-color .12s,box-shadow .12s}
@@ -92,6 +98,9 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 <h1>SpinRep route map</h1>
 <div class="sub">The SpinRepresentations roadmap as a dependency graph. Gray dashed edges are the dependency spine; each goal draws its route as a subgraph of colored edges toward its summit, and where routes share an edge the edge splits into one tight lane per goal, each in its own color; branches meet at the summit instead of zigzagging. Add a goal by appending one entry to the <code>GOALS</code> array in the source.</div>
 <div class="sub" style="margin-top:6px">23 merged PRs on the roadmap (13 by utensil, 10 by upstream authors) · 6 drafts · 7 closed</div>
+
+<h2>PR timeline</h2>
+<div id="prtl"></div>
 
 <h2>Goals</h2>
 <div class="legend" id="legend"></div>
@@ -571,6 +580,45 @@ function scheduleHide() {
 svg.addEventListener("mouseleave", e => { if (!tip.contains(e.relatedTarget)) { clearTimeout(hideTimer); tip.style.display = "none"; } });
 tip.addEventListener("mouseenter", () => clearTimeout(hideTimer));
 tip.addEventListener("mouseleave", () => { clearTimeout(hideTimer); tip.style.display = "none"; });
+</script>
+<script>
+/* PR timeline: state-colored dots by date, goal letters, hover = digest */
+const PR_TL = [["9111", "2024-08-20", "M", "αβ", "feat(LinearAlgebra/CliffordAlgebra): port SpinGroup"], ["1473", "2026-07-30", "M", "αδγ", "feat: add the degree filtration of a Clifford algebra"], ["1499", "2026-07-30", "M", "", "feat: add the orthogonal group of a quadratic form"], ["1510", "2026-07-31", "M", "αβ", "feat: identify the vectors inside a Clifford algebra"], ["1561", "2026-07-31", "M", "", "feat: compute the dimension of a Clifford algebra"], ["1611", "2026-08-01", "M", "αβ", "feat: act on quadratic spaces by the spin group"], ["1708", "2026-08-01", "M", "δγ", "feat: add normalized Clifford bivector exterior map"], ["1742", "2026-08-02", "M", "αβ", "feat: act on a quadratic space by the Pin group"], ["1759", "2026-08-02", "C", "δγ", "feat: close Clifford bivector image under commutator"], ["1772", "2026-08-02", "C", "γ", "feat: add degree-two Clifford leading-term map"], ["1783", "2026-08-02", "M", "γ", "feat: add generic Clifford filtration leading terms"], ["1794", "2026-08-02", "M", "γ", "feat: preserve Clifford filtrations under change of form"], ["1802", "2026-08-02", "M", "γ", "feat: add zero-form Clifford filtration quotients"], ["1804", "2026-08-02", "M", "γ", "refactor(CliffordAlgebra): decompose filtrationLeadingTerm_surjective"], ["1847", "2026-08-03", "M", "γ", "feat: add Clifford filtration graded equivalence"], ["1859", "2026-08-03", "C", "δγ", "feat: add Clifford bivector exterior map"], ["1903", "2026-08-04", "M", "γ", "feat: add homogeneous Clifford filtration multiplication"], ["1971", "2026-08-04", "M", "γ", "feat: package the Clifford associated graded algebra"], ["1972", "2026-08-04", "C", "", "feat: add faithful Clifford bivector exterior map"], ["2224", "2026-08-07", "M", "δγ", "feat: the quadratic elements of a Clifford algebra as a Lie subalgebra"], ["2334", "2026-08-08", "M", "α", "feat: the real Clifford forms Cliff(p, q) and the base entries of the "], ["2347", "2026-08-08", "M", "γ", "refactor: name the Clifford graded-piece denominator"], ["2404", "2026-08-08", "M", "αβ", "feat: lift reflections through Pin and Spin groups"], ["2411", "2026-08-08", "D", "δγ", "feat: identify quadratic Clifford elements with skew adjoints"], ["2413", "2026-08-08", "C", "δγ", "feat: add the canonical quadratic Lie action"], ["2419", "2026-08-08", "D", "δ", "feat: induce Lie representations from Clifford modules"], ["2335", "2026-08-09", "M", "βγ", "feat: identify exterior bivectors with quadratic elements"], ["2343", "2026-08-09", "M", "βγ", "feat: transport the Lie structure to exterior bivectors"], ["2397", "2026-08-09", "M", "βγ", "feat: identify the standard skew-adjoint Lie algebra"], ["2410", "2026-08-09", "M", "αβ", "feat: add a one-step Cartan-Dieudonne reduction"], ["2470", "2026-08-09", "C", "αβ", "feat: extend Pin corrections over fixed subspaces"], ["2492", "2026-08-09", "D", "αβ", "feat: prove Cartan-Dieudonne generation and Pin surjectivity"], ["2511", "2026-08-09", "M", "δγ", "refactor(CliffordAlgebra): drop the cliffordBivector namespace stutter"], ["2523", "2026-08-09", "D", "αβ", "feat: prove surjectivity of the Spin action"], ["2524", "2026-08-09", "D", "α", "feat: iterate and apply hyperbolic Bott reduction"], ["2530", "2026-08-09", "D", "α", "feat: add a real Clifford pure-axis recurrence"], ["2553", "2026-08-09", "R", "αβ", "feat: extend Pin corrections over fixed subspaces"], ["2550", "2026-08-10", "M", "α", "feat: add hyperbolic Clifford periodicity"], ["2563", "2026-08-10", "M", "βγ", "feat: identify standard bivectors with the orthogonal Lie algebra"]];
+const TL_STATE = { M: "#7fb069", R: "#e5c07b", D: "#8fa3b8", C: "#c97b7b" };
+const TL_GOAL = { α: "#6d9cbe", β: "#6b8e23", γ: "#cc7833", δ: "#7570b3" };
+(function () {
+  const host = document.getElementById("prtl");
+  if (!host) return;
+  const t0 = Date.parse("2024-07-25"), t1 = Date.parse("2026-08-12");
+  const W = 1540, Y = 56;
+  const byDay = {};
+  PR_TL.forEach(p => { (byDay[p[1]] = byDay[p[1]] || []).push(p); });
+  const X = t => 40 + (t - t0) / (t1 - t0) * (W - 60);
+  let svg = `<svg viewBox="0 0 ${W} 160" preserveAspectRatio="xMidYMin meet">`;
+  svg += `<line x1="40" y1="${Y}" x2="${W - 20}" y2="${Y}" stroke="#444" stroke-dasharray="2 4"/>`;
+  for (let t = Date.parse("2024-08-01"); t <= t1; t += 91 * 864e5) {
+    const x = X(t);
+    svg += `<text x="${x.toFixed(0)}" y="${Y + 16}" font-size="9" fill="#8a857e" text-anchor="middle">${new Date(t).toISOString().slice(0, 7)}</text>`;
+  }
+  Object.keys(byDay).sort().forEach(d => {
+    const x = X(Date.parse(d));
+    byDay[d].forEach((p, i) => {
+      const y = Y - i * 15;
+      const st = p[2] === "M" ? "merged" : p[2] === "R" ? "in review" : p[2] === "D" ? "draft" : "closed";
+      svg += `<g class="tlp"><title>#${p[0]} · ${p[4]} · ${st} ${d}</title>
+        <circle cx="${x.toFixed(1)}" cy="${y}" r="5" fill="${TL_STATE[p[2]]}" stroke="#e6e1dc" stroke-width=".8"/>
+        <text x="${x.toFixed(1)}" y="${y + 20}" font-size="10.5" fill="${(TL_GOAL[p[3][0]] || "#9d9485")}" text-anchor="middle">${p[3]}</text></g>`;
+    });
+  });
+  svg += '</svg>';
+  host.innerHTML = svg + '<div class="tllegend">' +
+    '<span class="s"><span class="d" style="background:#7fb069"></span>merged</span>' +
+    '<span class="s"><span class="d" style="background:#e5c07b"></span>in review</span>' +
+    '<span class="s"><span class="d" style="background:#8fa3b8"></span>draft</span>' +
+    '<span class="s"><span class="d" style="background:#c97b7b"></span>closed</span>' +
+    '<span style="margin-left:.6rem">letters = goals served (α β γ δ)</span>' +
+    '</div>';
+})();
 </script>
 </body>
 </html>
