@@ -23,6 +23,10 @@ jobs:
               github-pages
       - name: Stage pages
         run: |
+          # Stage exactly the current tree: delete-then-copy so files removed
+          # from spinrep/ (e.g. the retired reuse proposal) drop out of the
+          # cached github-pages directory instead of persisting.
+          rm -rf github-pages/spinrep
           mkdir -p github-pages/spinrep
           cp -R spinrep/. github-pages/spinrep/
       - name: Save github-pages cache
