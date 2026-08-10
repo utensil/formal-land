@@ -61,6 +61,7 @@ a.prlink:hover{border-bottom-style:solid;border-bottom-color:currentColor}
 a.prlink.pr-merged{color:#9fc37e}
 a.prlink.pr-closed{color:#b98d88;text-decoration:line-through}
 a.prlink.pr-draft{color:#8aa0b8}
+a.prlink.pr-merged.pr-upstream{color:#5f9e8f}
 a.prlink.pr-open{color:#e8bc6e}
 a:not(.rm-chip):not(.prlink){color:#8ba8c7;text-decoration:none;border-bottom:1px dotted rgba(230,225,220,.3)}
   a:not(.rm-chip):not(.prlink):hover{color:#e6e1dc;border-bottom-style:solid}
@@ -132,7 +133,7 @@ const NODES = [
   "L2-vec|2|ιRangeEquiv|done|#1510|Vectors · ιRangeEquiv",
   "L2-hom|2|spin/pin → SO/O|done|#1611 #1742 · mathlib#9111 SpinGroup|Twisted conjugation → O(Q)/SO(Q)",
   "L2-dc|2|double cover|review|#2404 #2410 #2470 #2492 #2523 · kernel ±1, spinor-norm open|Double cover: Cartan–Dieudonné, kernel ±1, spinor-norm exact seq",
-  "L3-biv|3|quadratic Lie subalgebra|done|#2224 (canonical) · #1708 · #1759 #1859|Bivectors as a Lie subalgebra (quadratic elements)",
+  "L3-biv|3|quadratic Lie subalgebra|done|#2224 (canonical) · #1708 · #1759 #1859 · #2511|Bivectors as a Lie subalgebra (quadratic elements)",
   "L3-ext|3|⋀²V ↔ quadratic|done|#2335 · supersedes #1972|Exterior bivectors identified with quadratic elements",
   "L3-iso|3|soEquivBivector|incomplete|#2397 #2343 · composition open|soEquivBivector : ⋀²V ≃ 𝔰𝔬(V)",
   "L3-diff|3|d(double cover)|open|— open|Differential of the double cover",
@@ -147,7 +148,7 @@ const NODES = [
   "L5-char|5|characters|open|— open|Characters · Weyl construction",
   "L6-34|6|Spin₃/Spin₄|open|— open|Spin₃ ≅ SL₂ · Spin₄ ≅ SL₂×SL₂",
   "L6-56|6|Spin₅/Spin₆|open|— open|Spin₅ ≅ Sp₄ · Spin₆ ≅ SL₄",
-  "L7-real|7|Cliff(p,q)|open|— open · no Mathlib substrate|Real forms Cliff(p,q)",
+  "L7-real|7|Cliff(p,q)|done|#2334|Real forms Cliff(p,q)",
   "L7-bott|7|Bott periodicity|review|#2501 #2524 #2530 · mod-8 table open|Bott: Cliff(p+1,q+1) ≅ Cliff(p,q) ⊗ M₂(ℝ) · mod-8 table",
   "L7-spinq|7|Spin(p,q)|open|— open|Real spin groups Spin(p,q)",
   "L7-con|7|connectivity|open|— open|Connectivity of the compact spin group",
@@ -156,7 +157,7 @@ const NODES = [
   "L9-rep|9|𝔤-module machinery|review|#2419 · adjointSO open|Every Clifford module is a 𝔤-module · cliffordInducedRep · adjointSO",
   "L9-iso|9|Kostant isotypy|open|— open|Kostant's isotypy corollary (summit)",
   "L9-car|9|CAR instance|branch|branch-only lane (CAR)|CAR worked instance: gl_N on M_N(ℂ)",
-  "W-cliff|10|Cliff(0,1)/Cliff(0,2)|open|— open|Cliff(0,1) ≅ ℂ · Cliff(0,2) ≅ ℍ",
+  "W-cliff|10|Cliff(0,1)/Cliff(0,2)|done|#2334|Cliff(0,1) ≅ ℂ · Cliff(0,2) ≅ ℍ",
   "W-spin3|10|Spin₃ spin rep|open|— open|Spin₃ ≅ SL₂ and its spin representation",
   "W-so2l1|10|𝔰𝔬(2l+1) spin rep|open|— open|2^l-dim spin rep of 𝔰𝔬(2l+1)",
   "W-tri|10|𝔰𝔬(8) half-spin|open|— open|Half-spin reps of 𝔰𝔬(8) and triality",
@@ -176,7 +177,7 @@ const DEPS = "L0-filt L0-pbw L0-univ L2-orth L0-univ L2-vec L0-univ L3-biv L0-fi
    colors must keep that rule. */
 const PALETTE = ["#6d9cbe","#6b8e23","#cc7833","#7570b3","#a5c261","#bc9458","#da4939"];
 const GOALS = [
-  "alpha|0|Goal α — Bott periodicity: the real Clifford algebras and the real spin groups|L0-univ L0-filt L0-filt L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L4-iso L4-iso L4-mod L4-mod L1-struct L1-struct L7-real L2-dc L7-real L7-real L7-bott L7-bott L7-spinq L7-spinq L7-con|The Bott table: real Cliff(p,q), Cliff(p+1,q+1) ≅ Cliff(p,q) ⊗ M₂(ℝ), the mod-8 table, Spin(p,q). Substrate landed (L0, mathlib SpinGroup, L2 homomorphisms); the double cover is under way (#2404/#2410 merged, #2492 draft), and the Bott lane is reset with provisional successors (#2524/#2530); mathlib has no realCliffordAlgebra at all — the rest of L7 is greenfield.",
+  "alpha|0|Goal α — Bott periodicity: the real Clifford algebras and the real spin groups|L0-univ L0-filt L0-filt L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L4-iso L4-iso L4-mod L4-mod L1-struct L1-struct L7-real L2-dc L7-real L7-real L7-bott L7-bott L7-spinq L7-spinq L7-con|The Bott table: real Cliff(p,q), Cliff(p+1,q+1) ≅ Cliff(p,q) ⊗ M₂(ℝ), the mod-8 table, Spin(p,q). Substrate landed (L0, mathlib SpinGroup, L2 homomorphisms, the real forms #2334); the double cover is under way (#2404/#2410 merged, #2492 draft), and the Bott lane is reset with provisional successors (#2524/#2530); mathlib has no realCliffordAlgebra at all — the periodicity and spin-group milestones are greenfield.",
   "beta|1|Goal β — the spin representations of the Spin groups, from the double cover to triality|L0-univ L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L3-diff L3-diff L4-iso L4-iso L4-mod L4-mod L4-rep L4-rep L4-half L4-half L4-irt L4-irt L5-w L5-w L5-bd L5-bd L6-34 L6-34 L6-56 L6-56 L8-tri|The spin representations of the Spin groups: the double cover and its differential, the Clifford module S = ⋀·W with spinRep and half-spins, the B_l/D_l weights, and Spin₈ triality. Substrate: mathlib's spinGroup (mathlib#9111) with the homomorphisms merged (#1611/#1742); the double cover is being landed (#2404/#2410 merged, #2492 draft); the module and weights open.",
   "gamma|2|Goal γ — the quadratic layer is 𝔰𝔬(V) ≅ ⋀²V, with its quadratic action (PBW + Cartan)|L0-filt L0-pbw L0-pbw L3-biv L3-biv L3-ext L3-ext L3-iso L3-iso L9-real|PBW + Cartan over the same degree-2 layer: gr(Cliff) ≅ ⋀V, and that layer with the commutator is 𝔰𝔬(V) ≅ ⋀²V. PBW pieces merged, quadratic package landed (#2224), #2335/#2343/#2397 merged; the summit is the quadratic realization (#2411 draft), with the soEquivBivector composition still open.",
   "delta|3|Goal δ — Kostant's isotypy: Clifford modules decompose isotypically under the 𝔰𝔬(V)-action|L0-filt L3-biv L3-biv L4-iso L4-iso L4-mod L4-mod L4-rep L4-rep L9-rep L9-rep L9-iso L9-iso L9-car|Kostant's isotypy: every Clifford module carries the 𝔰𝔬(V)-action (consuming γ's realization) and decomposes isotypically; the CAR instance is the worked case. The induced-rep machinery draft #2419 is in review; the summit and CAR open.",
@@ -441,6 +442,7 @@ legend.innerHTML = '<span class="st" style="margin-right:10px">node state:</span
   '<span class="st"><span class="dot" style="background:#8aa0b8"></span>draft</span>' +
   '<span class="st"><span class="dot" style="background:#e8bc6e"></span>in review</span>' +
   '<span class="st"><span class="dot" style="background:#9fc37e"></span>merged</span>' +
+  '<span class="st"><span class="dot" style="background:#5f9e8f"></span>merged by others</span>' +
   '<span class="st"><span class="dot" style="background:#b98d88"></span>closed</span>' +
   '<span style="flex-basis:100%;height:0;margin:0"></span>' +
   '<span class="st"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#e6e1dc;box-shadow:0 0 7px 3px rgba(230,225,220,.35);margin-right:6px;vertical-align:-2px"></span>summit (glowing halo)</span><span style="margin:0 10px">|</span>routes: ' +
@@ -452,7 +454,9 @@ legend.querySelectorAll(".gl").forEach(el => el.addEventListener("click", () => 
 }));
 
 /* ================= PR links ================= */
-const PRS = {1473:"m",1499:"m",1510:"m",1561:"m",1611:"m",1708:"m",1742:"m",1783:"m",1794:"m",1802:"m",1804:"m",1847:"m",1903:"m",1971:"m",2224:"m",2335:"m",2343:"m",2397:"m",2404:"m",2410:"m",1772:"c",1759:"c",1859:"c",1972:"c",2413:"c",2470:"c",2501:"c",2411:"d",2419:"d",2492:"d",2523:"d",2524:"d",2530:"d"};
+const PRS = {1473:"m",1499:"m",1510:"m",1561:"m",1611:"m",1708:"m",1742:"m",1783:"m",1794:"m",1802:"m",1804:"m",1847:"m",1903:"m",1971:"m",2224:"m",2334:"m",2335:"m",2343:"m",2397:"m",2404:"m",2410:"m",2511:"m",1772:"c",1759:"c",1859:"c",1972:"c",2413:"c",2470:"c",2501:"c",2411:"d",2419:"d",2492:"d",2523:"d",2524:"d",2530:"d"};
+/* roadmap PRs merged by upstream authors; every other merged PR is utensil's */
+const UPSTREAM = {1473:"kim-em",1499:"kim-em",1510:"eohjelle",1561:"kim-em",1611:"rudygt",1742:"kim-em",1804:"CBirkbeck",2224:"chrisromanmiller",2334:"chrisromanmiller",2511:"kim-em"};
 function linkify(t) {
   return t.replace(/(?:mathlib)?#(\d+)(\u271d)?/g, (m, n, d) => {
     const isML = m.indexOf("mathlib") === 0;
@@ -461,7 +465,10 @@ function linkify(t) {
     const pre = isML ? "mathlib#" : "#";
     const href = isML ? `https://github.com/leanprover-community/mathlib4/pull/${n}`
                       : `https://github.com/TauCetiProject/TauCeti/pull/${n}`;
-    return `<a class="prlink ${cls}" href="${href}" target="_blank" rel="noopener">${pre}${n}</a>` + (d ? "✝" : "");
+    const au = UPSTREAM[n];
+    const cls2 = cls === "pr-merged" && au ? " pr-upstream" : "";
+    const tip = au ? ` title="merged by ${au}"` : "";
+    return `<a class="prlink ${cls}${cls2}" href="${href}" target="_blank" rel="noopener"${tip}>${pre}${n}</a>` + (d ? "✝" : "");
   });
 }
 
