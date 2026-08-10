@@ -26,7 +26,6 @@ I explore with the following formalization systems, and do interactive [literate
     - [pluscal.pdf](https://utensil.github.io/formal-land/tla/pluscal.pdf)
 - [SpinRep](https://utensil.github.io/formal-land/spinrep/spinrep-route-map.html)
     - [route map](https://utensil.github.io/formal-land/spinrep/spinrep-route-map.html)
-    - [reuse proposal](https://utensil.github.io/formal-land/spinrep/spinrep-clifford-reuse-proposal.html)
     - [annotated roadmap](https://utensil.github.io/formal-land/spinrep/spinrep-roadmap-appendix.html)
 - [FGAP](https://github.com/utensil/fgap): Study the foundational gap between established mathematical tools and open questions about physical structures, grounded by formalization.
 - [FCAP](https://github.com/utensil/fcap): Build a modern library of Clifford algebras in Lean for efficient symbolic and numerical computation, with formal verification of both its mathematical foundations and executable implementations.
