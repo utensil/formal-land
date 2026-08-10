@@ -7,5 +7,5 @@ the owning Tau Ceti rubric.
 | rubric id | question |
 |---|---|
 | `ut-dependency-readiness` | From the supplied authoritative context, name any unstable prerequisite or record that none remains. |
-| `ut-consumer-contract` | Inventory applicable introduction/elimination, forward/inverse, and zero/successor equations. Test advertised normal forms with bare `simp`; justify that public `rfl` across private bundles is stable, or use a named proof boundary. |
-| `ut-aggregate-reuse` | Inventory new helpers, thin specializations, repeated calculations, and direct imports. For each material item, cite an exact-conclusion search or deletion/replacement probe. |
+| `ut-consumer-contract` | Classify every public declaration as a canonical endpoint or name its consumer. Ensure public statements are restatable with public names. Inventory applicable introduction/elimination, forward/inverse, and zero/successor equations; test advertised normal forms with bare `simp`. |
+| `ut-aggregate-reuse` | Inventory unconsumed public declarations, new helpers, thin specializations, repeated calculations or anonymous constructor patterns, and direct imports. For each material item, cite an exact-conclusion search or deletion/replacement probe. |

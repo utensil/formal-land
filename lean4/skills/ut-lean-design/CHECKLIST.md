@@ -30,7 +30,7 @@ uses bare `simp` or a named theorem.
 ## Exit
 
 - [ ] The contract matches the narrative specification.
-- [ ] Names describe conclusions; shared declarations have the earliest valid owner.
+- [ ] Names describe conclusions; modules distinguish sibling concepts and match their primary endpoint; shared declarations have the earliest valid owner.
 - [ ] Lint decides simplification orientation; no unconditional `@[expose]` remains.
 - [ ] Every named consumer probe compiles through public imports with opaque definitions.
 - [ ] The slice stops at the first complete consumer boundary.
