@@ -1,6 +1,6 @@
 ---
 name: ut-lean-review
-description: 'Review Lean formalization changes against the live Tau Ceti rubrics plus three additional checks: dependency readiness, consumer contracts, and structural boundaries.'
+description: 'Review Lean formalizations against the live Tau Ceti rubrics plus three compact evidence checks: prerequisite state, public consumer contracts, and aggregate helper/import reuse.'
 ---
 
 # ut-lean-review
@@ -11,7 +11,8 @@ description: 'Review Lean formalization changes against the live Tau Ceti rubric
    angle file in `rubrics/`. All are required.
 2. Bind the review to the exact base and aggregate diff. Any source change
    invalidates it.
-3. Run the three additional rubrics in [RUBRICS.md](RUBRICS.md).
+3. Run the three additional rubrics in [RUBRICS.md](RUBRICS.md). Record the
+   requested artifact, not a general assurance.
 4. Write one internal review scoreboard row per Tau Ceti and additional rubric:
 
    ```md
@@ -32,7 +33,8 @@ description: 'Review Lean formalization changes against the live Tau Ceti rubric
 
 ## Rules
 
-- Review the complete aggregate diff, not only the newest commit.
+- Review the complete aggregate diff. Inventory every added or changed
+  declaration before judging the headline result.
 - Verify claims with source inspection, searches, deletion or consumer probes,
   and Lean output. Never mark an unperformed check `approve`.
 - Return architectural findings about prerequisites, hypotheses, public API,
