@@ -613,6 +613,7 @@ const TL_STNAME = { D: "draft open", R: "ready open", V: "review", T: "ready to 
   const ORDER = ["D", "R", "V", "T", "M"];
   let svg = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMin meet">`;
   svg += `<line x1="40" y1="${Y0}" x2="${W - 10}" y2="${Y0}" stroke="#444" stroke-dasharray="2 4"/>`;
+  let prevDay = "";
   slots.forEach((k, i) => {
     const x = 60 + i * (BW + GAP);
     const evs = byb[k];
@@ -624,9 +625,12 @@ const TL_STNAME = { D: "draft open", R: "ready open", V: "review", T: "ready to 
       base -= n * PER;
       svg += `<rect x="${x}" y="${base}" width="${BW}" height="${n * PER}" fill="${TL_STATE[st]}" opacity=".85"/>`;
     }
-    svg += `<text x="${x + BW / 2}" y="${Y0 + 13}" font-size="9.5" fill="#8a857e" text-anchor="middle">${day.slice(5)} ${h}h</text>`;
+    /* date label only at the beginning of each UTC date, bare hour after that */
+    const lbl = day !== prevDay ? day.slice(5) + " " + h + "h" : h + "h";
+    svg += `<text x="${x + BW / 2}" y="${Y0 + 13}" font-size="9.5" fill="#8a857e" text-anchor="middle">${lbl}</text>`;
     svg += `<text x="${x + BW / 2}" y="${base - 6}" font-size="11" fill="#e6e1dc" text-anchor="middle" font-weight="700">${evs.length}</text>`;
     svg += `<g class="tlcol" data-k="${k}"><rect x="${x - 3}" y="${base - 20}" width="${BW + 6}" height="${Y0 - base + 34}" fill="transparent"/></g>`;
+    prevDay = day;
   });
   svg += '</svg>';
   host.innerHTML = svg;
