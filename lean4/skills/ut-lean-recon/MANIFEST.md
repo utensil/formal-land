@@ -1,69 +1,58 @@
-# Recon Manifest Template
-
-Attach this manifest to every recon verdict. Fill one row per requirement and label every claim by evidence level: `compiled`, `spike-boundary`, `inspected API`, or `proposed`.
+# Recon manifest
 
 ## Verdict
 
 | Field | Value |
 | --- | --- |
-| Target statement | |
-| Pinned mathlib commit | |
-| Lean toolchain | |
+| Target | |
 | Project commit | |
-| Pinned checkout path | |
+| Mathlib commit | |
+| Lean toolchain | |
+| Checkout path | |
 | Verdict | direct / no-gap / blocker |
-| Verdict summary | |
+| Summary | |
 
-## Source-role versus existing declaration
+## Reachability
 
-| Source role | Existing declaration | What is already formalized | Evidence |
+| Requirement | Existing declaration or missing work | Classification | Evidence |
 | --- | --- | --- | --- |
 | | | | |
 
-## API reachability
+Classifications are `direct`, `local lemma`, and `infrastructure blocker`.
+Evidence levels are `compiled`, `spike-boundary`, `inspected API`, and
+`proposed`.
 
-| Requirement | Classification | Pinned API or missing work | Evidence |
+## Hypothesis and helper-shape probes
+
+| Item | Exact probe | Result | Evidence |
 | --- | --- | --- | --- |
 | | | | |
 
-Classification values: `direct` (suitable declaration already present), `local lemma` (buildable from present APIs without new general theory), `infrastructure blocker` (reusable construction or equivalence needed before the result can be stated honestly).
+Include every nontrivial hypothesis and proposed helper shape, public or
+private. Golf owns the later aggregate-diff inventory.
 
-## Minimal hypotheses and consumer contract
+## Conventions
 
-| Item | Deletion/generalization probe | Construction and inverse routes | Required public computations | Evidence |
-| --- | --- | --- | --- | --- |
-| | | | | |
-
-## Failed-probe journal
-
-| Remembered (wrong) name | Failure | Correct route | Evidence |
+| Item | Library side | Target side | Result |
 | --- | --- | --- | --- |
 | | | | |
 
-## Convention comparison
+Record map direction, source and target forms, signs, and scalar factors for
+each equality or transport claim.
 
-| Item | Library side | Target side | Matched? |
-| --- | --- | --- | --- |
-| | | | |
+## Collisions
 
-For every equality claim also record, outside the table: direction of the map, source and target forms, signs, scalar factors.
-
-## Collision search log
-
-| Scope searched | Query | Result |
+| Scope | Query | Result |
 | --- | --- | --- |
-| pinned mathlib | | |
-| project merged history | | |
-| open project pull requests | | |
-| adjacent project lanes | | |
+| Pinned library | | |
+| Merged project history | | |
+| Open project work | | |
 
-## Evidence level labels
+## Failed probes
 
-- `compiled`: elaborated on the pinned toolchain.
-- `spike-boundary`: elaborated with a named sorry boundary that states the exact obligation postponed.
-- `inspected API`: read from the pinned source, not elaborated.
-- `proposed`: intended, not yet checked.
+| Remembered name or route | Failure | Correct route | Evidence |
+| --- | --- | --- | --- |
+| | | | |
 
-## No-gap conclusion
-
-If the verdict is `no-gap`, record here the exact boundary covered: hypotheses, direction, conventions, and why no wrapper theorem is justified. If the verdict is `blocker`, list the missing infrastructure and what a later slice must establish first.
+For `no-gap`, state the exact covered boundary. For `blocker`, name the missing
+infrastructure and the first consumer it must enable.

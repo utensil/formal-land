@@ -1,45 +1,36 @@
-# Slice Design Checklist
+# Slice design handoff
 
-## 1. Compact design check (five questions)
+## Selection and recon
 
-| Question | Answer |
+| Item | Evidence |
 | --- | --- |
-| 1. Dependency and scope: which authoritative requirement does this discharge, and what later declaration consumes it? | |
-| 2. Natural statement: which variables and indices are genuinely arbitrary, and which hypotheses survive compiled deletion probes? | |
-| 3. Existing structure: which pinned library map, equivalence, or composition theorem is the starting point? | |
-| 4. Public behavioral contract: which application, membership, forward, inverse, and canonical-coordinate equations must work without unfolding? | |
-| 5. Proof shape: which named map or explicit boundary lemma replaces the elementwise chain or private-construction defeq? | |
+| Summit and milestone | |
+| Stable prerequisite closure | |
+| Immediate downstream consumer | |
+| Recon manifest and pinned revisions | |
+| Named hypothesis probes and results | |
+| Reused structural API | |
 
-## 2. Selected slice (owned by ut-lean-roadmap)
+## Public contract
 
-- [ ] Named summit and milestone recorded.
-- [ ] Stable prerequisite closure and downstream consumer recorded.
-- [ ] Natural generality and coherent milestone boundary recorded.
-
-## 3. Convention lock by definitional acceptance tests
-
-| Convention item | Test declaration | Expected normal form | Pinned against |
+| Public declaration | Named consumer probe | Required normal form | Result |
 | --- | --- | --- | --- |
 | | | | |
 
-Examples: a signature convention pinned by four base-entry tests; a bivector normalization pinned by its defining action identity against the library's polar convention.
+Cover each applicable application, membership, forward/inverse,
+zero/successor, and canonical-coordinate direction. State whether the probe
+uses bare `simp` or a named theorem.
 
-## 4. Pre-edit checklist
+## Conventions and proof boundary
 
-- [ ] Search result recorded: repository, merged history, open pull requests, pinned library.
-- [ ] Exact declarations read from the pinned checkout.
-- [ ] A focused probe resolves each uncertain feasibility or convention question.
-- [ ] Consumer probe written (downstream import plus bare `simp`) and passed.
-- [ ] Every relevant forward, inverse, and canonical-coordinate consumer compiled with public imports and opaque definitions.
-- [ ] Nontrivial hypotheses passed deletion/generalization probes; an equivalence did not inherit finiteness merely from the first bijectivity proof.
-- [ ] Independent reusable work is split; inseparable supporting results stay with their immediate consumer.
-- [ ] Characteristic-API rules applied: `mem_*_iff`, apply and computation equations, linter-decided `@[simp]` orientation, no unconditional `@[expose]`, conclusion-describing names, earliest-file placement.
-- [ ] Specification check: the claim matches the authoritative narrative specification, not only a stub-file signature.
-- [ ] Public proofs do not cross private constructions through unexplained `change`, `show`, or bare `rfl`; an explicit boundary lemma covers the transition.
+| Item | Compiled acceptance test or boundary lemma | Result |
+| --- | --- | --- |
+| | | |
 
-## 5. Acceptance oracle
+## Exit
 
-- [ ] `lake build` passes at the exact head.
-- [ ] No `sorry`, `admit`, or newly introduced axioms.
-- [ ] Linter set passes, including `simp` orientation checks.
-- [ ] Named test theorem exercises the public contract without unfolding definitions.
+- [ ] The contract matches the narrative specification.
+- [ ] Names describe conclusions; shared declarations have the earliest valid owner.
+- [ ] Lint decides simplification orientation; no unconditional `@[expose]` remains.
+- [ ] Every named consumer probe compiles through public imports with opaque definitions.
+- [ ] The slice stops at the first complete consumer boundary.

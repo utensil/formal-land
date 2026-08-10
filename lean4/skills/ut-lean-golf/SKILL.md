@@ -1,114 +1,50 @@
 ---
 name: ut-lean-golf
-description: Shorten Lean proofs at the mathematical interface by replacing locally rebuilt machinery with the library abstraction that already names the object. Survey the pinned revision, search by structure before writing lemmas, state at natural generality, extract shared criteria on first reuse, and land structural API at the project's permitted boundary before specializing.
+description: Structural Lean proof golf. Replaces locally rebuilt machinery with pinned library abstractions while preserving the intended public contract, imports, hypotheses, and simplification behavior.
 ---
 
 # ut-lean-golf
 
-## Purpose
+Golf removes local machinery when the library or project already names the
+same mathematics. It optimizes abstraction and elaboration cost, not line
+count alone. Keep concrete calculations that expose the mathematical content.
 
-Lean proof golf at the mathematical interface. A long proof is not itself a problem: it becomes a golf candidate when its length comes from rebuilding a standard universal construction, normal-form interface, bundled morphism, or decomposition that mathlib already names. The productive question is not which tactics shorten the proof. It is: what mathematical object is this proof constructing, and does mathlib already name that object?
+## Use it
 
-The goal is not the smallest line count. It is to remove local machinery when a current mathlib abstraction states the same mathematics more directly, while preserving the intended theorem surface and making dependency ownership clearer.
-
-## When to use
-
-Use this skill when:
-
-- a proof manually rebuilds machinery mathlib already names: a lift out of a cyclic quotient, a linear endomorphism from scalar multiplication, a quotient preimage, a bijectivity argument built from finite cardinality;
-- the same proof shape appears a second time (the rule of two);
-- a proof is fixed to one degree or one specialization while the argument is uniform across all of them;
-- a reviewer flags a re-derivation of mathlib API.
-
-Do not use it merely to shorten a proof. A proof that is long because it carries a concrete calculation may be correct as written. Keep calculations where they expose the mathematical content, and use structural interfaces for the consequences that should not repeat those calculations.
+- when a proof rebuilds a standard map, quotient, equivalence, or decomposition;
+- when a helper, proof shape, or calculation appears twice;
+- when a statement is specialized although its proof is uniform;
+- when review reports reuse, import, or structural-proof duplication.
 
 ## Procedure
 
-### 1. Ask the interface question first
+1. **Name the object.** Identify what the proof constructs, then use
+   `ut-lean-recon` to search the pinned revision by structure before changing
+   tactics.
+2. **Inventory the aggregate diff.** List every public or private mathematical
+   helper, thin specialization, repeated calculation, and direct import. For
+   every listed item, record an exact-conclusion search or
+   deletion/replacement probe.
+3. **Use the natural boundary.** Prefer the existing bundled construction.
+   State uniform results at natural generality. Extract a shared criterion on
+   its second use and place it at the earliest project-permitted owner. This
+   skill never authorizes an upstream pull request.
+4. **Recheck the contract.** Rebuild the affected modules and named consumers.
+   Confirm hypotheses, public equations, opacity, simplification behavior,
+   imports, and downstream availability. A deletion probe must compile before
+   a wrapper or import is removed.
+5. **Check cost when relevant.** Replace expensive search tactics only when a
+   direct term or targeted lemma expresses the same mathematics. Confirm with
+   `set_option profiler true` or `count_heartbeats` when cost motivates the
+   change.
 
-Identify the mathematical object the proof constructs (homomorphism, equivalence, submodule, graded piece, quotient) and search mathlib for the declaration that already names it, before touching tactics.
-
-### 2. Search by structure before writing any lemma
-
-Grep the checked-out mathlib for the proof shape before writing a new lemma. Re-deriving mathlib API is the block-capable reuse failure this prevents. See the reference file for the search procedure.
-
-### 3. Survey the pinned mathlib revision
-
-The first survey is a pinned-source API survey: rg over the checked-out mathlib revision, inspection of current declarations and adjacent source in the relevant domain, small compile probes for candidate declarations, removal probes to determine direct imports, then targeted and full builds against the pinned revision.
-
-### 4. Escalate to mathlib history only on triggers
-
-A repository-history or pull-request survey is warranted when the expected abstraction is materially missing, several interfaces compete, the API is recent or deprecated or moving, an upstream contribution is being considered, a proof depends on an implementation accident, a public compatibility choice is material, or current source cannot explain an unusual design. A clear one-line local bridge does not trigger archaeology on its own. See the reference file for the complete list.
-
-### 5. State at natural generality
-
-If the proof works uniformly in a degree, state the theorem for all degrees instead of the one fixed degree the immediate need has. A generator argument that proves equality should not be stated as an inequality; a generic filtration theorem should not be wrapped for a single special form. Specialization is then a thin consumer, and the theorem surface is future-proof.
-
-### 6. Extract on first reuse (rule of two)
-
-Ship the criterion lemma with the pull request that first repeats the proof shape. When the second occurrence of a pattern appears, extract the shared lemma in that same pull request, so the third occurrence and every later one consume the API and reviewers do not re-litigate the shape.
-
-### 7. Land structural API at the permitted boundary first
-
-When the reusable piece is generic, land it at the earliest boundary the
-project permits before the specialization. In a project that welcomes a
-Mathlib contribution, that may be Mathlib first; in a project that keeps its
-roadmap work local, it means a generic project-local declaration. Never infer
-permission to open an upstream pull request from this skill. The invariant is
-structural API before repeated specialization, not a particular repository.
-
-### 8. Recheck the boundary after golf
-
-Golf can silently alter public helper declarations, theorem hypotheses, reducibility or simplification behavior, public imports, and downstream availability. After every golf, recheck the boundary and rebuild. See the reference file.
-
-### 9. Golf the elaboration cost, not only the line count
-
-Length is one golf axis; elaboration cost is another. When a short proof is
-slow, the interface-first question applies to the tactic rather than the
-lemma: a heavy search tactic (`simp` blocks, `omega`, `decide`) is often
-rebuilding structure the library names. Prefer the direct term or the
-targeted lemma, and confirm the trade with the elaborator's own instruments:
-`set_option profiler true` around a section, or `count_heartbeats` around a
-declaration. Cost is a symptom check, not a metric: a fast proof is better
-only when the invoked theorem is also the right abstraction.
-
-## Worked idioms
-
-Generic shapes worth recognizing in ordinary proofs:
-
-- A manual bilinear build that proves the linearity fields by hand should be replaced by the bundled construction that already exists: Submodule.mulMap' for multiplying two submodules, TensorProduct.curry for currying a bilinear map, LinearMap.liftQ₂ for descending a bilinear map to quotients.
-- Thin wrappers that merely restate an existing mathlib equation, such as DirectSum.of_mul_of or DirectSum.algebraMap_apply, should be deleted in favor of the original rather than wrapped.
-- Never re-prove AlternatingMap facts: alternation, swap and self behavior, and the universal property live in LinearAlgebra.Alternating.
-- The positive model for a reusable construction is a generic degree-indexed construction, one public defining equation, and one theorem stating its usefulness, for example surjectivity or the universal property. Ship those three together so consumers invoke the lemmas instead of re-deriving the construction.
-
-## Failure modes
-
-Two failure modes are worth recognizing in golfed proofs:
-
-- A lemma re-proved from scratch when Mathlib already carries it wastes a review round: the duplicate is closed, not merged. Search by structure before writing the declaration (recon owns the search procedure).
-- A construction fixed at one concrete degree although the argument is uniform in every degree must be re-scoped to the all-degree version. State the general theorem even when a concrete case satisfies the immediate need.
-
-## Sources and verification status
-
-External tips adopted into this skill carry a source index until they are
-verified against the pinned mathlib and real review rounds. Unverified tips
-are usable as heuristics, not as citation:
-
-| Adopted tip | Source | File | Adopted |
-| --- | --- | --- | --- |
-| Elaboration-cost golf: expensive-tactic check (`simp`-heavy, `omega`, `decide`) against a direct term or targeted lemma, measured with `set_option profiler true` / `count_heartbeats` | [jstoobysmith/PhyslibAITools](https://github.com/jstoobysmith/PhyslibAITools) | `Tasks/Golf.md` | 2026-08-08 |
-| Mathlib naming conventions as the structure axis of golf | same | `Tasks/Golf.md` | 2026-08-08 |
-
-Status of both: **not yet verified**. Deliberately not adopted from the same
-source: the task's frozen-statement constraint (this skill may re-scope a
-fixed-degree statement to natural generality, step 5; a signature-freeze golf
-mode is a project choice, not a skill rule) and the harness, collision-check,
-and tooling content (orchestration, not mathlib knowledge). Naming-convention
-details are owned by ut-lean-review; golf only points at them.
+A golf pass may conclude with no source change. Record the aggregate inventory
+and probe results either way. See `REFERENCE.md` for history-escalation
+triggers and boundary examples.
 
 ## References
 
-- REFERENCE.md in this skill directory: the mathlib-history escalation triggers and the post-golf boundary recheck.
-- The pinned-source survey procedure is owned by ut-lean-recon; run it before golfing.
-- Mathlib source: leanprover-community/mathlib4.
-- For the review-side checks that interact with golf, see the ut-lean-review skill.
+- Pinned-source survey and evidence: `ut-lean-recon`
+- Public-contract owner: `ut-lean-design`
+- Review gate: `ut-lean-review`
+- Detailed triggers and rechecks: `REFERENCE.md`
