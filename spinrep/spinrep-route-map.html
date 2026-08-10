@@ -421,11 +421,12 @@ const MEET = {
   "L9-real": "γ's summit realization feeds δ",
   "L1-struct": "α and β both consume the structure theorem, proved forward from the spin module"
 };
-/* summit nodes: the terminal node of each goal's subgraph, ringed in that goal's color */
+/* summit nodes: the goal's mathematical capstone, ringed in that goal's color.
+   A goal may extend to worked cases beyond the summit; the summit stays the weighted math piece. */
+const SUMMIT = { alpha: "L7-bott", beta: "L8-tri", gamma: "L9-real", delta: "L9-iso" };
 const summitOf = {};
 GOALS.forEach(g => {
-  const s = g.edges[g.edges.length - 1][1];
-  (summitOf[s] = summitOf[s] || []).push(g.id);
+  (summitOf[SUMMIT[g.id]] = summitOf[SUMMIT[g.id]] || []).push(g.id);
 });
 NODES.forEach(n => {
   const halo = summitOf[n.id] && summitOf[n.id].length
