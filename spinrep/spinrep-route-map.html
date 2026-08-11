@@ -102,10 +102,12 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 <div class="goals" id="goals"></div>
 
 <h2>PR activity timeline (utensil)</h2>
-<div id="stats" class="sub" style="margin-top:6px"></div>
 <div id="prtl"></div>
+<div class="sub" style="font-size:12px;margin-top:6px">column height = state transitions in a 6-hour window · hover a column for the activity list</div>
 
-<h2>The map</h2>
+<h2>The map (all spinrep)</h2>
+<div id="stats" class="sub" style="margin-top:6px"></div>
+<div class="sub" style="font-size:12px;margin-top:2px">Collected as PRs labelled <code>roadmap/RepresentationTheory</code> whose changed files touch the spinrep directories, plus the lane's goal PRs.</div>
 <svg id="map" viewBox="0 0 1420 1180" preserveAspectRatio="xMidYMin meet"></svg>
 
 <div class="foot">The SpinRepresentations roadmap as a dependency graph · node states: merged / in review / unstarted / next up · goal colors follow the legend · rows follow the dependency spine (topological order), not the roadmap's layer numbering: Layer 1's structure theorem sits below the spin module because it is proved forward from it, so every dependency edge points downward and routes never travel upward.</div>
@@ -541,8 +543,7 @@ const TYPES = {1473:"feat",1499:"feat",1510:"feat",1561:"feat",1611:"feat",1708:
   if (el) el.innerHTML =
     `${merged.length} merged PRs on the roadmap · ` +
     `feat × ${feat} (${featMine} by utensil) · refactor × ${ref} (${refMine} by utensil) · ` +
-    `docs/chore × ${misc} · ${drafts} drafts · ${open} open · ${closed} closed` +
-    `<br><span style="font-size:12px">column height = state transitions in a 6-hour window · hover a column for the activity list</span>`;
+    `docs/chore × ${misc} · ${drafts} drafts · ${open} open · ${closed} closed`;
 })();
 
 function linkify(t) {
