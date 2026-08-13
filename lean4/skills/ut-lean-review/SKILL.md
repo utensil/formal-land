@@ -45,5 +45,6 @@ description: 'Review Lean formalizations against the live Tau Ceti rubrics plus 
   declaration before judging the headline result.
 - Verify claims with source inspection, searches, deletion or consumer probes,
   and Lean output. Never mark an unperformed check `approve`.
-- Return architectural findings about prerequisites, hypotheses, public API,
-  or module ownership to recon/design; dependent reviews become provisional.
+- A finding that changes hypotheses, public API, construction, or ownership
+  invalidates dependent approvals. Return to recon/design, then review the full
+  aggregate and reconcile every earlier finding before approval.

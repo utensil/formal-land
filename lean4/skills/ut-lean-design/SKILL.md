@@ -26,9 +26,12 @@ hypothesis question, run a focused recon probe and update the manifest.
 3. **Existing structure.** Which pinned map, equivalence, or composition
    theorem is the starting point? Link the recon evidence.
 4. **Public consumer contract.** Name each scratch consumer declaration and
-   record whether it compiled. Cover the applicable application, membership,
-   forward/inverse, zero/successor, and canonical-coordinate equations with
-   opaque definitions and bare `simp` or an explicitly named theorem.
+   record whether it compiled. The probe must elaborate the actual immediate
+   downstream declaration signature and first use; an author-supplied proxy is
+   evidence to challenge, not the contract. Cover the applicable application,
+   membership, forward/inverse, zero/successor, and canonical-coordinate
+   equations with opaque definitions and bare `simp` or an explicitly named
+   theorem.
 5. **Proof boundary.** Which named map or boundary lemma replaces an
    elementwise chain or private-construction definitional equality? Public
    proofs must not rely on unexplained `change`, `show`, or bare `rfl` across
