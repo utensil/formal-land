@@ -2,9 +2,26 @@
 
 Utensil's monorepo for formalization, e.g. Lean, Aya.
 
+## Formalization projects and contributions
+
+The following projects are agent work closely steered by me.
+
+<!-- [![SpinRep CI](https://github.com/utensil/formal-land/actions/workflows/spinrep.yml/badge.svg)](https://github.com/utensil/formal-land/actions/workflows/spinrep.yml) -->
+
+- Working on [TauCetiProject/TauCeti](https://github.com/TauCetiProject/TauCeti) roadmaps
+    - [SpinRep](https://utensil.github.io/formal-land/spinrep/spinrep-route-map.html)
+        - [math notes (agent drafted)](https://utensil.github.io/forest/fcap-0019/)
+        - [annotated roadmap (maybe stale)](https://utensil.github.io/formal-land/spinrep/spinrep-roadmap-appendix.html)
+- [FGAP](https://github.com/utensil/fgap): Study the foundational gap between established mathematical tools and open questions about physical structures, grounded by formalization.
+    - [math notes (agent drafted)](https://utensil.github.io/forest/fgap-0001/)
+- [FCAP](https://github.com/utensil/fcap): Build a modern library of Clifford algebras in Lean for efficient symbolic and numerical computation, with formal verification of both its mathematical foundations and executable implementations.
+    - [math notes (agent drafted)](https://utensil.github.io/forest/fcap-0001/)
+- [connes-rigidity](https://github.com/utensil/connes-rigidity): Experimental autoformalization attempt of arXiv:2608.02327
+    - [math notes (agent drafted)](https://utensil.github.io/forest/connes-0001/)
+
 ## Included explorations
 
-[![Lean 4 CI](https://github.com/utensil/formal-land/actions/workflows/lean4.yml/badge.svg)](https://github.com/utensil/formal-land/actions/workflows/lean4.yml) [![Aya CI](https://github.com/utensil/formal-land/actions/workflows/aya.yml/badge.svg)](https://github.com/utensil/formal-land/actions/workflows/aya.yml) [![TLA+ CI](https://github.com/utensil/formal-land/actions/workflows/tla.yml/badge.svg)](https://github.com/utensil/formal-land/actions/workflows/tla.yml) [![SpinRep CI](https://github.com/utensil/formal-land/actions/workflows/spinrep.yml/badge.svg)](https://github.com/utensil/formal-land/actions/workflows/spinrep.yml)
+[![Lean 4 CI](https://github.com/utensil/formal-land/actions/workflows/lean4.yml/badge.svg)](https://github.com/utensil/formal-land/actions/workflows/lean4.yml) [![Aya CI](https://github.com/utensil/formal-land/actions/workflows/aya.yml/badge.svg)](https://github.com/utensil/formal-land/actions/workflows/aya.yml) [![TLA+ CI](https://github.com/utensil/formal-land/actions/workflows/tla.yml/badge.svg)](https://github.com/utensil/formal-land/actions/workflows/tla.yml) 
 
 I explore with the following formalization systems, and do interactive [literate programming](https://en.wikipedia.org/wiki/Literate_programming) when supported, because then one can interact with the formalization and inspect intermediate (goal) states just from a Web browser.
 
@@ -24,11 +41,6 @@ I explore with the following formalization systems, and do interactive [literate
     - [literate](https://utensil.github.io/formal-land/aya/literate.html)
 - [TLA+](./tla/README.md)
     - [pluscal.pdf](https://utensil.github.io/formal-land/tla/pluscal.pdf)
-- [SpinRep](https://utensil.github.io/formal-land/spinrep/spinrep-route-map.html)
-    - [route map](https://utensil.github.io/formal-land/spinrep/spinrep-route-map.html)
-    - [annotated roadmap](https://utensil.github.io/formal-land/spinrep/spinrep-roadmap-appendix.html)
-- [FGAP](https://github.com/utensil/fgap): Study the foundational gap between established mathematical tools and open questions about physical structures, grounded by formalization.
-- [FCAP](https://github.com/utensil/fcap): Build a modern library of Clifford algebras in Lean for efficient symbolic and numerical computation, with formal verification of both its mathematical foundations and executable implementations.
 
 ## In scope
 
