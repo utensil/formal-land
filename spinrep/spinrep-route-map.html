@@ -70,6 +70,7 @@ a.prlink.pr-closed{color:#b98d88;text-decoration:line-through}
 a.prlink.pr-draft{color:#8aa0b8}
 a.prlink.pr-merged.pr-upstream{color:#5f9e8f}
 a.prlink.pr-open{color:#e8bc6e}
+a.prlink.pr-roadmap{color:#b197fc}
 a:not(.rm-chip):not(.prlink){color:#8ba8c7;text-decoration:none;border-bottom:1px dotted rgba(230,225,220,.3)}
   a:not(.rm-chip):not(.prlink):hover{color:#e6e1dc;border-bottom-style:solid}
 a.prlink.pr-neutral{color:var(--tau)}
@@ -80,13 +81,14 @@ a.prlink.pr-neutral{color:var(--tau)}
 .goal h3{margin:0 0 6px;font-size:15px;display:flex;align-items:center;gap:8px}
 .goal h3 .sw{display:inline-block;width:22px;height:7px;border-radius:3px}
 .goal .route-lbl{font-size:11.5px;color:var(--muted);margin:8px 0 4px;text-transform:uppercase;letter-spacing:.06em}
-.goal .route{font-size:12.5px;color:var(--fg)}
+.goal .route{font-size:12.5px;color:var(--fg);overflow-wrap:anywhere}
 .goal .route .sep{color:var(--muted);margin:0 3px}
 .goal .bar{height:8px;background:#1e1e1e;border-radius:5px;margin:10px 0 6px;overflow:hidden}
 .goal .bar i{display:block;height:100%;border-radius:5px}
 .goal .pct{font-size:12px;color:var(--muted)}
 .goal p{font-size:13px;margin:8px 0 0;color:#d4cdbf}
-.goal .eval{margin-top:8px;border-top:1px dashed var(--line);padding-top:8px;font-size:12.5px;color:var(--muted)}
+.goal .eval{margin-top:8px;border-top:1px dashed var(--line);padding-top:8px;font-size:12.5px;color:var(--muted);overflow-wrap:break-word;overflow-wrap:anywhere}
+.goal .rdev{margin-top:6px;font-size:12px;color:var(--muted);overflow-wrap:anywhere}
 .foot:not(.pat .foot){margin-top:24px;color:var(--muted);font-size:12px;line-height:1.8}
   .foot:not(.pat .foot) a{color:#8ba8c7;text-decoration:none;border-bottom:1px dotted rgba(230,225,220,.3);font-weight:500}
   .foot:not(.pat .foot) a:hover{color:#e6e1dc;border-bottom-style:solid}
@@ -173,7 +175,7 @@ const NODES = [
   "L2-dc|2|double cover|done|#2404 #2410 #2553 #2492 #2523 #2914 #2981 #3025 #3157 #3176 #3281 merged · #3321 · #2470 #2853 closed · +refactors #2503 #2505 #2518 #2604 · Lipschitz norm done, spinorNorm open|Double cover: Cartan–Dieudonné, kernel ±1, spinor-norm exact seq",
   "L3-biv|3|quadratic Lie subalgebra|done|#2224 (canonical) · #1708 · #1759 #1859 · #2511 · +refactors #2510 #2546|Bivectors as a Lie subalgebra (quadratic elements)",
   "L3-iso|3|soEquivBivector|done|#2335 #2563 #2343 #2397 merged · +refactor #2547|soEquivBivector : ⋀²V ≃ 𝔰𝔬(V) via the quadratic elements",
-  "L3-diff|3|d(double cover)|open|— open|Differential of the double cover",
+  "L3-diff|3|d(double cover)|open|— open · TauCetiRoadmap#224|Differential of the double cover",
   "L4-iso|4|maximal isotropic W|review|#2652 · hyperbolic model|Maximal isotropic W",
   "L4-mod|4|spin module S|done|#2816 #2925 #3089 merged (polarization → Fock)|Clifford module S = ⋀·W (wedge + contraction)",
   "L4-rep|4|spinRep|review|#3151 · spinRep + half-spins|spinRep : Representation ℂ (spinGroup Q) (⋀ W)",
@@ -185,7 +187,7 @@ const NODES = [
   "L5-char|5|characters|open|— open|Characters · Weyl construction",
   "L6-34|6|Spin₃/Spin₄|open|— open|Spin₃ ≅ SL₂ · Spin₄ ≅ SL₂×SL₂",
   "L6-56|6|Spin₅/Spin₆|open|— open|Spin₅ ≅ Sp₄ · Spin₆ ≅ SL₄",
-  "L7-real|7|Cliff(p,q)|done|#2334|Real forms Cliff(p,q)",
+  "L7-real|7|Cliff(p,q)|done|#2334 · TauCetiRoadmap#225|Real forms Cliff(p,q)",
   "L7-bott|7|Bott periodicity|done|#2550 #2524 #2530 #2804 · mod-8 table open|Bott: Cliff(p+1,q+1) ≅ Cliff(p,q) ⊗ M₂(ℝ) · mod-8 table",
   "L7-spinq|7|Spin(p,q)|open|— open|Real spin groups Spin(p,q)",
   "L7-con|7|connectivity|open|— open|Connectivity of the compact spin group",
@@ -214,10 +216,10 @@ const DEPS = "L0-filt L0-pbw L0-univ L2-orth L0-univ L2-vec L0-univ L3-biv L0-fi
    colors must keep that rule. */
 const PALETTE = ["#6d9cbe","#6b8e23","#cc7833","#7570b3","#a5c261","#bc9458","#da4939"];
 const GOALS = [
-  "alpha|0|Goal α — Bott periodicity: the real Clifford algebras and the real spin groups|L0-univ L0-filt L0-filt L7-real L7-real L7-bott L0-univ L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L4-iso L4-iso L4-mod L4-mod L1-struct L1-struct L7-spinq L7-spinq L7-con|The Bott table: real Cliff(p,q), the hyperbolic step Cliff(p+1,q+1) ≅ Cliff(p,q) ⊗ M₂(ℝ) (landed #2550), the mod-8 table, the real spin groups, connectivity. The Bott-algebra branch is independent of Layers 1-2; only the real Spin-group milestones consume the double cover and the spin module. Remaining math: the mod-8 table (iteration landed #2524, pure-axis #2530 closed, signature-switch #2804 merged), Spin(p,q), connectivity.",
-  "beta|1|Goal β — the spin representations of the Spin groups, from the double cover to triality|L0-univ L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L3-diff L3-iso L3-diff L3-diff L4-iso L4-iso L4-mod L4-mod L4-rep L4-rep L4-half L4-half L4-irt L4-irt L5-w L5-w L5-bd L5-bd L6-34 L6-34 L6-56 L6-56 L8-tri|The spin representations of the Spin groups: the double cover and completed L3 isomorphism meet at the differential, followed by the Clifford module S = ⋀·W with spinRep and half-spins, the B_l/D_l weights, and Spin₈ triality. The double cover landed (#2404/#2410/#2553/#2492/#2523/#2914/#2981/#3157/#3176 merged — kernel, SES, and Pin packaging complete); the module landed (#2925, #3089 merged) and spinRep is underway (#3151 open); weights remain open.",
-  "gamma|2|Goal γ — the quadratic layer is 𝔰𝔬(V) ≅ ⋀²V, with its quadratic action (PBW + Cartan)|L0-filt L0-pbw L0-pbw L3-biv L3-biv L3-iso L3-iso L9-real|PBW + Cartan over the same degree-2 layer: gr(Cliff) ≅ ⋀V, and that layer with the commutator is 𝔰𝔬(V) ≅ ⋀²V. PBW pieces and the standard-form soEquivBivector capstone are merged through #2563; the summit is the generic quadratic realization: one exterior-square/skew-adjoint bridge and the canonical soEquivQuadratic composition landed (#2411).",
-  "delta|3|Goal δ — Kostant's isotypy: Clifford modules decompose isotypically under the 𝔰𝔬(V)-action|L0-filt L3-biv L3-biv L4-iso L4-iso L4-mod L4-mod L4-rep L3-biv L9-real L4-rep L9-rep L9-real L9-rep L9-rep L9-iso L9-iso L9-car|Kostant's isotypy: the Layer 4 module spine and γ's quadratic realization meet at the induced 𝔰𝔬(V)-module machinery. The polarization data landed (#2925 merged by chrisromanmiller) as the Fock module; #3089 merged the matrix units behind spinAction; #2419 merged the induced-𝔤-module machinery (L9-rep done); the isotypy and CAR steps remain open.",
+  "alpha|0|Goal α — Bott periodicity: the real Clifford algebras and the real spin groups|L0-univ L0-filt L0-filt L7-real L7-real L7-bott L0-univ L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L4-iso L4-iso L4-mod L4-mod L1-struct L1-struct L7-spinq L7-spinq L7-con|The Bott table: real Cliff(p,q), the hyperbolic step Cliff(p+1,q+1) ≅ Cliff(p,q) ⊗ M₂(ℝ), the mod-8 table, the real spin groups, and connectivity. The Bott-algebra branch is independent of Layers 1–2; only the real Spin-group milestones consume the double cover and the spin module. Landed: #2550 (hyperbolic step), #2524 (iteration), #2804 (signature-switch); #2530 closed. Remaining: the mod-8 table, Spin(p,q), connectivity.",
+  "beta|1|Goal β — the spin representations of the Spin groups, from the double cover to triality|L0-univ L2-vec L2-vec L2-hom L2-hom L2-dc L2-dc L3-diff L3-iso L3-diff L3-diff L4-iso L4-iso L4-mod L4-mod L4-rep L4-rep L4-half L4-half L4-irt L4-irt L5-w L5-w L5-bd L5-bd L6-34 L6-34 L6-56 L6-56 L8-tri|The spin representations of the Spin groups: the double cover and the completed L3 isomorphism meet at the differential, then the Clifford module S = ⋀·W with spinRep and half-spins, the B_l/D_l weights, and Spin₈ triality. The double cover is complete — surjectivity #2523, kernel #2914, Spin/Pin packaging #2981 #3157 #3176, SES #3025, Lipschitz norm #3281; the module landed (#2925, #3089) and spinRep is underway (#3151). Remaining: the L3-diff differential, the weights, and triality.",
+  "gamma|2|Goal γ — the quadratic layer is 𝔰𝔬(V) ≅ ⋀²V, with its quadratic action (PBW + Cartan)|L0-filt L0-pbw L0-pbw L3-biv L3-biv L3-iso L3-iso L9-real|PBW + Cartan over the same degree-2 layer: gr(Cliff) ≅ ⋀V, and that layer with the commutator is 𝔰𝔬(V) ≅ ⋀²V. Complete: the PBW pieces and the standard-form soEquivBivector capstone, plus the summit — the generic quadratic realization β(a,b) = ½·[ιa,ιb], delivered by the exterior-square/skew-adjoint bridge and the canonical soEquivQuadratic composition (#2411). No further slice is scheduled.",
+  "delta|3|Goal δ — Kostant's isotypy: Clifford modules decompose isotypically under the 𝔰𝔬(V)-action|L0-filt L3-biv L3-biv L4-iso L4-iso L4-mod L4-mod L4-rep L3-biv L9-real L4-rep L9-rep L9-real L9-rep L9-rep L9-iso L9-iso L9-car|Kostant's isotypy: the Layer 4 module spine and γ's quadratic realization meet at the induced 𝔰𝔬(V)-module machinery. Landed: the Fock module (#2925, chrisromanmiller), the spinAction matrix units (#3089), and the induced-𝔤-module machinery (#2419) — L9-rep done. Remaining: the isotypy decomposition and the CAR instance.",
 ].map(r => { const [id, color, name, edgeStr, evalText] = r.split("|"); const es = edgeStr.split(" "); const edges = []; for (let i = 0; i < es.length; i += 2) edges.push([es[i], es[i + 1]]); return { id, color: +color, name, edges, eval: evalText }; });
 
 
@@ -548,6 +550,7 @@ legend.querySelectorAll(".gl").forEach(el => el.addEventListener("click", () => 
 }));
 
 /* ================= PR links ================= */
+const ROADPRS = { "224": ["o", "clarify the Lie functor dependencies", "beta"], "225": ["o", "split the Layer 7 dependencies", "alpha"] };
 const PRS = { 1473:"m",1499:"m",1510:"m",1561:"m",1611:"m",1708:"m",1742:"m",1783:"m",1794:"m",1802:"m",1804:"m",1847:"m",1903:"m",1971:"m",2224:"m",2334:"m",2335:"m",2343:"m",2347:"m",2397:"m",2404:"m",2410:"m",2511:"m",1772:"c",1759:"c",1859:"c",1972:"c",2413:"c",2470:"c",2501:"c",2411:"m",2419:"m",2523:"m",2530:"c",2492:"m",2524:"m",2550:"m",2553:"m",2563:"m","2553":"m","2563":"m",2503:"m",2505:"m",2506:"m",2510:"m",2512:"m",2513:"m",2518:"m",2525:"m",2546:"m",2547:"m",2562:"m",2604:"m",2606:"m",2652:"c",2670:"m",2730:"m",2804:"m",2816:"m",2853:"c",2914:"m",2981:"m",3053:"o",3049:"m",2925:"m",3056:"m",3025:"m",3089:"m",3157:"m",3176:"m",3151:"o",3281:"m",3321:"o"};
 /* roadmap PRs merged by upstream authors; every other merged PR is utensil's */
 const UPSTREAM = { 1473:"kim-em",1499:"kim-em",1510:"eohjelle",1561:"kim-em",1611:"rudygt",1742:"kim-em",1804:"CBirkbeck",2224:"chrisromanmiller",2334:"chrisromanmiller",2511:"kim-em","2503":"kim-em","2505":"kim-em","2506":"kim-em","2510":"kim-em","2512":"kim-em","2513":"kim-em","2518":"kim-em","2525":"kim-em","2546":"kim-em","2547":"kim-em","2562":"kim-em","2604":"kim-em","2606":"kim-em","2670":"kim-em","3053":"kim-em","3049":"sqrt-of-2","2925":"chrisromanmiller","3056":"sqrt-of-2","3151":"chrisromanmiller"};
@@ -575,12 +578,14 @@ const TYPES = { 1473:"feat",1499:"feat",1510:"feat",1561:"feat",1611:"feat",1708
 })();
 
 function linkify(t) {
-  return t.replace(/(?:mathlib)?#(\d+)(\u271d)?/g, (m, n, d) => {
+  return t.replace(/(?:mathlib|TauCetiRoadmap)?#(\d+)(\u271d)?/g, (m, n, d) => {
     const isML = m.indexOf("mathlib") === 0;
-    const st = PRS[n] || (isML ? "m" : "");
-    const cls = st === "m" ? "pr-merged" : st === "c" ? "pr-closed" : st === "d" ? "pr-draft" : st === "o" ? "pr-open" : "pr-neutral";
-    const pre = isML ? "mathlib#" : "#";
+    const isRM = m.indexOf("TauCetiRoadmap") === 0;
+    const st = isRM ? (ROADPRS[n] || [])[0] : PRS[n];
+    const cls = isRM ? "pr-roadmap" : st === "m" ? "pr-merged" : st === "c" ? "pr-closed" : st === "d" ? "pr-draft" : st === "o" ? "pr-open" : "pr-neutral";
+    const pre = isML ? "mathlib#" : isRM ? "TauCetiRoadmap#" : "#";
     const href = isML ? `https://github.com/leanprover-community/mathlib4/pull/${n}`
+                      : isRM ? `https://github.com/TauCetiProject/TauCetiRoadmap/pull/${n}`
                       : `https://github.com/TauCetiProject/TauCeti/pull/${n}`;
     const au = UPSTREAM[n];
     const cls2 = cls === "pr-merged" && au ? " pr-upstream" : "";
@@ -619,6 +624,7 @@ GOALS.forEach(g => {
       <div class="route-lbl">route</div>
       <div class="route">${routeNodes.map(n => `<span data-g="${g.id}" style="cursor:default">${n.short}</span>`).join('<span class="sep">→</span>')}</div>
       <div class="eval">${linkify(g.eval)}</div>
+      ${(rd => rd.length ? `<div class="route-lbl">roadmap slices</div><div class="rdev">${rd.map(([n, v]) => `<a class="prlink pr-roadmap" href="https://github.com/TauCetiProject/TauCetiRoadmap/pull/${n}" target="_blank" rel="noopener" title="${v[1]}">TauCetiRoadmap#${n}</a>`).join(" · ")}</div>` : "")(Object.entries(ROADPRS).filter(([, v]) => v[2] === g.id))}
     </div>`);
 });
 
