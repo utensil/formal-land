@@ -49,6 +49,8 @@ If a source-level definition is already covered by mathlib, the conclusion is a 
 
 Before proposing anything new, search mathlib, the project's merged history, and its open pull requests for the same or adjacent declarations. A collision means contribute to or build on the existing work, not re-open it.
 
+When an authoritative milestone names sibling endpoints, census that family and record shared machinery, its earliest natural owner, and each endpoint's first consumer.
+
 ### 7. Compare conventions before claiming equality
 
 No equality is claimed until a convention table records, for each side: the direction of the map, the source and target forms, and the signs or scalar factors. A change-of-form map, a quotient identification, or a normalization constant must be matched explicitly. Record the table in the manifest.

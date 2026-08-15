@@ -1,6 +1,6 @@
 ---
 name: ut-lean-design
-description: Design of a Lean formalization slice before writing any code: the five-question compact design check, convention locks by definitional acceptance tests, the authoritative-spec principle, and the characteristic-API rules for public declarations. Slice selection (the gates and the operational algorithm) is ut-lean-roadmap's concern.
+description: "Design of a Lean formalization slice before writing any code: the five-question compact design check, convention locks by definitional acceptance tests, the authoritative-spec principle, and the characteristic-API rules for public declarations. Slice selection (the gates and the operational algorithm) is ut-lean-roadmap's concern."
 ---
 
 # ut-lean-design
@@ -22,7 +22,7 @@ Design operates at the level of a single slice: one topic, one reviewable contra
 
 Record answers to these five questions before implementation:
 
-1. Dependency and scope: which authoritative requirement does this slice discharge, what later declaration consumes it, and why is it one coherent slice rather than a fixed-degree or partial copy?
+1. Dependency and scope: which authoritative requirement does this slice discharge, what later declaration consumes it, and why is it one coherent slice rather than a fixed-degree or partial copy? When sibling endpoints share machinery, link the recon family census and justify its owner.
 2. Natural statement: which variables and indices are genuinely arbitrary? If the proof works uniformly in a degree, a form, or a module, state it that way unless a real dependency prevents it.
 3. Existing structure: which pinned library map, equivalence, or composition theorem is the natural starting point? Search by the mathematical structure, not only by a hoped-for theorem name.
 4. Public behavioral contract: for every public definition or equivalence, which consumer equations must work without unfolding it? Test a small downstream import and a bare `simp`, both directions when an equivalence is exposed.
