@@ -4,7 +4,7 @@ Utensil's monorepo for formalization, e.g. Lean, Aya.
 
 ## Formalization projects and contributions
 
-The following projects are agent work closely steered by me.
+The following projects are agent work closely steered by me, with guidance from [Tau Ceti rubrics](https://github.com/TauCetiProject/TauCetiReview) and [my Lean skills on the lean-skills branch](https://github.com/utensil/formal-land/tree/dev/lean-skills/lean4/skills).
 
 <!-- [![SpinRep CI](https://github.com/utensil/formal-land/actions/workflows/spinrep.yml/badge.svg)](https://github.com/utensil/formal-land/actions/workflows/spinrep.yml) -->
 
