@@ -73,6 +73,8 @@ Doc and annotation generators build against the active toolchain and lag the new
 ### 8. Verify and record
 
 - Re-run every test driver; run audits (no new `sorry`/`admit`, axioms on the allowlist); regenerate and commit the manifests.
+- After regeneration, search tracked files for each previous pinned revision
+  and explain every surviving hit as intentional history or stale metadata.
 - Record the toolchain readback, the resolved revisions, the commands, and the exit codes so the bump is reproducible from a fresh checkout.
 
 ## API drift catalog (Lean 4.16 → 4.32)

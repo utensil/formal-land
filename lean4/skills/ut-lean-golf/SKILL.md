@@ -33,10 +33,16 @@ count alone. Keep concrete calculations that expose the mathematical content.
    Confirm hypotheses, public equations, opacity, simplification behavior,
    imports, and downstream availability. A deletion probe must compile before
    a wrapper or import is removed.
-5. **Check cost when relevant.** Replace expensive search tactics only when a
-   direct term or targeted lemma expresses the same mathematics. Confirm with
-   `set_option profiler true` or `count_heartbeats` when cost motivates the
-   change.
+5. **Check cost when relevant.** During project stabilization, performance
+   cleanup, or a major refactor, first make one repository-wide search for
+   explicit elaboration and instance-search budgets. Report their count and
+   clustering before changing proofs; this is a one-shot diagnostic, not a
+   permanent ledger. Retained exceptions should be declaration-local, briefly
+   explained, and supported by a default-failure probe. Replace expensive
+   search tactics only when a direct term or targeted lemma expresses the same
+   mathematics. Confirm with `set_option profiler true` or
+   `count_heartbeats` when claiming a cost improvement; lowering or deleting a
+   budget alone is not evidence of faster compilation.
 
 A golf pass may conclude with no source change. Record the aggregate inventory
 and probe results either way. See `REFERENCE.md` for history-escalation

@@ -31,7 +31,10 @@ hypothesis question, run a focused recon probe and update the manifest.
    evidence to challenge, not the contract. Cover the applicable application,
    membership, forward/inverse, zero/successor, and canonical-coordinate
    equations with opaque definitions and bare `simp` or an explicitly named
-   theorem.
+   theorem. When an abstraction combines an operation with a relation, compile
+   the first concrete consumer and name the coherence law between them; use
+   that probe to decide whether introduction, elimination, uniqueness,
+   identity, inverse, or composition laws are actually needed.
 5. **Proof boundary.** Which named map or boundary lemma replaces an
    elementwise chain or private-construction definitional equality? Public
    proofs must not rely on unexplained `change`, `show`, or bare `rfl` across
