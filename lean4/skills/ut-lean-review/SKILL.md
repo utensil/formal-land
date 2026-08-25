@@ -36,8 +36,10 @@ description: 'Review Lean formalizations against the live Tau Ceti rubrics plus 
    python3 scripts/validate-review-evidence.py REVIEW.md /path/to/TauCetiReview/rubrics
    ```
 
-   A pass is the all-green private gate. A negative review is complete but
-   fails this gate until its findings are resolved.
+   `FORMAT/BINDING PASS` means the required metadata and rubric rows are
+   present and marked green; it does not validate the reviewer's judgment. A
+   negative review is complete but fails the private gate until its findings
+   are resolved.
 
 ## Rules
 

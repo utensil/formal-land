@@ -101,9 +101,14 @@ def main() -> int:
 
     if errors:
         for error in errors:
-            print(f"REVIEW-EVIDENCE: FAIL — {error}", file=sys.stderr)
+            print(
+                f"REVIEW-EVIDENCE: FORMAT/BINDING FAIL — {error}", file=sys.stderr
+            )
         return 1
-    print(f"REVIEW-EVIDENCE: PASS — {len(required)} rubric verdicts approved")
+    print(
+        "REVIEW-EVIDENCE: FORMAT/BINDING PASS — "
+        f"{len(required)} rubric rows present and marked approve"
+    )
     return 0
 
 
