@@ -44,7 +44,7 @@ svg{display:block;background:var(--card);border:1px solid var(--line);border-rad
 .nodest-review{fill:var(--review)}
 .nodest-open{fill:var(--open)}
 .nodest-branch{fill:var(--branch)}
-.nodest-incomplete{fill:var(--incomplete)} .nodest-active{fill:#61afef} .nodest-blocked{fill:#e06c75}
+.nodest-incomplete{fill:var(--incomplete)} .nodest-active{fill:#61afef}
 .summit-halo{pointer-events:none;transform-box:fill-box;transform-origin:center;animation:breathe 3.4s ease-in-out infinite}
 @keyframes breathe{0%,100%{opacity:.10;transform:scale(1)}50%{opacity:.26;transform:scale(1.22)}}
 @media (prefers-reduced-motion:reduce){.summit-halo{animation:none}}
@@ -163,7 +163,7 @@ const LAYERS = [
   "L9 · Lie action, isotypy",
   "Worked examples"
 ];
-const ST = { done:"merged", review:"in review", open:"unstarted", branch:"next up", incomplete:"incomplete", active:"active", blocked:"blocked" };
+const ST = { done:"merged", review:"in review", open:"unstarted", branch:"next up", incomplete:"incomplete", active:"active" };
 
 /* id, layer (index into LAYERS), label, short label, status, prs */
 const NODES = [
@@ -195,7 +195,7 @@ const NODES = [
   "L7-real|7|Cliff(p,q)|done|#2334 · TauCetiRoadmap#225 · #4705 compact real double cover|Real forms Cliff(p,q)",
   "L7-bott|7|Bott periodicity|active|#2550 #2524 #2804 #3859 #4081 merged · #3839 #4287 #3321 satisfy current Layer 1/2 ordering · replay SPINREP-053 then SPINREP-061 · Roadmap#225 is wording-only|Bott: Cliff(p+1,q+1) ≅ Cliff(p,q) ⊗ M₂(ℝ) · mod-8 table",
   "L7-spinq|7|Spin(p,q)|branch|#4705 ready with spinPQ, spinN, and the algebraic compact double cover · next: 280–390-line canonical topology and continuous projection|Real spin groups Spin(p,q)",
-  "L7-con|7|connectivity|blocked|topology bridge next · then needs the Spin(n−1) stabilizer and sphere bundle|Connectivity of the compact spin group",
+  "L7-con|7|connectivity|open|topology bridge next · then needs the Spin(n−1) stabilizer and sphere bundle|Connectivity of the compact spin group",
   "L8-tri|8|Spin₈ triality|open|— open|Triality for Spin₈ (three stages)",
   "L9-real|9|quadratic realization|done|#2224 (subalgebra) · #2411|Abstract quadratic realization β(a,b) = ½·[ιa,ιb]",
   "L9-rep|9|𝔤-module machinery|done|#2419 merged · adjointSO open|Every Clifford module is a 𝔤-module · cliffordInducedRep · adjointSO",
@@ -203,7 +203,7 @@ const NODES = [
   "L9-iso|9|Kostant isotypy|open|— open|Kostant's isotypy corollary (summit)",
   "L9-carq|9|gl_N quadratic lift|done|#4289 merged at reviewed head 4f8069db|Normal-ordered glCliffordHom · generator action · central shift",
   "L9-cara|9|CAR left action|done|#4419 merged the scoped left-regular CAR action · obsolete 63-line local package removed|Scoped left-regular CAR Lie module · defining action equation",
-  "L9-car|9|CAR isotypy|blocked|left action merged in #4419 · first needs gl_N irreducible highest-weight existence/uniqueness and the CAR weight computation|CAR isotypy · multiplicity · highest weight",
+  "L9-car|9|CAR isotypy|open|left action merged in #4419 · first needs gl_N irreducible highest-weight existence/uniqueness and the CAR weight computation|CAR isotypy · multiplicity · highest weight",
   "L9-rank|9|Cartan rank|review|#4351 ready · 127-line aggregate, full review, public-head review, and CI pass|rank ≤ finrank H toward the Cartan-rank equality",
   "W-cliff|10|Cliff(0,1)/Cliff(0,2)|done|#2334|Cliff(0,1) ≅ ℂ · Cliff(0,2) ≅ ℍ",
   "W-spin3|10|Spin₃ spin rep|open|— open|Spin₃ ≅ SL₂ and its spin representation",
@@ -534,7 +534,7 @@ const gname = id => GREEK[id] || id;
 
 /* ================= legend ================= */
 const legend = document.getElementById("legend");
-const stl = [["open", ST.open], ["branch", ST.branch], ["review", ST.review], ["incomplete", ST.incomplete], ["done", ST.done], ["active", ST.active], ["blocked", ST.blocked]];
+const stl = [["open", ST.open], ["branch", ST.branch], ["review", ST.review], ["incomplete", ST.incomplete], ["done", ST.done], ["active", ST.active]];
 legend.innerHTML =
   '<div class="legrow">' +
     '<span class="st" style="margin-right:4px">routes:</span>' + GOALS.map(g => `<span class="gl" data-g="${g.id}"><span class="sw" style="background:${PALETTE[g.color]}"></span>${gname(g.id)}</span>`).join(" ") +
@@ -622,7 +622,7 @@ svg.querySelectorAll(".node").forEach(el => {
 const goalsEl = document.getElementById("goals");
 GOALS.forEach(g => {
   const routeNodes = [...new Set(g.edges.flat())].map(id => NODES.find(n => n.id === id));
-  const weight = { done: 1, review: 0.75, open: 0.05, branch: 0.2, incomplete: 0.6 };
+  const weight = { done: 1, review: 0.75, open: 0.05, branch: 0.2, incomplete: 0.6, active: 1 };
   const prog = routeNodes.reduce((a, n) => a + weight[n.status], 0) / routeNodes.length;
   const pct = Math.round(prog * 100);
   goalsEl.insertAdjacentHTML("beforeend", `
