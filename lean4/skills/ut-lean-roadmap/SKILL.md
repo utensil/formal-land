@@ -70,8 +70,10 @@ one of those points is genuinely uncertain.
 
 The roadmap and route are records of current human intent, not immutable
 contracts. Recompute the route when mathematics, accepted interfaces, or goals
-change. Stop scheduling once the summit is landed; treat worked examples or
-acceptance tails as separate goals when they matter.
+change. If the preferred route has no schedulable milestone, descend to its
+missing prerequisites; if none qualifies, choose another uncovered roadmap
+summit and repeat. Stop scheduling once the summit is landed; treat worked
+examples or acceptance tails as separate goals when they matter.
 
 ## Output
 
