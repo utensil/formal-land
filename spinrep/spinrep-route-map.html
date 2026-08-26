@@ -722,9 +722,11 @@ const TL_STNAME = { D: "draft", R: "open", V: "review", T: "ready to merge", M: 
       base -= n * PER;
       svg += `<rect x="${x}" y="${base}" width="${BW}" height="${n * PER}" fill="${TL_STATE[st]}" opacity=".85"/>`;
     }
-    /* date label only at the beginning of each date, clock time after that */
-    const lbl = day !== prevDay ? day.slice(5) : h + ":00";
-    svg += `<text x="${x + BW / 2}" y="${Y0 + 13}" font-size="9.5" fill="#8a857e" text-anchor="middle">${lbl}</text>`;
+    /* date label only at the beginning of each date (browser-local, matching
+       the window slots); no per-window labels so nothing overlaps */
+    if (day !== prevDay) {
+      svg += `<text x="${x + BW / 2}" y="${Y0 + 13}" font-size="9.5" fill="#8a857e" text-anchor="middle">${day.slice(5)}</text>`;
+    }
     svg += `<text x="${x + BW / 2}" y="${base - 6}" font-size="11" fill="#e6e1dc" text-anchor="middle" font-weight="700">${evs.length}</text>`;
     svg += `<g class="tlcol" data-k="${k}"><rect x="${x - 3}" y="${base - 20}" width="${BW + 6}" height="${Y0 - base + 34}" fill="transparent"/></g>`;
     prevDay = day;
