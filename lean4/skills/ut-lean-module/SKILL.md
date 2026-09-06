@@ -10,6 +10,31 @@ use, large import closures, generated theorem/proof wrappers, or expensive
 editor environments. It is a measurement-led optimization workflow, not a
 license to change mathematics or weaken verification.
 
+## Optimization reality check
+
+A successful build is not an optimization. Adding an import to make an
+isolated target elaborate is a compatibility repair; it normally enlarges the
+environment and must not be reported as a speed or memory win. Classify such
+repairs separately and return to the last green baseline. Every optimization
+claim requires comparable before/after measurements on the same roots, cache
+state, invalidation state, and parallelism.
+
+The reference FLT work followed a concrete loop, not ad-hoc target repairs:
+modulize a small named cone; make proof-module and utility imports private;
+privatize proof-only subterms; prune out-of-scope `attribute [-simp]` and
+`[-instance]` entries; merge wrappers; run `lake shake` with all relevant
+package roots; remove imports retained only for extra reverse-use edges; repair
+the shaken cone; rerun the shake; then profile narrowly scoped shortcut
+instances. Expand only after each loop is green. Prefer reproducible generated
+or scripted transformations, and review their complete change set before
+committing.
+
+Do not substitute “build more modules” for this loop. If a target fails,
+isolate and classify the failure, make the smallest evidence-backed repair, and
+then resume optimization. If a candidate regresses, restore it and try the
+next independent transformation or cone; do not turn the repair into the
+result.
+
 ## Non-negotiable contract
 
 - Work on a dedicated branch or worktree and preserve the exact baseline.
@@ -66,6 +91,26 @@ license to change mathematics or weaken verification.
    module/job counts, wall/CPU/RSS/disk metrics, checks, tradeoffs, and
    rollback. Use bounded parallelism and stop before OOM, unsafe swap growth,
    thermal exhaustion, or destructive cleanup.
+
+## Concrete transformation loop
+
+When the baseline already contains optimization work, do not restart by adding
+imports or widening the cone. For one bounded manifest, generate the exact
+module and reverse-use closure; apply one structural change (private proof
+import, private proof subterm, wrapper merge, or reviewed attribute pruning);
+build changed leaves plus forward and reverse consumers; then run `lake shake`
+with every relevant package root and review its complete deletion set. Repair
+shaken-cone failures, rerun the shaker until stable, and compare against an
+equivalently invalidated baseline. Commit only a reproducible wall/CPU/RSS or
+closure improvement. A compatibility repair may be committed for correctness,
+but it closes no optimization phase and does not justify expanding the scope.
+Expand only after this loop is green.
+
+For long-running optimization campaigns, continue phase-by-phase for the
+declared time budget (five hours when requested) or until the full repository
+has been optimized. A failed or unsafe individual partition is a local
+backoff: bisect it, lower parallelism, or move to an independent cone. It is
+not permission to terminate the campaign while safe work remains.
 
 ## Conditional guidance
 
