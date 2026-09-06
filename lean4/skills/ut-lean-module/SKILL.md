@@ -25,11 +25,17 @@ license to change mathematics or weaken verification.
 
 ## Workflow
 
-1. **Pin the baseline.** Record the commit, Lean and dependency revisions,
-   package roots, cache state, hardware, parallelism, and CI checks. Choose a
-   cheap leaf, a representative cone, and an expensive final root. Measure warm
-   and cold builds when feasible with `/usr/bin/time -l` or the platform
-   equivalent. Record wall time, user/system CPU, peak RSS, job count, and disk.
+1. **Hydrate the cache, then pin the baseline.** Obtain the repository's
+   Mathlib/dependency build cache before compiling project modules, using the
+   documented cache command and exact Lean/toolchain pair. Resolve a mismatch
+   safely and verify any temporary alignment is restored. Record the commit,
+   revisions, package roots, cache state, hardware, parallelism, and CI checks.
+   Start with one controlled small portion: a named leaf or import-cone root
+   whose closure can be counted and built independently, as in Kha's 100-module
+   experiment. Add representative and expensive roots only after it is green.
+   Measure warm and cold builds when feasible with `/usr/bin/time -l` or the
+   platform equivalent. Record wall time, user/system CPU, peak RSS, job count,
+   and disk.
 2. **Map dependencies.** Build import and reverse-use graphs, then supplement
    them with declaration-level type/value dependencies. Identify definitions,
    instances, proof-only helpers, private declarations, generated companions,

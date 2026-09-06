@@ -1,5 +1,19 @@
 # Measured optimization playbook
 
+## Cache-first controlled baseline
+
+Before compiling a project cone, obtain the Mathlib/dependency cache with the
+repository's documented command and exact toolchain pair. If the project and
+Mathlib toolchains differ, use a temporary trapped alignment or explicit
+toolchain override; restore and verify the tracked toolchain file afterward.
+Do not redownload or rebuild the same cache concurrently.
+
+Start with one named controlled root whose import closure is small enough to
+measure and whose module count can be recorded. A Kha-style first run is a
+single target such as `lake build <controlled-cone-root>`, not an unrestricted
+whole-repository build. Confirm it is green before expanding to a medium cone
+or final root.
+
 ## Benchmark ledger
 
 Start every experiment with:
