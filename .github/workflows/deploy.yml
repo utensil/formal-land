@@ -5,7 +5,7 @@ name: Deploy Gitub Pages
 
 on:
   workflow_run:
-    workflows: ["Aya CI", "Lean 4 CI", "TLA+ CI", "SpinRep CI"]
+    workflows: ["Aya CI", "Lean 4 CI", "TLA+ CI", "SpinRep CI", "Geotopo CI"]
     types:
       - completed
 
@@ -28,8 +28,8 @@ concurrency:
 jobs:
   # Single deploy job since we're just deploying
   deploy:
-    # only deploy if the workflow_run was successful or if this is triggered by workflow_dispatch
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    # Deploy successful main-branch builds or an explicit manual dispatch; never PR artifacts.
+    if: ${{ (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.event != 'pull_request' && github.event.workflow_run.event != 'pull_request_target') || github.event_name == 'workflow_dispatch' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -54,7 +54,7 @@ jobs:
             just jobs
         - name: Setup Pages
           uses: actions/configure-pages@v5
-        - name: Download pages from the three CIs
+        - name: Download project pages
           env:
             GH_TOKEN: ${{ github.token }}
           run: |
@@ -71,12 +71,12 @@ jobs:
             # and a section whose latest successful run uploaded no artifact
             # (e.g. lean4 without an [annotate] tag) keeps its last cached content
             # instead of being dropped from the deployed site.
-            for spec in "aya.yml pages-aya" "lean4.yml pages-lean4" "tla.yml pages-tla" "spinrep.yml pages-spinrep"; do
+            for spec in "aya.yml pages-aya" "lean4.yml pages-lean4" "tla.yml pages-tla" "spinrep.yml pages-spinrep" "geotopo.yml pages-geotopo"; do
               set -- $spec
               wf_file=$1
               artifact=$2
-              run_id=$(gh run list --workflow "$wf_file" --status success --limit 1 \
-                --json databaseId --jq '.[0].databaseId // empty')
+              run_id=$(gh run list --workflow "$wf_file" --branch main --status success --limit 100 \
+                --json databaseId,event --jq '[.[] | select(.event != "pull_request" and .event != "pull_request_target")][0].databaseId // empty')
               if [ -n "$run_id" ]; then
                 echo "Downloading $artifact from $wf_file run $run_id"
                 if ! gh run download "$run_id" -n "$artifact" -D "staging-$artifact"; then
@@ -87,6 +87,7 @@ jobs:
                   pages-aya)     mkdir -p github-pages/aya;     cp -R "staging-$artifact/." github-pages/aya/ ;;
                   pages-tla)     mkdir -p github-pages/tla;     cp -R "staging-$artifact/." github-pages/tla/ ;;
                   pages-spinrep) rm -rf github-pages/spinrep; mkdir -p github-pages/spinrep; cp -R "staging-$artifact/." github-pages/spinrep/ ;;
+                  pages-geotopo) rm -rf github-pages/geotopo; mkdir -p github-pages/geotopo; cp -R "staging-$artifact/." github-pages/geotopo/ ;;
                   pages-lean4) cp -R "staging-$artifact/." github-pages/ ;;
                 esac
               else
@@ -105,7 +106,7 @@ jobs:
             # [annotate] tag in the commit message so cache and artifact are
             # rebuilt, then retry this deploy.
             missing=0
-            for d in aya tla spinrep lean4 lean4-duper-xp lean4-verso-xp; do
+            for d in aya tla spinrep geotopo lean4 lean4-duper-xp lean4-verso-xp; do
               if [ ! -d "github-pages/$d" ]; then
                 echo "::error::github-pages/$d is missing: no fresh artifact and no cached content. Re-run the project CIs with an [annotate] commit to rebuild the pages cache, then retry the deploy."
                 missing=1
