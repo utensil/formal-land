@@ -18,13 +18,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Check standalone page
+      - name: Validate data and standalone page
         run: |
-          test -s geotopo/geotopo-route-map.html
-          test -s geotopo/README.md
+          python3 geotopo/build.py --check
+          python3 -m unittest discover -s geotopo/tests -v
+          node --check geotopo/src/app.js
+      - name: Stage standalone output
+        run: |
+          mkdir staging-geotopo
+          cp geotopo/geotopo-route-map.html geotopo/README.md staging-geotopo/
       - name: Upload pages artifact
         uses: actions/upload-artifact@v4
         with:
           name: pages-geotopo
-          path: geotopo
+          path: staging-geotopo
           if-no-files-found: error

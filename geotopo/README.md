@@ -1,49 +1,87 @@
 # Geometric topology route map
 
-Open [geotopo-route-map.html](geotopo-route-map.html) directly in a browser. The
-page embeds its styles, scripts, graph and snapshot data; it needs no server or
-network connection. Source and PR links open the corresponding public records.
+Open [geotopo-route-map.html](geotopo-route-map.html) directly in a browser. All
+styles, scripts and data are embedded; the map and charts work offline.
 
-The page maps the GeometricTopology roadmap's 11 layers and six editorial work
-trails. It includes all 94 PRs carrying `roadmap/GeometricTopology` at collection
-on 10 September 2026: 83 merged, 8 closed without merging, and 3 open. Counts are
-historical PR activity, not mathematical completion or a list of surviving APIs.
+The diagram places our contributions within 42 milestones across all 11 layers
+of the GeometricTopology roadmap. Three colored dependency routes lead toward
+presentation equivalence, the Smale statement and Zeeman's conjecture. Route cards identify the
+current frontier and the next missing handoff. Their bars count merged selected
+PRs; they do not measure mathematical completion.
 
-## Evidence and interpretation
+The snapshot includes only eight verified contributions: five merged, two open
+and one closed without merging. Five also have verified review evidence. Context
+milestones remain visible without importing unrelated PRs into the charts.
 
-- Roadmap: `TauCetiProject/TauCetiRoadmap` at
-  `d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3`, under
-  `TauCetiRoadmap/GeometricTopology/`. Dependency relations link to exact lines.
-- Selected Lean source checks: `TauCetiProject/TauCeti` at
-  `be0b30f3963c7f5158674dca96d7fe3fdd0dcd20`. The weak Whitney contribution is
-  chart-level, and the contractible two-complex predicate does not prove Zeeman's
-  conjecture.
-- Public PR evidence: paginated GitHub PR metadata, changed files, retained
-  commits, issue lifecycle events and machine-readable review-comment metadata;
-  checks and commit statuses were also collected for the three open PR heads.
-- TCWORK attribution covers seven verified owned PRs. TCREVIEW attribution covers
-  five PRs with completed-review evidence, including one closed without merging.
-  This is a verified minimum; an absent marker does not mean no review occurred.
-- PR-to-layer assignments and work trails are editorial interpretations of titles
-  and changed files. The cited roadmap dependencies are not Lean import edges.
-- Review comments can be edited. The timeline shows observed review metadata and
-  workflow events, not an immutable reconstruction of every past review state.
-  Current-head review evidence is distinguished from older scoreboards.
-- The generated roadmap `STATUS.md` is dated 1 September 2026. It is a historical
-  baseline, not the date of this newer PR snapshot. Layers with no assigned PRs
-  make no absence claim about Mathlib or other roadmaps.
+## Data and updates
 
-The roadmap aims to make theorems faithfully stateable. This page is not a new
-proof audit and does not assign a weighted completion or health score.
+- `data/roadmap.json`: pinned roadmap sources, milestone scope, dependencies,
+  diagram layout and route frontiers. Update these editorial interpretations
+  when a new contribution changes the available API or next handoff.
+- `data/selection.json`: explicit PR-to-milestone mapping and worked/reviewed
+  attribution. A reviewed marker requires a public evidence link. Authorship
+  alone never establishes review attribution.
+- `data/prs.json`: public metadata and preserved review observations for exactly
+  the selected PRs. The collector stores no comment bodies or credentials.
+- `src/`: page template, shared SpinRep visual language and interaction code.
+  `build.py` validates inputs and generates the standalone HTML deterministically.
 
-## Updating and publishing
+From the repository root, with Python 3 and authenticated GitHub CLI available:
 
-Refresh the labeled PR cohort and its paginated evidence, pin the roadmap and
-source revisions, review the route assignments, then replace the embedded data.
-Keep the timestamps and interpretation notes with the snapshot. Verify filters,
-exact-head review handling, mobile layout and direct-file offline use before
-publishing an update.
+```sh
+python3 geotopo/refresh.py --discover
+# Add verified PRs and milestone mappings to data/selection.json.
+python3 geotopo/refresh.py
+python3 geotopo/build.py
+python3 geotopo/build.py --check
+python3 -m unittest discover -s geotopo/tests -v
+node --check geotopo/src/app.js
+```
 
-Geotopo CI uploads this directory as `pages-geotopo`. The shared Pages deployment
-consumes successful main-branch artifacts and publishes it under `/geotopo/`.
-PR builds stage an artifact for checking and do not trigger production deployment.
+Discovery reports unmapped authored GeometricTopology PRs without adding them.
+Reviewed-only PRs require an explicit entry supported by review evidence. Refresh
+updates new/open PRs and preserves terminal records; use `--all` to refresh every
+selected PR. A failed request leaves the previous snapshot intact. Successive
+refreshes preserve observations from edited comments and remove exact duplicates.
+Always inspect changed scope, source links and route frontiers before committing.
+
+## Reading the map and charts
+
+Route chips filter colored paths and chart cohorts. The worked/reviewed lens
+further narrows the selected contributions. Clicking a route, milestone or PR
+point connects its activity to the relevant dependency and next handoff. The
+collapsed PR table provides supporting records, rather than the main view.
+
+The aligned charts use six-hour Singapore-time bins: stacked lifecycle and
+workflow-stage transitions above; PR review-health markers below. Circles mean
+merged, diamonds closed, and triangles open. A dashed white ring marks verified
+review participation. The orange line is a three-day rolling median of merged
+selected PRs. Unassessed points have a separate lane.
+
+Health follows the SpinRep public-review churn formula:
+`max(0, 100 - (3A + 4D + 3H + 6L + 8B + 12S + 5U))`.
+A is observed additional rounds; D distinct failing rubrics; H failing high-impact
+rubrics; L rubrics failing across multiple rounds; B distinct blocking
+rubric/round pairs; S explicitly recorded scope resets; U unresolved rubrics at
+the snapshot head. A score requires a complete scoreboard for that exact head.
+Missing, stale, pending or skipped evidence never becomes a perfect score or an
+observed failure. This is a review-churn indicator, not proof correctness.
+
+Public comments can be overwritten before collection, so historical evidence is
+incomplete. The timeline records observed events, not a full immutable review
+history. Reviewed attribution is a verified minimum, not a claim that unmarked
+PRs received no review.
+
+## Source and publication boundaries
+
+The roadmap is pinned to `TauCetiProject/TauCetiRoadmap` commit
+`d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3`; source-context checks use
+`TauCetiProject/TauCeti` commit `be0b30f3963c7f5158674dca96d7fe3fdd0dcd20`.
+Dependency links cite roadmap lines, not Lean import edges. Milestone scope is
+an interpretation of these sources, not a fresh proof audit: chart-level Whitney
+work is narrower than a global embedding theorem, and a contractibility predicate
+does not prove Zeeman's conjecture.
+
+Geotopo CI checks data, generated output and tests, then stages the HTML and this
+README as `pages-geotopo`. Shared Pages deployment consumes successful main-branch
+artifacts under `/geotopo/`; PR builds provide a review artifact.

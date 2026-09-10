@@ -1,0 +1,92 @@
+[
+  {
+    "number": 5714,
+    "nodes": [
+      "unoriented"
+    ],
+    "worked": true,
+    "reviewed": true,
+    "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/5714#issuecomment-5554289043"
+    ],
+    "scopeReset": 0
+  },
+  {
+    "number": 5715,
+    "nodes": [
+      "isotopy"
+    ],
+    "worked": true,
+    "reviewed": true,
+    "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/5715#issuecomment-5557580845"
+    ],
+    "scopeReset": 0
+  },
+  {
+    "number": 5844,
+    "nodes": [
+      "contractible"
+    ],
+    "worked": true,
+    "reviewed": true,
+    "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/5844#issuecomment-5558964171"
+    ],
+    "scopeReset": 0
+  },
+  {
+    "number": 5849,
+    "nodes": [
+      "gauss"
+    ],
+    "worked": true,
+    "reviewed": true,
+    "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/5849#issuecomment-5590478981"
+    ],
+    "scopeReset": 0
+  },
+  {
+    "number": 5945,
+    "nodes": [
+      "pd"
+    ],
+    "worked": true,
+    "reviewed": true,
+    "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/5945#issuecomment-5576968318"
+    ],
+    "scopeReset": 0
+  },
+  {
+    "number": 6199,
+    "nodes": [
+      "gauss-pd"
+    ],
+    "worked": true,
+    "reviewed": false,
+    "reviewEvidence": [],
+    "scopeReset": 0
+  },
+  {
+    "number": 6203,
+    "nodes": [
+      "chart-whitney"
+    ],
+    "worked": true,
+    "reviewed": false,
+    "reviewEvidence": [],
+    "scopeReset": 0
+  },
+  {
+    "number": 6237,
+    "nodes": [
+      "links"
+    ],
+    "worked": true,
+    "reviewed": false,
+    "reviewEvidence": [],
+    "scopeReset": 0
+  }
+]

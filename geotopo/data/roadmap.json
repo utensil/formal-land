@@ -1,0 +1,906 @@
+{
+  "schemaVersion": 1,
+  "title": "Geotopo route map",
+  "repository": "TauCetiProject/TauCeti",
+  "timezone": "Asia/Singapore",
+  "roadmapRevision": "d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3",
+  "roadmapUrl": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md",
+  "contextAsOf": "2026-09-10T07:13:25.211801+00:00",
+  "reference": "https://utensil.github.io/formal-land/spinrep/spinrep-route-map.html",
+  "rows": [
+    {
+      "id": "foundations",
+      "label": "L1 · manifolds & gluing"
+    },
+    {
+      "id": "tame",
+      "label": "L2 · locally flat"
+    },
+    {
+      "id": "geometry",
+      "label": "L7 · geometry"
+    },
+    {
+      "id": "diff",
+      "label": "L3 · Diff(M) topology"
+    },
+    {
+      "id": "homotopy",
+      "label": "L3 · homotopy interfaces"
+    },
+    {
+      "id": "presentations",
+      "label": "L4 · presentations"
+    },
+    {
+      "id": "maps",
+      "label": "L4 · presentation maps"
+    },
+    {
+      "id": "equivalence",
+      "label": "L4 · equivalence hub"
+    },
+    {
+      "id": "surgery",
+      "label": "L5 · surgery"
+    },
+    {
+      "id": "concordance",
+      "label": "L6 · concordance"
+    },
+    {
+      "id": "jsj",
+      "label": "L8 · geometries & JSJ"
+    },
+    {
+      "id": "heegaard",
+      "label": "L9 · Heegaard"
+    },
+    {
+      "id": "foliation",
+      "label": "L10 · foliations"
+    },
+    {
+      "id": "simplicial",
+      "label": "L11 · realization"
+    },
+    {
+      "id": "collapse",
+      "label": "L11 · collapse & PL"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "manifolds",
+      "row": "foundations",
+      "layer": "L1",
+      "label": "manifold foundations",
+      "status": "done",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L177",
+      "summary": "Boundary and smooth-manifold building blocks supply the ambient spaces.",
+      "remaining": ""
+    },
+    {
+      "id": "collars",
+      "row": "foundations",
+      "layer": "L1",
+      "label": "local collars",
+      "status": "done",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L204",
+      "summary": "Local collar charts and their smooth diffeomorphisms are available.",
+      "remaining": "Global collar existence is a separate theorem."
+    },
+    {
+      "id": "gluing",
+      "row": "foundations",
+      "layer": "L1",
+      "label": "global gluing",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L209",
+      "summary": "Glue along boundaries, then construct connected sums and knot complements.",
+      "remaining": "Assemble global collars and the gluing interface."
+    },
+    {
+      "id": "pl",
+      "row": "foundations",
+      "layer": "L1",
+      "label": "PL groupoid",
+      "status": "done",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L249",
+      "summary": "The chart-based piecewise-linear structure track.",
+      "remaining": "Relate chart-based PL structures to combinatorial triangulations."
+    },
+    {
+      "id": "flat",
+      "row": "tame",
+      "layer": "L2",
+      "label": "locally flat embeddings",
+      "status": "done",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L288",
+      "summary": "Local flatness and local bicollars provide tame topological embeddings.",
+      "remaining": ""
+    },
+    {
+      "id": "bicollar",
+      "row": "tame",
+      "layer": "L2",
+      "label": "global bicollars",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L321",
+      "summary": "Global collars of embedded spheres are needed for Annulus-type statements.",
+      "remaining": "The global existence statement goes beyond a local slice chart."
+    },
+    {
+      "id": "metric",
+      "row": "geometry",
+      "layer": "L7",
+      "label": "metric / curvature",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L626",
+      "summary": "Riemannian structures consume manifold foundations and the external Hopf–Rinow connection.",
+      "remaining": "Volume and curvature interfaces remain a broad prerequisite track."
+    },
+    {
+      "id": "hyperbolic",
+      "row": "geometry",
+      "layer": "L7",
+      "label": "hyperbolic structures",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L648",
+      "summary": "Hyperbolic structures, volume and isometry invariance feed three-manifold geometry.",
+      "remaining": ""
+    },
+    {
+      "id": "diff-group",
+      "row": "diff",
+      "layer": "L3",
+      "label": "Diff(M) group",
+      "status": "done",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L369",
+      "summary": "Composition, inverse and actions provide the algebraic group of diffeomorphisms.",
+      "remaining": ""
+    },
+    {
+      "id": "chart-whitney",
+      "row": "diff",
+      "layer": "L3",
+      "label": "chart-level Whitney",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L372",
+      "summary": "The weak Whitney topology for maps in a single global chart.",
+      "remaining": "General manifold charts and compact-source hypotheses still need assembly.",
+      "x": 760
+    },
+    {
+      "id": "whitney",
+      "row": "diff",
+      "layer": "L3",
+      "label": "general Whitney topology",
+      "status": "branch",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L372",
+      "summary": "The initial topology from all chartwise derivatives, restricted to Diff(M).",
+      "remaining": "The chart-level construction is one input, not yet the general topological group.",
+      "x": 1120
+    },
+    {
+      "id": "families",
+      "row": "homotopy",
+      "layer": "L3",
+      "label": "smooth families → Diff",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L379",
+      "summary": "A smooth family of diffeomorphisms induces a continuous map into Diff(M).",
+      "remaining": "Prove the forward continuous-map interface; no unconditional converse.",
+      "x": 700
+    },
+    {
+      "id": "orthogonal",
+      "row": "homotopy",
+      "layer": "L3",
+      "label": "continuous O(n+1) action",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L387",
+      "summary": "Promote the sphere action to a continuous group homomorphism into Diff(Sⁿ).",
+      "remaining": "Continuity needs the general topology and the isometry action.",
+      "x": 1120
+    },
+    {
+      "id": "smale",
+      "row": "homotopy",
+      "layer": "L3",
+      "label": "Smale statement",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L393",
+      "summary": "State the homotopy-equivalence target for the reference inclusion O(4) → Diff(S³).",
+      "remaining": "This route aims at faithful statement infrastructure.",
+      "x": 1450
+    },
+    {
+      "id": "circle",
+      "row": "presentations",
+      "layer": "L4",
+      "label": "smooth circles",
+      "status": "done",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L426",
+      "summary": "Smooth circle embeddings are a geometric presentation over a general manifold.",
+      "remaining": ""
+    },
+    {
+      "id": "unoriented",
+      "row": "presentations",
+      "layer": "L4",
+      "label": "forget orientation",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L431",
+      "summary": "Our contribution quotients by a fixed orientation reversal.",
+      "remaining": "This is not a quotient by arbitrary reparametrizations."
+    },
+    {
+      "id": "links",
+      "row": "presentations",
+      "layer": "L4",
+      "label": "smooth links",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L426",
+      "summary": "The proposed finite-component presentation uses pairwise-disjoint smooth circles.",
+      "remaining": "Framings and link-complement interfaces remain separate work.",
+      "x": 850
+    },
+    {
+      "id": "gauss",
+      "row": "presentations",
+      "layer": "L4",
+      "label": "oriented Gauss codes",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L429",
+      "summary": "Based oriented Gauss codes are a finite combinatorial presentation.",
+      "remaining": "A valid abstract code need not be planar.",
+      "x": 1120
+    },
+    {
+      "id": "pd",
+      "row": "presentations",
+      "layer": "L4",
+      "label": "oriented PD codes",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L429",
+      "summary": "An oriented PD-code presentation with crossing-slot and local compatibility data.",
+      "remaining": "Global planar realizability is a later obligation.",
+      "x": 1450
+    },
+    {
+      "id": "isotopy",
+      "row": "maps",
+      "layer": "L4",
+      "label": "isotopy image transport",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L440",
+      "summary": "Our ambient-isotopy image-invariance attempt was closed without merging.",
+      "remaining": "It cannot be counted as a landed equivalence theorem."
+    },
+    {
+      "id": "gauss-pd",
+      "row": "maps",
+      "layer": "L4",
+      "label": "Gauss → PD",
+      "status": "branch",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L445",
+      "summary": "A one-way conversion connects the two code presentations.",
+      "remaining": "The current contribution does not by itself establish full presentation equivalence.",
+      "x": 1280
+    },
+    {
+      "id": "braid-grid",
+      "row": "maps",
+      "layer": "L4",
+      "label": "braid / grid branches",
+      "status": "incomplete",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L460",
+      "summary": "Braid/Markov and Heegaard-Floer grid work are adjacent combinatorial branches.",
+      "remaining": "Their interface to the diagram hub is a distinct route; no external PR cohort is included.",
+      "x": 730
+    },
+    {
+      "id": "geometric-diagram",
+      "row": "equivalence",
+      "layer": "L4",
+      "label": "geometric ↔ diagram",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L450",
+      "summary": "The expensive edge: generic projection and one-parameter general position.",
+      "remaining": "Control how ambient isotopies cross diagram degeneracies.",
+      "x": 750
+    },
+    {
+      "id": "diagram-hub",
+      "row": "equivalence",
+      "layer": "L4",
+      "label": "presentation equivalence",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L457",
+      "summary": "A spanning tree of correspondences anchored at diagrams lets invariants move between presentations.",
+      "remaining": "The geometric edge and move-by-move combinatorial equivalences must meet here.",
+      "x": 1100
+    },
+    {
+      "id": "invariants",
+      "row": "equivalence",
+      "layer": "L4",
+      "label": "invariant agreement",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L473",
+      "summary": "Alexander/Jones algorithms should agree across presentations and compute on small knots.",
+      "remaining": "Agreement tests consume the correspondence maps.",
+      "x": 1450
+    },
+    {
+      "id": "slopes",
+      "row": "surgery",
+      "layer": "L5",
+      "label": "framed slopes",
+      "status": "incomplete",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L518",
+      "summary": "Slope parametrization exists; complete surgery also requires geometric complement data.",
+      "remaining": "Intersection conventions and filling remain separate obligations."
+    },
+    {
+      "id": "complement",
+      "row": "surgery",
+      "layer": "L5",
+      "label": "link complements",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L525",
+      "summary": "Compact complements need tubular neighborhoods, boundary structure and gluing.",
+      "remaining": "Smooth-link presentations supply input objects, not the complement construction."
+    },
+    {
+      "id": "dehn",
+      "row": "surgery",
+      "layer": "L5",
+      "label": "Dehn filling",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L534",
+      "summary": "Fill a boundary torus with explicit slope and longitude conventions.",
+      "remaining": "Check surgery on the unknot against the standard manifolds."
+    },
+    {
+      "id": "concordance",
+      "row": "concordance",
+      "layer": "L6",
+      "label": "concordance / slice genus",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L571",
+      "summary": "Relate presentations by embedded cobordisms and define slice genus faithfully.",
+      "remaining": "Requires geometric knot inputs, tame discs and composition."
+    },
+    {
+      "id": "cobordism",
+      "row": "concordance",
+      "layer": "L6",
+      "label": "4-manifold cobordism",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L592",
+      "summary": "Gluing and the relevant four-manifold input support the slice statements.",
+      "remaining": ""
+    },
+    {
+      "id": "geometries",
+      "row": "jsj",
+      "layer": "L8",
+      "label": "eight geometries",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L690",
+      "summary": "Model the Thurston geometries as geometric structures.",
+      "remaining": ""
+    },
+    {
+      "id": "jsj",
+      "row": "jsj",
+      "layer": "L8",
+      "label": "JSJ decomposition",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L705",
+      "summary": "A decomposition must carry cutting and gluing data, not only a list of piece types.",
+      "remaining": "Consumes geometry, torus surgery and manifold foundations."
+    },
+    {
+      "id": "handlebody",
+      "row": "heegaard",
+      "layer": "L9",
+      "label": "handlebodies",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L738",
+      "summary": "Manifolds with boundary and gluing provide handlebodies.",
+      "remaining": ""
+    },
+    {
+      "id": "splitting",
+      "row": "heegaard",
+      "layer": "L9",
+      "label": "Heegaard genus",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L753",
+      "summary": "Specify a splitting and take the least genus over a nonempty family.",
+      "remaining": ""
+    },
+    {
+      "id": "foliations",
+      "row": "foliation",
+      "layer": "L10",
+      "label": "foliations",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L780",
+      "summary": "Plane fields need integrability and leaf data.",
+      "remaining": ""
+    },
+    {
+      "id": "euler",
+      "row": "foliation",
+      "layer": "L10",
+      "label": "Euler class pairing",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L795",
+      "summary": "A degree-two cohomology class must pair with surface classes.",
+      "remaining": "Tangent bundles alone do not provide the required pairing."
+    },
+    {
+      "id": "realization",
+      "row": "simplicial",
+      "layer": "L11",
+      "label": "geometric realization",
+      "status": "done",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L839",
+      "summary": "Realization and subdivision connect complexes to their underlying spaces.",
+      "remaining": ""
+    },
+    {
+      "id": "collapse-api",
+      "row": "simplicial",
+      "layer": "L11",
+      "label": "simplicial collapse",
+      "status": "done",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L867",
+      "summary": "Elementary collapse and collapsibility supply the combinatorial vocabulary.",
+      "remaining": "",
+      "x": 1450
+    },
+    {
+      "id": "contractible",
+      "row": "simplicial",
+      "layer": "L11",
+      "label": "contractible 2-complex",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L867",
+      "summary": "Our predicate records finite faces, dimension at most two and actual contractibility; the interval is a witness.",
+      "remaining": "This contribution proves no cylinder-collapse conclusion.",
+      "x": 910
+    },
+    {
+      "id": "pl-comparison",
+      "row": "collapse",
+      "layer": "L11",
+      "label": "PL ↔ combinatorial",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L853",
+      "summary": "Relate chart-based PL manifolds to combinatorial triangulations.",
+      "remaining": "A substantial comparison theorem, separate from arbitrary triangulability."
+    },
+    {
+      "id": "cylinder",
+      "row": "collapse",
+      "layer": "L11",
+      "label": "simplicial K × I",
+      "status": "branch",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L867",
+      "summary": "A compatible simplicial cylinder must connect the hypothesis to the collapse vocabulary.",
+      "remaining": "Construct and expose the product needed by the target statement.",
+      "x": 910
+    },
+    {
+      "id": "zeeman",
+      "row": "collapse",
+      "layer": "L11",
+      "label": "Zeeman statement",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L885",
+      "summary": "Faithfully state: a finite contractible two-complex K has collapsible K × I.",
+      "remaining": "Zeeman’s conjecture remains open; the summit is its formal statement, not a proof.",
+      "x": 1450
+    }
+  ],
+  "edges": [
+    {
+      "id": "manifolds--collars",
+      "fromNode": "manifolds",
+      "toNode": "collars",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L204"
+    },
+    {
+      "id": "collars--gluing",
+      "fromNode": "collars",
+      "toNode": "gluing",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L209"
+    },
+    {
+      "id": "manifolds--pl",
+      "fromNode": "manifolds",
+      "toNode": "pl",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L249"
+    },
+    {
+      "id": "manifolds--flat",
+      "fromNode": "manifolds",
+      "toNode": "flat",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L297"
+    },
+    {
+      "id": "flat--bicollar",
+      "fromNode": "flat",
+      "toNode": "bicollar",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L321"
+    },
+    {
+      "id": "manifolds--metric",
+      "fromNode": "manifolds",
+      "toNode": "metric",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L636"
+    },
+    {
+      "id": "metric--hyperbolic",
+      "fromNode": "metric",
+      "toNode": "hyperbolic",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L648"
+    },
+    {
+      "id": "manifolds--diff-group",
+      "fromNode": "manifolds",
+      "toNode": "diff-group",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L366"
+    },
+    {
+      "id": "diff-group--chart-whitney",
+      "fromNode": "diff-group",
+      "toNode": "chart-whitney",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L372"
+    },
+    {
+      "id": "chart-whitney--whitney",
+      "fromNode": "chart-whitney",
+      "toNode": "whitney",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L372"
+    },
+    {
+      "id": "whitney--families",
+      "fromNode": "whitney",
+      "toNode": "families",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L379"
+    },
+    {
+      "id": "whitney--orthogonal",
+      "fromNode": "whitney",
+      "toNode": "orthogonal",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L387"
+    },
+    {
+      "id": "metric--orthogonal",
+      "fromNode": "metric",
+      "toNode": "orthogonal",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L387"
+    },
+    {
+      "id": "orthogonal--smale",
+      "fromNode": "orthogonal",
+      "toNode": "smale",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L393"
+    },
+    {
+      "id": "manifolds--circle",
+      "fromNode": "manifolds",
+      "toNode": "circle",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L418"
+    },
+    {
+      "id": "circle--unoriented",
+      "fromNode": "circle",
+      "toNode": "unoriented",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L431"
+    },
+    {
+      "id": "circle--links",
+      "fromNode": "circle",
+      "toNode": "links",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L426"
+    },
+    {
+      "id": "circle--isotopy",
+      "fromNode": "circle",
+      "toNode": "isotopy",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L440"
+    },
+    {
+      "id": "isotopy--geometric-diagram",
+      "fromNode": "isotopy",
+      "toNode": "geometric-diagram",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L450"
+    },
+    {
+      "id": "links--geometric-diagram",
+      "fromNode": "links",
+      "toNode": "geometric-diagram",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L450"
+    },
+    {
+      "id": "gauss--gauss-pd",
+      "fromNode": "gauss",
+      "toNode": "gauss-pd",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L445"
+    },
+    {
+      "id": "pd--gauss-pd",
+      "fromNode": "pd",
+      "toNode": "gauss-pd",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L445"
+    },
+    {
+      "id": "gauss-pd--diagram-hub",
+      "fromNode": "gauss-pd",
+      "toNode": "diagram-hub",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L457"
+    },
+    {
+      "id": "geometric-diagram--diagram-hub",
+      "fromNode": "geometric-diagram",
+      "toNode": "diagram-hub",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L457"
+    },
+    {
+      "id": "braid-grid--diagram-hub",
+      "fromNode": "braid-grid",
+      "toNode": "diagram-hub",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L460"
+    },
+    {
+      "id": "diagram-hub--invariants",
+      "fromNode": "diagram-hub",
+      "toNode": "invariants",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L473"
+    },
+    {
+      "id": "links--complement",
+      "fromNode": "links",
+      "toNode": "complement",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L525"
+    },
+    {
+      "id": "gluing--complement",
+      "fromNode": "gluing",
+      "toNode": "complement",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L525"
+    },
+    {
+      "id": "slopes--dehn",
+      "fromNode": "slopes",
+      "toNode": "dehn",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L534"
+    },
+    {
+      "id": "complement--dehn",
+      "fromNode": "complement",
+      "toNode": "dehn",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L534"
+    },
+    {
+      "id": "circle--concordance",
+      "fromNode": "circle",
+      "toNode": "concordance",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L579"
+    },
+    {
+      "id": "flat--concordance",
+      "fromNode": "flat",
+      "toNode": "concordance",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L464"
+    },
+    {
+      "id": "gluing--cobordism",
+      "fromNode": "gluing",
+      "toNode": "cobordism",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L579"
+    },
+    {
+      "id": "hyperbolic--geometries",
+      "fromNode": "hyperbolic",
+      "toNode": "geometries",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L697"
+    },
+    {
+      "id": "geometries--jsj",
+      "fromNode": "geometries",
+      "toNode": "jsj",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L705"
+    },
+    {
+      "id": "dehn--jsj",
+      "fromNode": "dehn",
+      "toNode": "jsj",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L697"
+    },
+    {
+      "id": "gluing--handlebody",
+      "fromNode": "gluing",
+      "toNode": "handlebody",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L745"
+    },
+    {
+      "id": "handlebody--splitting",
+      "fromNode": "handlebody",
+      "toNode": "splitting",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L753"
+    },
+    {
+      "id": "diff-group--splitting",
+      "fromNode": "diff-group",
+      "toNode": "splitting",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L751"
+    },
+    {
+      "id": "manifolds--foliations",
+      "fromNode": "manifolds",
+      "toNode": "foliations",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L787"
+    },
+    {
+      "id": "foliations--euler",
+      "fromNode": "foliations",
+      "toNode": "euler",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L795"
+    },
+    {
+      "id": "realization--contractible",
+      "fromNode": "realization",
+      "toNode": "contractible",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L867"
+    },
+    {
+      "id": "pl--pl-comparison",
+      "fromNode": "pl",
+      "toNode": "pl-comparison",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L853"
+    },
+    {
+      "id": "realization--pl-comparison",
+      "fromNode": "realization",
+      "toNode": "pl-comparison",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L853"
+    },
+    {
+      "id": "contractible--cylinder",
+      "fromNode": "contractible",
+      "toNode": "cylinder",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L867"
+    },
+    {
+      "id": "cylinder--zeeman",
+      "fromNode": "cylinder",
+      "toNode": "zeeman",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L885"
+    },
+    {
+      "id": "collapse-api--zeeman",
+      "fromNode": "collapse-api",
+      "toNode": "zeeman",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L885"
+    },
+    {
+      "id": "diff-group--isotopy",
+      "fromNode": "diff-group",
+      "toNode": "isotopy",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L440"
+    }
+  ],
+  "routes": [
+    {
+      "id": "presentations",
+      "symbol": "α",
+      "color": 0,
+      "title": "Knot presentations that agree",
+      "summit": "diagram-hub",
+      "edges": [
+        "manifolds--circle",
+        "circle--unoriented",
+        "circle--links",
+        "circle--isotopy",
+        "isotopy--geometric-diagram",
+        "links--geometric-diagram",
+        "gauss--gauss-pd",
+        "pd--gauss-pd",
+        "gauss-pd--diagram-hub",
+        "geometric-diagram--diagram-hub",
+        "manifolds--diff-group",
+        "diff-group--isotopy"
+      ],
+      "frontier": [
+        "gauss-pd",
+        "links"
+      ],
+      "insight": "Our work spans geometric inputs and finite codes. The Gauss-to-PD map joins the code branch; smooth links extend the geometric branch. Full equivalence still waits on the expensive geometric-to-diagram edge. The closed isotopy attempt remains a gap.",
+      "displayPaths": [
+        [
+          "circle",
+          "links",
+          "geometric-diagram",
+          "diagram-hub"
+        ],
+        [
+          "gauss",
+          "gauss-pd",
+          "diagram-hub"
+        ],
+        [
+          "pd",
+          "gauss-pd"
+        ]
+      ]
+    },
+    {
+      "id": "diffeomorphisms",
+      "symbol": "β",
+      "color": 1,
+      "title": "From charts to the topology of Diff(M)",
+      "summit": "smale",
+      "edges": [
+        "manifolds--diff-group",
+        "diff-group--chart-whitney",
+        "chart-whitney--whitney",
+        "whitney--families",
+        "whitney--orthogonal",
+        "orthogonal--smale"
+      ],
+      "frontier": [
+        "whitney"
+      ],
+      "insight": "The chart-level contribution is landed, while the general-manifold topology remains the handoff. Topological-group laws, continuous smooth-family maps and the sphere action are what make the Smale target stateable.",
+      "displayPaths": [
+        [
+          "chart-whitney",
+          "whitney",
+          "orthogonal",
+          "smale"
+        ],
+        [
+          "whitney",
+          "families"
+        ]
+      ]
+    },
+    {
+      "id": "collapse",
+      "symbol": "γ",
+      "color": 2,
+      "title": "A faithful collapse-conjecture statement",
+      "summit": "zeeman",
+      "edges": [
+        "realization--contractible",
+        "contractible--cylinder",
+        "cylinder--zeeman",
+        "collapse-api--zeeman"
+      ],
+      "frontier": [
+        "cylinder"
+      ],
+      "insight": "Our work supplies the hypothesis: finite, contractible, at most two-dimensional complexes. The cylinder must connect that predicate to collapsibility. The route ends at stating Zeeman’s open conjecture, not proving it.",
+      "displayPaths": [
+        [
+          "realization",
+          "contractible",
+          "cylinder",
+          "zeeman"
+        ],
+        [
+          "collapse-api",
+          "zeeman"
+        ]
+      ]
+    }
+  ]
+}
