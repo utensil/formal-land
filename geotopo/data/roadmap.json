@@ -25,8 +25,16 @@
       "label": "L3 · Diff(M) topology"
     },
     {
+      "id": "diff-tools",
+      "label": "L3 · group & relative API"
+    },
+    {
       "id": "homotopy",
-      "label": "L3 · homotopy interfaces"
+      "label": "L3 · statement gate"
+    },
+    {
+      "id": "diffproof",
+      "label": "L3 · proof horizon"
     },
     {
       "id": "presentations",
@@ -45,16 +53,44 @@
       "label": "L5 · surgery"
     },
     {
+      "id": "surgerytargets",
+      "label": "L5 · statement & inputs"
+    },
+    {
+      "id": "surgeryproof",
+      "label": "L5 · proof horizon"
+    },
+    {
       "id": "concordance",
       "label": "L6 · concordance"
     },
     {
+      "id": "slicetargets",
+      "label": "L6 · statement & inputs"
+    },
+    {
+      "id": "sliceproof",
+      "label": "L6 · proof horizon"
+    },
+    {
       "id": "jsj",
-      "label": "L8 · geometries & JSJ"
+      "label": "L8 · decompositions"
+    },
+    {
+      "id": "geometrytargets",
+      "label": "L7–8 · statement gates"
+    },
+    {
+      "id": "geometryproof",
+      "label": "L8 · proof horizon"
     },
     {
       "id": "heegaard",
       "label": "L9 · Heegaard"
+    },
+    {
+      "id": "heegaardproof",
+      "label": "L9 · proof horizon"
     },
     {
       "id": "foliation",
@@ -67,6 +103,14 @@
     {
       "id": "collapse",
       "label": "L11 · collapse & PL"
+    },
+    {
+      "id": "comparison",
+      "label": "L1 ↔ L11 · comparison"
+    },
+    {
+      "id": "plproof",
+      "label": "L11 · far horizon"
     }
   ],
   "nodes": [
@@ -191,7 +235,7 @@
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L379",
       "summary": "A smooth family of diffeomorphisms induces a continuous map into Diff(M).",
       "remaining": "Prove the forward continuous-map interface; no unconditional converse.",
-      "x": 700
+      "x": 370
     },
     {
       "id": "orthogonal",
@@ -202,7 +246,7 @@
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L387",
       "summary": "Promote the sphere action to a continuous group homomorphism into Diff(Sⁿ).",
       "remaining": "Continuity needs the general topology and the isometry action.",
-      "x": 1120
+      "x": 910
     },
     {
       "id": "smale",
@@ -212,8 +256,9 @@
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L393",
       "summary": "State the homotopy-equivalence target for the reference inclusion O(4) → Diff(S³).",
-      "remaining": "This route aims at faithful statement infrastructure.",
-      "x": 1450
+      "remaining": "State the sharp inclusion theorem; a separate summit requires its proof.",
+      "x": 1450,
+      "kind": "statement"
     },
     {
       "id": "circle",
@@ -401,7 +446,8 @@
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L705",
       "summary": "A decomposition must carry cutting and gluing data, not only a list of piece types.",
-      "remaining": "Consumes geometry, torus surgery and manifold foundations."
+      "remaining": "Consumes geometry, torus surgery and manifold foundations.",
+      "x": 1000
     },
     {
       "id": "handlebody",
@@ -411,7 +457,8 @@
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L738",
       "summary": "Manifolds with boundary and gluing provide handlebodies.",
-      "remaining": ""
+      "remaining": "",
+      "x": 370
     },
     {
       "id": "splitting",
@@ -421,7 +468,8 @@
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L753",
       "summary": "Specify a splitting and take the least genus over a nonempty family.",
-      "remaining": ""
+      "remaining": "",
+      "x": 1100
     },
     {
       "id": "foliations",
@@ -473,7 +521,7 @@
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L867",
       "summary": "Our predicate records finite faces, dimension at most two and actual contractibility; the interval is a witness.",
       "remaining": "This contribution proves no cylinder-collapse conclusion.",
-      "x": 910
+      "x": 1090
     },
     {
       "id": "pl-comparison",
@@ -482,8 +530,9 @@
       "label": "PL ↔ combinatorial",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L853",
-      "summary": "Relate chart-based PL manifolds to combinatorial triangulations.",
-      "remaining": "A substantial comparison theorem, separate from arbitrary triangulability."
+      "summary": "Prove that combinatorial triangulations and chart-based PL manifold structures agree.",
+      "remaining": "Both directions are substantial theorems, with the correct vertex-link and subdivision conditions.",
+      "kind": "proof"
     },
     {
       "id": "cylinder",
@@ -504,7 +553,344 @@
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L885",
       "summary": "Faithfully state: a finite contractible two-complex K has collapsible K × I.",
-      "remaining": "Zeeman’s conjecture remains open; the summit is its formal statement, not a proof.",
+      "remaining": "Open conjecture: a faithful statement and concrete collapse examples are milestones; no proof completion is promised.",
+      "x": 1450,
+      "kind": "open-conjecture"
+    },
+    {
+      "id": "top-group",
+      "row": "diff-tools",
+      "layer": "L3",
+      "label": "Diff topological group",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L372",
+      "summary": "Prove continuity of composition and inverse for the compact-manifold Whitney topology.",
+      "remaining": "Requires the assembled topology; the algebraic Group instance is insufficient.",
+      "kind": "infrastructure",
+      "x": 730
+    },
+    {
+      "id": "relative-diff",
+      "row": "diff-tools",
+      "layer": "L3",
+      "label": "Diff(M, ∂M)",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L377",
+      "summary": "Construct the boundary-fixing subgroup with its induced topology.",
+      "remaining": "Relative isotopies and boundary conditions are needed by disk and sphere arguments.",
+      "kind": "infrastructure",
+      "x": 1450
+    },
+    {
+      "id": "hatcher-input",
+      "row": "diffproof",
+      "layer": "L3",
+      "label": "parametric sphere topology",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1006",
+      "summary": "The global, parameter-dependent geometric arguments in Hatcher’s proof.",
+      "remaining": "A major proof development beyond topology definitions and the continuous sphere action.",
+      "kind": "infrastructure",
+      "x": 730
+    },
+    {
+      "id": "hatcher",
+      "row": "diffproof",
+      "layer": "L3",
+      "label": "Smale–Hatcher theorem",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L398",
+      "summary": "Prove that the reference inclusion O(4) → Diff(S³) is a homotopy equivalence.",
+      "remaining": "Summit proof horizon: building or stating the inclusion does not discharge it.",
+      "kind": "proof",
+      "x": 1450
+    },
+    {
+      "id": "surgery-checks",
+      "row": "surgerytargets",
+      "layer": "L5",
+      "label": "unknot filling identities",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L546",
+      "summary": "Prove the 0-surgery and rational-surgery identities against the pinned slope convention.",
+      "remaining": "Must recover S¹ × S² and the appropriate lens spaces with actual diffeomorphisms.",
+      "kind": "infrastructure",
+      "x": 370
+    },
+    {
+      "id": "property-p-statement",
+      "row": "surgerytargets",
+      "layer": "L5",
+      "label": "Property P statement",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L561",
+      "summary": "Faithfully express Property P for nontrivial knots and their nontrivial surgeries.",
+      "remaining": "Requires genuine complements, filling, knot equivalence and fundamental groups.",
+      "kind": "statement",
+      "x": 910
+    },
+    {
+      "id": "gauge",
+      "row": "surgerytargets",
+      "layer": "L5",
+      "label": "gauge-theory input",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1041",
+      "summary": "The gauge-theoretic machinery of Kronheimer–Mrowka is a separate proof dependency.",
+      "remaining": "External proof development; it is not supplied by Dehn-surgery definitions.",
+      "kind": "infrastructure",
+      "x": 1450
+    },
+    {
+      "id": "property-p",
+      "row": "surgeryproof",
+      "layer": "L5",
+      "label": "Property P theorem",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1041",
+      "summary": "Formalize the theorem that a nontrivial knot has Property P.",
+      "remaining": "Proof horizon after the surgery library and the deep gauge-theory input.",
+      "kind": "proof",
+      "x": 910
+    },
+    {
+      "id": "property-r",
+      "row": "surgeryproof",
+      "layer": "L5",
+      "label": "Property R statement",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L567",
+      "summary": "State the characterization of the unknot by 0-surgery yielding S¹ × S².",
+      "remaining": "An adjacent summit with its own proof requirements.",
+      "kind": "statement",
+      "x": 1450
+    },
+    {
+      "id": "freedman-statement",
+      "row": "slicetargets",
+      "layer": "L6",
+      "label": "Alexander-one slicing",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L490",
+      "summary": "State: Alexander polynomial one implies topological sliceness.",
+      "remaining": "Normalize the polynomial and use locally flat topological disks, keeping smooth sliceness separate.",
+      "kind": "statement",
+      "x": 730
+    },
+    {
+      "id": "disk-embedding",
+      "row": "slicetargets",
+      "layer": "L6",
+      "label": "4D disk embedding input",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L594",
+      "summary": "Develop the four-manifold machinery supporting Freedman’s topological slicing result.",
+      "remaining": "A major proof dependency beyond the predicate for a slice disk.",
+      "kind": "infrastructure",
+      "x": 1450
+    },
+    {
+      "id": "freedman",
+      "row": "sliceproof",
+      "layer": "L6",
+      "label": "Freedman slicing theorem",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1030",
+      "summary": "Prove that Alexander-polynomial-one knots bound locally flat disks in B⁴.",
+      "remaining": "The proof must connect the computable polynomial, geometric presentation and four-dimensional input.",
+      "kind": "proof",
+      "x": 730
+    },
+    {
+      "id": "smooth-obstructions",
+      "row": "sliceproof",
+      "layer": "L6",
+      "label": "smooth slice obstructions",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L509",
+      "summary": "Concordance invariants distinguish the smooth category from the topological category.",
+      "remaining": "The Conway/Piccirillo direction also consumes external homological or other smooth obstructions.",
+      "kind": "infrastructure",
+      "x": 1450
+    },
+    {
+      "id": "prime",
+      "row": "jsj",
+      "layer": "L8",
+      "label": "prime decomposition",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L724",
+      "summary": "Prime connected-sum decomposition precedes the torus decomposition.",
+      "remaining": "Construct the decomposition and establish its existence and uniqueness.",
+      "kind": "infrastructure",
+      "x": 1450
+    },
+    {
+      "id": "geometrization-statement",
+      "row": "geometrytargets",
+      "layer": "L8",
+      "label": "Geometrization statement",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L713",
+      "summary": "State geometric structures on the pieces, with the required prime and torus decompositions.",
+      "remaining": "A list of eight labels does not supply metrics, cutting data or reconstruction.",
+      "kind": "statement",
+      "x": 370
+    },
+    {
+      "id": "weeks",
+      "row": "geometrytargets",
+      "layer": "L7",
+      "label": "Weeks minimum volume",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L674",
+      "summary": "State minimum volume using an explicitly constructed Weeks manifold and metric-independent hyperbolic volume.",
+      "remaining": "Requires a concrete manifold, volume integration and Mostow invariance.",
+      "kind": "statement",
+      "x": 1000
+    },
+    {
+      "id": "agol",
+      "row": "geometrytargets",
+      "layer": "L7",
+      "label": "virtual fibering",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L675",
+      "summary": "State virtual fibering for closed hyperbolic three-manifolds through an actual finite cover.",
+      "remaining": "Finite covering spaces, mapping tori and the hyperbolic input must meet.",
+      "kind": "statement",
+      "x": 1450
+    },
+    {
+      "id": "ricci",
+      "row": "geometryproof",
+      "layer": "L8",
+      "label": "Ricci-flow proof input",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1076",
+      "summary": "The analytic and geometric machinery in Perelman’s proof is an external proof development.",
+      "remaining": "The statement roadmap does not build Ricci flow, surgery analysis or the required estimates.",
+      "kind": "infrastructure",
+      "x": 730
+    },
+    {
+      "id": "geometrization",
+      "row": "geometryproof",
+      "layer": "L8",
+      "label": "Geometrization theorem",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L736",
+      "summary": "Prove the geometric decomposition theorem with genuine structures on its pieces.",
+      "remaining": "Far proof horizon joining the manifold, surgery, geometry and analytic tracks.",
+      "kind": "proof",
+      "x": 1450
+    },
+    {
+      "id": "mapping-classes",
+      "row": "heegaard",
+      "layer": "L9",
+      "label": "surface mapping classes",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L751",
+      "summary": "Control surface gluing maps up to isotopy for Heegaard splittings.",
+      "remaining": "The general diffeomorphism and family APIs are shared inputs.",
+      "kind": "infrastructure",
+      "x": 730
+    },
+    {
+      "id": "rank-genus-statement",
+      "row": "heegaard",
+      "layer": "L9",
+      "label": "rank–genus counterexample",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L759",
+      "summary": "State the existence of a three-manifold with rank π₁ strictly smaller than Heegaard genus.",
+      "remaining": "Requires least genus over a proved nonempty family and the minimal-generators invariant.",
+      "kind": "statement",
+      "x": 1450
+    },
+    {
+      "id": "genus-bounds",
+      "row": "heegaardproof",
+      "layer": "L9",
+      "label": "certified genus bounds",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1087",
+      "summary": "Prove the lower genus bounds and upper fundamental-group rank bounds for a concrete family.",
+      "remaining": "Providing a splitting gives an upper genus bound, not the lower bound needed for a counterexample.",
+      "kind": "infrastructure",
+      "x": 730
+    },
+    {
+      "id": "rank-genus",
+      "row": "heegaardproof",
+      "layer": "L9",
+      "label": "Li rank–genus theorem",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1087",
+      "summary": "Formalize a concrete witness disproving rank equals Heegaard genus.",
+      "remaining": "The strict inequality needs both certified estimates on the same manifold.",
+      "kind": "proof",
+      "x": 1450
+    },
+    {
+      "id": "combinatorial",
+      "row": "simplicial",
+      "layer": "L11",
+      "label": "combinatorial links",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L845",
+      "summary": "Recursive sphere and ball conditions define combinatorial manifolds.",
+      "remaining": "Build the subdivision relations and base cases before using the comparison.",
+      "kind": "infrastructure",
+      "x": 730
+    },
+    {
+      "id": "smooth-triangulation",
+      "row": "comparison",
+      "layer": "L11",
+      "label": "smooth triangulations",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L901",
+      "summary": "Construct compatible triangulations of smooth manifolds.",
+      "remaining": "The Whitehead/Cairns triangulation development goes far beyond an abstract realization.",
+      "kind": "infrastructure",
+      "x": 730
+    },
+    {
+      "id": "whitehead",
+      "row": "comparison",
+      "layer": "L11",
+      "label": "Whitehead comparison",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L901",
+      "summary": "Prove smooth-to-PL existence and the appropriate essential uniqueness, reconciled with combinatorial triangulations.",
+      "remaining": "Summit proof horizon: general triangulability, PL structure and smoothability remain distinct.",
+      "kind": "proof",
+      "x": 1450
+    },
+    {
+      "id": "triangulability",
+      "row": "plproof",
+      "layer": "L11",
+      "label": "general triangulability",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L842",
+      "summary": "Triangulability means homeomorphism to the realization of some simplicial complex.",
+      "remaining": "This is weaker than having a combinatorial or PL triangulation.",
+      "kind": "infrastructure",
+      "x": 370
+    },
+    {
+      "id": "manolescu",
+      "row": "plproof",
+      "layer": "L11",
+      "label": "Manolescu statement",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L881",
+      "summary": "State the existence of a closed topological five-manifold admitting no triangulation.",
+      "remaining": "Use general triangulability; failure to admit a PL structure is a weaker conclusion.",
+      "kind": "statement",
       "x": 1450
     }
   ],
@@ -796,6 +1182,293 @@
       "fromNode": "diff-group",
       "toNode": "isotopy",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L440"
+    },
+    {
+      "id": "whitney--top-group",
+      "fromNode": "whitney",
+      "toNode": "top-group",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L372",
+      "role": "prerequisite"
+    },
+    {
+      "id": "top-group--relative-diff",
+      "fromNode": "top-group",
+      "toNode": "relative-diff",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L377",
+      "role": "prerequisite"
+    },
+    {
+      "id": "top-group--families",
+      "fromNode": "top-group",
+      "toNode": "families",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L379",
+      "role": "prerequisite"
+    },
+    {
+      "id": "top-group--orthogonal",
+      "fromNode": "top-group",
+      "toNode": "orthogonal",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L387",
+      "role": "prerequisite"
+    },
+    {
+      "id": "smale--hatcher",
+      "fromNode": "smale",
+      "toNode": "hatcher",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1006",
+      "role": "proof-extension"
+    },
+    {
+      "id": "families--hatcher-input",
+      "fromNode": "families",
+      "toNode": "hatcher-input",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1006",
+      "role": "proof-extension"
+    },
+    {
+      "id": "relative-diff--hatcher-input",
+      "fromNode": "relative-diff",
+      "toNode": "hatcher-input",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1006",
+      "role": "proof-extension"
+    },
+    {
+      "id": "hatcher-input--hatcher",
+      "fromNode": "hatcher-input",
+      "toNode": "hatcher",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1006",
+      "role": "proof-extension"
+    },
+    {
+      "id": "dehn--surgery-checks",
+      "fromNode": "dehn",
+      "toNode": "surgery-checks",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L546",
+      "role": "prerequisite"
+    },
+    {
+      "id": "surgery-checks--property-p-statement",
+      "fromNode": "surgery-checks",
+      "toNode": "property-p-statement",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L561",
+      "role": "prerequisite"
+    },
+    {
+      "id": "property-p-statement--property-p",
+      "fromNode": "property-p-statement",
+      "toNode": "property-p",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1041",
+      "role": "proof-extension"
+    },
+    {
+      "id": "gauge--property-p",
+      "fromNode": "gauge",
+      "toNode": "property-p",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1041",
+      "role": "proof-extension"
+    },
+    {
+      "id": "dehn--property-r",
+      "fromNode": "dehn",
+      "toNode": "property-r",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L567",
+      "role": "prerequisite"
+    },
+    {
+      "id": "invariants--freedman-statement",
+      "fromNode": "invariants",
+      "toNode": "freedman-statement",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L490",
+      "role": "prerequisite"
+    },
+    {
+      "id": "concordance--freedman-statement",
+      "fromNode": "concordance",
+      "toNode": "freedman-statement",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L579",
+      "role": "prerequisite"
+    },
+    {
+      "id": "cobordism--disk-embedding",
+      "fromNode": "cobordism",
+      "toNode": "disk-embedding",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L594",
+      "role": "prerequisite"
+    },
+    {
+      "id": "freedman-statement--freedman",
+      "fromNode": "freedman-statement",
+      "toNode": "freedman",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1030",
+      "role": "proof-extension"
+    },
+    {
+      "id": "disk-embedding--freedman",
+      "fromNode": "disk-embedding",
+      "toNode": "freedman",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1030",
+      "role": "proof-extension"
+    },
+    {
+      "id": "concordance--smooth-obstructions",
+      "fromNode": "concordance",
+      "toNode": "smooth-obstructions",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L509",
+      "role": "prerequisite"
+    },
+    {
+      "id": "gluing--prime",
+      "fromNode": "gluing",
+      "toNode": "prime",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L724",
+      "role": "prerequisite"
+    },
+    {
+      "id": "prime--geometrization-statement",
+      "fromNode": "prime",
+      "toNode": "geometrization-statement",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L724",
+      "role": "prerequisite"
+    },
+    {
+      "id": "jsj--geometrization-statement",
+      "fromNode": "jsj",
+      "toNode": "geometrization-statement",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L713",
+      "role": "prerequisite"
+    },
+    {
+      "id": "geometries--geometrization-statement",
+      "fromNode": "geometries",
+      "toNode": "geometrization-statement",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L713",
+      "role": "prerequisite"
+    },
+    {
+      "id": "dehn--weeks",
+      "fromNode": "dehn",
+      "toNode": "weeks",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L681",
+      "role": "prerequisite"
+    },
+    {
+      "id": "hyperbolic--weeks",
+      "fromNode": "hyperbolic",
+      "toNode": "weeks",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L674",
+      "role": "prerequisite"
+    },
+    {
+      "id": "hyperbolic--agol",
+      "fromNode": "hyperbolic",
+      "toNode": "agol",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L675",
+      "role": "prerequisite"
+    },
+    {
+      "id": "geometrization-statement--geometrization",
+      "fromNode": "geometrization-statement",
+      "toNode": "geometrization",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1076",
+      "role": "proof-extension"
+    },
+    {
+      "id": "ricci--geometrization",
+      "fromNode": "ricci",
+      "toNode": "geometrization",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1076",
+      "role": "proof-extension"
+    },
+    {
+      "id": "whitney--mapping-classes",
+      "fromNode": "whitney",
+      "toNode": "mapping-classes",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L751",
+      "role": "prerequisite"
+    },
+    {
+      "id": "families--mapping-classes",
+      "fromNode": "families",
+      "toNode": "mapping-classes",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L751",
+      "role": "prerequisite"
+    },
+    {
+      "id": "mapping-classes--splitting",
+      "fromNode": "mapping-classes",
+      "toNode": "splitting",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L751",
+      "role": "prerequisite"
+    },
+    {
+      "id": "splitting--rank-genus-statement",
+      "fromNode": "splitting",
+      "toNode": "rank-genus-statement",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L759",
+      "role": "prerequisite"
+    },
+    {
+      "id": "rank-genus-statement--rank-genus",
+      "fromNode": "rank-genus-statement",
+      "toNode": "rank-genus",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1087",
+      "role": "proof-extension"
+    },
+    {
+      "id": "genus-bounds--rank-genus",
+      "fromNode": "genus-bounds",
+      "toNode": "rank-genus",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L1087",
+      "role": "proof-extension"
+    },
+    {
+      "id": "realization--combinatorial",
+      "fromNode": "realization",
+      "toNode": "combinatorial",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L845",
+      "role": "prerequisite"
+    },
+    {
+      "id": "combinatorial--pl-comparison",
+      "fromNode": "combinatorial",
+      "toNode": "pl-comparison",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L853",
+      "role": "prerequisite"
+    },
+    {
+      "id": "pl-comparison--whitehead",
+      "fromNode": "pl-comparison",
+      "toNode": "whitehead",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L901",
+      "role": "proof-extension"
+    },
+    {
+      "id": "manifolds--smooth-triangulation",
+      "fromNode": "manifolds",
+      "toNode": "smooth-triangulation",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L901",
+      "role": "proof-extension"
+    },
+    {
+      "id": "smooth-triangulation--whitehead",
+      "fromNode": "smooth-triangulation",
+      "toNode": "whitehead",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L901",
+      "role": "proof-extension"
+    },
+    {
+      "id": "realization--triangulability",
+      "fromNode": "realization",
+      "toNode": "triangulability",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L842",
+      "role": "prerequisite"
+    },
+    {
+      "id": "triangulability--manolescu",
+      "fromNode": "triangulability",
+      "toNode": "manolescu",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L881",
+      "role": "prerequisite"
     }
   ],
   "routes": [
@@ -803,104 +1476,472 @@
       "id": "presentations",
       "symbol": "α",
       "color": 0,
-      "title": "Knot presentations that agree",
-      "summit": "diagram-hub",
+      "title": "Knot calculus → Property P",
+      "summit": "property-p",
       "edges": [
+        "links--complement",
+        "complement--dehn",
+        "dehn--surgery-checks",
+        "surgery-checks--property-p-statement",
+        "property-p-statement--property-p",
+        "gauss--gauss-pd",
+        "gauss-pd--diagram-hub",
+        "diagram-hub--invariants",
         "manifolds--circle",
         "circle--unoriented",
         "circle--links",
         "circle--isotopy",
         "isotopy--geometric-diagram",
         "links--geometric-diagram",
-        "gauss--gauss-pd",
         "pd--gauss-pd",
-        "gauss-pd--diagram-hub",
         "geometric-diagram--diagram-hub",
         "manifolds--diff-group",
-        "diff-group--isotopy"
+        "diff-group--isotopy",
+        "manifolds--collars",
+        "collars--gluing",
+        "gluing--complement",
+        "slopes--dehn",
+        "gauge--property-p",
+        "dehn--property-r"
       ],
       "frontier": [
         "gauss-pd",
-        "links"
+        "links",
+        "gluing"
       ],
-      "insight": "Our work spans geometric inputs and finite codes. The Gauss-to-PD map joins the code branch; smooth links extend the geometric branch. Full equivalence still waits on the expensive geometric-to-diagram edge. The closed isotopy attempt remains a gap.",
+      "insight": "Our circle and code work is the entrance. The route must cross geometric equivalence, genuine surgery and convention checks before the statement; the summit additionally needs major gauge theory.",
+      "finish": "Prove Property P for all nontrivial knots; a surgery definition or statement is an intermediate checkpoint.",
       "displayPaths": [
         [
-          "circle",
           "links",
-          "geometric-diagram",
-          "diagram-hub"
+          "complement",
+          "dehn",
+          "surgery-checks",
+          "property-p-statement",
+          "property-p"
         ],
         [
           "gauss",
           "gauss-pd",
-          "diagram-hub"
-        ],
-        [
-          "pd",
-          "gauss-pd"
+          "diagram-hub",
+          "invariants"
         ]
-      ]
+      ],
+      "checkpoints": [
+        {
+          "label": "Presentations",
+          "nodes": [
+            "diagram-hub"
+          ]
+        },
+        {
+          "label": "Surgery",
+          "nodes": [
+            "dehn",
+            "surgery-checks"
+          ]
+        },
+        {
+          "label": "Statement",
+          "nodes": [
+            "property-p-statement"
+          ]
+        },
+        {
+          "label": "Proof",
+          "nodes": [
+            "property-p"
+          ]
+        }
+      ],
+      "horizon": "proof"
     },
     {
       "id": "diffeomorphisms",
       "symbol": "β",
       "color": 1,
-      "title": "From charts to the topology of Diff(M)",
-      "summit": "smale",
+      "title": "Diff(M) → Smale–Hatcher",
+      "summit": "hatcher",
       "edges": [
+        "chart-whitney--whitney",
+        "whitney--top-group",
+        "top-group--orthogonal",
+        "orthogonal--smale",
+        "smale--hatcher",
+        "top-group--relative-diff",
+        "relative-diff--hatcher-input",
+        "hatcher-input--hatcher",
         "manifolds--diff-group",
         "diff-group--chart-whitney",
-        "chart-whitney--whitney",
         "whitney--families",
         "whitney--orthogonal",
-        "orthogonal--smale"
+        "top-group--families",
+        "families--hatcher-input"
       ],
       "frontier": [
-        "whitney"
+        "whitney",
+        "top-group"
       ],
-      "insight": "The chart-level contribution is landed, while the general-manifold topology remains the handoff. Topological-group laws, continuous smooth-family maps and the sphere action are what make the Smale target stateable.",
+      "insight": "Our single-chart topology is an early foothold. Compact-manifold topology, relative groups and parameterized geometry must be assembled before the global homotopy-equivalence proof.",
+      "finish": "Prove that the actual inclusion O(4) → Diff(S³) is a homotopy equivalence.",
       "displayPaths": [
         [
           "chart-whitney",
           "whitney",
+          "top-group",
           "orthogonal",
-          "smale"
+          "smale",
+          "hatcher"
         ],
         [
-          "whitney",
-          "families"
+          "top-group",
+          "relative-diff",
+          "hatcher-input",
+          "hatcher"
         ]
-      ]
+      ],
+      "checkpoints": [
+        {
+          "label": "Topology",
+          "nodes": [
+            "whitney",
+            "top-group"
+          ]
+        },
+        {
+          "label": "Families",
+          "nodes": [
+            "families",
+            "relative-diff"
+          ]
+        },
+        {
+          "label": "Statement",
+          "nodes": [
+            "smale"
+          ]
+        },
+        {
+          "label": "Proof",
+          "nodes": [
+            "hatcher"
+          ]
+        }
+      ],
+      "horizon": "proof"
     },
     {
       "id": "collapse",
       "symbol": "γ",
       "color": 2,
-      "title": "A faithful collapse-conjecture statement",
-      "summit": "zeeman",
+      "title": "Smooth / PL / Top comparison",
+      "summit": "whitehead",
       "edges": [
-        "realization--contractible",
+        "realization--combinatorial",
+        "combinatorial--pl-comparison",
+        "pl-comparison--whitehead",
+        "manifolds--smooth-triangulation",
+        "smooth-triangulation--whitehead",
         "contractible--cylinder",
         "cylinder--zeeman",
-        "collapse-api--zeeman"
+        "realization--contractible",
+        "collapse-api--zeeman",
+        "manifolds--pl",
+        "pl--pl-comparison",
+        "realization--triangulability",
+        "triangulability--manolescu"
       ],
       "frontier": [
-        "cylinder"
+        "combinatorial",
+        "cylinder",
+        "pl-comparison"
       ],
-      "insight": "Our work supplies the hypothesis: finite, contractible, at most two-dimensional complexes. The cylinder must connect that predicate to collapsibility. The route ends at stating Zeeman’s open conjecture, not proving it.",
+      "insight": "Our contractible-complex predicate occupies the collapse branch of a much larger simplicial library. The main summit is a proved comparison of smooth and PL structures; Manolescu and Zeeman expose distinct limits of triangulation and collapse.",
+      "finish": "Prove the comparison and smooth-triangulation existence/uniqueness results. Zeeman remains an open-conjecture branch.",
       "displayPaths": [
         [
           "realization",
+          "combinatorial",
+          "pl-comparison",
+          "whitehead"
+        ],
+        [
+          "manifolds",
+          "smooth-triangulation",
+          "whitehead"
+        ],
+        [
           "contractible",
           "cylinder",
           "zeeman"
+        ]
+      ],
+      "checkpoints": [
+        {
+          "label": "Local links",
+          "nodes": [
+            "combinatorial"
+          ]
+        },
+        {
+          "label": "PL equivalence",
+          "nodes": [
+            "pl-comparison"
+          ]
+        },
+        {
+          "label": "Triangulation",
+          "nodes": [
+            "smooth-triangulation"
+          ]
+        },
+        {
+          "label": "Comparison",
+          "nodes": [
+            "whitehead"
+          ]
+        }
+      ],
+      "horizon": "proof"
+    },
+    {
+      "id": "concordance",
+      "symbol": "δ",
+      "color": 3,
+      "title": "Knot invariants → Freedman slicing",
+      "summit": "freedman",
+      "edges": [
+        "gauss--gauss-pd",
+        "gauss-pd--diagram-hub",
+        "diagram-hub--invariants",
+        "invariants--freedman-statement",
+        "freedman-statement--freedman",
+        "circle--concordance",
+        "concordance--freedman-statement",
+        "manifolds--circle",
+        "circle--unoriented",
+        "circle--links",
+        "circle--isotopy",
+        "isotopy--geometric-diagram",
+        "links--geometric-diagram",
+        "pd--gauss-pd",
+        "geometric-diagram--diagram-hub",
+        "manifolds--diff-group",
+        "diff-group--isotopy",
+        "manifolds--flat",
+        "flat--concordance",
+        "manifolds--collars",
+        "collars--gluing",
+        "gluing--cobordism",
+        "cobordism--disk-embedding",
+        "disk-embedding--freedman",
+        "concordance--smooth-obstructions"
+      ],
+      "frontier": [
+        "diagram-hub",
+        "invariants",
+        "concordance"
+      ],
+      "insight": "Our finite presentations must support invariant transport and normalized computations. Locally flat disks, concordance and the four-dimensional disk-embedding machinery are further independent obligations.",
+      "finish": "Prove Alexander polynomial one implies topological sliceness, while preserving the distinction from smooth sliceness.",
+      "displayPaths": [
+        [
+          "gauss",
+          "gauss-pd",
+          "diagram-hub",
+          "invariants",
+          "freedman-statement",
+          "freedman"
         ],
         [
-          "collapse-api",
-          "zeeman"
+          "circle",
+          "concordance",
+          "freedman-statement"
         ]
-      ]
+      ],
+      "checkpoints": [
+        {
+          "label": "Invariants",
+          "nodes": [
+            "invariants"
+          ]
+        },
+        {
+          "label": "Concordance",
+          "nodes": [
+            "concordance"
+          ]
+        },
+        {
+          "label": "4D input",
+          "nodes": [
+            "disk-embedding"
+          ]
+        },
+        {
+          "label": "Proof",
+          "nodes": [
+            "freedman"
+          ]
+        }
+      ],
+      "horizon": "proof"
+    },
+    {
+      "id": "geometry",
+      "symbol": "ε",
+      "color": 4,
+      "title": "Surgery → Geometrization",
+      "summit": "geometrization",
+      "edges": [
+        "links--complement",
+        "complement--dehn",
+        "dehn--jsj",
+        "jsj--geometrization-statement",
+        "geometrization-statement--geometrization",
+        "metric--hyperbolic",
+        "hyperbolic--geometries",
+        "geometries--geometrization-statement",
+        "manifolds--circle",
+        "circle--links",
+        "manifolds--collars",
+        "collars--gluing",
+        "gluing--complement",
+        "manifolds--metric",
+        "slopes--dehn",
+        "gluing--prime",
+        "prime--geometrization-statement",
+        "dehn--weeks",
+        "hyperbolic--weeks",
+        "hyperbolic--agol",
+        "ricci--geometrization"
+      ],
+      "frontier": [
+        "links",
+        "gluing",
+        "metric"
+      ],
+      "insight": "Our smooth-link input can eventually reach actual three-manifolds through surgery. Geometric metrics, prime/JSJ decompositions and a large analytic proof program are separate mountains; Weeks volume and virtual fibering branch off the same infrastructure.",
+      "finish": "Prove geometric decomposition with real cutting/gluing data and geometric structures; the Ricci-flow proof dependency is external.",
+      "displayPaths": [
+        [
+          "links",
+          "complement",
+          "dehn",
+          "jsj",
+          "geometrization-statement",
+          "geometrization"
+        ],
+        [
+          "metric",
+          "hyperbolic",
+          "geometries",
+          "geometrization-statement"
+        ]
+      ],
+      "checkpoints": [
+        {
+          "label": "Surgery",
+          "nodes": [
+            "dehn"
+          ]
+        },
+        {
+          "label": "Geometry",
+          "nodes": [
+            "hyperbolic",
+            "geometries"
+          ]
+        },
+        {
+          "label": "Decomposition",
+          "nodes": [
+            "prime",
+            "jsj"
+          ]
+        },
+        {
+          "label": "Proof",
+          "nodes": [
+            "geometrization"
+          ]
+        }
+      ],
+      "horizon": "proof"
+    },
+    {
+      "id": "heegaard",
+      "symbol": "ζ",
+      "color": 5,
+      "title": "Gluing → rank versus genus",
+      "summit": "rank-genus",
+      "edges": [
+        "chart-whitney--whitney",
+        "whitney--mapping-classes",
+        "mapping-classes--splitting",
+        "splitting--rank-genus-statement",
+        "rank-genus-statement--rank-genus",
+        "gluing--handlebody",
+        "handlebody--splitting",
+        "manifolds--collars",
+        "collars--gluing",
+        "manifolds--diff-group",
+        "diff-group--chart-whitney",
+        "whitney--families",
+        "families--mapping-classes",
+        "genus-bounds--rank-genus"
+      ],
+      "frontier": [
+        "whitney",
+        "gluing",
+        "handlebody"
+      ],
+      "insight": "Our Whitney work can feed the isotopy and surface-gluing interfaces. A counterexample needs a genuine minimal Heegaard genus and certified lower bounds; drawing one splitting supplies only an upper bound.",
+      "finish": "Prove rank π₁(M) < Heegaard genus(M) for a concrete witness, formalizing Li’s counterexample.",
+      "displayPaths": [
+        [
+          "chart-whitney",
+          "whitney",
+          "mapping-classes",
+          "splitting",
+          "rank-genus-statement",
+          "rank-genus"
+        ],
+        [
+          "gluing",
+          "handlebody",
+          "splitting"
+        ]
+      ],
+      "checkpoints": [
+        {
+          "label": "Gluing",
+          "nodes": [
+            "gluing",
+            "handlebody"
+          ]
+        },
+        {
+          "label": "Genus",
+          "nodes": [
+            "splitting"
+          ]
+        },
+        {
+          "label": "Bounds",
+          "nodes": [
+            "genus-bounds"
+          ]
+        },
+        {
+          "label": "Witness",
+          "nodes": [
+            "rank-genus"
+          ]
+        }
+      ],
+      "horizon": "proof"
     }
-  ]
+  ],
+  "horizonNote": "The cited roadmap targets faithful statements. These six proof summits are editorial long-term extensions: intermediate statement gates remain visible, and no external proof machinery is claimed implemented. Zeeman is an open conjecture, not a proof task."
 }

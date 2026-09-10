@@ -46,6 +46,18 @@ class EvidenceTests(unittest.TestCase):
         new = {'at': '2026-09-02T00:00:00Z', 'verdict': 'approve', 'round': 2}
         self.assertEqual(merge_observations([old], [old, new]), [old, new])
 
+    def test_open_conjecture_cannot_be_a_proof_summit(self):
+        roadmap = copy.deepcopy(self.roadmap)
+        roadmap["routes"][2]["summit"] = "zeeman"
+        with self.assertRaisesRegex(AssertionError, "proof summit"):
+            validate(roadmap, self.selection, self.snapshot)
+
+    def test_checkpoint_must_belong_to_its_route(self):
+        roadmap = copy.deepcopy(self.roadmap)
+        roadmap["routes"][0]["checkpoints"][0]["nodes"] = ["zeeman"]
+        with self.assertRaisesRegex(AssertionError, "Checkpoint lies outside"):
+            validate(roadmap, self.selection, self.snapshot)
+
     def test_generated_file_matches_inputs(self):
         self.assertEqual(generate(), (ROOT / 'geotopo-route-map.html').read_text())
 

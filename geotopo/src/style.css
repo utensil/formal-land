@@ -112,3 +112,11 @@ th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);verti
 .status-future{color:var(--muted)}.status-done{color:var(--done)}.status-review{color:var(--review)}
 .empty-chart{padding:30px;text-align:center;color:var(--muted)}
 @media(max-width:600px){.wrap{padding:20px 13px 40px}.goals{grid-template-columns:1fr}.legend .legrow{gap:7px 10px}h1{font-size:22px}.sub{font-size:13px}}
+
+.goal .bar.checkpoints{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;height:9px;background:transparent;overflow:visible}
+.goal .checkpoint{padding:0;border:0;border-radius:3px;min-width:0;height:9px;opacity:.6}
+.goal .checkpoint:hover,.goal .checkpoint:focus-visible{opacity:1}
+.checkpoint-labels{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;font-size:10px;color:var(--muted)}
+.goals{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:1100px){.goals{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.goals{grid-template-columns:1fr}}

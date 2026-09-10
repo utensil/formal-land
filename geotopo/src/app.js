@@ -24,6 +24,8 @@ const goalPrs = g => PRS.filter(p=>p.nodes.some(id=>routeNodes.get(g.id).has(id)
 function nodeState(n) {
   const ps=nodePrs(n.id);
   if (!ps.length) return n.status;
+  // A PR can contribute to a proof milestone without proving the summit theorem.
+  if (n.kind === "proof") return n.status === "done" ? "done" : ps.some(p=>p.state === "open" || p.state === "draft") ? "review" : n.status;
   if (ps.some(p=>p.state === "open" || p.state === "draft")) return "review";
   if (ps.some(p=>p.state === "merged")) return "done";
   return "incomplete";
@@ -38,13 +40,21 @@ function renderLegend() {
     bindRouteHover(el,el.dataset.g);
   });
 }
+function checkpointState(cp) {
+  const statuses=cp.nodes.map(id=>nodeState(byId.get(id)));
+  return statuses.every(s=>s==="done") ? "done" : statuses.some(s=>s==="done"||s==="review"||s==="incomplete") ? "incomplete" : "open";
+}
 function renderGoals() {
   $("goals").innerHTML = GOALS.map(g=>{
-    const ps=goalPrs(g), merged=ps.filter(p=>p.state==="merged").length, open=ps.filter(p=>p.state==="open"||p.state==="draft").length;
-    return `<div class="goal" data-g="${g.id}" style="--gc:${PALETTE[g.color]}"><h3><span class="sw" style="background:${PALETTE[g.color]}"></span>Route ${esc(g.symbol)} — ${esc(g.title)}</h3><div class="bar"><i style="width:${ps.length ? merged/ps.length*100 : 0}%;background:${PALETTE[g.color]}"></i></div><div class="pct">${merged} / ${ps.length} tracked PRs landed · ${open} open · ${ps.length-merged-open} closed<br>PR delivery, not completion of the summit.</div><div class="route-lbl">route branches</div>${g.displayPaths.map(path=>`<div class="route">${path.map(id=>`<button data-node-link="${id}">${esc(byId.get(id).label)}</button>`).join('<span class="sep">→</span>')}</div>`).join("")}<div class="work">${ps.map(prLink).join(" · ")}</div><div class="eval">${esc(g.insight)}</div><div class="rdev"><b>Next handoff:</b> ${g.frontier.map(id=>`${esc(byId.get(id).label)} <span class="status-${nodeState(byId.get(id))}">(${esc(ST[nodeState(byId.get(id))])})</span>`).join(" · ")}</div></div>`;
+    const ps=goalPrs(g), met=g.checkpoints.filter(cp=>checkpointState(cp)==="done").length;
+    return `<div class="goal" data-g="${g.id}" style="--gc:${PALETTE[g.color]}"><h3><span class="sw" style="background:${PALETTE[g.color]}"></span>Route ${esc(g.symbol)} — ${esc(g.title)}</h3><div class="bar checkpoints">${g.checkpoints.map((cp,i)=>`<button class="checkpoint" data-checkpoint="${i}" title="${esc(cp.label)}: ${esc(ST[checkpointState(cp)])}" aria-label="${esc(cp.label)} checkpoint: ${esc(ST[checkpointState(cp)])}" style="background:var(--${checkpointState(cp)})"></button>`).join("")}</div><div class="checkpoint-labels">${g.checkpoints.map(cp=>`<span>${esc(cp.label)}</span>`).join("")}</div><div class="pct">${met} / ${g.checkpoints.length} checkpoints met · stages differ greatly in difficulty</div><div class="route-lbl">route branches</div>${g.displayPaths.map(path=>`<div class="route">${path.map(id=>`<button data-node-link="${id}">${esc(byId.get(id).label)}</button>`).join('<span class="sep">→</span>')}</div>`).join("")}<div class="work">Our footholds: ${ps.length?ps.map(prLink).join(" · "):"no selected PR yet"}</div><div class="eval">${esc(g.insight)}</div><div class="rdev"><b>Summit:</b> ${esc(g.finish)}</div><div class="rdev"><b>Next handoff:</b> ${g.frontier.map(id=>`${esc(byId.get(id).label)} <span class="status-${nodeState(byId.get(id))}">(${esc(ST[nodeState(byId.get(id))])})</span>`).join(" · ")}</div></div>`;
   }).join("");
-  $("goals").querySelectorAll(".goal").forEach(el=>bindRouteHover(el,el.dataset.g));
-  $("goals").querySelectorAll("[data-node-link]").forEach(el=>el.addEventListener("click",()=>selectNode(el.dataset.nodeLink,true)));
+  $("goals").querySelectorAll(".goal").forEach(el=>{
+    bindRouteHover(el,el.dataset.g);
+    const g=GOALS.find(g=>g.id===el.dataset.g);
+    chartBind(el,"[data-checkpoint]",button=>{const cp=g.checkpoints[Number(button.dataset.checkpoint)];return `<b>${esc(g.symbol)} · ${esc(cp.label)}</b><div class="tstatus">${esc(ST[checkpointState(cp)])}</div><p>${cp.nodes.map(id=>`${esc(byId.get(id).label)}: ${esc(ST[nodeState(byId.get(id))])}`).join("<br>")}</p><div class="tstatus">Every listed milestone must be available. Merged PR counts do not complete a checkpoint.</div>`;});
+  });
+  $("goals").querySelectorAll("[data-node-link]").forEach(el=>el.addEventListener("click",()=>{hideTip();selectNode(el.dataset.nodeLink,true);}));
 }
 
 const W=1560, ROW=94, TOP=70, X0=370, X1=1450;
@@ -70,7 +80,7 @@ function labelLines(label,max=24) {
   return lines;
 }
 function renderMap() {
-  let html=`<title id="map-title">Geometric topology: contribution routes in the overall roadmap</title><desc id="map-desc">${NODES.length} milestone nodes across all eleven layers. Gray dependencies and three colored routes; select nodes for evidence.</desc>`;
+  let html=`<title id="map-title">Geometric topology: contribution routes in the overall roadmap</title><desc id="map-desc">${NODES.length} milestone nodes across all eleven layers. Gray dependencies and six colored routes; select nodes for evidence.</desc>`;
   RM.rows.forEach((row,i)=>html+=`<text class="lrow" x="305" y="${TOP+i*ROW+6}" text-anchor="end" style="font-size:21px">${esc(row.label)}</text>`);
   RM.edges.forEach(e=>html+=`<path class="edge edge-dep" d="${edgePath(positions.get(e.fromNode),positions.get(e.toNode))}"><title>${esc(byId.get(e.fromNode).label)} → ${esc(byId.get(e.toNode).label)}</title></path>`);
   GOALS.forEach(g=>g.edges.forEach(id=>{
@@ -92,7 +102,7 @@ function renderMap() {
 }
 function nodeContent(n) {
   const ps=nodePrs(n.id),dependent=RM.edges.filter(e=>e.fromNode===n.id).map(e=>byId.get(e.toNode).label);
-  return `<b>${esc(n.label)}</b><div class="tstatus">${esc(n.layer)} · ${esc(ST[nodeState(n)])}</div><p>${esc(n.summary)}</p>${ps.length?`<div class="tstatus">Our work: ${ps.map(p=>`${prLink(p)} · ${esc(p.state)}${p.reviewed?" · reviewed by us":""}`).join("<br>")}</div>`:`<div class="tstatus">Roadmap context · no selected PR</div>`}${n.remaining?`<p><strong>Handoff:</strong> ${esc(n.remaining)}</p>`:""}${dependent.length?`<div class="tstatus">Feeds: ${esc(dependent.join(" · "))}</div>`:""}<div class="tstatus">${sourceLink(n.source,"pinned roadmap")}</div>`;
+  return `<b>${esc(n.label)}</b><div class="tstatus">${esc(n.layer)} · ${esc(ST[nodeState(n)])}${n.kind?" · "+esc(({proof:"proof horizon",statement:"statement gate","open-conjecture":"open conjecture",infrastructure:"infrastructure"})[n.kind]):""}</div><p>${esc(n.summary)}</p>${ps.length?`<div class="tstatus">Our work: ${ps.map(p=>`${prLink(p)} · ${esc(p.state)}${p.reviewed?" · reviewed by us":""}`).join("<br>")}</div>`:`<div class="tstatus">Roadmap context · no selected PR</div>`}${n.remaining?`<p><strong>Handoff:</strong> ${esc(n.remaining)}</p>`:""}${dependent.length?`<div class="tstatus">Feeds: ${esc(dependent.join(" · "))}</div>`:""}<div class="tstatus">${sourceLink(n.source,"pinned roadmap")}</div>`;
 }
 function selectNode(id,scroll=false) {
   const n=byId.get(id);if(!n)return;
@@ -222,5 +232,5 @@ let syncing=false;
 [$("prtl"),$("prhealth")].forEach((el,i,all)=>el.addEventListener("scroll",()=>{if(syncing)return;syncing=true;all[1-i].scrollLeft=el.scrollLeft;requestAnimationFrame(()=>syncing=false);}));
 const mergedCount=PRS.filter(p=>p.state==="merged").length,closedCount=PRS.filter(p=>p.state==="closed").length;
 $("stats").textContent=`${NODES.length} milestones · ${RM.edges.length} cited dependencies · ${PRS.length} worked-on or reviewed PRs: ${mergedCount} merged, ${PRS.length-mergedCount-closedCount} open, ${closedCount} closed · ${PRS.filter(p=>p.reviewed).length} with verified review coverage. ◌ marks reviewed contributions. Toggle route chips to focus the charts.`;
-$("sources").innerHTML=`<p>${sourceLink(RM.roadmapUrl,"Pinned GeometricTopology roadmap")} · ${sourceLink(RM.reference,"SpinRep design reference")}</p><p>Roadmap context checked ${esc(dateTime(RM.contextAsOf))}; PR snapshot refreshed ${esc(dateTime(DATA.collected_at))}. Only the explicit worked/reviewed selection is embedded. The review marker records verified coverage of the PR, not authorship of every public rubric observation.</p><p>Terminal PR evidence stays frozen during ordinary refreshes. Earlier overwritten review rounds cannot be reconstructed. Context nodes summarize milestones without importing the rest of the roadmap’s PR history.</p>`;
+$("sources").innerHTML=`<p>${sourceLink(RM.roadmapUrl,"Pinned GeometricTopology roadmap")} · ${sourceLink(RM.reference,"SpinRep design reference")}</p><p>Roadmap context checked ${esc(dateTime(RM.contextAsOf))}; PR snapshot refreshed ${esc(dateTime(DATA.collected_at))}. Only the explicit worked/reviewed selection is embedded. The review marker records verified coverage of the PR, not authorship of every public rubric observation.</p><p>Terminal PR evidence stays frozen during ordinary refreshes. Earlier overwritten review rounds cannot be reconstructed. Context nodes summarize milestones without importing the rest of the roadmap’s PR history.</p><p>${esc(RM.horizonNote)}</p>`;
 $("snapshot").innerHTML=`Snapshot ${esc(dateTime(DATA.collected_at))} · ${sourceLink("https://github.com/utensil/formal-land/tree/main/geotopo","data and update instructions")} · standalone HTML; no network requests.`;

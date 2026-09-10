@@ -3,11 +3,25 @@
 Open [geotopo-route-map.html](geotopo-route-map.html) directly in a browser. All
 styles, scripts and data are embedded; the map and charts work offline.
 
-The diagram places our contributions within 42 milestones across all 11 layers
-of the GeometricTopology roadmap. Three colored dependency routes lead toward
-presentation equivalence, the Smale statement and Zeeman's conjecture. Route cards identify the
-current frontier and the next missing handoff. Their bars count merged selected
-PRs; they do not measure mathematical completion.
+The diagram places our contributions within 70 milestones across all 11 layers
+of the GeometricTopology roadmap. Six colored routes lead to substantial proof
+horizons: Property P, Smale–Hatcher, Whitehead smooth/PL comparison, Freedman
+slicing, Geometrization, and Li's rank-versus-Heegaard-genus counterexample.
+
+Current contributions are early footholds. Statement gates remain intermediate
+nodes, and the deep proof inputs are explicit, including gauge theory, parametric
+sphere topology, four-dimensional disk embedding and Ricci flow. Weeks volume,
+virtual fibering, Property R and Manolescu are visible statement branches; Zeeman
+remains an open conjecture. The cited source roadmap targets statements; these
+proof summits are editorial long-term extensions, not claims about existing code.
+
+Each route has four explicit, inspectable checkpoints in `data/roadmap.json`.
+A checkpoint is met only when all its listed milestones are available. A proof
+milestone also requires explicit status and a `completionEvidence` source link;
+merging a contributing PR cannot complete it automatically. Segmented
+bars use milestone-state colors and do not measure merged-PR fraction, weighted
+effort or a percentage of mathematical completion. Shared prerequisite work may
+appear on several route cards; the charts deduplicate the selected PR cohort.
 
 The snapshot includes only eight verified contributions: five merged, two open
 and one closed without merging. Five also have verified review evidence. Context
@@ -16,7 +30,7 @@ milestones remain visible without importing unrelated PRs into the charts.
 ## Data and updates
 
 - `data/roadmap.json`: pinned roadmap sources, milestone scope, dependencies,
-  diagram layout and route frontiers. Update these editorial interpretations
+  diagram layout, route frontiers, summit criteria and checkpoints. Update these editorial interpretations
   when a new contribution changes the available API or next handoff.
 - `data/selection.json`: explicit PR-to-milestone mapping and worked/reviewed
   attribution. A reviewed marker requires a public evidence link. Authorship

@@ -52,6 +52,9 @@ def validate(roadmap, selection, snapshot):
     rows = {row["id"]: i for i, row in enumerate(roadmap["rows"])}
     assert len(nodes) == len(roadmap["nodes"]), "Duplicate milestone ID"
     assert all(node["row"] in rows for node in nodes.values()), "Unknown row"
+    for node in nodes.values():
+        if node.get("kind") == "proof" and node["status"] == "done":
+            assert node.get("completionEvidence", "").startswith("https://github.com/"), "A completed proof needs explicit source evidence"
     assert {node["layer"] for node in nodes.values()} == {f"L{i}" for i in range(1, 12)}, "Missing roadmap layer"
     edges = {edge["id"]: edge for edge in roadmap["edges"]}
     assert len(edges) == len(roadmap["edges"]), "Duplicate edge ID"
@@ -76,6 +79,11 @@ def validate(roadmap, selection, snapshot):
         visit(node)
     for route in roadmap["routes"]:
         assert route["summit"] in nodes
+        assert nodes[route["summit"]].get("kind") == "proof", "A proof summit must be a proof milestone"
+        route_nodes = {endpoint for edge_id in route["edges"] for endpoint in (edges[edge_id]["fromNode"], edges[edge_id]["toNode"])}
+        assert route["checkpoints"] and route["finish"], "Goal needs checkpoints and a completion criterion"
+        for checkpoint in route["checkpoints"]:
+            assert checkpoint["nodes"] and all(node in route_nodes for node in checkpoint["nodes"]), "Checkpoint lies outside its route"
         assert all(edge in edges for edge in route["edges"]), "Route is not a dependency subgraph"
         assert all(node in nodes for node in route["frontier"])
         for path in route["displayPaths"]:
