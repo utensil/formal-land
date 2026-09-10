@@ -1,0 +1,35 @@
+name: Geotopo CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/geotopo.yml'
+      - 'geotopo/**'
+  pull_request:
+    paths:
+      - '.github/workflows/geotopo.yml'
+      - 'geotopo/**'
+  workflow_dispatch:
+
+jobs:
+  pages:
+    name: Stage Geotopo pages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate data and standalone page
+        run: |
+          python3 geotopo/build.py --check
+          python3 -m unittest discover -s geotopo/tests -v
+          node --check geotopo/src/app.js
+      - name: Stage standalone output
+        run: |
+          mkdir staging-geotopo
+          cp geotopo/geotopo-route-map.html geotopo/README.md staging-geotopo/
+      - name: Upload pages artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pages-geotopo
+          path: staging-geotopo
+          if-no-files-found: error
