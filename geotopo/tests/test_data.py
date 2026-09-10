@@ -48,7 +48,7 @@ class EvidenceTests(unittest.TestCase):
 
     def test_open_conjecture_cannot_be_a_proof_summit(self):
         roadmap = copy.deepcopy(self.roadmap)
-        roadmap["routes"][2]["summit"] = "zeeman"
+        roadmap["routes"][2]["summits"] = ["zeeman"]
         with self.assertRaisesRegex(AssertionError, "proof summit"):
             validate(roadmap, self.selection, self.snapshot)
 
@@ -56,6 +56,12 @@ class EvidenceTests(unittest.TestCase):
         roadmap = copy.deepcopy(self.roadmap)
         roadmap["routes"][0]["checkpoints"][0]["nodes"] = ["zeeman"]
         with self.assertRaisesRegex(AssertionError, "Checkpoint lies outside"):
+            validate(roadmap, self.selection, self.snapshot)
+
+    def test_merged_tree_keeps_every_proof_endpoint(self):
+        roadmap = copy.deepcopy(self.roadmap)
+        roadmap["routes"][0]["tree"]["children"].pop()
+        with self.assertRaisesRegex(AssertionError, "route tree must branch|Every proof summit"):
             validate(roadmap, self.selection, self.snapshot)
 
     def test_generated_file_matches_inputs(self):

@@ -1473,11 +1473,14 @@
   ],
   "routes": [
     {
-      "id": "presentations",
+      "id": "knots",
       "symbol": "α",
       "color": 0,
-      "title": "Knot calculus → Property P",
-      "summit": "property-p",
+      "title": "Knot surgery & concordance",
+      "summits": [
+        "property-p",
+        "freedman"
+      ],
       "edges": [
         "links--complement",
         "complement--dehn",
@@ -1502,66 +1505,113 @@
         "gluing--complement",
         "slopes--dehn",
         "gauge--property-p",
-        "dehn--property-r"
+        "dehn--property-r",
+        "invariants--freedman-statement",
+        "freedman-statement--freedman",
+        "circle--concordance",
+        "concordance--freedman-statement",
+        "manifolds--flat",
+        "flat--concordance",
+        "gluing--cobordism",
+        "cobordism--disk-embedding",
+        "disk-embedding--freedman",
+        "concordance--smooth-obstructions"
       ],
       "frontier": [
         "gauss-pd",
         "links",
-        "gluing"
+        "diagram-hub"
       ],
-      "insight": "Our circle and code work is the entrance. The route must cross geometric equivalence, genuine surgery and convention checks before the statement; the summit additionally needs major gauge theory.",
-      "finish": "Prove Property P for all nontrivial knots; a surgery definition or statement is an intermediate checkpoint.",
-      "displayPaths": [
-        [
-          "links",
-          "complement",
-          "dehn",
-          "surgery-checks",
-          "property-p-statement",
-          "property-p"
-        ],
-        [
-          "gauss",
-          "gauss-pd",
-          "diagram-hub",
-          "invariants"
-        ]
-      ],
+      "insight": "Property P and Freedman slicing share the knot/link presentations and geometric equivalence machinery. Surgery and four-dimensional sliceness then branch apart: neither theorem is a stepping stone to the other.",
+      "finish": "Complete both theorem branches: Property P and Alexander-one topological slicing, with their separate deep proof inputs.",
       "checkpoints": [
         {
-          "label": "Presentations",
+          "label": "Common trunk",
           "nodes": [
             "diagram-hub"
           ]
         },
         {
-          "label": "Surgery",
+          "label": "Surgery branch",
           "nodes": [
             "dehn",
             "surgery-checks"
           ]
         },
         {
-          "label": "Statement",
+          "label": "Slicing branch",
           "nodes": [
-            "property-p-statement"
+            "invariants",
+            "concordance",
+            "disk-embedding"
           ]
         },
         {
-          "label": "Proof",
+          "label": "Theorem leaves",
           "nodes": [
-            "property-p"
+            "property-p",
+            "freedman"
           ]
         }
       ],
+      "tree": {
+        "label": "Knot / link presentations",
+        "nodes": [
+          "circle",
+          "links",
+          "gauss",
+          "pd",
+          "diagram-hub"
+        ],
+        "children": [
+          {
+            "label": "Complements & surgery",
+            "nodes": [
+              "complement",
+              "dehn",
+              "surgery-checks",
+              "gauge"
+            ],
+            "children": [
+              {
+                "label": "Property P",
+                "nodes": [
+                  "property-p"
+                ],
+                "children": []
+              }
+            ]
+          },
+          {
+            "label": "Invariants & 4D slicing",
+            "nodes": [
+              "invariants",
+              "concordance",
+              "disk-embedding"
+            ],
+            "children": [
+              {
+                "label": "Freedman slicing",
+                "nodes": [
+                  "freedman"
+                ],
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
       "horizon": "proof"
     },
     {
       "id": "diffeomorphisms",
       "symbol": "β",
       "color": 1,
-      "title": "Diff(M) → Smale–Hatcher",
-      "summit": "hatcher",
+      "title": "Diffeomorphisms & manifold gluing",
+      "summits": [
+        "hatcher",
+        "rank-genus"
+      ],
       "edges": [
         "chart-whitney--whitney",
         "whitney--top-group",
@@ -1576,66 +1626,115 @@
         "whitney--families",
         "whitney--orthogonal",
         "top-group--families",
-        "families--hatcher-input"
+        "families--hatcher-input",
+        "whitney--mapping-classes",
+        "mapping-classes--splitting",
+        "splitting--rank-genus-statement",
+        "rank-genus-statement--rank-genus",
+        "gluing--handlebody",
+        "handlebody--splitting",
+        "manifolds--collars",
+        "collars--gluing",
+        "families--mapping-classes",
+        "genus-bounds--rank-genus"
       ],
       "frontier": [
         "whitney",
-        "top-group"
+        "top-group",
+        "gluing"
       ],
-      "insight": "Our single-chart topology is an early foothold. Compact-manifold topology, relative groups and parameterized geometry must be assembled before the global homotopy-equivalence proof.",
-      "finish": "Prove that the actual inclusion O(4) → Diff(S³) is a homotopy equivalence.",
-      "displayPaths": [
-        [
-          "chart-whitney",
-          "whitney",
-          "top-group",
-          "orthogonal",
-          "smale",
-          "hatcher"
-        ],
-        [
-          "top-group",
-          "relative-diff",
-          "hatcher-input",
-          "hatcher"
-        ]
-      ],
+      "insight": "The same Whitney topology and smooth-family interface feed two branches. Sphere diffeomorphisms lead to Smale–Hatcher; surface isotopy and gluing lead to Heegaard genus. A proof on one branch does not complete the other.",
+      "finish": "Prove the sphere inclusion is a homotopy equivalence, and separately certify a concrete rank–genus counterexample.",
       "checkpoints": [
         {
-          "label": "Topology",
+          "label": "Common trunk",
           "nodes": [
             "whitney",
-            "top-group"
+            "top-group",
+            "families"
           ]
         },
         {
-          "label": "Families",
+          "label": "Sphere branch",
           "nodes": [
-            "families",
-            "relative-diff"
+            "relative-diff",
+            "smale",
+            "hatcher-input"
           ]
         },
         {
-          "label": "Statement",
+          "label": "Gluing branch",
           "nodes": [
-            "smale"
+            "mapping-classes",
+            "splitting",
+            "genus-bounds"
           ]
         },
         {
-          "label": "Proof",
+          "label": "Theorem leaves",
           "nodes": [
-            "hatcher"
+            "hatcher",
+            "rank-genus"
           ]
         }
       ],
+      "tree": {
+        "label": "Whitney topology & families",
+        "nodes": [
+          "chart-whitney",
+          "whitney",
+          "top-group",
+          "families"
+        ],
+        "children": [
+          {
+            "label": "Sphere & relative Diff",
+            "nodes": [
+              "orthogonal",
+              "relative-diff",
+              "smale",
+              "hatcher-input"
+            ],
+            "children": [
+              {
+                "label": "Smale–Hatcher",
+                "nodes": [
+                  "hatcher"
+                ],
+                "children": []
+              }
+            ]
+          },
+          {
+            "label": "Surface gluing & genus",
+            "nodes": [
+              "mapping-classes",
+              "handlebody",
+              "splitting",
+              "genus-bounds"
+            ],
+            "children": [
+              {
+                "label": "Li rank–genus",
+                "nodes": [
+                  "rank-genus"
+                ],
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
       "horizon": "proof"
     },
     {
-      "id": "collapse",
+      "id": "structures",
       "symbol": "γ",
       "color": 2,
-      "title": "Smooth / PL / Top comparison",
-      "summit": "whitehead",
+      "title": "Smooth / PL / Top structures",
+      "summits": [
+        "whitehead"
+      ],
       "edges": [
         "realization--combinatorial",
         "combinatorial--pl-comparison",
@@ -1653,146 +1752,108 @@
       ],
       "frontier": [
         "combinatorial",
-        "cylinder",
-        "pl-comparison"
+        "pl-comparison",
+        "cylinder"
       ],
-      "insight": "Our contractible-complex predicate occupies the collapse branch of a much larger simplicial library. The main summit is a proved comparison of smooth and PL structures; Manolescu and Zeeman expose distinct limits of triangulation and collapse.",
-      "finish": "Prove the comparison and smooth-triangulation existence/uniqueness results. Zeeman remains an open-conjecture branch.",
-      "displayPaths": [
-        [
-          "realization",
-          "combinatorial",
-          "pl-comparison",
-          "whitehead"
-        ],
-        [
-          "manifolds",
-          "smooth-triangulation",
-          "whitehead"
-        ],
-        [
-          "contractible",
-          "cylinder",
-          "zeeman"
-        ]
-      ],
+      "insight": "Realization and local links form the shared simplicial trunk. Smooth/PL comparison, general triangulability and cylinder collapse are distinct branches. Our contractible-complex contribution sits on the collapse branch.",
+      "finish": "Prove the Whitehead comparison; retain Manolescu as a statement target and Zeeman as an explicitly open conjecture.",
       "checkpoints": [
         {
-          "label": "Local links",
+          "label": "Common trunk",
           "nodes": [
             "combinatorial"
           ]
         },
         {
-          "label": "PL equivalence",
+          "label": "Comparison",
           "nodes": [
-            "pl-comparison"
+            "pl-comparison",
+            "smooth-triangulation",
+            "whitehead"
           ]
         },
         {
           "label": "Triangulation",
           "nodes": [
-            "smooth-triangulation"
+            "triangulability",
+            "manolescu"
           ]
         },
         {
-          "label": "Comparison",
+          "label": "Collapse API",
           "nodes": [
-            "whitehead"
+            "cylinder",
+            "zeeman"
           ]
         }
       ],
-      "horizon": "proof"
-    },
-    {
-      "id": "concordance",
-      "symbol": "δ",
-      "color": 3,
-      "title": "Knot invariants → Freedman slicing",
-      "summit": "freedman",
-      "edges": [
-        "gauss--gauss-pd",
-        "gauss-pd--diagram-hub",
-        "diagram-hub--invariants",
-        "invariants--freedman-statement",
-        "freedman-statement--freedman",
-        "circle--concordance",
-        "concordance--freedman-statement",
-        "manifolds--circle",
-        "circle--unoriented",
-        "circle--links",
-        "circle--isotopy",
-        "isotopy--geometric-diagram",
-        "links--geometric-diagram",
-        "pd--gauss-pd",
-        "geometric-diagram--diagram-hub",
-        "manifolds--diff-group",
-        "diff-group--isotopy",
-        "manifolds--flat",
-        "flat--concordance",
-        "manifolds--collars",
-        "collars--gluing",
-        "gluing--cobordism",
-        "cobordism--disk-embedding",
-        "disk-embedding--freedman",
-        "concordance--smooth-obstructions"
-      ],
-      "frontier": [
-        "diagram-hub",
-        "invariants",
-        "concordance"
-      ],
-      "insight": "Our finite presentations must support invariant transport and normalized computations. Locally flat disks, concordance and the four-dimensional disk-embedding machinery are further independent obligations.",
-      "finish": "Prove Alexander polynomial one implies topological sliceness, while preserving the distinction from smooth sliceness.",
-      "displayPaths": [
-        [
-          "gauss",
-          "gauss-pd",
-          "diagram-hub",
-          "invariants",
-          "freedman-statement",
-          "freedman"
+      "tree": {
+        "label": "Realization & local links",
+        "nodes": [
+          "realization",
+          "combinatorial"
         ],
-        [
-          "circle",
-          "concordance",
-          "freedman-statement"
+        "children": [
+          {
+            "label": "Smooth / PL comparison",
+            "nodes": [
+              "pl-comparison",
+              "smooth-triangulation"
+            ],
+            "children": [
+              {
+                "label": "Whitehead",
+                "nodes": [
+                  "whitehead"
+                ],
+                "children": []
+              }
+            ]
+          },
+          {
+            "label": "Triangulability",
+            "nodes": [
+              "triangulability"
+            ],
+            "children": [
+              {
+                "label": "Manolescu · statement",
+                "nodes": [
+                  "manolescu"
+                ],
+                "children": []
+              }
+            ]
+          },
+          {
+            "label": "Contractibility & cylinder",
+            "nodes": [
+              "contractible",
+              "cylinder",
+              "collapse-api"
+            ],
+            "children": [
+              {
+                "label": "Zeeman · open",
+                "nodes": [
+                  "zeeman"
+                ],
+                "children": []
+              }
+            ]
+          }
         ]
-      ],
-      "checkpoints": [
-        {
-          "label": "Invariants",
-          "nodes": [
-            "invariants"
-          ]
-        },
-        {
-          "label": "Concordance",
-          "nodes": [
-            "concordance"
-          ]
-        },
-        {
-          "label": "4D input",
-          "nodes": [
-            "disk-embedding"
-          ]
-        },
-        {
-          "label": "Proof",
-          "nodes": [
-            "freedman"
-          ]
-        }
-      ],
+      },
       "horizon": "proof"
     },
     {
       "id": "geometry",
-      "symbol": "ε",
-      "color": 4,
-      "title": "Surgery → Geometrization",
-      "summit": "geometrization",
+      "symbol": "δ",
+      "color": 3,
+      "title": "Geometric three-manifolds",
+      "summits": [
+        "geometrization"
+      ],
       "edges": [
         "links--complement",
         "complement--dehn",
@@ -1821,127 +1882,100 @@
         "gluing",
         "metric"
       ],
-      "insight": "Our smooth-link input can eventually reach actual three-manifolds through surgery. Geometric metrics, prime/JSJ decompositions and a large analytic proof program are separate mountains; Weeks volume and virtual fibering branch off the same infrastructure.",
-      "finish": "Prove geometric decomposition with real cutting/gluing data and geometric structures; the Ricci-flow proof dependency is external.",
-      "displayPaths": [
-        [
-          "links",
-          "complement",
-          "dehn",
-          "jsj",
-          "geometrization-statement",
-          "geometrization"
-        ],
-        [
-          "metric",
-          "hyperbolic",
-          "geometries",
-          "geometrization-statement"
-        ]
-      ],
+      "insight": "Actual manifolds from surgery and genuine hyperbolic structures form the common base. Canonical decomposition, minimal volume and virtual fibering are parallel destinations; the Weeks and Agol branches do not wait for a formal Geometrization proof.",
+      "finish": "Prove Geometrization, with Weeks minimum volume and virtual fibering retained as substantial statement branches.",
       "checkpoints": [
         {
-          "label": "Surgery",
+          "label": "Common base",
           "nodes": [
-            "dehn"
-          ]
-        },
-        {
-          "label": "Geometry",
-          "nodes": [
-            "hyperbolic",
-            "geometries"
+            "dehn",
+            "hyperbolic"
           ]
         },
         {
           "label": "Decomposition",
           "nodes": [
             "prime",
-            "jsj"
-          ]
-        },
-        {
-          "label": "Proof",
-          "nodes": [
+            "jsj",
             "geometrization"
           ]
+        },
+        {
+          "label": "Volume branch",
+          "nodes": [
+            "weeks"
+          ]
+        },
+        {
+          "label": "Cover branch",
+          "nodes": [
+            "agol"
+          ]
         }
       ],
-      "horizon": "proof"
-    },
-    {
-      "id": "heegaard",
-      "symbol": "ζ",
-      "color": 5,
-      "title": "Gluing → rank versus genus",
-      "summit": "rank-genus",
-      "edges": [
-        "chart-whitney--whitney",
-        "whitney--mapping-classes",
-        "mapping-classes--splitting",
-        "splitting--rank-genus-statement",
-        "rank-genus-statement--rank-genus",
-        "gluing--handlebody",
-        "handlebody--splitting",
-        "manifolds--collars",
-        "collars--gluing",
-        "manifolds--diff-group",
-        "diff-group--chart-whitney",
-        "whitney--families",
-        "families--mapping-classes",
-        "genus-bounds--rank-genus"
-      ],
-      "frontier": [
-        "whitney",
-        "gluing",
-        "handlebody"
-      ],
-      "insight": "Our Whitney work can feed the isotopy and surface-gluing interfaces. A counterexample needs a genuine minimal Heegaard genus and certified lower bounds; drawing one splitting supplies only an upper bound.",
-      "finish": "Prove rank π₁(M) < Heegaard genus(M) for a concrete witness, formalizing Li’s counterexample.",
-      "displayPaths": [
-        [
-          "chart-whitney",
-          "whitney",
-          "mapping-classes",
-          "splitting",
-          "rank-genus-statement",
-          "rank-genus"
+      "tree": {
+        "label": "Surgery & hyperbolic geometry",
+        "nodes": [
+          "links",
+          "complement",
+          "dehn",
+          "metric",
+          "hyperbolic"
         ],
-        [
-          "gluing",
-          "handlebody",
-          "splitting"
+        "children": [
+          {
+            "label": "Prime / JSJ & Ricci flow",
+            "nodes": [
+              "prime",
+              "jsj",
+              "geometries",
+              "ricci"
+            ],
+            "children": [
+              {
+                "label": "Geometrization",
+                "nodes": [
+                  "geometrization"
+                ],
+                "children": []
+              }
+            ]
+          },
+          {
+            "label": "Concrete manifold & volume",
+            "nodes": [
+              "dehn",
+              "hyperbolic"
+            ],
+            "children": [
+              {
+                "label": "Weeks · statement",
+                "nodes": [
+                  "weeks"
+                ],
+                "children": []
+              }
+            ]
+          },
+          {
+            "label": "Finite covers & fibering",
+            "nodes": [
+              "hyperbolic"
+            ],
+            "children": [
+              {
+                "label": "Agol · statement",
+                "nodes": [
+                  "agol"
+                ],
+                "children": []
+              }
+            ]
+          }
         ]
-      ],
-      "checkpoints": [
-        {
-          "label": "Gluing",
-          "nodes": [
-            "gluing",
-            "handlebody"
-          ]
-        },
-        {
-          "label": "Genus",
-          "nodes": [
-            "splitting"
-          ]
-        },
-        {
-          "label": "Bounds",
-          "nodes": [
-            "genus-bounds"
-          ]
-        },
-        {
-          "label": "Witness",
-          "nodes": [
-            "rank-genus"
-          ]
-        }
-      ],
+      },
       "horizon": "proof"
     }
   ],
-  "horizonNote": "The cited roadmap targets faithful statements. These six proof summits are editorial long-term extensions: intermediate statement gates remain visible, and no external proof machinery is claimed implemented. Zeeman is an open conjecture, not a proof task."
+  "horizonNote": "Four branching goals group shared infrastructure. Card trees summarize work packages; the full dependency map retains cross-links and additional inputs. Six proof endpoints remain long-term editorial extensions of the statement roadmap. Manolescu, Weeks and Agol are statement branches; Zeeman is an open conjecture, not a proof task."
 }

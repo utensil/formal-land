@@ -44,14 +44,27 @@ function checkpointState(cp) {
   const statuses=cp.nodes.map(id=>nodeState(byId.get(id)));
   return statuses.every(s=>s==="done") ? "done" : statuses.some(s=>s==="done"||s==="review"||s==="incomplete") ? "incomplete" : "open";
 }
+function treeEntries(root,path="0") {
+  return [[path,root],...root.children.flatMap((child,i)=>treeEntries(child,`${path}.${i}`))];
+}
+function renderGoalTree(branch,path="0") {
+  const kind=branch.children.length ? "" : byId.get(branch.nodes[0]).kind;
+  const tag=({proof:"proof horizon",statement:"statement gate","open-conjecture":"open conjecture"})[kind]||"";
+  return `<li><button class="tree-node" data-tree-path="${path}"><span class="tree-dot ${kind==="proof"?"tree-summit":""}" style="background:var(--${checkpointState(branch)})"></span><span>${esc(branch.label)}</span>${tag?`<small>${esc(tag)}</small>`:""}</button>${branch.children.length?`<ul>${branch.children.map((child,i)=>renderGoalTree(child,`${path}.${i}`)).join("")}</ul>`:""}</li>`;
+}
+function treeContent(branch) {
+  return `<b>${esc(branch.label)}</b><div class="tstatus">${branch.children.length?"Shared work package":"Target branch"}</div><p>${branch.nodes.map(id=>`<button data-jump-node="${id}">${esc(byId.get(id).label)}</button> · ${esc(ST[nodeState(byId.get(id))])}`).join("<br>")}</p><div class="tstatus">Select a milestone to see its exact scope and dependencies on the map.</div>`;
+}
 function renderGoals() {
   $("goals").innerHTML = GOALS.map(g=>{
     const ps=goalPrs(g), met=g.checkpoints.filter(cp=>checkpointState(cp)==="done").length;
-    return `<div class="goal" data-g="${g.id}" style="--gc:${PALETTE[g.color]}"><h3><span class="sw" style="background:${PALETTE[g.color]}"></span>Route ${esc(g.symbol)} — ${esc(g.title)}</h3><div class="bar checkpoints">${g.checkpoints.map((cp,i)=>`<button class="checkpoint" data-checkpoint="${i}" title="${esc(cp.label)}: ${esc(ST[checkpointState(cp)])}" aria-label="${esc(cp.label)} checkpoint: ${esc(ST[checkpointState(cp)])}" style="background:var(--${checkpointState(cp)})"></button>`).join("")}</div><div class="checkpoint-labels">${g.checkpoints.map(cp=>`<span>${esc(cp.label)}</span>`).join("")}</div><div class="pct">${met} / ${g.checkpoints.length} checkpoints met · stages differ greatly in difficulty</div><div class="route-lbl">route branches</div>${g.displayPaths.map(path=>`<div class="route">${path.map(id=>`<button data-node-link="${id}">${esc(byId.get(id).label)}</button>`).join('<span class="sep">→</span>')}</div>`).join("")}<div class="work">Our footholds: ${ps.length?ps.map(prLink).join(" · "):"no selected PR yet"}</div><div class="eval">${esc(g.insight)}</div><div class="rdev"><b>Summit:</b> ${esc(g.finish)}</div><div class="rdev"><b>Next handoff:</b> ${g.frontier.map(id=>`${esc(byId.get(id).label)} <span class="status-${nodeState(byId.get(id))}">(${esc(ST[nodeState(byId.get(id))])})</span>`).join(" · ")}</div></div>`;
+    return `<div class="goal" data-g="${g.id}" style="--gc:${PALETTE[g.color]}"><h3><span class="sw" style="background:${PALETTE[g.color]}"></span>Route ${esc(g.symbol)} — ${esc(g.title)}</h3><div class="bar checkpoints">${g.checkpoints.map((cp,i)=>`<button class="checkpoint" data-checkpoint="${i}" title="${esc(cp.label)}: ${esc(ST[checkpointState(cp)])}" aria-label="${esc(cp.label)} checkpoint: ${esc(ST[checkpointState(cp)])}" style="background:var(--${checkpointState(cp)})"></button>`).join("")}</div><div class="checkpoint-labels">${g.checkpoints.map(cp=>`<span>${esc(cp.label)}</span>`).join("")}</div><div class="pct">${met} / ${g.checkpoints.length} checkpoints met · checkpoints vary in difficulty</div><div class="route-lbl">route branches</div><div class="route-tree"><ul>${renderGoalTree(g.tree)}</ul></div><div class="work">Our footholds: ${ps.length?ps.map(prLink).join(" · "):"no selected PR yet"}</div><div class="eval">${esc(g.insight)}</div><div class="rdev"><b>Goal:</b> ${esc(g.finish)}</div><div class="rdev"><b>Next handoff:</b> ${g.frontier.map(id=>`${esc(byId.get(id).label)} <span class="status-${nodeState(byId.get(id))}">(${esc(ST[nodeState(byId.get(id))])})</span>`).join(" · ")}</div></div>`;
   }).join("");
   $("goals").querySelectorAll(".goal").forEach(el=>{
     bindRouteHover(el,el.dataset.g);
     const g=GOALS.find(g=>g.id===el.dataset.g);
+    const branches=new Map(treeEntries(g.tree));
+    chartBind(el,"[data-tree-path]",button=>treeContent(branches.get(button.dataset.treePath)));
     chartBind(el,"[data-checkpoint]",button=>{const cp=g.checkpoints[Number(button.dataset.checkpoint)];return `<b>${esc(g.symbol)} · ${esc(cp.label)}</b><div class="tstatus">${esc(ST[checkpointState(cp)])}</div><p>${cp.nodes.map(id=>`${esc(byId.get(id).label)}: ${esc(ST[nodeState(byId.get(id))])}`).join("<br>")}</p><div class="tstatus">Every listed milestone must be available. Merged PR counts do not complete a checkpoint.</div>`;});
   });
   $("goals").querySelectorAll("[data-node-link]").forEach(el=>el.addEventListener("click",()=>{hideTip();selectNode(el.dataset.nodeLink,true);}));
@@ -80,7 +93,7 @@ function labelLines(label,max=24) {
   return lines;
 }
 function renderMap() {
-  let html=`<title id="map-title">Geometric topology: contribution routes in the overall roadmap</title><desc id="map-desc">${NODES.length} milestone nodes across all eleven layers. Gray dependencies and six colored routes; select nodes for evidence.</desc>`;
+  let html=`<title id="map-title">Geometric topology: contribution routes in the overall roadmap</title><desc id="map-desc">${NODES.length} milestone nodes across all eleven layers. Gray dependencies and four branching routes; select nodes for evidence.</desc>`;
   RM.rows.forEach((row,i)=>html+=`<text class="lrow" x="305" y="${TOP+i*ROW+6}" text-anchor="end" style="font-size:21px">${esc(row.label)}</text>`);
   RM.edges.forEach(e=>html+=`<path class="edge edge-dep" d="${edgePath(positions.get(e.fromNode),positions.get(e.toNode))}"><title>${esc(byId.get(e.fromNode).label)} → ${esc(byId.get(e.toNode).label)}</title></path>`);
   GOALS.forEach(g=>g.edges.forEach(id=>{
@@ -88,7 +101,7 @@ function renderMap() {
     html+=`<path class="edge edge-goal" data-goal="${g.id}" stroke="${PALETTE[g.color]}" d="${edgePath(positions.get(edge.fromNode),positions.get(edge.toNode),off)}"/>`;
   }));
   NODES.forEach(n=>{
-    const p=positions.get(n.id),goals=GOALS.filter(g=>routeNodes.get(g.id).has(n.id)),summits=GOALS.filter(g=>g.summit===n.id),ps=nodePrs(n.id),lines=labelLines(n.label);
+    const p=positions.get(n.id),goals=GOALS.filter(g=>routeNodes.get(g.id).has(n.id)),summits=GOALS.filter(g=>g.summits.includes(n.id)),ps=nodePrs(n.id),lines=labelLines(n.label);
     html+=`<g class="node" data-id="${n.id}" data-goals="${goals.map(g=>g.id).join(" ")}" tabindex="0" role="button" aria-label="${esc(n.label)}; ${esc(ST[nodeState(n)])}; ${ps.length} tracked PRs">${summits.map(g=>`<circle class="summit-halo" r="25" cx="${p.x}" cy="${p.y}" fill="${PALETTE[g.color]}"/><circle r="18" cx="${p.x}" cy="${p.y}" fill="none" style="stroke:${PALETTE[g.color]};stroke-width:2.8"/>`).join("")}<circle class="main nodest-${nodeState(n)}" cx="${p.x}" cy="${p.y}" r="13"/>${goals.length>1?`<circle class="junction" r="4" cx="${p.x}" cy="${p.y}"/>`:""}${lines.map((line,i)=>`<text class="nl" x="${p.x}" y="${p.y-20-(lines.length-1-i)*18}" text-anchor="middle">${esc(line)}</text>`).join("")}${ps.length?`<text class="ownmark" x="${p.x}" y="${p.y+33}" text-anchor="middle">${ps.map(p=>`#${p.number}${p.reviewed?" ◌":""}`).join(" · ")}</text>`:""}</g>`;
   });
   $("map").setAttribute("viewBox",`0 0 ${W} ${H}`);$("map").innerHTML=html;
@@ -139,6 +152,7 @@ function showTip(html,target,pin=false) {
   const r=target.getBoundingClientRect(),box=tip.getBoundingClientRect();
   tip.style.left=Math.max(10,Math.min(r.left+r.width/2-box.width/2,innerWidth-box.width-10))+"px";
   tip.style.top=Math.max(10,Math.min(r.bottom+8,innerHeight-box.height-10))+"px";
+  tip.querySelectorAll("[data-jump-node]").forEach(button=>button.addEventListener("click",()=>{hideTip();selectNode(button.dataset.jumpNode,true);}));
   tip.querySelectorAll("[data-jump-pr]").forEach(button=>button.addEventListener("click",()=>{const p=byPR.get(Number(button.dataset.jumpPr));hideTip();selectNode(p.nodes[0],true);}));
 }
 $("tip").addEventListener("mouseenter",()=>clearTimeout(hideTimer));$("tip").addEventListener("mouseleave",scheduleHide);

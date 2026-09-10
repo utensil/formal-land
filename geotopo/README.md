@@ -4,24 +4,35 @@ Open [geotopo-route-map.html](geotopo-route-map.html) directly in a browser. All
 styles, scripts and data are embedded; the map and charts work offline.
 
 The diagram places our contributions within 70 milestones across all 11 layers
-of the GeometricTopology roadmap. Six colored routes lead to substantial proof
-horizons: Property P, Smale–Hatcher, Whitehead smooth/PL comparison, Freedman
-slicing, Geometrization, and Li's rank-versus-Heegaard-genus counterexample.
+of the GeometricTopology roadmap. Four goals group work by shared infrastructure:
 
-Current contributions are early footholds. Statement gates remain intermediate
-nodes, and the deep proof inputs are explicit, including gauge theory, parametric
-sphere topology, four-dimensional disk embedding and Ricci flow. Weeks volume,
-virtual fibering, Property R and Manolescu are visible statement branches; Zeeman
-remains an open conjecture. The cited source roadmap targets statements; these
-proof summits are editorial long-term extensions, not claims about existing code.
+- **Knot surgery and concordance:** one presentation/equivalence trunk branches
+  toward Property P and Freedman's topological slicing theorem.
+- **Diffeomorphisms and manifold gluing:** Whitney topology and smooth families
+  branch toward Smale–Hatcher and Li's rank-versus-Heegaard-genus counterexample.
+- **Smooth / PL / Top structures:** realization branches toward Whitehead
+  comparison, Manolescu's statement and the open Zeeman conjecture.
+- **Geometric three-manifolds:** surgery and hyperbolic geometry branch toward
+  Geometrization, Weeks minimum-volume and Agol virtual-fibering statements.
 
-Each route has four explicit, inspectable checkpoints in `data/roadmap.json`.
-A checkpoint is met only when all its listed milestones are available. A proof
-milestone also requires explicit status and a `completionEvidence` source link;
-merging a contributing PR cannot complete it automatically. Segmented
-bars use milestone-state colors and do not measure merged-PR fraction, weighted
-effort or a percentage of mathematical completion. Shared prerequisite work may
-appear on several route cards; the charts deduplicate the selected PR cohort.
+Each card renders an explicit nested `tree`, with shared work packages in the
+trunk and distinct targets at the leaves. Clicking a tree node exposes its
+milestones and navigation to the full map. The six major proof endpoints remain
+in `summits`; a merged goal can have several. Card trees summarize common work,
+while the full dependency graph retains cross-links and separate deep inputs.
+
+Statement gates remain intermediate to proof endpoints; gauge theory, parametric
+sphere topology, four-dimensional disk embedding and Ricci flow are explicit
+proof dependencies. The source roadmap targets statements; the proof horizons
+are editorial long-term extensions, not claims about existing implementations.
+
+Each route also has four inspectable checkpoints in `data/roadmap.json`. They
+can represent parallel branches, rather than sequential stages. A checkpoint is
+met only when all its listed milestones are available. A proof milestone needs
+explicit status and a `completionEvidence` source link; merging a contributing
+PR cannot complete it automatically. Bars show milestone states, not merged-PR
+fractions, effort or a percentage of mathematical completion. Shared work can
+appear on several cards; the charts deduplicate the selected PR cohort.
 
 The snapshot includes only eight verified contributions: five merged, two open
 and one closed without merging. Five also have verified review evidence. Context
@@ -30,7 +41,7 @@ milestones remain visible without importing unrelated PRs into the charts.
 ## Data and updates
 
 - `data/roadmap.json`: pinned roadmap sources, milestone scope, dependencies,
-  diagram layout, route frontiers, summit criteria and checkpoints. Update these editorial interpretations
+  diagram layout, route trees, frontiers, summit criteria and checkpoints. Update these editorial interpretations
   when a new contribution changes the available API or next handoff.
 - `data/selection.json`: explicit PR-to-milestone mapping and worked/reviewed
   attribution. A reviewed marker requires a public evidence link. Authorship
