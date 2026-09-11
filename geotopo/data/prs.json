@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-09-10T08:04:34.221069+00:00",
+  "collected_at": "2026-09-11T18:23:20.400278+00:00",
   "prs": [
     {
       "number": 5714,
@@ -2745,14 +2745,13 @@
       "title": "feat: convert Gauss codes to PD-codes",
       "url": "https://github.com/TauCetiProject/TauCeti/pull/6199",
       "author": "utensil",
-      "head": "490eb6ca1af992b23c775a98437c70e14348d4c2",
-      "state": "open",
+      "head": "897473a17bc741218b036396399a43521dd30f6e",
+      "state": "merged",
       "created_at": "2026-09-10T02:53:13Z",
-      "updated_at": "2026-09-10T07:40:19Z",
-      "closed_at": null,
-      "merged_at": null,
+      "updated_at": "2026-09-10T21:11:47Z",
+      "closed_at": "2026-09-10T21:11:37Z",
+      "merged_at": "2026-09-10T21:11:37Z",
       "labels": [
-        "review-in-progress",
         "roadmap/GeometricTopology"
       ],
       "review_boards": [
@@ -2773,6 +2772,78 @@
           },
           "updated_at": "2026-09-10T05:32:36Z",
           "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5613689537"
+        },
+        {
+          "head": "6404a7aa30f10a4d49be717e48dba21a6a0e6e71",
+          "round": 2,
+          "states": {
+            "api-design": "blocking_request",
+            "attribution": "green",
+            "correctness": "green",
+            "documentation": "blocking_request",
+            "generality": "blocking_request",
+            "naming": "blocking_request",
+            "placement": "green",
+            "proof-quality": "green",
+            "reuse": "green",
+            "scope": "green"
+          },
+          "updated_at": "2026-09-10T17:24:18Z",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5622253590"
+        },
+        {
+          "head": "bc0efd100ea044fa42b27694ac8e0f732530c5a7",
+          "round": 4,
+          "states": {
+            "api-design": "green",
+            "attribution": "green",
+            "correctness": "green",
+            "documentation": "green",
+            "generality": "green",
+            "naming": "green",
+            "placement": "blocking_request",
+            "proof-quality": "green",
+            "reuse": "blocking_request",
+            "scope": "green"
+          },
+          "updated_at": "2026-09-10T18:01:29Z",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5615319892"
+        },
+        {
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 1,
+          "states": {
+            "api-design": "error",
+            "attribution": "error",
+            "correctness": "error",
+            "documentation": "error",
+            "generality": "error",
+            "naming": "error",
+            "placement": "error",
+            "proof-quality": "error",
+            "reuse": "error",
+            "scope": "error"
+          },
+          "updated_at": "2026-09-10T19:28:37Z",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5613689537"
+        },
+        {
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 2,
+          "states": {
+            "api-design": "green",
+            "attribution": "green",
+            "correctness": "green",
+            "documentation": "green",
+            "generality": "green",
+            "naming": "green",
+            "placement": "green",
+            "proof-quality": "green",
+            "reuse": "green",
+            "scope": "green"
+          },
+          "updated_at": "2026-09-10T20:41:45Z",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5617030004"
         }
       ],
       "review_events": [
@@ -2865,6 +2936,285 @@
           "rubric": "scope",
           "verdict": "approve",
           "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5613689537"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T17:24:16Z",
+          "head": "6404a7aa30f10a4d49be717e48dba21a6a0e6e71",
+          "round": 2,
+          "rubric": "api-design",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5622253590"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T18:02:01Z",
+          "head": "bc0efd100ea044fa42b27694ac8e0f732530c5a7",
+          "round": 4,
+          "rubric": "api-design",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5615319892"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T18:02:01Z",
+          "head": "bc0efd100ea044fa42b27694ac8e0f732530c5a7",
+          "round": 4,
+          "rubric": "attribution",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5615319892"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T18:02:01Z",
+          "head": "bc0efd100ea044fa42b27694ac8e0f732530c5a7",
+          "round": 4,
+          "rubric": "correctness",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5615319892"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T18:02:01Z",
+          "head": "bc0efd100ea044fa42b27694ac8e0f732530c5a7",
+          "round": 4,
+          "rubric": "documentation",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5615319892"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T18:02:01Z",
+          "head": "bc0efd100ea044fa42b27694ac8e0f732530c5a7",
+          "round": 4,
+          "rubric": "generality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5615319892"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T18:02:01Z",
+          "head": "bc0efd100ea044fa42b27694ac8e0f732530c5a7",
+          "round": 4,
+          "rubric": "naming",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5615319892"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T18:02:01Z",
+          "head": "bc0efd100ea044fa42b27694ac8e0f732530c5a7",
+          "round": 4,
+          "rubric": "placement",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5615319892"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T18:02:01Z",
+          "head": "bc0efd100ea044fa42b27694ac8e0f732530c5a7",
+          "round": 4,
+          "rubric": "proof-quality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5615319892"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T18:02:01Z",
+          "head": "bc0efd100ea044fa42b27694ac8e0f732530c5a7",
+          "round": 4,
+          "rubric": "reuse",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5615319892"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T18:02:01Z",
+          "head": "bc0efd100ea044fa42b27694ac8e0f732530c5a7",
+          "round": 4,
+          "rubric": "scope",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5615319892"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T19:28:12Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 1,
+          "rubric": "api-design",
+          "verdict": "error",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5613689537"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T19:28:12Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 1,
+          "rubric": "attribution",
+          "verdict": "error",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5613689537"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T19:28:12Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 1,
+          "rubric": "correctness",
+          "verdict": "error",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5613689537"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T19:28:12Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 1,
+          "rubric": "documentation",
+          "verdict": "error",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5613689537"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T19:28:12Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 1,
+          "rubric": "generality",
+          "verdict": "error",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5613689537"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T19:28:12Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 1,
+          "rubric": "naming",
+          "verdict": "error",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5613689537"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T19:28:12Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 1,
+          "rubric": "placement",
+          "verdict": "error",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5613689537"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T19:28:12Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 1,
+          "rubric": "proof-quality",
+          "verdict": "error",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5613689537"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T19:28:12Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 1,
+          "rubric": "reuse",
+          "verdict": "error",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5613689537"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T19:28:12Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 1,
+          "rubric": "scope",
+          "verdict": "error",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5613689537"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T20:41:43Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 2,
+          "rubric": "api-design",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5617030004"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T20:41:43Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 2,
+          "rubric": "attribution",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5617030004"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T20:41:43Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 2,
+          "rubric": "correctness",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5617030004"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T20:41:43Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 2,
+          "rubric": "documentation",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5617030004"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T20:41:43Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 2,
+          "rubric": "generality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5617030004"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T20:41:43Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 2,
+          "rubric": "naming",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5617030004"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T20:41:43Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 2,
+          "rubric": "placement",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5617030004"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T20:41:43Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 2,
+          "rubric": "proof-quality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5617030004"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T20:41:43Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 2,
+          "rubric": "reuse",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5617030004"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T20:41:43Z",
+          "head": "897473a17bc741218b036396399a43521dd30f6e",
+          "round": 2,
+          "rubric": "scope",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5617030004"
         }
       ],
       "events": [
@@ -2974,6 +3324,336 @@
           "kind": "labeled",
           "at": "2026-09-10T07:40:19Z",
           "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T08:10:59Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T08:11:00Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T08:40:35Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T08:40:36Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T08:56:52Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T08:56:54Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T10:11:13Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T10:11:14Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T10:19:16Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T10:19:17Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T10:48:59Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T10:49:01Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T11:02:17Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T11:02:18Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T12:32:28Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T12:32:29Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T12:50:29Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T12:50:30Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T13:05:07Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T13:05:09Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T13:21:27Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T13:21:29Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T13:48:16Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T13:48:17Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T14:02:33Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T14:02:34Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T14:22:45Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T14:22:46Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T14:38:48Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T14:38:49Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T16:39:40Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T16:39:42Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T16:48:43Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T16:48:45Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T17:23:49Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T17:23:50Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T17:36:39Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T17:36:41Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T17:40:01Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T17:40:02Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T18:01:43Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T18:01:44Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T18:19:46Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T18:19:47Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T18:35:34Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T18:35:35Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T19:27:20Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T19:27:21Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T19:28:47Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T19:28:48Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T20:41:58Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T20:41:59Z",
+          "label": "ready-to-merge",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "closed",
+          "at": "2026-09-10T21:11:37Z",
+          "label": null,
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "merged",
+          "at": "2026-09-10T21:11:37Z",
+          "label": null,
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T21:11:47Z",
+          "label": "ready-to-merge",
           "url": "https://github.com/TauCetiProject/TauCeti/pull/6199"
         }
       ]
@@ -3226,18 +3906,298 @@
       "title": "feat: add smooth link presentations",
       "url": "https://github.com/TauCetiProject/TauCeti/pull/6237",
       "author": "utensil",
-      "head": "6029b647223d4f26397d48b96d04f255aed0ad17",
-      "state": "open",
+      "head": "1544c4ae4eb6861efc7b4591679e3c6f2a619645",
+      "state": "merged",
       "created_at": "2026-09-10T07:29:11Z",
-      "updated_at": "2026-09-10T07:41:57Z",
-      "closed_at": null,
-      "merged_at": null,
+      "updated_at": "2026-09-11T01:53:26Z",
+      "closed_at": "2026-09-11T01:53:12Z",
+      "merged_at": "2026-09-11T01:53:12Z",
       "labels": [
-        "ci-failed",
         "roadmap/GeometricTopology"
       ],
-      "review_boards": [],
-      "review_events": [],
+      "review_boards": [
+        {
+          "head": "c037791c3a113280a27842d95fd68f8c166596ef",
+          "round": 3,
+          "states": {
+            "api-design": "blocking_request",
+            "attribution": "blocking_request",
+            "correctness": "green",
+            "documentation": "green",
+            "generality": "green",
+            "naming": "green",
+            "placement": "green",
+            "proof-quality": "green",
+            "reuse": "green",
+            "scope": "green"
+          },
+          "updated_at": "2026-09-10T15:35:53Z",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5619355192"
+        },
+        {
+          "head": "1544c4ae4eb6861efc7b4591679e3c6f2a619645",
+          "round": 2,
+          "states": {
+            "api-design": "blocking_request",
+            "attribution": "green",
+            "correctness": "stale",
+            "documentation": "stale",
+            "generality": "green",
+            "naming": "stale",
+            "placement": "stale",
+            "proof-quality": "green",
+            "reuse": "green",
+            "scope": "stale"
+          },
+          "updated_at": "2026-09-11T00:21:20Z",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5615882108"
+        },
+        {
+          "head": "1544c4ae4eb6861efc7b4591679e3c6f2a619645",
+          "round": 4,
+          "states": {
+            "api-design": "green",
+            "attribution": "green",
+            "correctness": "green",
+            "documentation": "green",
+            "generality": "green",
+            "naming": "green",
+            "placement": "green",
+            "proof-quality": "green",
+            "reuse": "green",
+            "scope": "green"
+          },
+          "updated_at": "2026-09-11T01:01:01Z",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5618342636"
+        }
+      ],
+      "review_events": [
+        {
+          "kind": "review",
+          "at": "2026-09-10T15:35:49Z",
+          "head": "c037791c3a113280a27842d95fd68f8c166596ef",
+          "round": 3,
+          "rubric": "api-design",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5619355192"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T15:35:49Z",
+          "head": "c037791c3a113280a27842d95fd68f8c166596ef",
+          "round": 3,
+          "rubric": "attribution",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5619355192"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T15:35:49Z",
+          "head": "c037791c3a113280a27842d95fd68f8c166596ef",
+          "round": 3,
+          "rubric": "correctness",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5619355192"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T15:35:49Z",
+          "head": "c037791c3a113280a27842d95fd68f8c166596ef",
+          "round": 3,
+          "rubric": "documentation",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5619355192"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T15:35:49Z",
+          "head": "c037791c3a113280a27842d95fd68f8c166596ef",
+          "round": 3,
+          "rubric": "generality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5619355192"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T15:35:49Z",
+          "head": "c037791c3a113280a27842d95fd68f8c166596ef",
+          "round": 3,
+          "rubric": "naming",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5619355192"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T15:35:49Z",
+          "head": "c037791c3a113280a27842d95fd68f8c166596ef",
+          "round": 3,
+          "rubric": "placement",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5619355192"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T15:35:49Z",
+          "head": "c037791c3a113280a27842d95fd68f8c166596ef",
+          "round": 3,
+          "rubric": "proof-quality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5619355192"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T15:35:49Z",
+          "head": "c037791c3a113280a27842d95fd68f8c166596ef",
+          "round": 3,
+          "rubric": "reuse",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5619355192"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-10T15:35:49Z",
+          "head": "c037791c3a113280a27842d95fd68f8c166596ef",
+          "round": 3,
+          "rubric": "scope",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5619355192"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T00:20:54Z",
+          "head": "1544c4ae4eb6861efc7b4591679e3c6f2a619645",
+          "round": 2,
+          "rubric": "api-design",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5615882108"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T00:20:54Z",
+          "head": "1544c4ae4eb6861efc7b4591679e3c6f2a619645",
+          "round": 2,
+          "rubric": "attribution",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5615882108"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T00:20:54Z",
+          "head": "1544c4ae4eb6861efc7b4591679e3c6f2a619645",
+          "round": 2,
+          "rubric": "generality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5615882108"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T00:20:54Z",
+          "head": "1544c4ae4eb6861efc7b4591679e3c6f2a619645",
+          "round": 2,
+          "rubric": "proof-quality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5615882108"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T00:20:54Z",
+          "head": "1544c4ae4eb6861efc7b4591679e3c6f2a619645",
+          "round": 2,
+          "rubric": "reuse",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5615882108"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T01:01:39Z",
+          "head": "1544c4ae4eb6861efc7b4591679e3c6f2a619645",
+          "round": 4,
+          "rubric": "api-design",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5618342636"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T01:01:39Z",
+          "head": "1544c4ae4eb6861efc7b4591679e3c6f2a619645",
+          "round": 4,
+          "rubric": "attribution",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5618342636"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T01:01:39Z",
+          "head": "1544c4ae4eb6861efc7b4591679e3c6f2a619645",
+          "round": 4,
+          "rubric": "correctness",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5618342636"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T01:01:39Z",
+          "head": "1544c4ae4eb6861efc7b4591679e3c6f2a619645",
+          "round": 4,
+          "rubric": "documentation",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5618342636"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T01:01:39Z",
+          "head": "1544c4ae4eb6861efc7b4591679e3c6f2a619645",
+          "round": 4,
+          "rubric": "generality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5618342636"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T01:01:39Z",
+          "head": "1544c4ae4eb6861efc7b4591679e3c6f2a619645",
+          "round": 4,
+          "rubric": "naming",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5618342636"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T01:01:39Z",
+          "head": "1544c4ae4eb6861efc7b4591679e3c6f2a619645",
+          "round": 4,
+          "rubric": "placement",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5618342636"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T01:01:39Z",
+          "head": "1544c4ae4eb6861efc7b4591679e3c6f2a619645",
+          "round": 4,
+          "rubric": "proof-quality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5618342636"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T01:01:39Z",
+          "head": "1544c4ae4eb6861efc7b4591679e3c6f2a619645",
+          "round": 4,
+          "rubric": "reuse",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5618342636"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T01:01:39Z",
+          "head": "1544c4ae4eb6861efc7b4591679e3c6f2a619645",
+          "round": 4,
+          "rubric": "scope",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5618342636"
+        }
+      ],
       "events": [
         {
           "kind": "labeled",
@@ -3262,6 +4222,2260 @@
           "at": "2026-09-10T07:41:57Z",
           "label": "ci-failed",
           "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T08:05:16Z",
+          "label": "ci-failed",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T08:05:17Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T08:22:23Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T08:22:24Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T08:42:01Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T08:42:02Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T08:52:51Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T08:52:52Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T09:12:17Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T09:12:18Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T09:28:35Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T09:28:36Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T10:45:55Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T10:45:56Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T10:54:41Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T10:54:42Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T11:12:28Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T11:12:29Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T11:24:49Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T11:24:50Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T11:51:17Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T11:51:18Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T12:01:14Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T12:01:16Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T12:18:05Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T12:18:06Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T12:33:43Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T12:33:44Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T13:13:02Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T13:13:03Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T13:21:10Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T13:21:11Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T13:38:52Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T13:38:53Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T13:51:55Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T13:51:56Z",
+          "label": "ci-failed",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T14:11:51Z",
+          "label": "ci-failed",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T14:11:53Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T14:25:23Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T14:25:24Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T14:39:56Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T14:39:58Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T14:44:50Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T14:44:51Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T15:04:36Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T15:04:37Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T15:16:58Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T15:17:00Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T15:29:17Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T15:29:18Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T15:36:05Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T15:36:07Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T15:45:03Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T15:45:04Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T15:55:04Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T15:55:06Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T19:50:01Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T19:50:02Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T20:18:06Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T20:18:08Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T20:44:46Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T20:44:47Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T20:57:21Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T20:57:23Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T22:33:59Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T22:34:00Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T22:51:11Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T22:51:13Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T23:23:27Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T23:23:28Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T23:39:37Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T23:39:38Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T00:18:56Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T00:18:57Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T00:21:33Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T00:21:34Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T01:01:14Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T01:01:15Z",
+          "label": "ready-to-merge",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "closed",
+          "at": "2026-09-11T01:53:12Z",
+          "label": null,
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "merged",
+          "at": "2026-09-11T01:53:12Z",
+          "label": null,
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T01:53:26Z",
+          "label": "ready-to-merge",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6237"
+        }
+      ]
+    },
+    {
+      "number": 6293,
+      "title": "feat: add unbased oriented Gauss codes",
+      "url": "https://github.com/TauCetiProject/TauCeti/pull/6293",
+      "author": "utensil",
+      "head": "13c9bb5a2ba711801484f10f0feb1f30c1f9584a",
+      "state": "merged",
+      "created_at": "2026-09-10T21:40:08Z",
+      "updated_at": "2026-09-11T05:35:30Z",
+      "closed_at": "2026-09-11T05:35:17Z",
+      "merged_at": "2026-09-11T05:35:17Z",
+      "labels": [
+        "roadmap/GeometricTopology"
+      ],
+      "review_boards": [
+        {
+          "head": "4a72290dd1f59345797f7aa1efec039db24bf467",
+          "round": 2,
+          "states": {
+            "api-design": "blocking_request",
+            "attribution": "stale",
+            "correctness": "stale",
+            "documentation": "stale",
+            "generality": "stale",
+            "naming": "blocking_request",
+            "placement": "stale",
+            "proof-quality": "green",
+            "reuse": "green",
+            "scope": "stale"
+          },
+          "updated_at": "2026-09-11T01:30:25Z",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293#issuecomment-5627227189"
+        },
+        {
+          "head": "13c9bb5a2ba711801484f10f0feb1f30c1f9584a",
+          "round": 2,
+          "states": {
+            "api-design": "green",
+            "attribution": "green",
+            "correctness": "green",
+            "documentation": "green",
+            "generality": "green",
+            "naming": "green",
+            "placement": "green",
+            "proof-quality": "green",
+            "reuse": "green",
+            "scope": "green"
+          },
+          "updated_at": "2026-09-11T04:59:50Z",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293#issuecomment-5626550877"
+        }
+      ],
+      "review_events": [
+        {
+          "kind": "review",
+          "at": "2026-09-11T01:30:59Z",
+          "head": "4a72290dd1f59345797f7aa1efec039db24bf467",
+          "round": 2,
+          "rubric": "api-design",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293#issuecomment-5627227189"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T01:30:59Z",
+          "head": "4a72290dd1f59345797f7aa1efec039db24bf467",
+          "round": 2,
+          "rubric": "naming",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293#issuecomment-5627227189"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T01:30:59Z",
+          "head": "4a72290dd1f59345797f7aa1efec039db24bf467",
+          "round": 2,
+          "rubric": "proof-quality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293#issuecomment-5627227189"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T01:30:59Z",
+          "head": "4a72290dd1f59345797f7aa1efec039db24bf467",
+          "round": 2,
+          "rubric": "reuse",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293#issuecomment-5627227189"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T04:59:25Z",
+          "head": "13c9bb5a2ba711801484f10f0feb1f30c1f9584a",
+          "round": 2,
+          "rubric": "api-design",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293#issuecomment-5626550877"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T04:59:25Z",
+          "head": "13c9bb5a2ba711801484f10f0feb1f30c1f9584a",
+          "round": 2,
+          "rubric": "attribution",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293#issuecomment-5626550877"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T04:59:25Z",
+          "head": "13c9bb5a2ba711801484f10f0feb1f30c1f9584a",
+          "round": 2,
+          "rubric": "correctness",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293#issuecomment-5626550877"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T04:59:25Z",
+          "head": "13c9bb5a2ba711801484f10f0feb1f30c1f9584a",
+          "round": 2,
+          "rubric": "documentation",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293#issuecomment-5626550877"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T04:59:25Z",
+          "head": "13c9bb5a2ba711801484f10f0feb1f30c1f9584a",
+          "round": 2,
+          "rubric": "generality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293#issuecomment-5626550877"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T04:59:25Z",
+          "head": "13c9bb5a2ba711801484f10f0feb1f30c1f9584a",
+          "round": 2,
+          "rubric": "naming",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293#issuecomment-5626550877"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T04:59:25Z",
+          "head": "13c9bb5a2ba711801484f10f0feb1f30c1f9584a",
+          "round": 2,
+          "rubric": "placement",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293#issuecomment-5626550877"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T04:59:25Z",
+          "head": "13c9bb5a2ba711801484f10f0feb1f30c1f9584a",
+          "round": 2,
+          "rubric": "proof-quality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293#issuecomment-5626550877"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T04:59:25Z",
+          "head": "13c9bb5a2ba711801484f10f0feb1f30c1f9584a",
+          "round": 2,
+          "rubric": "reuse",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293#issuecomment-5626550877"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T04:59:25Z",
+          "head": "13c9bb5a2ba711801484f10f0feb1f30c1f9584a",
+          "round": 2,
+          "rubric": "scope",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293#issuecomment-5626550877"
+        }
+      ],
+      "events": [
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T21:40:22Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T21:40:25Z",
+          "label": "roadmap/GeometricTopology",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T21:55:25Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T21:55:26Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T22:52:42Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T22:52:43Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T22:58:00Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T22:58:01Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T23:10:57Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T23:10:58Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T23:27:10Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T23:27:12Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-10T23:45:56Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-10T23:45:57Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T00:06:04Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T00:06:05Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T00:24:06Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T00:24:07Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T00:39:48Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T00:39:50Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T01:17:29Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T01:17:30Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T01:30:37Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T01:30:38Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T03:53:00Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T03:53:01Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T04:05:40Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T04:05:41Z",
+          "label": "ci-failed",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T04:29:38Z",
+          "label": "ci-failed",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T04:29:39Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T04:49:35Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T04:49:36Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T04:53:03Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T04:53:04Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T05:00:05Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T05:00:07Z",
+          "label": "ready-to-merge",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "closed",
+          "at": "2026-09-11T05:35:17Z",
+          "label": null,
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "merged",
+          "at": "2026-09-11T05:35:17Z",
+          "label": null,
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T05:35:30Z",
+          "label": "ready-to-merge",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6293"
+        }
+      ]
+    },
+    {
+      "number": 6308,
+      "title": "feat: make smooth families continuous in the weak Whitney topology",
+      "url": "https://github.com/TauCetiProject/TauCeti/pull/6308",
+      "author": "utensil",
+      "head": "096c547903715115a51724390e2cea418e2cd46b",
+      "state": "merged",
+      "created_at": "2026-09-11T07:17:26Z",
+      "updated_at": "2026-09-11T13:03:50Z",
+      "closed_at": "2026-09-11T13:03:40Z",
+      "merged_at": "2026-09-11T13:03:40Z",
+      "labels": [
+        "roadmap/GeometricTopology"
+      ],
+      "review_boards": [
+        {
+          "head": "096c547903715115a51724390e2cea418e2cd46b",
+          "round": 3,
+          "states": {
+            "api-design": "green",
+            "attribution": "green",
+            "correctness": "green",
+            "documentation": "green",
+            "generality": "green",
+            "naming": "green",
+            "placement": "green",
+            "proof-quality": "green",
+            "reuse": "green",
+            "scope": "green"
+          },
+          "updated_at": "2026-09-11T12:35:13Z",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308#issuecomment-5631193042"
+        }
+      ],
+      "review_events": [
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:34:47Z",
+          "head": "096c547903715115a51724390e2cea418e2cd46b",
+          "round": 3,
+          "rubric": "api-design",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308#issuecomment-5631193042"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:34:47Z",
+          "head": "096c547903715115a51724390e2cea418e2cd46b",
+          "round": 3,
+          "rubric": "attribution",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308#issuecomment-5631193042"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:34:47Z",
+          "head": "096c547903715115a51724390e2cea418e2cd46b",
+          "round": 3,
+          "rubric": "correctness",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308#issuecomment-5631193042"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:34:47Z",
+          "head": "096c547903715115a51724390e2cea418e2cd46b",
+          "round": 3,
+          "rubric": "documentation",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308#issuecomment-5631193042"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:34:47Z",
+          "head": "096c547903715115a51724390e2cea418e2cd46b",
+          "round": 3,
+          "rubric": "generality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308#issuecomment-5631193042"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:34:47Z",
+          "head": "096c547903715115a51724390e2cea418e2cd46b",
+          "round": 3,
+          "rubric": "naming",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308#issuecomment-5631193042"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:34:47Z",
+          "head": "096c547903715115a51724390e2cea418e2cd46b",
+          "round": 3,
+          "rubric": "placement",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308#issuecomment-5631193042"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:34:47Z",
+          "head": "096c547903715115a51724390e2cea418e2cd46b",
+          "round": 3,
+          "rubric": "proof-quality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308#issuecomment-5631193042"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:34:47Z",
+          "head": "096c547903715115a51724390e2cea418e2cd46b",
+          "round": 3,
+          "rubric": "reuse",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308#issuecomment-5631193042"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:34:47Z",
+          "head": "096c547903715115a51724390e2cea418e2cd46b",
+          "round": 3,
+          "rubric": "scope",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308#issuecomment-5631193042"
+        }
+      ],
+      "events": [
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T07:17:42Z",
+          "label": "roadmap/GeometricTopology",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T07:17:46Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T07:32:18Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T07:32:18Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T07:40:51Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T07:40:52Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T07:47:47Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T07:47:48Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T08:29:03Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T08:29:04Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T08:46:38Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T08:46:39Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T09:14:02Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T09:14:03Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T09:18:09Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T09:18:10Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T11:01:54Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T11:01:55Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T11:18:18Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T11:18:19Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T11:44:38Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T11:44:39Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T11:50:20Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T11:50:21Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T12:11:26Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T12:11:27Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T12:24:29Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T12:24:30Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T12:30:32Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T12:30:33Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T12:35:26Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T12:35:27Z",
+          "label": "ready-to-merge",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "closed",
+          "at": "2026-09-11T13:03:40Z",
+          "label": null,
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "merged",
+          "at": "2026-09-11T13:03:40Z",
+          "label": null,
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T13:03:50Z",
+          "label": "ready-to-merge",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6308"
+        }
+      ]
+    },
+    {
+      "number": 6310,
+      "title": "feat: add weak Whitney jets on manifold chart domains",
+      "url": "https://github.com/TauCetiProject/TauCeti/pull/6310",
+      "author": "utensil",
+      "head": "70d2763101654918103dec5e20b640c9e96db5a2",
+      "state": "merged",
+      "created_at": "2026-09-11T07:34:04Z",
+      "updated_at": "2026-09-11T12:44:42Z",
+      "closed_at": "2026-09-11T12:44:32Z",
+      "merged_at": "2026-09-11T12:44:32Z",
+      "labels": [
+        "roadmap/GeometricTopology"
+      ],
+      "review_boards": [
+        {
+          "head": "2f3a183601232b3a2cdec09efae8dadddaa981d8",
+          "round": 1,
+          "states": {
+            "api-design": "blocking_request",
+            "attribution": "green",
+            "correctness": "green",
+            "documentation": "green",
+            "generality": "green",
+            "naming": "blocking_request",
+            "placement": "green",
+            "proof-quality": "blocking_request",
+            "reuse": "blocking_request",
+            "scope": "green"
+          },
+          "updated_at": "2026-09-11T09:09:40Z",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5632177864"
+        },
+        {
+          "head": "70d2763101654918103dec5e20b640c9e96db5a2",
+          "round": 2,
+          "states": {
+            "api-design": "green",
+            "attribution": "green",
+            "correctness": "green",
+            "documentation": "green",
+            "generality": "green",
+            "naming": "green",
+            "placement": "green",
+            "proof-quality": "green",
+            "reuse": "green",
+            "scope": "green"
+          },
+          "updated_at": "2026-09-11T12:21:48Z",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5633335738"
+        }
+      ],
+      "review_events": [
+        {
+          "kind": "review",
+          "at": "2026-09-11T09:10:07Z",
+          "head": "2f3a183601232b3a2cdec09efae8dadddaa981d8",
+          "round": 1,
+          "rubric": "api-design",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5632177864"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T09:10:07Z",
+          "head": "2f3a183601232b3a2cdec09efae8dadddaa981d8",
+          "round": 1,
+          "rubric": "attribution",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5632177864"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T09:10:07Z",
+          "head": "2f3a183601232b3a2cdec09efae8dadddaa981d8",
+          "round": 1,
+          "rubric": "correctness",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5632177864"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T09:10:07Z",
+          "head": "2f3a183601232b3a2cdec09efae8dadddaa981d8",
+          "round": 1,
+          "rubric": "documentation",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5632177864"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T09:10:07Z",
+          "head": "2f3a183601232b3a2cdec09efae8dadddaa981d8",
+          "round": 1,
+          "rubric": "generality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5632177864"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T09:10:07Z",
+          "head": "2f3a183601232b3a2cdec09efae8dadddaa981d8",
+          "round": 1,
+          "rubric": "naming",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5632177864"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T09:10:07Z",
+          "head": "2f3a183601232b3a2cdec09efae8dadddaa981d8",
+          "round": 1,
+          "rubric": "placement",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5632177864"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T09:10:07Z",
+          "head": "2f3a183601232b3a2cdec09efae8dadddaa981d8",
+          "round": 1,
+          "rubric": "proof-quality",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5632177864"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T09:10:07Z",
+          "head": "2f3a183601232b3a2cdec09efae8dadddaa981d8",
+          "round": 1,
+          "rubric": "reuse",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5632177864"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T09:10:07Z",
+          "head": "2f3a183601232b3a2cdec09efae8dadddaa981d8",
+          "round": 1,
+          "rubric": "scope",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5632177864"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:21:22Z",
+          "head": "70d2763101654918103dec5e20b640c9e96db5a2",
+          "round": 2,
+          "rubric": "api-design",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5633335738"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:21:22Z",
+          "head": "70d2763101654918103dec5e20b640c9e96db5a2",
+          "round": 2,
+          "rubric": "attribution",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5633335738"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:21:22Z",
+          "head": "70d2763101654918103dec5e20b640c9e96db5a2",
+          "round": 2,
+          "rubric": "correctness",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5633335738"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:21:22Z",
+          "head": "70d2763101654918103dec5e20b640c9e96db5a2",
+          "round": 2,
+          "rubric": "documentation",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5633335738"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:21:22Z",
+          "head": "70d2763101654918103dec5e20b640c9e96db5a2",
+          "round": 2,
+          "rubric": "generality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5633335738"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:21:22Z",
+          "head": "70d2763101654918103dec5e20b640c9e96db5a2",
+          "round": 2,
+          "rubric": "naming",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5633335738"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:21:22Z",
+          "head": "70d2763101654918103dec5e20b640c9e96db5a2",
+          "round": 2,
+          "rubric": "placement",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5633335738"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:21:22Z",
+          "head": "70d2763101654918103dec5e20b640c9e96db5a2",
+          "round": 2,
+          "rubric": "proof-quality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5633335738"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:21:22Z",
+          "head": "70d2763101654918103dec5e20b640c9e96db5a2",
+          "round": 2,
+          "rubric": "reuse",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5633335738"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T12:21:22Z",
+          "head": "70d2763101654918103dec5e20b640c9e96db5a2",
+          "round": 2,
+          "rubric": "scope",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5633335738"
+        }
+      ],
+      "events": [
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T07:34:16Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T07:34:23Z",
+          "label": "roadmap/GeometricTopology",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T07:45:15Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T07:45:16Z",
+          "label": "ci-failed",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T08:22:50Z",
+          "label": "ci-failed",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T08:22:51Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T08:39:05Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T08:39:06Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T08:48:06Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T08:48:08Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T09:09:50Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T09:09:51Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T10:19:17Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T10:19:18Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T10:38:45Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T10:38:45Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T10:44:37Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T10:44:39Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T10:50:36Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T10:50:37Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T11:15:02Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T11:15:03Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T11:31:27Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T11:31:28Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T11:33:41Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T11:33:42Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T11:39:18Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T11:39:19Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T11:59:37Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T11:59:38Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T12:15:54Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T12:15:55Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T12:17:25Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T12:17:26Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T12:21:58Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T12:21:59Z",
+          "label": "ready-to-merge",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "closed",
+          "at": "2026-09-11T12:44:32Z",
+          "label": null,
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "merged",
+          "at": "2026-09-11T12:44:32Z",
+          "label": null,
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T12:44:42Z",
+          "label": "ready-to-merge",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6310"
+        }
+      ]
+    },
+    {
+      "number": 6320,
+      "title": "feat: expose PD-code component traversal",
+      "url": "https://github.com/TauCetiProject/TauCeti/pull/6320",
+      "author": "utensil",
+      "head": "e57d5d948474a803ec349e806de20842c0e3d4a3",
+      "state": "open",
+      "created_at": "2026-09-11T13:04:48Z",
+      "updated_at": "2026-09-11T18:20:28Z",
+      "closed_at": null,
+      "merged_at": null,
+      "labels": [
+        "awaiting-review",
+        "roadmap/GeometricTopology"
+      ],
+      "review_boards": [
+        {
+          "head": "41252785c5f3d4e5973a2e8a6faea09e66efeee2",
+          "round": 1,
+          "states": {
+            "api-design": "blocking_request",
+            "attribution": "blocking_request",
+            "correctness": "green",
+            "documentation": "blocking_request",
+            "generality": "blocking_request",
+            "naming": "blocking_request",
+            "placement": "blocking_request",
+            "proof-quality": "blocking_request",
+            "reuse": "blocking_request",
+            "scope": "green"
+          },
+          "updated_at": "2026-09-11T14:34:03Z",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320#issuecomment-5635066247"
+        }
+      ],
+      "review_events": [
+        {
+          "kind": "review",
+          "at": "2026-09-11T14:33:29Z",
+          "head": "41252785c5f3d4e5973a2e8a6faea09e66efeee2",
+          "round": 1,
+          "rubric": "api-design",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320#issuecomment-5635066247"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T14:33:29Z",
+          "head": "41252785c5f3d4e5973a2e8a6faea09e66efeee2",
+          "round": 1,
+          "rubric": "attribution",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320#issuecomment-5635066247"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T14:33:29Z",
+          "head": "41252785c5f3d4e5973a2e8a6faea09e66efeee2",
+          "round": 1,
+          "rubric": "correctness",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320#issuecomment-5635066247"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T14:33:29Z",
+          "head": "41252785c5f3d4e5973a2e8a6faea09e66efeee2",
+          "round": 1,
+          "rubric": "documentation",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320#issuecomment-5635066247"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T14:33:29Z",
+          "head": "41252785c5f3d4e5973a2e8a6faea09e66efeee2",
+          "round": 1,
+          "rubric": "generality",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320#issuecomment-5635066247"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T14:33:29Z",
+          "head": "41252785c5f3d4e5973a2e8a6faea09e66efeee2",
+          "round": 1,
+          "rubric": "naming",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320#issuecomment-5635066247"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T14:33:29Z",
+          "head": "41252785c5f3d4e5973a2e8a6faea09e66efeee2",
+          "round": 1,
+          "rubric": "placement",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320#issuecomment-5635066247"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T14:33:29Z",
+          "head": "41252785c5f3d4e5973a2e8a6faea09e66efeee2",
+          "round": 1,
+          "rubric": "proof-quality",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320#issuecomment-5635066247"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T14:33:29Z",
+          "head": "41252785c5f3d4e5973a2e8a6faea09e66efeee2",
+          "round": 1,
+          "rubric": "reuse",
+          "verdict": "request_changes",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320#issuecomment-5635066247"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T14:33:29Z",
+          "head": "41252785c5f3d4e5973a2e8a6faea09e66efeee2",
+          "round": 1,
+          "rubric": "scope",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320#issuecomment-5635066247"
+        }
+      ],
+      "events": [
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T13:05:03Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T13:05:05Z",
+          "label": "roadmap/GeometricTopology",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T13:18:20Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T13:18:21Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T13:21:41Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T13:21:42Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T13:23:06Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T13:23:08Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T13:51:12Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T13:51:13Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T14:07:19Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T14:07:20Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T14:28:39Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T14:28:41Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T14:34:19Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T14:34:21Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T14:48:48Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T14:48:49Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T14:55:13Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T14:55:15Z",
+          "label": "ci-failed",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T17:35:28Z",
+          "label": "ci-failed",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T17:35:29Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T17:48:54Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T17:48:55Z",
+          "label": "ci-failed",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T18:03:59Z",
+          "label": "ci-failed",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T18:04:00Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T18:20:27Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T18:20:28Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6320"
+        }
+      ]
+    },
+    {
+      "number": 6322,
+      "title": "feat: add framed unbased Gauss codes",
+      "url": "https://github.com/TauCetiProject/TauCeti/pull/6322",
+      "author": "utensil",
+      "head": "16df272afafb3fd4a08d132d3f3a58c92c232bf7",
+      "state": "merged",
+      "created_at": "2026-09-11T13:30:31Z",
+      "updated_at": "2026-09-11T16:12:23Z",
+      "closed_at": "2026-09-11T16:12:10Z",
+      "merged_at": "2026-09-11T16:12:10Z",
+      "labels": [
+        "roadmap/GeometricTopology"
+      ],
+      "review_boards": [
+        {
+          "head": "16df272afafb3fd4a08d132d3f3a58c92c232bf7",
+          "round": 2,
+          "states": {
+            "api-design": "green",
+            "attribution": "green",
+            "correctness": "green",
+            "documentation": "green",
+            "generality": "green",
+            "naming": "green",
+            "placement": "green",
+            "proof-quality": "green",
+            "reuse": "green",
+            "scope": "green"
+          },
+          "updated_at": "2026-09-11T15:09:58Z",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322#issuecomment-5635656069"
+        }
+      ],
+      "review_events": [
+        {
+          "kind": "review",
+          "at": "2026-09-11T15:09:32Z",
+          "head": "16df272afafb3fd4a08d132d3f3a58c92c232bf7",
+          "round": 2,
+          "rubric": "api-design",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322#issuecomment-5635656069"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T15:09:32Z",
+          "head": "16df272afafb3fd4a08d132d3f3a58c92c232bf7",
+          "round": 2,
+          "rubric": "attribution",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322#issuecomment-5635656069"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T15:09:32Z",
+          "head": "16df272afafb3fd4a08d132d3f3a58c92c232bf7",
+          "round": 2,
+          "rubric": "correctness",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322#issuecomment-5635656069"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T15:09:32Z",
+          "head": "16df272afafb3fd4a08d132d3f3a58c92c232bf7",
+          "round": 2,
+          "rubric": "documentation",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322#issuecomment-5635656069"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T15:09:32Z",
+          "head": "16df272afafb3fd4a08d132d3f3a58c92c232bf7",
+          "round": 2,
+          "rubric": "generality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322#issuecomment-5635656069"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T15:09:32Z",
+          "head": "16df272afafb3fd4a08d132d3f3a58c92c232bf7",
+          "round": 2,
+          "rubric": "naming",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322#issuecomment-5635656069"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T15:09:32Z",
+          "head": "16df272afafb3fd4a08d132d3f3a58c92c232bf7",
+          "round": 2,
+          "rubric": "placement",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322#issuecomment-5635656069"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T15:09:32Z",
+          "head": "16df272afafb3fd4a08d132d3f3a58c92c232bf7",
+          "round": 2,
+          "rubric": "proof-quality",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322#issuecomment-5635656069"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T15:09:32Z",
+          "head": "16df272afafb3fd4a08d132d3f3a58c92c232bf7",
+          "round": 2,
+          "rubric": "reuse",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322#issuecomment-5635656069"
+        },
+        {
+          "kind": "review",
+          "at": "2026-09-11T15:09:32Z",
+          "head": "16df272afafb3fd4a08d132d3f3a58c92c232bf7",
+          "round": 2,
+          "rubric": "scope",
+          "verdict": "approve",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322#issuecomment-5635656069"
+        }
+      ],
+      "events": [
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T13:30:44Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T13:30:48Z",
+          "label": "roadmap/GeometricTopology",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T13:48:46Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T13:48:47Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T14:03:19Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T14:03:20Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T14:08:41Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T14:08:42Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T14:28:48Z",
+          "label": "awaiting-author",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T14:28:50Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T14:51:06Z",
+          "label": "awaiting-CI",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T14:51:08Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T15:05:50Z",
+          "label": "awaiting-review",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T15:05:51Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T15:10:11Z",
+          "label": "review-in-progress",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
+        },
+        {
+          "kind": "labeled",
+          "at": "2026-09-11T15:10:12Z",
+          "label": "ready-to-merge",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
+        },
+        {
+          "kind": "closed",
+          "at": "2026-09-11T16:12:10Z",
+          "label": null,
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
+        },
+        {
+          "kind": "merged",
+          "at": "2026-09-11T16:12:10Z",
+          "label": null,
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
+        },
+        {
+          "kind": "unlabeled",
+          "at": "2026-09-11T16:12:23Z",
+          "label": "ready-to-merge",
+          "url": "https://github.com/TauCetiProject/TauCeti/pull/6322"
         }
       ]
     }

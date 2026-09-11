@@ -88,5 +88,55 @@
     "reviewed": false,
     "reviewEvidence": [],
     "scopeReset": 0
+  },
+  {
+    "number": 6293,
+    "nodes": [
+      "gauss"
+    ],
+    "worked": true,
+    "reviewed": false,
+    "reviewEvidence": [],
+    "scopeReset": 0
+  },
+  {
+    "number": 6308,
+    "nodes": [
+      "chart-whitney"
+    ],
+    "worked": true,
+    "reviewed": false,
+    "reviewEvidence": [],
+    "scopeReset": 0
+  },
+  {
+    "number": 6310,
+    "nodes": [
+      "chart-whitney"
+    ],
+    "worked": true,
+    "reviewed": false,
+    "reviewEvidence": [],
+    "scopeReset": 0
+  },
+  {
+    "number": 6320,
+    "nodes": [
+      "pd"
+    ],
+    "worked": true,
+    "reviewed": false,
+    "reviewEvidence": [],
+    "scopeReset": 0
+  },
+  {
+    "number": 6322,
+    "nodes": [
+      "gauss"
+    ],
+    "worked": true,
+    "reviewed": false,
+    "reviewEvidence": [],
+    "scopeReset": 0
   }
 ]

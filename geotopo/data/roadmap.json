@@ -5,7 +5,7 @@
   "timezone": "Asia/Singapore",
   "roadmapRevision": "d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3",
   "roadmapUrl": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md",
-  "contextAsOf": "2026-09-10T07:13:25.211801+00:00",
+  "contextAsOf": "2026-09-11T18:24:04.078224+00:00",
   "reference": "https://utensil.github.io/formal-land/spinrep/spinrep-route-map.html",
   "rows": [
     {
@@ -208,11 +208,11 @@
       "id": "chart-whitney",
       "row": "diff",
       "layer": "L3",
-      "label": "chart-level Whitney",
+      "label": "Whitney coordinate APIs",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L372",
-      "summary": "The weak Whitney topology for maps in a single global chart.",
-      "remaining": "General manifold charts and compact-source hypotheses still need assembly.",
+      "summary": "Weak Whitney topology in a global chart, manifold-source vector-valued chart jets, and continuity of smooth families between normed spaces are available.",
+      "remaining": "Assemble general target charts and the manifold smooth-family map into Diff(M).",
       "x": 760
     },
     {
@@ -222,8 +222,8 @@
       "label": "general Whitney topology",
       "status": "branch",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L372",
-      "summary": "The initial topology from all chartwise derivatives, restricted to Diff(M).",
-      "remaining": "The chart-level construction is one input, not yet the general topological group.",
+      "summary": "Assemble coordinate jets into the weak Whitney topology for general manifold targets, then restrict to Diff(M).",
+      "remaining": "Source-chart jets are available; general target-chart assembly and the topological-group interface remain open.",
       "x": 1120
     },
     {
@@ -233,8 +233,8 @@
       "label": "smooth families → Diff",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L379",
-      "summary": "A smooth family of diffeomorphisms induces a continuous map into Diff(M).",
-      "remaining": "Prove the forward continuous-map interface; no unconditional converse.",
+      "summary": "A smooth family of manifold diffeomorphisms should induce a continuous map into Diff(M). The normed-space analytic step is now available.",
+      "remaining": "Lift coordinate-family continuity to the assembled manifold topology; no unconditional converse.",
       "x": 370
     },
     {
@@ -287,7 +287,7 @@
       "label": "smooth links",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L426",
-      "summary": "The proposed finite-component presentation uses pairwise-disjoint smooth circles.",
+      "summary": "Finite-component smooth links use pairwise-disjoint smooth circles.",
       "remaining": "Framings and link-complement interfaces remain separate work.",
       "x": 850
     },
@@ -298,8 +298,8 @@
       "label": "oriented Gauss codes",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L429",
-      "summary": "Based oriented Gauss codes are a finite combinatorial presentation.",
-      "remaining": "A valid abstract code need not be planar.",
+      "summary": "Based, unbased and framed unbased oriented Gauss codes are available, with basepoint forgetting, mirror, reversal and crossing relabelling.",
+      "remaining": "Abstract codes need not be planar. Quotient-level framed correspondences and realizability remain open.",
       "x": 1120
     },
     {
@@ -309,8 +309,8 @@
       "label": "oriented PD codes",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L429",
-      "summary": "An oriented PD-code presentation with crossing-slot and local compatibility data.",
-      "remaining": "Global planar realizability is a later obligation.",
+      "summary": "Oriented PD-code data is available. The open component-traversal contribution supplies crossing-bearing component bookkeeping and keeps crossing-free components separate.",
+      "remaining": "Component traversal awaits exact-head review. The inverse PD-to-Gauss map, quotient correspondence and planar realizability remain separate obligations.",
       "x": 1450
     },
     {
@@ -1518,9 +1518,9 @@
         "concordance--smooth-obstructions"
       ],
       "frontier": [
-        "gauss-pd",
-        "links",
-        "diagram-hub"
+        "pd",
+        "diagram-hub",
+        "complement"
       ],
       "insight": "Property P and Freedman slicing share the knot/link presentations and geometric equivalence machinery. Surgery and four-dimensional sliceness then branch apart: neither theorem is a stepping stone to the other.",
       "finish": "Complete both theorem branches: Property P and Alexander-one topological slicing, with their separate deep proof inputs.",
@@ -1878,7 +1878,7 @@
         "ricci--geometrization"
       ],
       "frontier": [
-        "links",
+        "complement",
         "gluing",
         "metric"
       ],
