@@ -34,7 +34,7 @@ PR cannot complete it automatically. Bars show milestone states, not merged-PR
 fractions, effort or a percentage of mathematical completion. Shared work can
 appear on several cards; the charts deduplicate the selected PR cohort.
 
-The snapshot includes only eight verified contributions: five merged, two open
+The snapshot includes only thirteen verified contributions: eleven merged, one open
 and one closed without merging. Five also have verified review evidence. Context
 milestones remain visible without importing unrelated PRs into the charts.
 
@@ -101,7 +101,13 @@ PRs received no review.
 
 The roadmap is pinned to `TauCetiProject/TauCetiRoadmap` commit
 `d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3`; source-context checks use
-`TauCetiProject/TauCeti` commit `be0b30f3963c7f5158674dca96d7fe3fdd0dcd20`.
+`TauCetiProject/TauCeti` commit `68b2d89afae712830ec180a2675dd1d55bdd6ad7`.
+The 12 September refresh verified that the pinned roadmap text is unchanged
+at roadmap head `aafd59c921100a7dc9fa20eb0d708c5ec1f508e8`. The Whitney
+coordinate milestone includes global-chart topology, manifold-source
+vector-valued jets and normed-space smooth-family continuity. General target
+charts and the manifold map into `Diff(M)` remain separate open milestones.
+
 Dependency links cite roadmap lines, not Lean import edges. Milestone scope is
 an interpretation of these sources, not a fresh proof audit: chart-level Whitney
 work is narrower than a global embedding theorem, and a contractibility predicate
