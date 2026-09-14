@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Validate route data and regenerate the single-file, offline explorer."""
 import argparse
+import datetime as dt
 import json
 from pathlib import Path
 import re
@@ -48,6 +49,21 @@ def health(pr, scope_reset=0):
 
 
 def validate(roadmap, selection, snapshot):
+    assert roadmap["timezone"] == "UTC" and roadmap["timeDisplay"] == "browser-local", "UTC data and browser-local display required"
+    def check_utc(value):
+        if value is not None:
+            instant = dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
+            assert instant.tzinfo is not None and instant.utcoffset() == dt.timedelta(0), "Source timestamps must be UTC"
+    check_utc(roadmap["contextAsOf"])
+    check_utc(snapshot["collected_at"])
+    for pr in snapshot["prs"]:
+        for key in ("created_at", "updated_at", "closed_at", "merged_at"):
+            check_utc(pr.get(key))
+        for key in ("review_boards", "review_events", "events", "checks"):
+            for event in pr.get(key, []):
+                for field in ("at", "updated_at", "started_at", "completed_at"):
+                    if field in event:
+                        check_utc(event[field])
     nodes = {node["id"]: node for node in roadmap["nodes"]}
     rows = {row["id"]: i for i, row in enumerate(roadmap["rows"])}
     assert len(nodes) == len(roadmap["nodes"]), "Duplicate milestone ID"
@@ -117,7 +133,7 @@ def generate():
     prs = [{**pr, **selected[pr["number"]], "health": health(pr, selected[pr["number"]]["scopeReset"])} for pr in snapshot["prs"]]
     data = {"roadmap": roadmap, "collected_at": snapshot["collected_at"], "prs": prs}
     encoded = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c").replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
-    result = (ROOT / "src/page.html").read_text().replace("/*__STYLE__*/", (ROOT / "src/style.css").read_text()).replace("/*__DATA__*/", encoded).replace("/*__APP__*/", (ROOT / "src/app.js").read_text())
+    result = (ROOT / "src/page.html").read_text().replace("/*__STYLE__*/", (ROOT / "src/style.css").read_text()).replace("/*__DATA__*/", encoded).replace("/*__TIME__*/", (ROOT / "src/time.js").read_text()).replace("/*__APP__*/", (ROOT / "src/app.js").read_text())
     assert not re.search(r"(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|/Users/|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,})", result), "Private data in generated page"
     assert "/*__" not in result, "Unexpanded template marker"
     return result

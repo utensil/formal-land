@@ -15,7 +15,7 @@ const $ = id => document.getElementById(id);
 const esc = x => String(x ?? "").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const url = value => /^https:\/\/(github\.com|utensil\.github\.io)\//.test(value || "") ? value : "#";
 const sourceLink = (value,label="source") => `<a href="${esc(url(value))}" target="_blank" rel="noopener">${esc(label)}</a>`;
-const dateTime = t => new Intl.DateTimeFormat("en-GB",{timeZone:RM.timezone,day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date(t))+" SGT";
+const {dateTime, dayKey, floorSlot, nextSlot} = LocalTime;
 const ms = value => new Date(value).getTime();
 const shortTitle = p => p.title.replace(/^(?:feat|refactor|docs|chore)(?:\([^)]*\))?:\s*/, "");
 function prLink(p) {return `<a class="prlink pr-${p.state === "merged" ? "merged" : p.state === "closed" ? "closed" : p.state === "draft" ? "draft" : "open"}${!p.worked && p.state === "merged" ? " pr-upstream" : ""}" href="${esc(url(p.url))}" target="_blank" rel="noopener">#${p.number}</a>`;}
@@ -176,17 +176,14 @@ function transitions(pr) {
   return result;
 }
 const EVENTS=PRS.flatMap(transitions);
-const SIX=6*3600e3,DAY=24*3600e3,SGT=8*3600e3;
-const floorSlot=t=>Math.floor((t+SGT)/SIX)*SIX-SGT;
-const t0=floorSlot(Math.min(...PRS.map(p=>ms(p.created_at)))),t1=floorSlot(ms(DATA.collected_at))+SIX;
-const slots=Array.from({length:Math.round((t1-t0)/SIX)},(_,i)=>t0+i*SIX);
-const CW=Math.max(1560,slots.length*20+90),LEFT=60,RIGHT=CW-30,STEP=(RIGHT-LEFT)/slots.length;
+const slots=LocalTime.slotsBetween(Math.min(...PRS.map(p=>ms(p.created_at))),ms(DATA.collected_at));
+const t0=slots[0],t1=nextSlot(slots[slots.length-1]);
+const CW=Math.max(1560,slots.length*20+90),LEFT=60,RIGHT=CW-30;
 const xOf=t=>LEFT+(t-t0)/(t1-t0)*(RIGHT-LEFT);
-const dayKey=t=>new Date(t+SGT).toISOString().slice(0,10);
 const median=a=>{const s=a.slice().sort((x,y)=>x-y);return s.length%2?s[(s.length-1)/2]:(s[s.length/2-1]+s[s.length/2])/2;};
 function axis(baseline) {
   let result="",prev="";
-  slots.forEach((t,i)=>{const day=dayKey(t);if(day!==prev){result+=`<text x="${LEFT+(i+.5)*STEP}" y="${baseline+17}" font-size="11" fill="#8a857e" text-anchor="middle">${day.slice(5)}</text>`;prev=day;}});
+  slots.forEach(t=>{const day=dayKey(t);if(day!==prev){result+=`<text x="${xOf((t+nextSlot(t))/2)}" y="${baseline+17}" font-size="11" fill="#8a857e" text-anchor="middle">${day.slice(5)}</text>`;prev=day;}});
   return result;
 }
 function chartBind(host,selector,content) {
@@ -203,24 +200,31 @@ function renderActivity(visible) {
   let html=`<svg viewBox="0 0 ${CW} ${baseline+35}" role="img" aria-label="State transitions per six-hour window"><line x1="40" y1="${baseline}" x2="${RIGHT+10}" y2="${baseline}" stroke="#444" stroke-dasharray="2 4"/>`;
   slots.forEach((t,i)=>{
     const es=groups.get(t);if(!es.length)return;
-    const x=LEFT+i*STEP+3,bw=Math.max(3,STEP-6);let y=baseline;
+    const x=xOf(t)+3,bw=Math.max(3,xOf(nextSlot(t))-xOf(t)-6);let y=baseline;
     for(const st of ["D","R","V","T","M","C"]){const n=es.filter(e=>e.state===st).length;if(n){y-=n*PER;html+=`<rect x="${x}" y="${y}" width="${bw}" height="${n*PER}" fill="${TL_STATE[st]}" opacity=".85"/>`;}}
     html+=`<text x="${x+bw/2}" y="${y-6}" font-size="12" fill="#e6e1dc" text-anchor="middle" font-weight="700">${es.length}</text><g class="tlcol" data-slot="${t}" tabindex="0" role="button" aria-label="${esc(dateTime(t))}: ${es.length} transitions"><rect x="${x-3}" y="${y-20}" width="${bw+6}" height="${baseline-y+34}" fill="transparent"/></g>`;
   });
   html+=axis(baseline)+"</svg>";$("prtl").innerHTML=html;
-  chartBind($("prtl"),".tlcol",el=>{const t=Number(el.dataset.slot),es=groups.get(t);return `<b>${esc(dateTime(t))} · 6-hour window</b><div class="tstatus">${es.length} state transitions</div>${es.map(e=>{const p=byPR.get(e.number);return `<div class="tstatus">${esc(dateTime(e.at))} · ${prLink(p)} → <span style="color:${TL_STATE[e.state]}">${TL_NAME[e.state]}</span><br>${esc(shortTitle(p))} · ${esc(e.label)}</div>`;}).join("")}`;});
-  $("activity-note").textContent=`${visible.length} selected PRs · ${events.length} stage transitions · height = transitions in a 6-hour SGT window. Empty windows retain their time width. Consecutive duplicate stages are collapsed; commits and individual rubric verdicts are not stage transitions.`;
+  chartBind($("prtl"),".tlcol",el=>{const t=Number(el.dataset.slot),es=groups.get(t);return `<b>${esc(dateTime(t))} → ${esc(dateTime(nextSlot(t)))}</b><div class="tstatus">${es.length} state transitions</div>${es.map(e=>{const p=byPR.get(e.number);return `<div class="tstatus">${esc(dateTime(e.at))} · ${prLink(p)} → <span style="color:${TL_STATE[e.state]}">${TL_NAME[e.state]}</span><br>${esc(shortTitle(p))} · ${esc(e.label)}</div>`;}).join("")}`;});
+  $("activity-note").textContent=`${visible.length} selected PRs · ${events.length} stage transitions · six-hour local calendar windows (${LocalTime.zone}), starting at 00:00, 06:00, 12:00 and 18:00. Empty windows retain their time width; daylight-saving changes alter elapsed window length. Consecutive duplicate stages are collapsed; commits and individual rubric verdicts are not stage transitions.`;
+}
+function checkSummary(p) {
+  const checks=p.checks||[];
+  if(!checks.length)return "No check runs recorded";
+  const failed=checks.filter(c=>["failure","cancelled","timed_out","action_required","startup_failure","stale"].includes(c.conclusion));
+  const pending=checks.filter(c=>c.status!=="completed");
+  return `${checks.length} check runs · ${failed.length} failed/cancelled · ${pending.length} pending`;
 }
 function healthContent(p) {
   const h=p.health,t=p.merged_at||p.closed_at||DATA.collected_at,verb=p.merged_at?"Merged":p.closed_at?"Closed, unmerged":"Open at snapshot";
-  return `<b>${prLink(p)} · ${esc(shortTitle(p))}</b><div class="tstatus">${verb} · ${esc(dateTime(t))}</div><div class="tstatus">${p.worked?"Worked on":"Reviewed-only"}${p.reviewed?" · reviewed by us":""}</div><div class="tstatus">${h.score==null?`Health unscored: ${esc(h.reason)}`:`Health <strong style="color:${band(h.score)}">${h.score}</strong> · ${Object.entries(h.terms).map(([k,v])=>`${k}=${v??"?"}`).join(" · ")}`}</div><div class="tstatus">Observed non-green rubrics: ${esc(h.failed.join(", ")||"none")}</div><div class="tstatus">Snapshot head: <code style="overflow-wrap:anywhere">${esc(p.head)}</code></div><div class="tstatus">${h.source?sourceLink(h.source,"exact-head scoreboard"):"No complete exact-head scoreboard"}${p.reviewEvidence.length?" · "+p.reviewEvidence.map(e=>sourceLink(e,"review evidence")).join(" · "):""}</div><div class="tstatus"><button data-jump-pr="${p.number}">Show contribution on the map</button></div>`;
+  return `<b>${prLink(p)} · ${esc(shortTitle(p))}</b><div class="tstatus">${verb} · ${esc(dateTime(t))}</div><div class="tstatus">${p.worked?"Worked on":"Reviewed-only"}${p.reviewed?" · reviewed by us":""}</div><div class="tstatus">${h.score==null?`Health unscored: ${esc(h.reason)}`:`Health <strong style="color:${band(h.score)}">${h.score}</strong> · ${Object.entries(h.terms).map(([k,v])=>`${k}=${v??"?"}`).join(" · ")}`}</div><div class="tstatus">Observed non-green rubrics: ${esc(h.failed.join(", ")||"none")}</div><div class="tstatus">Workflow: ${esc(p.labels.filter(l=>!l.startsWith("roadmap/")).join(" · ")||"no workflow label")}</div><div class="tstatus">CI: ${esc(checkSummary(p))}${(p.checks||[]).filter(c=>c.conclusion==="failure").map(c=>" · "+sourceLink(c.url,c.name)).join("")}</div><div class="tstatus">Snapshot head: <code style="overflow-wrap:anywhere">${esc(p.head)}</code></div><div class="tstatus">${h.source?sourceLink(h.source,"exact-head scoreboard"):"No complete exact-head scoreboard"}${p.reviewEvidence.length?" · "+p.reviewEvidence.map(e=>sourceLink(e,"review evidence")).join(" · "):""}</div><div class="tstatus"><button data-jump-pr="${p.number}">Show contribution on the map</button></div>`;
 }
 function renderHealth(visible) {
   const top=55,plot=130,baseline=top+plot,yOf=h=>baseline-h/100*plot;
   let html=`<svg viewBox="0 0 ${CW} ${baseline+38}" role="img" aria-label="Public-review churn score at merge, close or snapshot time">`;
   [0,25,50,75,100].forEach(h=>{const y=yOf(h);html+=`<line x1="40" y1="${y}" x2="${RIGHT+10}" y2="${y}" stroke="#333" stroke-width=".6"/><text x="32" y="${y+4}" font-size="11" fill="#8a857e" text-anchor="end">${h}</text>`;});
-  const merged=visible.filter(p=>p.merged_at&&p.health.score!=null),days=[...new Set(merged.map(p=>dayKey(ms(p.merged_at))))].sort();
-  const med=days.map(day=>{const start=ms(day+"T00:00:00+08:00"),sample=merged.filter(p=>ms(p.merged_at)>=start-DAY&&ms(p.merged_at)<start+2*DAY);return {day,t:start+DAY/2,h:median(sample.map(p=>p.health.score)),count:sample.length};});
+  const merged=visible.filter(p=>p.merged_at&&p.health.score!=null),days=[...new Set(merged.map(p=>LocalTime.startOfDay(ms(p.merged_at))))].sort((a,b)=>a-b);
+  const med=days.map(start=>{const window=LocalTime.medianWindow(start),sample=merged.filter(p=>ms(p.merged_at)>=window.start&&ms(p.merged_at)<window.end);return {day:dayKey(start),t:window.at,h:median(sample.map(p=>p.health.score)),count:sample.length};});
   if(med.length>1)html+=`<path d="${med.map((p,i)=>`${i?"L":"M"}${xOf(p.t)},${yOf(p.h)}`).join(" ")}" fill="none" stroke="#cc7833" stroke-width="1.5" opacity=".85"/>`;
   med.forEach((p,i)=>html+=`<g class="median-mark" data-median="${i}" tabindex="0" role="button" aria-label="${p.day} rolling median ${p.h}"><circle cx="${xOf(p.t)}" cy="${yOf(p.h)}" r="2.5" fill="#cc7833"/><circle cx="${xOf(p.t)}" cy="${yOf(p.h)}" r="9" fill="transparent"/></g>`);
   let unscored=0;
@@ -233,12 +237,12 @@ function renderHealth(visible) {
   if(unscored)html+=`<text x="32" y="24" font-size="10" fill="#9d9485" text-anchor="end">n/a</text>`;
   html+=axis(baseline)+"</svg>";$("prhealth").innerHTML=html;
   chartBind($("prhealth"),".hp",el=>healthContent(byPR.get(Number(el.dataset.pr))));
-  chartBind($("prhealth"),".median-mark",el=>{const p=med[Number(el.dataset.median)];return `<b>${p.day} · rolling median ${p.h}</b><div class="tstatus">${p.count} selected merged PRs in this SGT day and its two adjacent days. Unscored PRs are excluded. This is our cohort, with no background sample of unrelated PRs.</div>`;});
+  chartBind($("prhealth"),".median-mark",el=>{const p=med[Number(el.dataset.median)];return `<b>${p.day} · rolling median ${p.h}</b><div class="tstatus">${p.count} selected merged PRs in this local calendar day and its two adjacent days (${esc(LocalTime.zone)}). Unscored PRs are excluded. This is our cohort, with no background sample of unrelated PRs.</div>`;});
 }
 function renderCharts() {
   const visible=visiblePrs();renderActivity(visible);renderHealth(visible);
   $("work-summary").textContent=`Work behind the routes · ${visible.length} PRs in the current lens`;
-  $("work-table").innerHTML=`<table><thead><tr><th>PR</th><th>Milestone</th><th>State</th><th>Our role</th><th>Health</th></tr></thead><tbody>${visible.map(p=>`<tr><td>${prLink(p)} · ${esc(shortTitle(p))}</td><td>${p.nodes.map(id=>esc(byId.get(id).label)).join(" · ")}</td><td>${esc(p.state)}</td><td>${p.worked?"worked on":""}${p.reviewed?" · reviewed":""}</td><td>${p.health.score??"unscored"}</td></tr>`).join("")}</tbody></table>`;
+  $("work-table").innerHTML=`<table><thead><tr><th>PR</th><th>Milestone</th><th>State / workflow</th><th>Our role</th><th>Health</th></tr></thead><tbody>${visible.map(p=>`<tr><td>${prLink(p)} · ${esc(shortTitle(p))}</td><td>${p.nodes.map(id=>esc(byId.get(id).label)).join(" · ")}</td><td>${esc(p.state)}<br>${esc(p.labels.filter(l=>!l.startsWith("roadmap/")).join(" · "))}<br>${esc(checkSummary(p))}</td><td>${p.worked?"worked on":""}${p.reviewed?" · reviewed":""}</td><td>${p.health.score??"unscored"}</td></tr>`).join("")}</tbody></table>`;
 }
 renderLegend();renderGoals();renderMap();renderCharts();
 $("cohort").addEventListener("change",e=>{state.cohort=e.target.value;hideTip();renderCharts();});
@@ -247,4 +251,4 @@ let syncing=false;
 const mergedCount=PRS.filter(p=>p.state==="merged").length,closedCount=PRS.filter(p=>p.state==="closed").length;
 $("stats").textContent=`${NODES.length} milestones · ${RM.edges.length} cited dependencies · ${PRS.length} worked-on or reviewed PRs: ${mergedCount} merged, ${PRS.length-mergedCount-closedCount} open, ${closedCount} closed · ${PRS.filter(p=>p.reviewed).length} with verified review coverage. ◌ marks reviewed contributions. Toggle route chips to focus the charts.`;
 $("sources").innerHTML=`<p>${sourceLink(RM.roadmapUrl,"Pinned GeometricTopology roadmap")} · ${sourceLink(RM.reference,"SpinRep design reference")}</p><p>Roadmap context checked ${esc(dateTime(RM.contextAsOf))}; PR snapshot refreshed ${esc(dateTime(DATA.collected_at))}. Only the explicit worked/reviewed selection is embedded. The review marker records verified coverage of the PR, not authorship of every public rubric observation.</p><p>Terminal PR evidence stays frozen during ordinary refreshes. Earlier overwritten review rounds cannot be reconstructed. Context nodes summarize milestones without importing the rest of the roadmap’s PR history.</p><p>${esc(RM.horizonNote)}</p>`;
-$("snapshot").innerHTML=`Snapshot ${esc(dateTime(DATA.collected_at))} · ${sourceLink("https://github.com/utensil/formal-land/tree/main/geotopo","data and update instructions")} · standalone HTML; no network requests.`;
+$("snapshot").innerHTML=`Snapshot ${esc(dateTime(DATA.collected_at))} · times and calendar windows in ${esc(LocalTime.zone)}; source timestamps UTC · ${sourceLink("https://github.com/utensil/formal-land/tree/main/geotopo","data and update instructions")} · standalone HTML; no network requests.`;

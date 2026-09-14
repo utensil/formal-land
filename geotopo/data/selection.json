@@ -43,6 +43,7 @@
     "worked": true,
     "reviewed": true,
     "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/5849#issuecomment-5559170588",
       "https://github.com/TauCetiProject/TauCeti/pull/5849#issuecomment-5590478981"
     ],
     "scopeReset": 0
@@ -65,8 +66,10 @@
       "gauss-pd"
     ],
     "worked": true,
-    "reviewed": false,
-    "reviewEvidence": [],
+    "reviewed": true,
+    "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/6199#issuecomment-5615319892"
+    ],
     "scopeReset": 0
   },
   {
@@ -85,8 +88,10 @@
       "links"
     ],
     "worked": true,
-    "reviewed": false,
-    "reviewEvidence": [],
+    "reviewed": true,
+    "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/6237#issuecomment-5618342636"
+    ],
     "scopeReset": 0
   },
   {
@@ -95,8 +100,10 @@
       "gauss"
     ],
     "worked": true,
-    "reviewed": false,
-    "reviewEvidence": [],
+    "reviewed": true,
+    "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/6293#issuecomment-5627227189"
+    ],
     "scopeReset": 0
   },
   {
@@ -115,8 +122,10 @@
       "chart-whitney"
     ],
     "worked": true,
-    "reviewed": false,
-    "reviewEvidence": [],
+    "reviewed": true,
+    "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/6310#issuecomment-5632177864"
+    ],
     "scopeReset": 0
   },
   {
@@ -125,8 +134,10 @@
       "pd"
     ],
     "worked": true,
-    "reviewed": false,
-    "reviewEvidence": [],
+    "reviewed": true,
+    "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/6320#issuecomment-5640828257"
+    ],
     "scopeReset": 0
   },
   {
@@ -137,6 +148,115 @@
     "worked": true,
     "reviewed": false,
     "reviewEvidence": [],
+    "scopeReset": 0
+  },
+  {
+    "number": 6355,
+    "nodes": [
+      "collar-data"
+    ],
+    "worked": true,
+    "reviewed": true,
+    "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/6355#issuecomment-5641149405"
+    ],
+    "scopeReset": 0
+  },
+  {
+    "number": 6396,
+    "nodes": [
+      "link-isotopy"
+    ],
+    "worked": true,
+    "reviewed": true,
+    "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/6396#issuecomment-5644496555"
+    ],
+    "scopeReset": 0
+  },
+  {
+    "number": 6435,
+    "nodes": [
+      "cylinder",
+      "zeeman"
+    ],
+    "worked": true,
+    "reviewed": false,
+    "reviewEvidence": [],
+    "scopeReset": 0
+  },
+  {
+    "number": 6475,
+    "nodes": [
+      "links"
+    ],
+    "worked": true,
+    "reviewed": true,
+    "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/6475#issuecomment-5648624333"
+    ],
+    "scopeReset": 0
+  },
+  {
+    "number": 6486,
+    "nodes": [
+      "triangulation-types"
+    ],
+    "worked": true,
+    "reviewed": false,
+    "reviewEvidence": [],
+    "scopeReset": 0
+  },
+  {
+    "number": 6519,
+    "nodes": [
+      "circle-isotopy"
+    ],
+    "worked": true,
+    "reviewed": false,
+    "reviewEvidence": [],
+    "scopeReset": 0
+  },
+  {
+    "number": 6524,
+    "nodes": [
+      "global-diff-whitney"
+    ],
+    "worked": true,
+    "reviewed": false,
+    "reviewEvidence": [],
+    "scopeReset": 0
+  },
+  {
+    "number": 6528,
+    "nodes": [
+      "gauss-pd-components"
+    ],
+    "worked": true,
+    "reviewed": false,
+    "reviewEvidence": [],
+    "scopeReset": 0
+  },
+  {
+    "number": 6530,
+    "nodes": [
+      "gauss-pd-naturality"
+    ],
+    "worked": true,
+    "reviewed": false,
+    "reviewEvidence": [],
+    "scopeReset": 0
+  },
+  {
+    "number": 6531,
+    "nodes": [
+      "diffeotopy-group"
+    ],
+    "worked": true,
+    "reviewed": true,
+    "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/6531#issuecomment-5652371297"
+    ],
     "scopeReset": 0
   }
 ]

@@ -2,15 +2,19 @@
   "schemaVersion": 1,
   "title": "Geotopo route map",
   "repository": "TauCetiProject/TauCeti",
-  "timezone": "Asia/Singapore",
+  "timezone": "UTC",
   "roadmapRevision": "d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3",
   "roadmapUrl": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md",
-  "contextAsOf": "2026-09-11T18:24:04.078224+00:00",
+  "contextAsOf": "2026-09-13T10:11:16.577034Z",
   "reference": "https://utensil.github.io/formal-land/spinrep/spinrep-route-map.html",
   "rows": [
     {
       "id": "foundations",
       "label": "L1 · manifolds & gluing"
+    },
+    {
+      "id": "collar-interface",
+      "label": "L1 · collar interface"
     },
     {
       "id": "tame",
@@ -43,6 +47,10 @@
     {
       "id": "maps",
       "label": "L4 · presentation maps"
+    },
+    {
+      "id": "map-extensions",
+      "label": "L4 · isotopy & code APIs"
     },
     {
       "id": "equivalence",
@@ -136,13 +144,14 @@
     },
     {
       "id": "gluing",
-      "row": "foundations",
+      "row": "collar-interface",
       "layer": "L1",
       "label": "global gluing",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L209",
       "summary": "Glue along boundaries, then construct connected sums and knot complements.",
-      "remaining": "Assemble global collars and the gluing interface."
+      "remaining": "Assemble global collars and the gluing interface.",
+      "x": 1250
     },
     {
       "id": "pl",
@@ -287,7 +296,7 @@
       "label": "smooth links",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L426",
-      "summary": "Finite-component smooth links use pairwise-disjoint smooth circles.",
+      "summary": "Finite-component smooth links use pairwise-disjoint smooth circles; disjointness of component ranges now has an explicit characterization.",
       "remaining": "Framings and link-complement interfaces remain separate work.",
       "x": 850
     },
@@ -309,8 +318,8 @@
       "label": "oriented PD codes",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L429",
-      "summary": "Oriented PD-code data is available. The open component-traversal contribution supplies crossing-bearing component bookkeeping and keeps crossing-free components separate.",
-      "remaining": "Component traversal awaits exact-head review. The inverse PD-to-Gauss map, quotient correspondence and planar realizability remain separate obligations.",
+      "summary": "Oriented PD-code data and component traversal are available, with crossing-free components handled separately.",
+      "remaining": "The inverse PD-to-Gauss map, quotient correspondence and planar realizability remain separate obligations.",
       "x": 1450
     },
     {
@@ -541,8 +550,8 @@
       "label": "simplicial K × I",
       "status": "branch",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L867",
-      "summary": "A compatible simplicial cylinder must connect the hypothesis to the collapse vocabulary.",
-      "remaining": "Construct and expose the product needed by the target statement.",
+      "summary": "The ordered simplicial cylinder and basic cone/simplex collapse APIs are available.",
+      "remaining": "Collapsibility for every contractible finite two-complex cylinder is the open Zeeman conjecture.",
       "x": 910
     },
     {
@@ -552,8 +561,8 @@
       "label": "Zeeman statement",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L885",
-      "summary": "Faithfully state: a finite contractible two-complex K has collapsible K × I.",
-      "remaining": "Open conjecture: a faithful statement and concrete collapse examples are milestones; no proof completion is promised.",
+      "summary": "The Zeeman conjecture is formally stated using the ordered cylinder and a collapsibility predicate.",
+      "remaining": "The conjecture remains open; availability here means its formal statement, not a proof.",
       "x": 1450,
       "kind": "open-conjecture"
     },
@@ -892,6 +901,94 @@
       "remaining": "Use general triangulability; failure to admit a PL structure is a weaker conclusion.",
       "kind": "statement",
       "x": 1450
+    },
+    {
+      "id": "collar-data",
+      "row": "collar-interface",
+      "layer": "L1",
+      "label": "global collar data",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L204",
+      "summary": "IsCollar / IsCollared describe a global product neighborhood, with restriction, scaling and homeomorphism transport.",
+      "remaining": "Existence for arbitrary manifold boundaries and smooth global gluing remain separate.",
+      "x": 730
+    },
+    {
+      "id": "global-diff-whitney",
+      "row": "diff-tools",
+      "layer": "L3",
+      "label": "global-chart Diff",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L372",
+      "summary": "Weak Whitney topology on self-diffeomorphisms in a global chart, with derivative convergence and smooth-family continuity.",
+      "remaining": "General manifold target charts and continuity of group operations remain separate.",
+      "x": 370
+    },
+    {
+      "id": "diffeotopy-group",
+      "row": "diff-tools",
+      "layer": "L3",
+      "label": "diffeotopy group API",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L369",
+      "summary": "Pointwise identity, composition and inverse are packaged as a Group instance on smooth diffeotopies.",
+      "remaining": "This algebraic packaging does not establish a topological group.",
+      "x": 1090
+    },
+    {
+      "id": "link-isotopy",
+      "row": "map-extensions",
+      "layer": "L4",
+      "label": "smooth link isotopy",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L440",
+      "summary": "A smooth ambient-isotopy setoid for links uses the shared diffeotopy API; complement homeomorphism invariance is included.",
+      "remaining": "Exact-head review is separate from constructing compact complements with boundary.",
+      "x": 370
+    },
+    {
+      "id": "circle-isotopy",
+      "row": "map-extensions",
+      "layer": "L4",
+      "label": "circle isotopy attempt",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L440",
+      "summary": "The continuous ambient-isotopy setoid contribution was closed without merging.",
+      "remaining": "No landed circle-setoid API is attributed to this PR.",
+      "x": 730
+    },
+    {
+      "id": "gauss-pd-components",
+      "row": "map-extensions",
+      "layer": "L4",
+      "label": "Gauss → PD components",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L445",
+      "summary": "Relate outgoing traversal to cyclic rotation and show one component, including the crossing-free case.",
+      "remaining": "The inverse map and full quotient correspondence remain separate.",
+      "x": 1090
+    },
+    {
+      "id": "gauss-pd-naturality",
+      "row": "map-extensions",
+      "layer": "L4",
+      "label": "Gauss → PD mirror",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L445",
+      "summary": "Mirror compatibility for crossing signs and writhe of the Gauss-to-PD conversion.",
+      "remaining": "This does not identify full PD-code equivalence or diagram quotients.",
+      "x": 1450
+    },
+    {
+      "id": "triangulation-types",
+      "row": "comparison",
+      "layer": "L11",
+      "label": "triangulability types",
+      "status": "open",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L845",
+      "summary": "Distinguish combinatorial triangulability, forget to general triangulability, and transport along homeomorphisms.",
+      "remaining": "Local-link criteria and equivalence with chart-based PL structures remain separate.",
+      "x": 1090
     }
   ],
   "edges": [
@@ -1469,6 +1566,111 @@
       "toNode": "manolescu",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L881",
       "role": "prerequisite"
+    },
+    {
+      "id": "collars--collar-data",
+      "fromNode": "collars",
+      "toNode": "collar-data",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L204",
+      "role": "prerequisite"
+    },
+    {
+      "id": "collar-data--gluing",
+      "fromNode": "collar-data",
+      "toNode": "gluing",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L209",
+      "role": "prerequisite"
+    },
+    {
+      "id": "chart-whitney--global-diff-whitney",
+      "fromNode": "chart-whitney",
+      "toNode": "global-diff-whitney",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L372",
+      "role": "prerequisite"
+    },
+    {
+      "id": "global-diff-whitney--families",
+      "fromNode": "global-diff-whitney",
+      "toNode": "families",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L379",
+      "role": "prerequisite"
+    },
+    {
+      "id": "diff-group--diffeotopy-group",
+      "fromNode": "diff-group",
+      "toNode": "diffeotopy-group",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L369",
+      "role": "prerequisite"
+    },
+    {
+      "id": "links--link-isotopy",
+      "fromNode": "links",
+      "toNode": "link-isotopy",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L440",
+      "role": "prerequisite"
+    },
+    {
+      "id": "link-isotopy--geometric-diagram",
+      "fromNode": "link-isotopy",
+      "toNode": "geometric-diagram",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L450",
+      "role": "prerequisite"
+    },
+    {
+      "id": "circle--circle-isotopy",
+      "fromNode": "circle",
+      "toNode": "circle-isotopy",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L440",
+      "role": "prerequisite"
+    },
+    {
+      "id": "circle-isotopy--geometric-diagram",
+      "fromNode": "circle-isotopy",
+      "toNode": "geometric-diagram",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L450",
+      "role": "prerequisite"
+    },
+    {
+      "id": "gauss-pd--gauss-pd-components",
+      "fromNode": "gauss-pd",
+      "toNode": "gauss-pd-components",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L445",
+      "role": "prerequisite"
+    },
+    {
+      "id": "gauss-pd-components--diagram-hub",
+      "fromNode": "gauss-pd-components",
+      "toNode": "diagram-hub",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L457",
+      "role": "prerequisite"
+    },
+    {
+      "id": "gauss-pd--gauss-pd-naturality",
+      "fromNode": "gauss-pd",
+      "toNode": "gauss-pd-naturality",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L445",
+      "role": "prerequisite"
+    },
+    {
+      "id": "gauss-pd-naturality--diagram-hub",
+      "fromNode": "gauss-pd-naturality",
+      "toNode": "diagram-hub",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L457",
+      "role": "prerequisite"
+    },
+    {
+      "id": "realization--triangulation-types",
+      "fromNode": "realization",
+      "toNode": "triangulation-types",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L845",
+      "role": "prerequisite"
+    },
+    {
+      "id": "triangulation-types--triangulability",
+      "fromNode": "triangulation-types",
+      "toNode": "triangulability",
+      "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L842",
+      "role": "prerequisite"
     }
   ],
   "routes": [
@@ -1515,10 +1717,22 @@
         "gluing--cobordism",
         "cobordism--disk-embedding",
         "disk-embedding--freedman",
-        "concordance--smooth-obstructions"
+        "concordance--smooth-obstructions",
+        "collars--collar-data",
+        "collar-data--gluing",
+        "diff-group--diffeotopy-group",
+        "links--link-isotopy",
+        "link-isotopy--geometric-diagram",
+        "circle--circle-isotopy",
+        "circle-isotopy--geometric-diagram",
+        "gauss-pd--gauss-pd-components",
+        "gauss-pd-components--diagram-hub",
+        "gauss-pd--gauss-pd-naturality",
+        "gauss-pd-naturality--diagram-hub"
       ],
       "frontier": [
-        "pd",
+        "link-isotopy",
+        "gauss-pd-components",
         "diagram-hub",
         "complement"
       ],
@@ -1561,7 +1775,10 @@
           "links",
           "gauss",
           "pd",
-          "diagram-hub"
+          "diagram-hub",
+          "link-isotopy",
+          "gauss-pd-components",
+          "gauss-pd-naturality"
         ],
         "children": [
           {
@@ -1636,9 +1853,15 @@
         "manifolds--collars",
         "collars--gluing",
         "families--mapping-classes",
-        "genus-bounds--rank-genus"
+        "genus-bounds--rank-genus",
+        "collars--collar-data",
+        "collar-data--gluing",
+        "chart-whitney--global-diff-whitney",
+        "global-diff-whitney--families",
+        "diff-group--diffeotopy-group"
       ],
       "frontier": [
+        "global-diff-whitney",
         "whitney",
         "top-group",
         "gluing"
@@ -1684,7 +1907,9 @@
           "chart-whitney",
           "whitney",
           "top-group",
-          "families"
+          "families",
+          "global-diff-whitney",
+          "diffeotopy-group"
         ],
         "children": [
           {
@@ -1748,12 +1973,14 @@
         "manifolds--pl",
         "pl--pl-comparison",
         "realization--triangulability",
-        "triangulability--manolescu"
+        "triangulability--manolescu",
+        "realization--triangulation-types",
+        "triangulation-types--triangulability"
       ],
       "frontier": [
+        "triangulation-types",
         "combinatorial",
-        "pl-comparison",
-        "cylinder"
+        "pl-comparison"
       ],
       "insight": "Realization and local links form the shared simplicial trunk. Smooth/PL comparison, general triangulability and cylinder collapse are distinct branches. Our contractible-complex contribution sits on the collapse branch.",
       "finish": "Prove the Whitehead comparison; retain Manolescu as a statement target and Zeeman as an explicitly open conjecture.",
@@ -1813,6 +2040,7 @@
           {
             "label": "Triangulability",
             "nodes": [
+              "triangulation-types",
               "triangulability"
             ],
             "children": [
@@ -1875,7 +2103,9 @@
         "dehn--weeks",
         "hyperbolic--weeks",
         "hyperbolic--agol",
-        "ricci--geometrization"
+        "ricci--geometrization",
+        "collars--collar-data",
+        "collar-data--gluing"
       ],
       "frontier": [
         "complement",
@@ -1977,5 +2207,6 @@
       "horizon": "proof"
     }
   ],
-  "horizonNote": "Four branching goals group shared infrastructure. Card trees summarize work packages; the full dependency map retains cross-links and additional inputs. Six proof endpoints remain long-term editorial extensions of the statement roadmap. Manolescu, Weeks and Agol are statement branches; Zeeman is an open conjecture, not a proof task."
+  "horizonNote": "Four branching goals group shared infrastructure. Card trees summarize work packages; the full dependency map retains cross-links and additional inputs. Six proof endpoints remain long-term editorial extensions of the statement roadmap. Manolescu, Weeks and Agol are statement branches; Zeeman is an open conjecture, not a proof task.",
+  "timeDisplay": "browser-local"
 }

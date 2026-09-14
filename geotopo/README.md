@@ -3,7 +3,7 @@
 Open [geotopo-route-map.html](geotopo-route-map.html) directly in a browser. All
 styles, scripts and data are embedded; the map and charts work offline.
 
-The diagram places our contributions within 70 milestones across all 11 layers
+The diagram places our contributions within 78 milestones across all 11 layers
 of the GeometricTopology roadmap. Four goals group work by shared infrastructure:
 
 - **Knot surgery and concordance:** one presentation/equivalence trunk branches
@@ -34,9 +34,31 @@ PR cannot complete it automatically. Bars show milestone states, not merged-PR
 fractions, effort or a percentage of mathematical completion. Shared work can
 appear on several cards; the charts deduplicate the selected PR cohort.
 
-The snapshot includes only thirteen verified contributions: eleven merged, one open
-and one closed without merging. Five also have verified review evidence. Context
-milestones remain visible without importing unrelated PRs into the charts.
+The snapshot at **2026-09-14 02:49 UTC** includes 23 verified contributions:
+16 merged, two open and five closed without merging. Fourteen have verified review
+attribution, cross-checked against public review observations. Discovery checked
+all 112 GeometricTopology PRs, recent utensil-authored PRs and the review desk's
+published evidence; it found ten new authored contributions and no additional
+reviewed-only PRs. Context milestones remain visible without importing unrelated
+PRs into the charts.
+
+The ten additions are #6355 (global collar data), #6396 (smooth link ambient
+isotopy), #6435 (ordered cylinder and Zeeman statement), #6475 (link component
+disjointness), #6486 (triangulability predicates), #6519 (closed circle-isotopy
+attempt), #6524 (global-chart Diff topology), #6528 (Gauss-to-PD component
+traversal), #6530 (mirror sign/writhe compatibility), and #6531 (diffeotopy group
+packaging). The previously open #6320 component-traversal contribution has merged.
+
+At this snapshot, #6396 and #6486 remain open. #6396 is labeled `awaiting-author`
+and has a round-4 API-design block; #6486 is labeled `ci-failed` with a failing
+`sandboxed-build` check. #6524, #6530 and #6531 are closed without merging; #6524
+and #6531 have `roadmap/none` labels and failed sandboxed builds, while #6530
+closed with a scope block. #6528 merged and has a complete green exact-head board.
+Labels and exact-head check-run summaries are available in PR details and the
+supporting table. They are separate from review health: incomplete or stale
+current-head evidence remains unscored. Scores retain observed earlier-round
+penalties after a PR merges; they do not assert current CI or mathematical
+correctness.
 
 ## Data and updates
 
@@ -61,6 +83,7 @@ python3 geotopo/build.py
 python3 geotopo/build.py --check
 python3 -m unittest discover -s geotopo/tests -v
 node --check geotopo/src/app.js
+node --test geotopo/tests/time.test.cjs
 ```
 
 Discovery reports unmapped authored GeometricTopology PRs without adding them.
@@ -77,11 +100,14 @@ further narrows the selected contributions. Clicking a route, milestone or PR
 point connects its activity to the relevant dependency and next handoff. The
 collapsed PR table provides supporting records, rather than the main view.
 
-The aligned charts use six-hour Singapore-time bins: stacked lifecycle and
-workflow-stage transitions above; PR review-health markers below. Circles mean
+All stored timestamps are UTC. The aligned charts use the browser's local
+calendar and timezone for every label, tooltip, day boundary and time window.
+Activity bins begin at local 00:00, 06:00, 12:00 and 18:00; their elapsed width
+changes across daylight-saving transitions. The charts show stacked lifecycle
+and workflow-stage transitions above, with PR review-health markers below. Circles mean
 merged, diamonds closed, and triangles open. A dashed white ring marks verified
-review participation. The orange line is a three-day rolling median of merged
-selected PRs. Unassessed points have a separate lane.
+review participation. The orange line is a centered three-local-calendar-day median of merged
+selected PRs, plotted at local noon (the day plus its two adjacent days). Unassessed points have a separate lane.
 
 Health follows the SpinRep public-review churn formula:
 `max(0, 100 - (3A + 4D + 3H + 6L + 8B + 12S + 5U))`.
@@ -101,12 +127,16 @@ PRs received no review.
 
 The roadmap is pinned to `TauCetiProject/TauCetiRoadmap` commit
 `d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3`; source-context checks use
-`TauCetiProject/TauCeti` commit `68b2d89afae712830ec180a2675dd1d55bdd6ad7`.
-The 12 September refresh verified that the pinned roadmap text is unchanged
-at roadmap head `aafd59c921100a7dc9fa20eb0d708c5ec1f508e8`. The Whitney
+`TauCetiProject/TauCeti` commit `cb3a8b39d615e65c4b1168118126b167073d745b`.
+The 13 September refresh verified that the pinned roadmap text is unchanged
+at roadmap head `d347d0841aa36be073aebcc678a7b6bb0d4b5188`. The Whitney
 coordinate milestone includes global-chart topology, manifold-source
 vector-valued jets and normed-space smooth-family continuity. General target
-charts and the manifold map into `Diff(M)` remain separate open milestones.
+charts and the general manifold map into `Diff(M)` remain separate open milestones.
+The global-chart Diff contribution is a separate milestone under review. Global
+collar data is available, but global collar existence and gluing remain open.
+The Zeeman statement and its cylinder API are available; the conjecture remains
+open and is never counted as a proved summit.
 
 Dependency links cite roadmap lines, not Lean import edges. Milestone scope is
 an interpretation of these sources, not a fresh proof audit: chart-level Whitney

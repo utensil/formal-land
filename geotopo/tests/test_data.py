@@ -7,13 +7,27 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from build import generate, health, validate
-from refresh import merge_observations
+from refresh import merge_observations, utc_timestamp
 
 class EvidenceTests(unittest.TestCase):
     def setUp(self):
         self.roadmap = json.loads((ROOT / 'data/roadmap.json').read_text())
         self.selection = json.loads((ROOT / 'data/selection.json').read_text())
         self.snapshot = json.loads((ROOT / 'data/prs.json').read_text())
+
+    def test_timestamps_require_utc_data(self):
+        snapshot = copy.deepcopy(self.snapshot)
+        snapshot['prs'][0]['created_at'] = '2026-09-13T18:00:00+08:00'
+        with self.assertRaisesRegex(AssertionError, 'Source timestamps must be UTC'):
+            validate(self.roadmap, self.selection, snapshot)
+        snapshot['prs'][0]['created_at'] = '2026-09-13T10:00:00'
+        with self.assertRaisesRegex(AssertionError, 'Source timestamps must be UTC'):
+            validate(self.roadmap, self.selection, snapshot)
+
+    def test_collector_normalizes_instants_without_guessing_zone(self):
+        self.assertEqual(utc_timestamp('2026-09-13T18:00:00+08:00'), '2026-09-13T10:00:00Z')
+        with self.assertRaisesRegex(ValueError, 'explicit timezone'):
+            utc_timestamp('2026-09-13T10:00:00')
 
     def test_unrelated_pr_rejected(self):
         selection = copy.deepcopy(self.selection)

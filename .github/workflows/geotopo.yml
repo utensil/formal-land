@@ -23,6 +23,7 @@ jobs:
           python3 geotopo/build.py --check
           python3 -m unittest discover -s geotopo/tests -v
           node --check geotopo/src/app.js
+          node --test geotopo/tests/time.test.cjs
       - name: Stage standalone output
         run: |
           mkdir staging-geotopo
