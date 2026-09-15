@@ -228,6 +228,11 @@ function renderHealth(visible) {
   const med=days.map(start=>{const window=LocalTime.medianWindow(start),sample=merged.filter(p=>ms(p.merged_at)>=window.start&&ms(p.merged_at)<window.end);return {day:dayKey(start),t:window.at,h:median(sample.map(p=>p.health.score)),count:sample.length};});
   if(med.length>1)html+=`<path d="${med.map((p,i)=>`${i?"L":"M"}${xOf(p.t)},${yOf(p.h)}`).join(" ")}" fill="none" stroke="#cc7833" stroke-width="1.5" opacity=".85"/>`;
   med.forEach((p,i)=>html+=`<g class="median-mark" data-median="${i}" tabindex="0" role="button" aria-label="${p.day} rolling median ${p.h}"><circle cx="${xOf(p.t)}" cy="${yOf(p.h)}" r="2.5" fill="#cc7833"/><circle cx="${xOf(p.t)}" cy="${yOf(p.h)}" r="9" fill="transparent"/></g>`);
+  const lastMedian=med[med.length-1],snapshot=ms(DATA.collected_at);
+  if(lastMedian && lastMedian.t<snapshot) {
+    const x=xOf(snapshot),y=yOf(lastMedian.h);
+    html+=`<g class="median-carry" tabindex="0" role="button" aria-label="Last available merged-PR median ${lastMedian.h} from ${lastMedian.day}, carried to snapshot"><path d="M${xOf(lastMedian.t)},${y} L${x},${y}" fill="none" stroke="#cc7833" stroke-width="1.5" stroke-dasharray="5 4"/><circle cx="${x}" cy="${y}" r="4" fill="#cc7833"/><circle cx="${x}" cy="${y}" r="10" fill="transparent"/><text x="${x-12}" y="${y+15}" text-anchor="end" fill="#cc7833" font-size="10">last median ${lastMedian.h}</text></g>`;
+  }
   let unscored=0;
   visible.forEach(p=>{
     const x=xOf(ms(p.merged_at||p.closed_at||DATA.collected_at)),value=p.health.score,y=value==null?17+(unscored++%2)*17:yOf(value),r=5,color=value==null?"#e5c07b":band(value);
@@ -239,6 +244,7 @@ function renderHealth(visible) {
   html+=axis(baseline)+"</svg>";$("prhealth").innerHTML=html;
   chartBind($("prhealth"),".hp",el=>healthContent(byPR.get(Number(el.dataset.pr))));
   chartBind($("prhealth"),".median-mark",el=>{const p=med[Number(el.dataset.median)];return `<b>${p.day} · rolling median ${p.h}</b><div class="tstatus">${p.count} selected merged PRs in this local calendar day and its two adjacent days (${esc(LocalTime.zone)}). Unscored PRs are excluded. This summarizes the current PR lens; missing review evidence remains unscored.</div>`;});
+  chartBind($("prhealth"),".median-carry",()=>`<b>Last available median ${lastMedian.h}</b><div class="tstatus">From ${lastMedian.day}: ${lastMedian.count} scored merged PRs in the centered three-day window (${esc(LocalTime.zone)}). The dashed line carries this value to the snapshot at ${esc(dateTime(snapshot))}; it is not a new daily measurement. Open, closed-unmerged and unscored PRs do not enter the merged-PR median.</div>`);
 }
 function renderCharts() {
   const visible=visiblePrs();renderActivity(visible);renderHealth(visible);

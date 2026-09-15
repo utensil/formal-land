@@ -107,7 +107,10 @@ changes across daylight-saving transitions. The charts show stacked lifecycle
 and workflow-stage transitions above, with PR review-health markers below. Circles mean
 merged, diamonds closed, and triangles open. A dashed white ring marks verified
 review participation. The orange line is a centered three-local-calendar-day median of merged
-selected PRs, plotted at local noon (the day plus its two adjacent days). Unassessed points have a separate lane.
+selected PRs, plotted at local noon (the day plus its two adjacent days). A dashed
+continuation carries the last available median to the snapshot, with its source
+day and sample count in the tooltip; it is not a new daily measurement. Open,
+closed-unmerged and unscored PRs do not enter this median. Unassessed points have a separate lane.
 
 Health follows the SpinRep public-review churn formula:
 `max(0, 100 - (3A + 4D + 3H + 6L + 8B + 12S + 5U))`.
