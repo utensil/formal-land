@@ -120,8 +120,13 @@ def validate(roadmap, selection, snapshot):
         assert entry["worked"] or entry["reviewed"], "Unrelated PR in selected cohort"
         assert entry["nodes"] and all(node in nodes for node in entry["nodes"]), "Map every selected PR to a milestone"
         assert not entry["reviewed"] or entry["reviewEvidence"], "Reviewed marker needs evidence"
-    assert set(ids) == {pr["number"] for pr in snapshot["prs"]}, "Refresh the snapshot after changing selection"
-    assert len(ids) == len(snapshot["prs"]), "Duplicate snapshot PR"
+    assert set(ids) <= {pr["number"] for pr in snapshot["prs"]}, "Refresh the snapshot after changing selection"
+    snapshot_ids = {pr["number"] for pr in snapshot["prs"]}
+    assert len(snapshot_ids) == len(snapshot["prs"]), "Duplicate snapshot PR"
+    coverage = snapshot.get("coverage")
+    if coverage:
+        assert coverage["label"] == "roadmap/GeometricTopology", "Wrong roadmap inventory"
+        assert set(coverage["discovered"]) | set(coverage["retained"]) == snapshot_ids, "Incomplete roadmap inventory"
 
 
 def generate():
@@ -130,8 +135,12 @@ def generate():
     snapshot = json.loads((ROOT / "data/prs.json").read_text())
     validate(roadmap, selection, snapshot)
     selected = {item["number"]: item for item in selection}
-    prs = [{**pr, **selected[pr["number"]], "health": health(pr, selected[pr["number"]]["scopeReset"])} for pr in snapshot["prs"]]
-    data = {"roadmap": roadmap, "collected_at": snapshot["collected_at"], "prs": prs}
+    prs = []
+    for pr in snapshot["prs"]:
+        annotation = selected.get(pr["number"], {"nodes": [], "worked": False, "reviewed": False,
+                                                   "reviewEvidence": [], "scopeReset": 0})
+        prs.append({**pr, **annotation, "health": health(pr, annotation["scopeReset"])})
+    data = {"roadmap": roadmap, "collected_at": snapshot["collected_at"], "coverage": snapshot.get("coverage", {}), "prs": prs}
     encoded = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c").replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
     result = (ROOT / "src/page.html").read_text().replace("/*__STYLE__*/", (ROOT / "src/style.css").read_text()).replace("/*__DATA__*/", encoded).replace("/*__TIME__*/", (ROOT / "src/time.js").read_text()).replace("/*__APP__*/", (ROOT / "src/app.js").read_text())
     assert not re.search(r"(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|/Users/|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,})", result), "Private data in generated page"

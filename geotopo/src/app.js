@@ -30,7 +30,7 @@ function nodeState(n) {
   if (ps.some(p=>p.state === "merged")) return "done";
   return "incomplete";
 }
-function visiblePrs() {return PRS.filter(p=>(state.cohort !== "worked" || p.worked) && (state.cohort !== "reviewed" || p.reviewed) && GOALS.some(g=>state.routes.has(g.id) && p.nodes.some(n=>routeNodes.get(g.id).has(n))));}
+function visiblePrs() {return PRS.filter(p=>(p.worked || p.reviewed) && (state.cohort !== "worked" || p.worked) && (state.cohort !== "reviewed" || p.reviewed) && (state.routes.size === GOALS.length || GOALS.some(g=>state.routes.has(g.id) && p.nodes.some(n=>routeNodes.get(g.id).has(n)))));}
 const band = value => value >= 75 ? "#7fb069" : value >= 60 ? "#e5c07b" : "#c97b7b";
 
 function renderLegend() {
@@ -175,8 +175,9 @@ function transitions(pr) {
   all.sort((a,b)=>ms(a.at)-ms(b.at)).forEach(e=>{if(e.state!==last){result.push({...e,number:pr.number});last=e.state;}});
   return result;
 }
-const EVENTS=PRS.flatMap(transitions);
-const slots=LocalTime.slotsBetween(Math.min(...PRS.map(p=>ms(p.created_at))),ms(DATA.collected_at));
+const TRACKED=PRS.filter(p=>p.worked || p.reviewed);
+const EVENTS=TRACKED.flatMap(transitions);
+const slots=LocalTime.slotsBetween(Math.min(...TRACKED.map(p=>ms(p.created_at))),ms(DATA.collected_at));
 const t0=slots[0],t1=nextSlot(slots[slots.length-1]);
 const CW=Math.max(1560,slots.length*20+90),LEFT=60,RIGHT=CW-30;
 const xOf=t=>LEFT+(t-t0)/(t1-t0)*(RIGHT-LEFT);
@@ -217,7 +218,7 @@ function checkSummary(p) {
 }
 function healthContent(p) {
   const h=p.health,t=p.merged_at||p.closed_at||DATA.collected_at,verb=p.merged_at?"Merged":p.closed_at?"Closed, unmerged":"Open at snapshot";
-  return `<b>${prLink(p)} · ${esc(shortTitle(p))}</b><div class="tstatus">${verb} · ${esc(dateTime(t))}</div><div class="tstatus">${p.worked?"Worked on":"Reviewed-only"}${p.reviewed?" · reviewed by us":""}</div><div class="tstatus">${h.score==null?`Health unscored: ${esc(h.reason)}`:`Health <strong style="color:${band(h.score)}">${h.score}</strong> · ${Object.entries(h.terms).map(([k,v])=>`${k}=${v??"?"}`).join(" · ")}`}</div><div class="tstatus">Observed non-green rubrics: ${esc(h.failed.join(", ")||"none")}</div><div class="tstatus">Workflow: ${esc(p.labels.filter(l=>!l.startsWith("roadmap/")).join(" · ")||"no workflow label")}</div><div class="tstatus">CI: ${esc(checkSummary(p))}${(p.checks||[]).filter(c=>c.conclusion==="failure").map(c=>" · "+sourceLink(c.url,c.name)).join("")}</div><div class="tstatus">Snapshot head: <code style="overflow-wrap:anywhere">${esc(p.head)}</code></div><div class="tstatus">${h.source?sourceLink(h.source,"exact-head scoreboard"):"No complete exact-head scoreboard"}${p.reviewEvidence.length?" · "+p.reviewEvidence.map(e=>sourceLink(e,"review evidence")).join(" · "):""}</div><div class="tstatus"><button data-jump-pr="${p.number}">Show contribution on the map</button></div>`;
+  return `<b>${prLink(p)} · ${esc(shortTitle(p))}</b><div class="tstatus">${verb} · ${esc(dateTime(t))}</div><div class="tstatus">${p.worked?"Worked on":p.reviewed?"Reviewed by us":"Roadmap history; no work/review attribution"}${p.reviewed?" · reviewed by us":""}</div><div class="tstatus">${h.score==null?`Health unscored: ${esc(h.reason)}`:`Health <strong style="color:${band(h.score)}">${h.score}</strong> · ${Object.entries(h.terms).map(([k,v])=>`${k}=${v??"?"}`).join(" · ")}`}</div><div class="tstatus">Observed non-green rubrics: ${esc(h.failed.join(", ")||"none")}</div><div class="tstatus">Workflow: ${esc(p.labels.filter(l=>!l.startsWith("roadmap/")).join(" · ")||"no workflow label")}</div><div class="tstatus">CI: ${esc(checkSummary(p))}${(p.checks||[]).filter(c=>c.conclusion==="failure").map(c=>" · "+sourceLink(c.url,c.name)).join("")}</div><div class="tstatus">Snapshot head: <code style="overflow-wrap:anywhere">${esc(p.head)}</code></div><div class="tstatus">${h.source?sourceLink(h.source,"exact-head scoreboard"):"No complete exact-head scoreboard"}${p.reviewEvidence.length?" · "+p.reviewEvidence.map(e=>sourceLink(e,"review evidence")).join(" · "):""}</div><div class="tstatus"><button data-jump-pr="${p.number}">Show contribution on the map</button></div>`;
 }
 function renderHealth(visible) {
   const top=55,plot=130,baseline=top+plot,yOf=h=>baseline-h/100*plot;
@@ -227,6 +228,11 @@ function renderHealth(visible) {
   const med=days.map(start=>{const window=LocalTime.medianWindow(start),sample=merged.filter(p=>ms(p.merged_at)>=window.start&&ms(p.merged_at)<window.end);return {day:dayKey(start),t:window.at,h:median(sample.map(p=>p.health.score)),count:sample.length};});
   if(med.length>1)html+=`<path d="${med.map((p,i)=>`${i?"L":"M"}${xOf(p.t)},${yOf(p.h)}`).join(" ")}" fill="none" stroke="#cc7833" stroke-width="1.5" opacity=".85"/>`;
   med.forEach((p,i)=>html+=`<g class="median-mark" data-median="${i}" tabindex="0" role="button" aria-label="${p.day} rolling median ${p.h}"><circle cx="${xOf(p.t)}" cy="${yOf(p.h)}" r="2.5" fill="#cc7833"/><circle cx="${xOf(p.t)}" cy="${yOf(p.h)}" r="9" fill="transparent"/></g>`);
+  const lastMedian=med[med.length-1],snapshot=ms(DATA.collected_at);
+  if(lastMedian && lastMedian.t<snapshot) {
+    const x=xOf(snapshot),y=yOf(lastMedian.h);
+    html+=`<g class="median-carry" tabindex="0" role="button" aria-label="Last available merged-PR median ${lastMedian.h} from ${lastMedian.day}, carried to snapshot"><path d="M${xOf(lastMedian.t)},${y} L${x},${y}" fill="none" stroke="#cc7833" stroke-width="1.5" stroke-dasharray="5 4"/><circle cx="${x}" cy="${y}" r="4" fill="#cc7833"/><circle cx="${x}" cy="${y}" r="10" fill="transparent"/><text x="${x-12}" y="${y+15}" text-anchor="end" fill="#cc7833" font-size="10">last median ${lastMedian.h}</text></g>`;
+  }
   let unscored=0;
   visible.forEach(p=>{
     const x=xOf(ms(p.merged_at||p.closed_at||DATA.collected_at)),value=p.health.score,y=value==null?17+(unscored++%2)*17:yOf(value),r=5,color=value==null?"#e5c07b":band(value);
@@ -237,18 +243,19 @@ function renderHealth(visible) {
   if(unscored)html+=`<text x="32" y="24" font-size="10" fill="#9d9485" text-anchor="end">n/a</text>`;
   html+=axis(baseline)+"</svg>";$("prhealth").innerHTML=html;
   chartBind($("prhealth"),".hp",el=>healthContent(byPR.get(Number(el.dataset.pr))));
-  chartBind($("prhealth"),".median-mark",el=>{const p=med[Number(el.dataset.median)];return `<b>${p.day} · rolling median ${p.h}</b><div class="tstatus">${p.count} selected merged PRs in this local calendar day and its two adjacent days (${esc(LocalTime.zone)}). Unscored PRs are excluded. This is our cohort, with no background sample of unrelated PRs.</div>`;});
+  chartBind($("prhealth"),".median-mark",el=>{const p=med[Number(el.dataset.median)];return `<b>${p.day} · rolling median ${p.h}</b><div class="tstatus">${p.count} selected merged PRs in this local calendar day and its two adjacent days (${esc(LocalTime.zone)}). Unscored PRs are excluded. This summarizes the current PR lens; missing review evidence remains unscored.</div>`;});
+  chartBind($("prhealth"),".median-carry",()=>`<b>Last available median ${lastMedian.h}</b><div class="tstatus">From ${lastMedian.day}: ${lastMedian.count} scored merged PRs in the centered three-day window (${esc(LocalTime.zone)}). The dashed line carries this value to the snapshot at ${esc(dateTime(snapshot))}; it is not a new daily measurement. Open, closed-unmerged and unscored PRs do not enter the merged-PR median.</div>`);
 }
 function renderCharts() {
   const visible=visiblePrs();renderActivity(visible);renderHealth(visible);
-  $("work-summary").textContent=`Work behind the routes · ${visible.length} PRs in the current lens`;
-  $("work-table").innerHTML=`<table><thead><tr><th>PR</th><th>Milestone</th><th>State / workflow</th><th>Our role</th><th>Health</th></tr></thead><tbody>${visible.map(p=>`<tr><td>${prLink(p)} · ${esc(shortTitle(p))}</td><td>${p.nodes.map(id=>esc(byId.get(id).label)).join(" · ")}</td><td>${esc(p.state)}<br>${esc(p.labels.filter(l=>!l.startsWith("roadmap/")).join(" · "))}<br>${esc(checkSummary(p))}</td><td>${p.worked?"worked on":""}${p.reviewed?" · reviewed":""}</td><td>${p.health.score??"unscored"}</td></tr>`).join("")}</tbody></table>`;
+  $("work-summary").textContent=`PR inventory · ${visible.length} / ${PRS.length} PRs in the current lens`;
+  $("work-table").innerHTML=`<table><thead><tr><th>PR</th><th>Milestone</th><th>State / workflow</th><th>Our role</th><th>Health</th></tr></thead><tbody>${visible.map(p=>`<tr><td>${prLink(p)} · ${esc(shortTitle(p))}</td><td>${p.nodes.map(id=>esc(byId.get(id).label)).join(" · ") || "Not yet mapped"}</td><td>${esc(p.state)}<br>${esc(p.labels.filter(l=>!l.startsWith("roadmap/")).join(" · "))}<br>${esc(checkSummary(p))}</td><td>${p.worked?"worked on":""}${p.reviewed?" · reviewed":""}${!p.worked&&!p.reviewed?"No attribution recorded":""}</td><td>${p.health.score??"unscored"}</td></tr>`).join("")}</tbody></table>`;
 }
 renderLegend();renderGoals();renderMap();renderCharts();
 $("cohort").addEventListener("change",e=>{state.cohort=e.target.value;hideTip();renderCharts();});
 let syncing=false;
 [$("prtl"),$("prhealth")].forEach((el,i,all)=>el.addEventListener("scroll",()=>{if(syncing)return;syncing=true;all[1-i].scrollLeft=el.scrollLeft;requestAnimationFrame(()=>syncing=false);}));
-const mergedCount=PRS.filter(p=>p.state==="merged").length,closedCount=PRS.filter(p=>p.state==="closed").length;
-$("stats").textContent=`${NODES.length} milestones · ${RM.edges.length} cited dependencies · ${PRS.length} worked-on or reviewed PRs: ${mergedCount} merged, ${PRS.length-mergedCount-closedCount} open, ${closedCount} closed · ${PRS.filter(p=>p.reviewed).length} with verified review coverage. ◌ marks reviewed contributions. Toggle route chips to focus the charts.`;
-$("sources").innerHTML=`<p>${sourceLink(RM.roadmapUrl,"Pinned GeometricTopology roadmap")} · ${sourceLink(RM.reference,"SpinRep design reference")}</p><p>Roadmap context checked ${esc(dateTime(RM.contextAsOf))}; PR snapshot refreshed ${esc(dateTime(DATA.collected_at))}. Only the explicit worked/reviewed selection is embedded. The review marker records verified coverage of the PR, not authorship of every public rubric observation.</p><p>Terminal PR evidence stays frozen during ordinary refreshes. Earlier overwritten review rounds cannot be reconstructed. Context nodes summarize milestones without importing the rest of the roadmap’s PR history.</p><p>${esc(RM.horizonNote)}</p>`;
+const mergedCount=TRACKED.filter(p=>p.state==="merged").length,closedCount=TRACKED.filter(p=>p.state==="closed").length;
+$("stats").textContent=`${NODES.length} milestones · ${RM.edges.length} cited dependencies · ${TRACKED.length} attributed PRs: ${mergedCount} merged, ${TRACKED.length-mergedCount-closedCount} open, ${closedCount} closed · ${TRACKED.filter(p=>p.reviewed).length} with verified review coverage. ◌ marks reviewed contributions. Selected TCWORK/TCREVIEW PRs only; closed PRs remain in the timelines. Route chips narrow the charts to mapped milestones.`;
+$("sources").innerHTML=`<p>${sourceLink(RM.roadmapUrl,"Pinned GeometricTopology roadmap")} · ${sourceLink(RM.reference,"SpinRep design reference")}</p><p>Roadmap context checked ${esc(dateTime(RM.contextAsOf))}; PR snapshot refreshed ${esc(dateTime(DATA.collected_at))}. Only PRs annotated with verified TCWORK work or TCREVIEW review are included in the timelines; closed PRs remain included. Milestone mapping and worked/reviewed attribution remain explicit annotations. The review marker records verified coverage of the PR, not authorship of every public rubric observation.</p><p>Unchanged terminal evidence is retained; changed terminal PRs are refreshed. Earlier overwritten review rounds cannot be reconstructed. Route filters show only verified mappings.</p><p>${esc(RM.horizonNote)}</p>`;
 $("snapshot").innerHTML=`Snapshot ${esc(dateTime(DATA.collected_at))} · times and calendar windows in ${esc(LocalTime.zone)}; source timestamps UTC · ${sourceLink("https://github.com/utensil/formal-land/tree/main/geotopo","data and update instructions")} · standalone HTML; no network requests.`;
