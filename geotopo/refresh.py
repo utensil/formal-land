@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Refresh only explicitly selected public PRs; no credentials or bodies are stored."""
+"""Refresh all labeled GeometricTopology PRs and retain previously recorded history."""
 import argparse
 import concurrent.futures
 import datetime as dt
@@ -116,38 +116,70 @@ def collect(number, previous):
     }
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--all", action="store_true", help="also refresh terminal PRs; by default their evidence stays frozen")
-    parser.add_argument("--discover", action="store_true", help="list our unmapped GeometricTopology PRs without adding them")
-    args = parser.parse_args()
-    selection = json.loads((ROOT / "data/selection.json").read_text())
-    numbers = {item["number"] for item in selection}
-    if args.discover:
-        query = f"search/issues?q=repo%3A{REPO}%20is%3Apr%20author%3Autensil%20label%3Aroadmap%2FGeometricTopology&per_page=100"
-        result = api(query)
-        if result.get("incomplete_results") or result["total_count"] > 100:
+ROADMAP_LABEL = "roadmap/GeometricTopology"
+
+
+def discover():
+    """Paginate every state; never publish a truncated search inventory."""
+    query = f"search/issues?q=repo%3A{REPO}%20is%3Apr%20label%3Aroadmap%2FGeometricTopology&per_page=100"
+    found = {}
+    expected = None
+    for page in range(1, 11):
+        result = api(f"{query}&page={page}")
+        total = result["total_count"]
+        if result.get("incomplete_results") or total > 1000:
             raise RuntimeError("Discovery result incomplete; snapshot was not changed")
-        found = [item for item in result["items"] if item["number"] not in numbers]
-        for item in found:
-            print(f"#{item['number']} {clean_title(item['title'])}")
-        if not found:
-            print("No unmapped authored PRs. Reviewed-only PRs are added from verified review evidence.")
-        return
-    path = ROOT / "data/prs.json"
-    previous = json.loads(path.read_text()) if path.exists() else {"prs": []}
+        if expected is not None and expected != total:
+            raise RuntimeError("Discovery changed during pagination; retry the refresh")
+        expected = total
+        for item in result["items"]:
+            found[item["number"]] = item
+        if len(found) == total:
+            return found
+        if len(result["items"]) < 100:
+            break
+    raise RuntimeError("Discovery pagination incomplete; snapshot was not changed")
+
+
+def refresh_snapshot(selection, previous, discovered, refresh_all=False):
     cached = {pr["number"]: pr for pr in previous["prs"]}
-    todo = sorted(n for n in numbers if args.all or n not in cached or cached[n]["state"] not in {"merged", "closed"})
-    # Resolve every request before writing. An API failure leaves the prior snapshot intact.
+    mapped = {item["number"] for item in selection}
+    # Historical records survive closure, label removal and annotation edits.
+    numbers = set(cached) | mapped | set(discovered)
+    todo = sorted(n for n in numbers if refresh_all or n not in cached or
+                  cached[n]["state"] not in {"merged", "closed"} or
+                  (n in discovered and utc_timestamp(discovered[n]["updated_at"]) !=
+                   utc_timestamp(cached[n]["updated_at"])))
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
         fresh = list(pool.map(lambda n: collect(n, cached.get(n, {})), todo))
     cached.update({pr["number"]: pr for pr in fresh})
-    snapshot = {"collected_at": utc_timestamp(dt.datetime.now(dt.timezone.utc).isoformat()),
-                "prs": [cached[n] for n in sorted(numbers)]}
+    return {"collected_at": utc_timestamp(dt.datetime.now(dt.timezone.utc).isoformat()),
+            "coverage": {"label": ROADMAP_LABEL, "discovered": sorted(discovered),
+                         "retained": sorted(numbers - set(discovered))},
+            "prs": [cached[n] for n in sorted(numbers)]}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--all", action="store_true", help="also refresh unchanged terminal evidence")
+    parser.add_argument("--discover", action="store_true", help="list labeled PRs without milestone mappings")
+    args = parser.parse_args()
+    selection = json.loads((ROOT / "data/selection.json").read_text())
+    discovered = discover()
+    if args.discover:
+        mapped = {item["number"] for item in selection}
+        for number in sorted(set(discovered) - mapped):
+            item = discovered[number]
+            print(f"#{number} {item['state']} {clean_title(item['title'])}")
+        return
+    path = ROOT / "data/prs.json"
+    previous = json.loads(path.read_text()) if path.exists() else {"prs": []}
+    snapshot = refresh_snapshot(selection, previous, discovered, args.all)
     temporary = path.with_suffix(".json.tmp")
     temporary.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n")
     temporary.replace(path)
-    print(f"Refreshed {len(fresh)} selected PRs; retained {len(numbers) - len(fresh)} terminal records. Run python3 geotopo/build.py.")
+    print(f"Collected {len(snapshot['prs'])} PRs: {len(discovered)} labeled, "
+          f"{len(snapshot['coverage']['retained'])} retained historical records. Run python3 geotopo/build.py.")
 
 
 if __name__ == "__main__":
