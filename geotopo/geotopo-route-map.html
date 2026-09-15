@@ -165,7 +165,7 @@ th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);verti
   <div class="foot" style="margin-top:8px">Rows follow the dependency direction, with subrows for the four route trees. Node colors describe the specific milestone; a green chart-level construction does not make all of Layer 3 complete. Colored lanes are subgraphs of the roadmap dependency schematic, not Lean import claims. Hover or select a node for its contribution, remaining handoff and pinned source.</div>
   <div class="section-tools">
     <h2>PR activity timeline · full roadmap history</h2>
-    <label>PR lens <select id="cohort"><option value="all">All PRs</option><option value="worked">Worked on</option><option value="reviewed">Reviewed by us</option></select></label>
+    <label>PR lens <select id="cohort"><option value="all">TCWORK / TCREVIEW PRs</option><option value="worked">Worked on</option><option value="reviewed">Reviewed by us</option></select></label>
   </div>
   <div id="prtl" class="chart-scroll" tabindex="0" aria-label="PR state-transition chart"></div>
   <div class="chart-note" id="activity-note"></div>
@@ -278,7 +278,7 @@ function nodeState(n) {
   if (ps.some(p=>p.state === "merged")) return "done";
   return "incomplete";
 }
-function visiblePrs() {return PRS.filter(p=>(state.cohort !== "worked" || p.worked) && (state.cohort !== "reviewed" || p.reviewed) && (state.routes.size === GOALS.length || GOALS.some(g=>state.routes.has(g.id) && p.nodes.some(n=>routeNodes.get(g.id).has(n)))));}
+function visiblePrs() {return PRS.filter(p=>(p.worked || p.reviewed) && (state.cohort !== "worked" || p.worked) && (state.cohort !== "reviewed" || p.reviewed) && (state.routes.size === GOALS.length || GOALS.some(g=>state.routes.has(g.id) && p.nodes.some(n=>routeNodes.get(g.id).has(n)))));}
 const band = value => value >= 75 ? "#7fb069" : value >= 60 ? "#e5c07b" : "#c97b7b";
 
 function renderLegend() {
@@ -497,8 +497,8 @@ $("cohort").addEventListener("change",e=>{state.cohort=e.target.value;hideTip();
 let syncing=false;
 [$("prtl"),$("prhealth")].forEach((el,i,all)=>el.addEventListener("scroll",()=>{if(syncing)return;syncing=true;all[1-i].scrollLeft=el.scrollLeft;requestAnimationFrame(()=>syncing=false);}));
 const mergedCount=PRS.filter(p=>p.state==="merged").length,closedCount=PRS.filter(p=>p.state==="closed").length;
-$("stats").textContent=`${NODES.length} milestones · ${RM.edges.length} cited dependencies · ${PRS.length} roadmap-history PRs: ${mergedCount} merged, ${PRS.length-mergedCount-closedCount} open, ${closedCount} closed · ${PRS.filter(p=>p.reviewed).length} with verified review coverage. ◌ marks reviewed contributions. All PRs includes unmapped history. Route chips narrow the charts to mapped milestones.`;
-$("sources").innerHTML=`<p>${sourceLink(RM.roadmapUrl,"Pinned GeometricTopology roadmap")} · ${sourceLink(RM.reference,"SpinRep design reference")}</p><p>Roadmap context checked ${esc(dateTime(RM.contextAsOf))}; PR snapshot refreshed ${esc(dateTime(DATA.collected_at))}. All labeled GeometricTopology PRs are included, together with retained historical records. Milestone mapping and worked/reviewed attribution remain explicit annotations. The review marker records verified coverage of the PR, not authorship of every public rubric observation.</p><p>Unchanged terminal evidence is retained; changed terminal PRs are refreshed. Earlier overwritten review rounds cannot be reconstructed. Unmapped PRs appear under All PRs when all routes are enabled; route filters show only verified mappings.</p><p>${esc(RM.horizonNote)}</p>`;
+$("stats").textContent=`${NODES.length} milestones · ${RM.edges.length} cited dependencies · ${PRS.length} roadmap-history PRs: ${mergedCount} merged, ${PRS.length-mergedCount-closedCount} open, ${closedCount} closed · ${PRS.filter(p=>p.reviewed).length} with verified review coverage. ◌ marks reviewed contributions. Selected TCWORK/TCREVIEW PRs only; closed PRs remain in the timelines. Route chips narrow the charts to mapped milestones.`;
+$("sources").innerHTML=`<p>${sourceLink(RM.roadmapUrl,"Pinned GeometricTopology roadmap")} · ${sourceLink(RM.reference,"SpinRep design reference")}</p><p>Roadmap context checked ${esc(dateTime(RM.contextAsOf))}; PR snapshot refreshed ${esc(dateTime(DATA.collected_at))}. Only PRs annotated with verified TCWORK work or TCREVIEW review are included in the timelines; closed PRs remain included. Milestone mapping and worked/reviewed attribution remain explicit annotations. The review marker records verified coverage of the PR, not authorship of every public rubric observation.</p><p>Unchanged terminal evidence is retained; changed terminal PRs are refreshed. Earlier overwritten review rounds cannot be reconstructed. Route filters show only verified mappings.</p><p>${esc(RM.horizonNote)}</p>`;
 $("snapshot").innerHTML=`Snapshot ${esc(dateTime(DATA.collected_at))} · times and calendar windows in ${esc(LocalTime.zone)}; source timestamps UTC · ${sourceLink("https://github.com/utensil/formal-land/tree/main/geotopo","data and update instructions")} · standalone HTML; no network requests.`;
 </script>
 </body>
