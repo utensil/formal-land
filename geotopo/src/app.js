@@ -175,8 +175,9 @@ function transitions(pr) {
   all.sort((a,b)=>ms(a.at)-ms(b.at)).forEach(e=>{if(e.state!==last){result.push({...e,number:pr.number});last=e.state;}});
   return result;
 }
-const EVENTS=PRS.flatMap(transitions);
-const slots=LocalTime.slotsBetween(Math.min(...PRS.map(p=>ms(p.created_at))),ms(DATA.collected_at));
+const TRACKED=PRS.filter(p=>p.worked || p.reviewed);
+const EVENTS=TRACKED.flatMap(transitions);
+const slots=LocalTime.slotsBetween(Math.min(...TRACKED.map(p=>ms(p.created_at))),ms(DATA.collected_at));
 const t0=slots[0],t1=nextSlot(slots[slots.length-1]);
 const CW=Math.max(1560,slots.length*20+90),LEFT=60,RIGHT=CW-30;
 const xOf=t=>LEFT+(t-t0)/(t1-t0)*(RIGHT-LEFT);
@@ -249,6 +250,6 @@ $("cohort").addEventListener("change",e=>{state.cohort=e.target.value;hideTip();
 let syncing=false;
 [$("prtl"),$("prhealth")].forEach((el,i,all)=>el.addEventListener("scroll",()=>{if(syncing)return;syncing=true;all[1-i].scrollLeft=el.scrollLeft;requestAnimationFrame(()=>syncing=false);}));
 const mergedCount=PRS.filter(p=>p.state==="merged").length,closedCount=PRS.filter(p=>p.state==="closed").length;
-$("stats").textContent=`${NODES.length} milestones · ${RM.edges.length} cited dependencies · ${PRS.length} roadmap-history PRs: ${mergedCount} merged, ${PRS.length-mergedCount-closedCount} open, ${closedCount} closed · ${PRS.filter(p=>p.reviewed).length} with verified review coverage. ◌ marks reviewed contributions. Selected TCWORK/TCREVIEW PRs only; closed PRs remain in the timelines. Route chips narrow the charts to mapped milestones.`;
+$("stats").textContent=`${NODES.length} milestones · ${RM.edges.length} cited dependencies · ${TRACKED.length} attributed PRs: ${mergedCount} merged, ${PRS.length-mergedCount-closedCount} open, ${closedCount} closed · ${PRS.filter(p=>p.reviewed).length} with verified review coverage. ◌ marks reviewed contributions. Selected TCWORK/TCREVIEW PRs only; closed PRs remain in the timelines. Route chips narrow the charts to mapped milestones.`;
 $("sources").innerHTML=`<p>${sourceLink(RM.roadmapUrl,"Pinned GeometricTopology roadmap")} · ${sourceLink(RM.reference,"SpinRep design reference")}</p><p>Roadmap context checked ${esc(dateTime(RM.contextAsOf))}; PR snapshot refreshed ${esc(dateTime(DATA.collected_at))}. Only PRs annotated with verified TCWORK work or TCREVIEW review are included in the timelines; closed PRs remain included. Milestone mapping and worked/reviewed attribution remain explicit annotations. The review marker records verified coverage of the PR, not authorship of every public rubric observation.</p><p>Unchanged terminal evidence is retained; changed terminal PRs are refreshed. Earlier overwritten review rounds cannot be reconstructed. Route filters show only verified mappings.</p><p>${esc(RM.horizonNote)}</p>`;
 $("snapshot").innerHTML=`Snapshot ${esc(dateTime(DATA.collected_at))} · times and calendar windows in ${esc(LocalTime.zone)}; source timestamps UTC · ${sourceLink("https://github.com/utensil/formal-land/tree/main/geotopo","data and update instructions")} · standalone HTML; no network requests.`;
