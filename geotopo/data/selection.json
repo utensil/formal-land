@@ -258,5 +258,63 @@
       "https://github.com/TauCetiProject/TauCeti/pull/6531#issuecomment-5652371297"
     ],
     "scopeReset": 0
+  },
+  {
+    "number": 6766,
+    "nodes": [
+      "links"
+    ],
+    "worked": true,
+    "reviewed": false,
+    "reviewEvidence": [],
+    "scopeReset": 0
+  },
+  {
+    "number": 6767,
+    "nodes": [
+      "links"
+    ],
+    "worked": true,
+    "reviewed": true,
+    "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/6767#issuecomment-5674701224"
+    ],
+    "scopeReset": 0
+  },
+  {
+    "number": 6774,
+    "nodes": [
+      "links"
+    ],
+    "worked": true,
+    "reviewed": true,
+    "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/6774#issuecomment-5668185937"
+    ],
+    "scopeReset": 0
+  },
+  {
+    "number": 6781,
+    "nodes": [
+      "link-isotopy"
+    ],
+    "worked": true,
+    "reviewed": true,
+    "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/6781#issuecomment-5664444407"
+    ],
+    "scopeReset": 0
+  },
+  {
+    "number": 6783,
+    "nodes": [
+      "gluing"
+    ],
+    "worked": true,
+    "reviewed": true,
+    "reviewEvidence": [
+      "https://github.com/TauCetiProject/TauCeti/pull/6783#issuecomment-5676078177"
+    ],
+    "scopeReset": 0
   }
 ]
