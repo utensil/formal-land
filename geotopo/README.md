@@ -34,31 +34,26 @@ PR cannot complete it automatically. Bars show milestone states, not merged-PR
 fractions, effort or a percentage of mathematical completion. Shared work can
 appear on several cards; the charts deduplicate the selected PR cohort.
 
-The snapshot at **2026-09-14 02:49 UTC** includes 23 verified contributions:
-16 merged, two open and five closed without merging. Fourteen have verified review
-attribution, cross-checked against public review observations. Discovery checked
-all 112 GeometricTopology PRs, recent utensil-authored PRs and the review desk's
-published evidence; it found ten new authored contributions and no additional
-reviewed-only PRs. Context milestones remain visible without importing unrelated
-PRs into the charts.
+The snapshot at **2026-09-19 17:08 UTC** preserves 139 public PR records:
+134 currently labeled GeometricTopology PRs and five retained historical records.
+The charts select 37 verified contributions: 20 merged, eight open and nine closed
+without merging. Fourteen retain verified review attribution. Fourteen newly
+mapped contributions include the current knot-invariant, Whitney-topology and
+curvature work, plus earlier link and gluing attempts. Closed and relabeled
+attempts remain visible; authorship does not imply review attribution.
 
-The ten additions are #6355 (global collar data), #6396 (smooth link ambient
-isotopy), #6435 (ordered cylinder and Zeeman statement), #6475 (link component
-disjointness), #6486 (triangulability predicates), #6519 (closed circle-isotopy
-attempt), #6524 (global-chart Diff topology), #6528 (Gauss-to-PD component
-traversal), #6530 (mirror sign/writhe compatibility), and #6531 (diffeotopy group
-packaging). The previously open #6320 component-traversal contribution has merged.
+Since the previous snapshot, #6396, #6486, #6781 and #7568 have merged. The eight
+open contributions are #7552, #7559, #7577, #7579, #7588, #7592, #7595 and #7600;
+all are labeled `awaiting-author` at collection. Chart volume density #7595 is
+mapped from its title and changed source files; its public description currently
+contains unrelated Whitney-topology text. That metadata error does not move it
+to the Whitney milestone.
 
-At this snapshot, #6396 and #6486 remain open. #6396 is labeled `awaiting-author`
-and has a round-4 API-design block; #6486 is labeled `ci-failed` with a failing
-`sandboxed-build` check. #6524, #6530 and #6531 are closed without merging; #6524
-and #6531 have `roadmap/none` labels and failed sandboxed builds, while #6530
-closed with a scope block. #6528 merged and has a complete green exact-head board.
-Labels and exact-head check-run summaries are available in PR details and the
-supporting table. They are separate from review health: incomplete or stale
-current-head evidence remains unscored. Scores retain observed earlier-round
-penalties after a PR merges; they do not assert current CI or mathematical
-correctness.
+The three-manifold route now shows the curvature and volume work, and the knot
+route shows the two invariant-preservation PRs. Merged pointwise curvature does
+not establish a global volume measure or Ricci-flow development. The link-isotopy
+handoff has advanced to presentation equivalence, invariant agreement and
+complements. Missing or partial exact-head review evidence remains unscored.
 
 ## Data and updates
 
@@ -68,8 +63,9 @@ correctness.
 - `data/selection.json`: explicit PR-to-milestone mapping and worked/reviewed
   attribution. A reviewed marker requires a public evidence link. Authorship
   alone never establishes review attribution.
-- `data/prs.json`: public metadata and preserved review observations for exactly
-  the selected PRs. The collector stores no comment bodies or credentials.
+- `data/prs.json`: public metadata and preserved review observations for every
+  discovered labeled PR and retained historical record. The charts filter this
+  archive to explicitly attributed contributions. The collector stores no comment bodies or credentials.
 - `src/`: page template, shared SpinRep visual language and interaction code.
   `build.py` validates inputs and generates the standalone HTML deterministically.
 
@@ -86,10 +82,11 @@ node --check geotopo/src/app.js
 node --test geotopo/tests/time.test.cjs
 ```
 
-Discovery reports unmapped authored GeometricTopology PRs without adding them.
+Discovery paginates all labeled GeometricTopology PRs and reports those without
+milestone mappings. It does not infer worked/reviewed attribution.
 Reviewed-only PRs require an explicit entry supported by review evidence. Refresh
-updates new/open PRs and preserves terminal records; use `--all` to refresh every
-selected PR. A failed request leaves the previous snapshot intact. Successive
+updates new/open and changed terminal PRs, preserving unchanged terminal evidence;
+use `--all` to recollect every retained PR. A failed request leaves the previous snapshot intact. Successive
 refreshes preserve observations from edited comments and remove exact duplicates.
 Always inspect changed scope, source links and route frontiers before committing.
 
@@ -130,13 +127,14 @@ PRs received no review.
 
 The roadmap is pinned to `TauCetiProject/TauCetiRoadmap` commit
 `d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3`; source-context checks use
-`TauCetiProject/TauCeti` commit `cb3a8b39d615e65c4b1168118126b167073d745b`.
-The 13 September refresh verified that the pinned roadmap text is unchanged
-at roadmap head `d347d0841aa36be073aebcc678a7b6bb0d4b5188`. The Whitney
+`TauCetiProject/TauCeti` commit `d520d747c7e3ec7be86a48d85329095a883fee8d`.
+The 20 September (Singapore time) refresh verified that the pinned roadmap text is unchanged
+at roadmap head `59c6b0bd3ce81d43f37a2cc4a20d8ee9333465ca`. The Whitney
 coordinate milestone includes global-chart topology, manifold-source
 vector-valued jets and normed-space smooth-family continuity. General target
 charts and the general manifold map into `Diff(M)` remain separate open milestones.
-The global-chart Diff contribution is a separate milestone under review. Global
+The earlier global-chart Diff contribution closed without merging; the general
+manifold-target Whitney topology in #7592 remains under review. Global
 collar data is available, but global collar existence and gluing remain open.
 The Zeeman statement and its cylinder API are available; the conjecture remains
 open and is never counted as a proved summit.

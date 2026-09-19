@@ -5,7 +5,7 @@
   "timezone": "UTC",
   "roadmapRevision": "d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3",
   "roadmapUrl": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md",
-  "contextAsOf": "2026-09-13T10:11:16.577034Z",
+  "contextAsOf": "2026-09-19T17:08:06.160516Z",
   "reference": "https://utensil.github.io/formal-land/spinrep/spinrep-route-map.html",
   "rows": [
     {
@@ -149,8 +149,8 @@
       "label": "global gluing",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L209",
-      "summary": "Glue along boundaries, then construct connected sums and knot complements.",
-      "remaining": "Assemble global collars and the gluing interface.",
+      "summary": "Global collar data is available, while the topological gluing quotient attempt #6783 closed without merging.",
+      "remaining": "Global collar existence and the manifold gluing theorem remain open; no quotient substrate is attributed to that closed attempt.",
       "x": 1250
     },
     {
@@ -190,8 +190,8 @@
       "label": "metric / curvature",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L626",
-      "summary": "Riemannian structures consume manifold foundations and the external Hopf–Rinow connection.",
-      "remaining": "Volume and curvature interfaces remain a broad prerequisite track."
+      "summary": "Pointwise curvature tensors are available from #7568. Metric skew-adjointness, Ricci contraction, first Bianchi, smooth tensor fields and chart volume densities are under review in #7577, #7579, #7588, #7600 and #7595.",
+      "remaining": "Complete the reviewed curvature APIs and chart densities, then construct the global volume measure and geometric consumers. These contributions do not supply Ricci flow."
     },
     {
       "id": "hyperbolic",
@@ -220,8 +220,8 @@
       "label": "Whitney coordinate APIs",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L372",
-      "summary": "Weak Whitney topology in a global chart, manifold-source vector-valued chart jets, and continuity of smooth families between normed spaces are available.",
-      "remaining": "Assemble general target charts and the manifold smooth-family map into Diff(M).",
+      "summary": "Global-chart weak Whitney topology, manifold-source vector-valued chart jets and manifold smooth-family continuity are available, including the later #7198 source-family result.",
+      "remaining": "General target-chart assembly is under review in #7592; continuity of the full manifold smooth-family map into Diff(M) remains separate.",
       "x": 760
     },
     {
@@ -231,8 +231,8 @@
       "label": "general Whitney topology",
       "status": "branch",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L372",
-      "summary": "Assemble coordinate jets into the weak Whitney topology for general manifold targets, then restrict to Diff(M).",
-      "remaining": "Source-chart jets are available; general target-chart assembly and the topological-group interface remain open.",
+      "summary": "Source-chart jets and their manifold smooth-family continuity are available. #7592 proposes the weak Whitney topology for general manifold-valued maps, with compact chart-validity tests.",
+      "remaining": "The manifold-target topology remains under review; the induced Diff(M) topology and topological-group interface remain separate.",
       "x": 1120
     },
     {
@@ -296,8 +296,8 @@
       "label": "smooth links",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L426",
-      "summary": "Finite-component smooth links use pairwise-disjoint smooth circles; disjointness of component ranges now has an explicit characterization.",
-      "remaining": "Framings and link-complement interfaces remain separate work.",
+      "summary": "Finite-component smooth links use pairwise-disjoint smooth circles, with merged smooth ambient-isotopy work. The membership and component-restriction attempts #6766, #6767 and #6774 closed without merging.",
+      "remaining": "Framings and link-complement interfaces remain separate work; the closed membership/restriction attempts are retained only as history.",
       "x": 850
     },
     {
@@ -383,8 +383,8 @@
       "label": "invariant agreement",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L473",
-      "summary": "Alexander/Jones algorithms should agree across presentations and compute on small knots.",
-      "remaining": "Agreement tests consume the correspondence maps.",
+      "summary": "The signature and normalized-bracket APIs now have proposed enlargement invariance (#7559) and planar clasp/Reidemeister-two invariance (#7552). Both remain under review.",
+      "remaining": "Resolve the reviewed API and planarity obligations, then prove invariant agreement across the geometric and combinatorial presentations.",
       "x": 1450
     },
     {
@@ -942,8 +942,8 @@
       "label": "smooth link isotopy",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L440",
-      "summary": "A smooth ambient-isotopy setoid for links uses the shared diffeotopy API; complement homeomorphism invariance is included.",
-      "remaining": "Exact-head review is separate from constructing compact complements with boundary.",
+      "summary": "Merged #6396 and #6781 provide smooth ambient-isotopy APIs for links and component-relabeling compatibility.",
+      "remaining": "Compact link complements with boundary and their geometric presentation correspondences remain separate targets.",
       "x": 370
     },
     {
@@ -1731,10 +1731,10 @@
         "gauss-pd-naturality--diagram-hub"
       ],
       "frontier": [
-        "link-isotopy",
-        "gauss-pd-components",
         "diagram-hub",
-        "complement"
+        "invariants",
+        "complement",
+        "slopes"
       ],
       "insight": "Property P and Freedman slicing share the knot/link presentations and geometric equivalence machinery. Surgery and four-dimensional sliceness then branch apart: neither theorem is a stepping stone to the other.",
       "finish": "Complete both theorem branches: Property P and Alexander-one topological slicing, with their separate deep proof inputs.",
@@ -1978,9 +1978,9 @@
         "triangulation-types--triangulability"
       ],
       "frontier": [
-        "triangulation-types",
         "combinatorial",
-        "pl-comparison"
+        "pl-comparison",
+        "smooth-triangulation"
       ],
       "insight": "Realization and local links form the shared simplicial trunk. Smooth/PL comparison, general triangulability and cylinder collapse are distinct branches. Our contractible-complex contribution sits on the collapse branch.",
       "finish": "Prove the Whitehead comparison; retain Manolescu as a statement target and Zeeman as an explicitly open conjecture.",
