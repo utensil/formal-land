@@ -34,26 +34,26 @@ PR cannot complete it automatically. Bars show milestone states, not merged-PR
 fractions, effort or a percentage of mathematical completion. Shared work can
 appear on several cards; the charts deduplicate the selected PR cohort.
 
-The snapshot at **2026-09-19 17:08 UTC** preserves 139 public PR records:
-134 currently labeled GeometricTopology PRs and five retained historical records.
-The charts select 37 verified contributions: 20 merged, eight open and nine closed
-without merging. Fourteen retain verified review attribution. Fourteen newly
-mapped contributions include the current knot-invariant, Whitney-topology and
-curvature work, plus earlier link and gluing attempts. Closed and relabeled
+The snapshot at **2026-09-24 06:16 UTC** preserves 149 public PR records:
+144 currently labeled GeometricTopology PRs and five retained historical records.
+The charts select 41 verified contributions: 29 merged, two open and ten closed
+without merging. Fourteen retain verified review attribution. Closed and relabeled
 attempts remain visible; authorship does not imply review attribution.
 
-Since the previous snapshot, #6396, #6486, #6781 and #7568 have merged. The eight
-open contributions are #7552, #7559, #7577, #7579, #7588, #7592, #7595 and #7600;
-all are labeled `awaiting-author` at collection. Chart volume density #7595 is
-mapped from its title and changed source files; its public description currently
-contains unrelated Whitney-topology text. That metadata error does not move it
-to the Whitney milestone.
+Four newly mapped TCWORK contributions are the open
+[half-space collar](https://github.com/TauCetiProject/TauCeti/pull/8204) and
+[compact closed-embedding bridge](https://github.com/TauCetiProject/TauCeti/pull/8221),
+and the merged [crossing-free-circle insertion](https://github.com/TauCetiProject/TauCeti/pull/8210)
+and [Jones-unit braid relations](https://github.com/TauCetiProject/TauCeti/pull/8238).
+The collar remains scope-blocked; the embedding bridge has only partial review
+evidence at its current head. The closed concordance-symmetry and empty-annulus
+attempts remain in the public archive without being selected as milestone work.
 
-The three-manifold route now shows the curvature and volume work, and the knot
-route shows the two invariant-preservation PRs. Merged pointwise curvature does
-not establish a global volume measure or Ricci-flow development. The link-isotopy
-handoff has advanced to presentation equivalence, invariant agreement and
-complements. Missing or partial exact-head review evidence remains unscored.
+The curvature and chart-volume work is merged, but a global Riemannian volume
+measure and Ricci flow remain open. The knot route shows merged signature
+enlargement invariance and algebraic Jones braid relations; the planar-clasp
+attempt closed without the general planarity bridge. Missing or partial
+exact-head review evidence remains unscored.
 
 ## Data and updates
 
@@ -126,16 +126,14 @@ PRs received no review.
 ## Source and publication boundaries
 
 The roadmap is pinned to `TauCetiProject/TauCetiRoadmap` commit
-`d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3`; source-context checks use
+`d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3`; the original source-context checks used
 `TauCetiProject/TauCeti` commit `d520d747c7e3ec7be86a48d85329095a883fee8d`.
-The 20 September (Singapore time) refresh verified that the pinned roadmap text is unchanged
-at roadmap head `59c6b0bd3ce81d43f37a2cc4a20d8ee9333465ca`. The Whitney
-coordinate milestone includes global-chart topology, manifold-source
-vector-valued jets and normed-space smooth-family continuity. General target
-charts and the general manifold map into `Diff(M)` remain separate open milestones.
-The earlier global-chart Diff contribution closed without merging; the general
-manifold-target Whitney topology in #7592 remains under review. Global
-collar data is available, but global collar existence and gluing remain open.
+The 24 September refresh verified that the pinned roadmap text is unchanged at
+roadmap head `9fad8acfc576deda250a8456c45c1e47ff467b0f` (blob `fd4e32528f618867c27c56358edcb00a81146fa1`);
+TauCeti `main` was `7bd3737e32072fa55649d35606a71e538dcedf72`.
+The general manifold-valued weak Whitney topology and smooth-family continuity
+into `Diff(M)` have merged; continuity of group operations remains separate.
+Global collar data is available, but global collar existence and gluing remain open.
 The Zeeman statement and its cylinder API are available; the conjecture remains
 open and is never counted as a proved summit.
 

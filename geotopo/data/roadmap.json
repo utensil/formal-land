@@ -5,7 +5,7 @@
   "timezone": "UTC",
   "roadmapRevision": "d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3",
   "roadmapUrl": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md",
-  "contextAsOf": "2026-09-19T17:08:06.160516Z",
+  "contextAsOf": "2026-09-24T06:21:03Z",
   "reference": "https://utensil.github.io/formal-land/spinrep/spinrep-route-map.html",
   "rows": [
     {
@@ -170,8 +170,8 @@
       "label": "locally flat embeddings",
       "status": "done",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L288",
-      "summary": "Local flatness and local bicollars provide tame topological embeddings.",
-      "remaining": ""
+      "summary": "Local flatness and local bicollars are available. A compact-source closed-embedding bridge is under review.",
+      "remaining": "The proposed compact-source bridge has not cleared its full review."
     },
     {
       "id": "bicollar",
@@ -190,8 +190,8 @@
       "label": "metric / curvature",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L626",
-      "summary": "Pointwise curvature tensors are available from #7568. Metric skew-adjointness, Ricci contraction, first Bianchi, smooth tensor fields and chart volume densities are under review in #7577, #7579, #7588, #7600 and #7595.",
-      "remaining": "Complete the reviewed curvature APIs and chart densities, then construct the global volume measure and geometric consumers. These contributions do not supply Ricci flow."
+      "summary": "Pointwise curvature, metric skew-adjointness, Ricci contraction, first Bianchi, smooth tensor fields, chart volume densities and overlap-compatible local measures are merged.",
+      "remaining": "Construct the global volume measure and its isometry invariance. These contributions do not supply Ricci flow."
     },
     {
       "id": "hyperbolic",
@@ -220,8 +220,8 @@
       "label": "Whitney coordinate APIs",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L372",
-      "summary": "Global-chart weak Whitney topology, manifold-source vector-valued chart jets and manifold smooth-family continuity are available, including the later #7198 source-family result.",
-      "remaining": "General target-chart assembly is under review in #7592; continuity of the full manifold smooth-family map into Diff(M) remains separate.",
+      "summary": "Global-chart weak Whitney topology, manifold-source vector-valued chart jets and manifold smooth-family continuity are available.",
+      "remaining": "General manifold-valued weak Whitney topology and smooth-family continuity into Diff(M) are now available; topological-group operation continuity remains separate.",
       "x": 760
     },
     {
@@ -231,8 +231,8 @@
       "label": "general Whitney topology",
       "status": "branch",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L372",
-      "summary": "Source-chart jets and their manifold smooth-family continuity are available. #7592 proposes the weak Whitney topology for general manifold-valued maps, with compact chart-validity tests.",
-      "remaining": "The manifold-target topology remains under review; the induced Diff(M) topology and topological-group interface remain separate.",
+      "summary": "Source-chart jets and the general manifold-valued weak Whitney topology are available, with compact chart-validity tests and continuous evaluation. Diff(M) has the induced topology and smooth-family continuity.",
+      "remaining": "Continuity of composition and inversion for the topological-group interface remains separate.",
       "x": 1120
     },
     {
@@ -240,10 +240,10 @@
       "row": "homotopy",
       "layer": "L3",
       "label": "smooth families → Diff",
-      "status": "open",
+      "status": "done",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L379",
-      "summary": "A smooth family of manifold diffeomorphisms should induce a continuous map into Diff(M). The normed-space analytic step is now available.",
-      "remaining": "Lift coordinate-family continuity to the assembled manifold topology; no unconditional converse.",
+      "summary": "A jointly smooth family of manifold diffeomorphisms induces a continuous map into Diff(M) with its induced weak Whitney topology.",
+      "remaining": "No unconditional converse is claimed; topological-group operation continuity is a separate target.",
       "x": 370
     },
     {
@@ -318,7 +318,7 @@
       "label": "oriented PD codes",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L429",
-      "summary": "Oriented PD-code data and component traversal are available, with crossing-free components handled separately.",
+      "summary": "Oriented PD-code data, component traversal and crossing-free-circle insertion are available.",
       "remaining": "The inverse PD-to-Gauss map, quotient correspondence and planar realizability remain separate obligations.",
       "x": 1450
     },
@@ -383,8 +383,8 @@
       "label": "invariant agreement",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L473",
-      "summary": "The signature and normalized-bracket APIs now have proposed enlargement invariance (#7559) and planar clasp/Reidemeister-two invariance (#7552). Both remain under review.",
-      "remaining": "Resolve the reviewed API and planarity obligations, then prove invariant agreement across the geometric and combinatorial presentations.",
+      "summary": "Signature invariance under enlargement is merged. The planar clasp/Reidemeister-two attempt closed without a general planarity bridge; Jones-unit braid relations are an algebraic step toward Reidemeister III, not diagram-level invariance.",
+      "remaining": "Prove the general planarity bridge and invariant agreement across geometric and combinatorial presentations.",
       "x": 1450
     },
     {
@@ -909,8 +909,8 @@
       "label": "global collar data",
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L204",
-      "summary": "IsCollar / IsCollared describe a global product neighborhood, with restriction, scaling and homeomorphism transport.",
-      "remaining": "Existence for arbitrary manifold boundaries and smooth global gluing remain separate.",
+      "summary": "IsCollar / IsCollared describe a global product neighborhood, with restriction, scaling and homeomorphism transport. A standard half-space model is under scope review.",
+      "remaining": "The model has not cleared review; existence for arbitrary manifold boundaries and smooth global gluing remain separate.",
       "x": 730
     },
     {
@@ -921,7 +921,7 @@
       "status": "open",
       "source": "https://github.com/TauCetiProject/TauCetiRoadmap/blob/d58f0b411ad04e1074ba20a69d1c5fb0c4b88da3/TauCetiRoadmap/GeometricTopology/README.md#L372",
       "summary": "Weak Whitney topology on self-diffeomorphisms in a global chart, with derivative convergence and smooth-family continuity.",
-      "remaining": "General manifold target charts and continuity of group operations remain separate.",
+      "remaining": "General manifold target charts are now available; continuity of group operations remains separate.",
       "x": 370
     },
     {
