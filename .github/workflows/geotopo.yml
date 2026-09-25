@@ -6,10 +6,6 @@ on:
     paths:
       - '.github/workflows/geotopo.yml'
       - 'geotopo/**'
-  pull_request:
-    paths:
-      - '.github/workflows/geotopo.yml'
-      - 'geotopo/**'
   workflow_dispatch:
 
 jobs:
@@ -18,27 +14,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Validate the standalone page
+      - name: Restore github-pages cache
+        uses: actions/cache/restore@v4
+        with:
+            path: github-pages
+            key: github-pages-${{ github.run_id }}
+            restore-keys: |
+              github-pages
+      - name: Stage pages
         run: |
-          # The JSON inputs are private (a published page is one self-contained
-          # HTML carrying its own data), so this checkout usually has none and
-          # the build check is skipped here; run it locally, where the private
-          # data lives. The unit tests guard themselves the same way.
-          if [ -f geotopo/data/prs.json ]; then
-            python3 geotopo/build.py --check
-          else
-            echo "No private data in this checkout; skipping build.py --check (run it locally)."
-          fi
-          python3 -m unittest discover -s geotopo/tests -v
-          node --check geotopo/src/app.js
-          node --test geotopo/tests/time.test.cjs
-      - name: Stage standalone output
-        run: |
-          mkdir staging-geotopo
-          cp geotopo/geotopo-route-map.html geotopo/README.md staging-geotopo/
+          # Stage exactly the current tree: delete-then-copy so files removed
+          # from geotopo/ drop out of the cached github-pages directory instead
+          # of persisting. The generator, its tests and the JSON inputs are
+          # private, so there is nothing to build here: this directory holds the
+          # published page and nothing else.
+          rm -rf github-pages/geotopo
+          mkdir -p github-pages/geotopo
+          cp -R geotopo/. github-pages/geotopo/
+      - name: Save github-pages cache
+        uses: actions/cache/save@v4
+        with:
+            path: github-pages
+            key: github-pages-${{ github.run_id }}
       - name: Upload pages artifact
         uses: actions/upload-artifact@v4
         with:
           name: pages-geotopo
-          path: staging-geotopo
+          path: github-pages/geotopo
           if-no-files-found: error
