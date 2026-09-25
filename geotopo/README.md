@@ -66,7 +66,8 @@ exact-head review evidence remains unscored.
 - `data/prs.json`: public metadata and preserved review observations for every
   discovered labeled PR and retained historical record. The charts filter this
   archive to explicitly attributed contributions. The collector stores no comment bodies or credentials.
-- `src/`: page template, shared SpinRep visual language and interaction code.
+- `src/`: page template, and the visual language and interaction code shared
+  with the spin representations map.
   `build.py` validates inputs and generates the standalone HTML deterministically.
 
 From the repository root, with Python 3 and authenticated GitHub CLI available:

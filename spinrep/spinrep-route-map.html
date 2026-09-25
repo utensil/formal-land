@@ -1,6 +1,6 @@
 <!--
 ---
-title: SpinRep route map
+title: Spin representations route map
 repo: utensil/formal-land/spinrep/spinrep-route-map.html
 public-url: https://utensil.github.io/formal-land/spinrep/spinrep-route-map.html
 ---
@@ -10,7 +10,7 @@ public-url: https://utensil.github.io/formal-land/spinrep/spinrep-route-map.html
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SpinRep route map — dependency graph with goal-colored routes</title>
+<title>Spin representations route map — dependency graph with goal-colored routes</title>
 <style>
 :root{
   --bg:#232323; --card:#2b2b2b; --line:#3d3d3d; --fg:#e6e1dc; --muted:#9d9485;
@@ -109,21 +109,21 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 </head>
 <body>
 <div class="wrap">
-<h1>SpinRep route map</h1>
+<h1>Spin representations route map</h1>
 <div class="sub">The SpinRepresentations roadmap as a dependency graph: gray dashed edges are the dependency spine, each goal draws its route in its own color toward its summit, and a shared edge splits into one lane per goal. The goals shown do not cap target selection — uncovered roadmap targets and their direct RepresentationTheory prerequisites qualify as cohesive slices — and a new goal is one entry in the <code>GOALS</code> array.</div>
 <h2>Goals</h2>
 <div class="legend" id="legend"></div>
 <div class="goals" id="goals"></div>
 
-<h2>The map (all spinrep)</h2>
+<h2>The map (all spin representations)</h2>
 <div id="stats" class="sub" style="margin-top:6px"></div>
-<div class="sub" style="font-size:12px;margin-top:2px">Collected as PRs labelled <code>roadmap/RepresentationTheory</code> whose changed files touch <span class="refLink" id="dirsRef">the spinrep directories</span>, plus the lane's goal PRs.</div>
-<div class="sub" style="font-size:12px;margin-top:2px">The lane also advances the orthogonal and spin groups roadmap: its PRs (label <code>roadmap/OrthogonalSpinGroups</code>) are listed on the <a class="prlink pr-neutral" href="spingrp-route-map.html">spin groups route map</a> and are not counted here.</div>
+<div class="sub" style="font-size:12px;margin-top:2px">Collected as PRs labelled <code>roadmap/RepresentationTheory</code> whose changed files touch <span class="refLink" id="dirsRef">the spin representations directories</span>, plus the lane's goal PRs.</div>
+<div class="sub" style="font-size:12px;margin-top:2px">The lane also advances the orthogonal and spin groups roadmap: its PRs (label <code>roadmap/OrthogonalSpinGroups</code>) are listed on the <a class="prlink pr-neutral" href="spingrp-route-map.html">orthogonal and spin groups route map</a> and are not counted here.</div>
 <svg id="map" viewBox="0 0 1420 1180" preserveAspectRatio="xMidYMin meet"></svg>
 
 <div class="foot">The SpinRepresentations roadmap as a dependency graph · node states: merged / in review / unstarted / next up · goal colors follow the legend · rows follow the dependency spine (topological order), not the roadmap's layer numbering: Layer 1's structure theorem sits below the spin module because it is proved forward from it, so every dependency edge points downward and routes never travel upward.</div>
 <div class="foot" style="margin-top:8px">E₈: a scale-specific consumer of the bivector/Lie bridge (route γ), not a target — <a class="prlink pr-neutral" href="https://leanprover.zulipchat.com/#narrow/channel/217875-Is-there-code-for-X.3F/topic/E.E2.82.88.20Lie.20algebra.20formalization.20.2B.20sparse.20Jacobi.20.2B.20scalability" target="_blank" rel="noopener">Zulip thread</a> · <a class="prlink pr-neutral" href="https://leanprover.zulipchat.com/#narrow/channel/217875-Is-there-code-for-X.3F/topic/E.E2.82.88.20Lie.20algebra.20formalization.20.2B.20sparse.20Jacobi.20.2B.20scalability/near/580290449" target="_blank" rel="noopener">msg 580290449</a></div>
-<div class="foot" style="margin-top:8px">Siblings: <a class="prlink pr-neutral" href="spingrp-route-map.html">spin groups route map</a></div><h2>History window</h2>
+<div class="foot" style="margin-top:8px">Siblings: <a class="prlink pr-neutral" href="spingrp-route-map.html">orthogonal and spin groups route map</a></div><h2>History window</h2>
 <div id="prmini"></div>
 <div class="sub" style="font-size:12px;margin-top:2px"><span id="prwincap"></span></div>
 <div class="hlegend" style="margin-top:4px">
@@ -140,7 +140,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 <div id="prtl"></div>
 <div class="sub" style="font-size:12px;margin-top:6px">hover a column for the activity list</div>
 
-<h2>PR health timeline (all spinrep)</h2>
+<h2>PR health timeline (all spin representations)</h2>
 <div id="prhealth"></div>
 <div class="hlegend">
   <span class="s"><span class="d" style="background:#cc7833;border-radius:2px"></span>median — 3-day rolling (per-day cache)</span>
@@ -733,7 +733,7 @@ tip.addEventListener("mouseleave", () => { clearTimeout(hideTimer); hideTip(); }
     ["Topology/Algebra/Group", 4, "quotient local sections"],
   ];
   const link = d => '<a class="prlink pr-neutral" href="' + TREE + d + '" target="_blank" rel="noopener">TauCeti/' + d + "</a>";
-  const html = "<b>the spinrep directories</b>" +
+  const html = "<b>the spin representations directories</b>" +
     '<div class="tstatus">labelled PRs are tracked from these trees; the count is how many tracked PRs touch each:</div>' +
     DIRS.map(d => '<div class="tstatus">' + link(d[0]) + " · " + d[1] + (d[2] ? " · " + d[2] : "") + "</div>").join("") +
     '<div class="tstatus">plus a long tail of single-PR families (SkewAdjoint, Analysis/Normed, Geometry/Manifold, RingTheory/Idempotents, Algebra/AlgebraicGroup, …)</div>' +
@@ -786,10 +786,10 @@ Object.assign(UP_MERGED, {
 const OPEN_TS = {"6493": "2026-09-23T20:43:35Z", "8356": "2026-09-23T18:20:16Z", "8372": "2026-09-23T18:54:47Z", "8493": "2026-09-24T02:29:38Z", "8515": "2026-09-24T05:07:03Z"};
 const EXT_HEALTH = {"1473":{"h":58,"A":2,"D":6,"H":4,"L":0,"B":0,"U":0,"failed":["api-design","documentation","generality","naming","proof-quality","reuse"]},"1499":{"h":91,"A":3,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"1510":{"h":91,"A":3,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"1561":{"h":94,"A":2,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"1611":{"h":67,"A":4,"D":3,"H":3,"L":0,"B":0,"U":0,"failed":["api-design","proof-quality","reuse"]},"1742":{"h":94,"A":2,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"1804":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"2224":{"h":91,"A":3,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"2334":{"h":68,"A":0,"D":5,"H":4,"L":0,"B":0,"U":0,"failed":["api-design","documentation","generality","proof-quality","scope"]},"2503":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"2505":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"2506":{"h":79,"A":1,"D":3,"H":2,"L":0,"B":0,"U":0,"failed":["documentation","generality","reuse"]},"2510":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"2511":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"2512":{"h":38,"A":3,"D":8,"H":5,"L":1,"B":0,"U":0,"failed":["api-design","attribution","documentation","generality","naming","proof-quality","reuse","scope"]},"2513":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"2518":{"h":93,"A":0,"D":1,"H":1,"L":0,"B":0,"U":0,"failed":["api-design"]},"2525":{"h":79,"A":0,"D":3,"H":3,"L":0,"B":0,"U":0,"failed":["api-design","generality","reuse"]},"2546":{"h":97,"A":1,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"2547":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"2562":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"2604":{"h":96,"A":0,"D":1,"H":0,"L":0,"B":0,"U":0,"failed":["naming"]},"2606":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"2670":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"2925":{"h":74,"A":1,"D":3,"H":2,"L":0,"B":0,"U":1,"failed":["api-design","naming","reuse"]},"3049":{"h":63,"A":2,"D":2,"H":2,"L":2,"B":0,"U":1,"failed":["proof-quality","reuse"]},"3056":{"h":56,"A":4,"D":5,"H":4,"L":0,"B":0,"U":0,"failed":["api-design","generality","placement","proof-quality","reuse"]},"3378":{"h":97,"A":1,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]} ,"3151":{"h":56,"A":6,"D":5,"H":2,"L":0,"B":0,"U":0,"failed":["correctness","naming","placement","proof-quality","reuse"]},"3332":{"h":94,"A":2,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"3614":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"3655":{"h":46,"A":5,"D":6,"H":3,"L":1,"B":0,"U":0,"failed":["api-design","attribution","documentation","placement","proof-quality","reuse"]},"3719":{"h":40,"A":4,"D":9,"H":4,"L":0,"B":0,"U":0,"failed":["api-design","attribution","correctness","documentation","generality","naming","placement","proof-quality","reuse"]},"3839":{"h":67,"A":5,"D":3,"H":2,"L":0,"B":0,"U":0,"failed":["api-design","naming","proof-quality"]},"3859":{"h":44,"A":2,"D":8,"H":4,"L":1,"B":0,"U":0,"failed":["api-design","correctness","documentation","generality","naming","placement","proof-quality","reuse"]},"3053":{"h":61,"A":5,"D":3,"H":2,"L":1,"B":0,"U":0,"failed":["api-design","placement","reuse"]},"4103":{"h":57,"A":1,"D":7,"H":4,"L":0,"B":0,"U":0,"failed":["api-design","documentation","generality","naming","placement","proof-quality","reuse"]},"4220":{"h":37,"A":7,"D":6,"H":4,"L":1,"B":0,"U":0,"failed":["api-design","documentation","generality","naming","proof-quality","reuse"]},"4287":{"h":87,"A":2,"D":1,"H":1,"L":0,"B":0,"U":0,"failed":["api-design"]},"4637":{"h":91,"A":3,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"3871":{"h":35,"A":5,"D":8,"H":4,"L":1,"B":0,"U":0,"failed":["api-design","correctness","documentation","generality","naming","placement","proof-quality","reuse"]},"4081":{"h":80,"A":2,"D":2,"H":2,"L":0,"B":0,"U":0,"failed":["api-design","reuse"]},"4239":{"h":88,"A":1,"D":1,"H":0,"L":0,"B":0,"U":1,"failed":["naming"]},"5150":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"5155":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"5102":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"5215":{"h":54,"A":1,"D":7,"H":5,"L":0,"B":0,"U":0,"failed":["api-design","generality","naming","placement","proof-quality","reuse","scope"]},"6097":{"h":60,"A":3,"D":4,"H":3,"L":1,"B":0,"U":0,"failed":["api-design","generality","naming","reuse"]},"4419":{"h":62,"A":3,"D":5,"H":3,"L":0,"B":0,"U":0,"failed":["api-design","documentation","generality","placement","reuse"]},"7466":{"h": 85, "A": 0, "D": 3, "H": 1, "L": 0, "B": 0, "U": 0, "failed": ["documentation", "generality", "naming"]},"8258":{"h": 76, "A": 2, "D": 3, "H": 2, "L": 0, "U": 0, "failed": ["documentation", "generality", "reuse"], "boards": 3, "full": 3},"8304":{"h": 100, "A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "failed": [], "boards": 1, "full": 1}};
 const REVIEWED = {
-  "3809": [12, 52, "Layer-5 Casimir and highest-weight infrastructure for the SpinRep route"],
+  "3809": [12, 52, "Layer-5 Casimir and highest-weight infrastructure for the spin representations route"],
   "3839": [10, 26, "even Clifford structure theorem on half-spinors"],
   "3859": [8, 31, "Clifford volume element"],
-  "3871": [20, 55, "real-form/Frobenius-Schur for SpinRep reality questions"],
+  "3871": [20, 55, "real-form/Frobenius-Schur for spin representations reality questions"],
   "4220": [10, 27, "trivial highest-weight modules"],
   "4239": [5, 5, "Layer-5/6 tensor weight-space decomposition for spin-chain characters"]
 };

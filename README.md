@@ -9,10 +9,10 @@ The following projects are agent work closely steered by me, with guidance from 
 <!-- [![SpinRep CI](https://github.com/utensil/formal-land/actions/workflows/spinrep.yml/badge.svg)](https://github.com/utensil/formal-land/actions/workflows/spinrep.yml) -->
 
 - Working on [TauCetiProject/TauCeti](https://github.com/TauCetiProject/TauCeti) roadmaps
-    - [SpinRep](https://utensil.github.io/formal-land/spinrep/spinrep-route-map.html)
+    - [Spin representations](https://utensil.github.io/formal-land/spinrep/spinrep-route-map.html)
         - [math notes (agent drafted)](https://utensil.github.io/forest/fcap-0019/)
-        - [orthogonal and spin groups](https://utensil.github.io/formal-land/spinrep/spingrp-route-map.html): roadmap routes, PR activity and review health
-    - [Geometric topology](https://utensil.github.io/formal-land/geotopo/geotopo-route-map.html): roadmap routes, PR activity and review health
+    - [Orthogonal and spin groups](https://utensil.github.io/formal-land/spinrep/spingrp-route-map.html)
+    - [Geometric topology](https://utensil.github.io/formal-land/geotopo/geotopo-route-map.html)
 - [FGAP](https://github.com/utensil/fgap): Study the foundational gap between established mathematical tools and open questions about physical structures, grounded by formalization.
     - [math notes (agent drafted)](https://utensil.github.io/forest/fgap-0001/)
 - [FCAP](https://github.com/utensil/fcap): Build a modern library of Clifford algebras in Lean for efficient symbolic and numerical computation, with formal verification of both its mathematical foundations and executable implementations.

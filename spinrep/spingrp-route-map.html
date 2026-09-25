@@ -1,6 +1,6 @@
 <!--
 ---
-title: Spin groups route map
+title: Orthogonal and spin groups route map
 repo: utensil/formal-land/spinrep/spingrp-route-map.html
 public-url: https://utensil.github.io/formal-land/spinrep/spingrp-route-map.html
 ---
@@ -10,7 +10,7 @@ public-url: https://utensil.github.io/formal-land/spinrep/spingrp-route-map.html
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spin groups route map — the orthogonal and spin groups roadmap</title>
+<title>Orthogonal and spin groups route map — dependency graph with goal-colored routes</title>
 <style>
 :root{
   --bg:#232323; --card:#2b2b2b; --line:#3d3d3d; --fg:#e6e1dc; --muted:#9d9485;
@@ -109,8 +109,8 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 </head>
 <body>
 <div class="wrap">
-<h1>Spin groups route map</h1>
-<div class="sub">The <b>orthogonal and spin groups</b> roadmap as a dependency graph: gray dashed edges are its stated layer order, each goal draws its route in its own color toward its summit, and a shared edge splits into one lane per goal. Rows are the roadmap's four layers and the nodes carry its own bullet ids (0A–3H). Siblings: <a class="prlink pr-neutral" href="spinrep-route-map.html">SpinRepresentations route map</a> · </div>
+<h1>Orthogonal and spin groups route map</h1>
+<div class="sub">The <b>orthogonal and spin groups</b> roadmap as a dependency graph: gray dashed edges are its stated layer order, each goal draws its route in its own color toward its summit, and a shared edge splits into one lane per goal. Rows are the roadmap's four layers and the nodes carry its own bullet ids (0A–3H). Siblings: <a class="prlink pr-neutral" href="spinrep-route-map.html">Spin representations route map</a> · </div>
 
 <h2>Goals</h2>
 <div class="goals" id="goals"></div>
@@ -154,7 +154,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 </div>
 <div id="tip"></div>
 
-<div class="foot" style="margin-top:14px">Siblings: <a class="prlink pr-neutral" href="spinrep-route-map.html">SpinRepresentations route map</a> · </div>
+<div class="foot" style="margin-top:14px">Siblings: <a class="prlink pr-neutral" href="spinrep-route-map.html">Spin representations route map</a> · </div>
 </div>
 <script>
 
@@ -484,8 +484,8 @@ const goalOfNode = {};
 GOALS.forEach(g => g.edges.flat().forEach(id => (goalOfNode[id] = (goalOfNode[id] || []).concat(g.id))));
 const MEET = {
   "1B": "the Lipschitz carrier is the same one the SpinRepresentations route uses for its Pin/Spin action",
-  "1D": "the spinor norm is the object the spinrep α route's spinor-norm cover packages",
-  "2C": "Eichler transvections meet the reflection-pair lifts of the spinrep α route"
+  "1D": "the spinor norm is the object the α route on the spin representations map packages",
+  "2C": "Eichler transvections meet the reflection-pair lifts of the α route on the spin representations map"
 }
 /* summit nodes: the goal's mathematical capstone, ringed in that goal's color.
    A goal may extend to worked cases beyond the summit; the summit stays the weighted math piece. */
