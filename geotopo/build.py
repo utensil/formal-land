@@ -9,6 +9,63 @@ import re
 ROOT = Path(__file__).resolve().parent
 HIGH_IMPACT = {"scope", "api-design", "generality", "reuse", "proof-quality"}
 UNASSESSED = {"pending", "running", "not_run", "skipped", "absent", "stale"}
+HEALTH_TERMS = ("A", "D", "H", "L", "B", "S", "U")
+FAILING_CONCLUSIONS = {"failure", "cancelled", "timed_out", "action_required", "startup_failure", "stale"}
+PR_URL = "https://github.com/TauCetiProject/TauCeti/pull/"
+INTERNED = ("check", "status", "conclusion", "kind", "label", "state", "rubric", "reason", "workflow")
+SCHEMA = {
+    "pr": ("number", "title", "state", "created", "merged", "closed", "labels", "nodes", "worked",
+           "reviewed", "health", "head", "evidence", "checks", "events"),
+    "check": ("name", "status", "conclusion", "url"),
+    "event": ("kind", "at", "label"),
+    "health": ("score", "terms", "failed", "reason", "source"),
+}
+
+
+def epoch(value):
+    """ISO-8601 UTC to milliseconds, or None, so high-count records stay small."""
+    if not value:
+        return None
+    return int(dt.datetime.fromisoformat(value.replace("Z", "+00:00")).timestamp() * 1000)
+
+
+def project(prs):
+    """The archive is preserved on disk; the page carries only what the viewer reads.
+
+    Positional rows plus index tables replace the API-shaped records: no repeated key
+    names, no per-record URLs, no millisecond-precision ISO strings, and none of the
+    review boards and review events, whose only consumer is `health()` above.
+    """
+    tables = {name: {} for name in INTERNED}
+    values = {name: [] for name in INTERNED}
+
+    def intern(table, value):
+        if value is None:
+            return -1
+        index = tables[table]
+        if value not in index:
+            index[value] = len(values[table])
+            values[table].append(value)
+        return index[value]
+
+    rows = []
+    for pr in prs:
+        health = pr["health"]
+        checks = [[intern("check", c.get("name")), intern("status", c.get("status")),
+                   intern("conclusion", c.get("conclusion")),
+                   c.get("url") if c.get("conclusion") in FAILING_CONCLUSIONS else None]
+                  for c in pr.get("checks") or []]
+        events = [[intern("kind", e.get("kind")), epoch(e.get("at")), intern("label", e.get("label"))]
+                  for e in pr.get("events") or []]
+        compact_health = [health["score"], [health["terms"][k] for k in HEALTH_TERMS],
+                          [intern("rubric", name) for name in health["failed"]],
+                          intern("reason", health.get("reason")), health.get("source")]
+        rows.append([pr["number"], pr["title"], intern("state", pr["state"]), epoch(pr.get("created_at")),
+                     epoch(pr.get("merged_at")), epoch(pr.get("closed_at")),
+                     [intern("workflow", label) for label in pr.get("labels") or [] if not label.startswith("roadmap/")],
+                     pr.get("nodes") or [], int(bool(pr.get("worked"))), int(bool(pr.get("reviewed"))),
+                     compact_health, pr.get("head"), pr.get("reviewEvidence") or [], checks, events])
+    return rows, values
 
 
 def health(pr, scope_reset=0):
@@ -140,7 +197,10 @@ def generate():
         annotation = selected.get(pr["number"], {"nodes": [], "worked": False, "reviewed": False,
                                                    "reviewEvidence": [], "scopeReset": 0})
         prs.append({**pr, **annotation, "health": health(pr, annotation["scopeReset"])})
-    data = {"roadmap": roadmap, "collected_at": snapshot["collected_at"], "coverage": snapshot.get("coverage", {}), "prs": prs}
+    rows, interned = project(prs)
+    data = {"roadmap": roadmap, "collected_at": snapshot["collected_at"], "coverage": snapshot.get("coverage", {}),
+            "base": {"pr": PR_URL}, "interned": interned, "schema": SCHEMA, "health_terms": list(HEALTH_TERMS),
+            "prs": rows}
     encoded = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c").replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
     result = (ROOT / "src/page.html").read_text().replace("/*__STYLE__*/", (ROOT / "src/style.css").read_text()).replace("/*__DATA__*/", encoded).replace("/*__TIME__*/", (ROOT / "src/time.js").read_text()).replace("/*__APP__*/", (ROOT / "src/app.js").read_text())
     assert not re.search(r"(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|/Users/|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,})", result), "Private data in generated page"

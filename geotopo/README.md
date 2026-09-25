@@ -66,9 +66,23 @@ exact-head review evidence remains unscored.
 - `data/prs.json`: public metadata and preserved review observations for every
   discovered labeled PR and retained historical record. The charts filter this
   archive to explicitly attributed contributions. The collector stores no comment bodies or credentials.
+  The **page never ships this archive**: `build.py` projects it into positional rows
+  with index tables — no repeated key names, no per-record URLs, epoch-millisecond
+  timestamps, and none of the review boards and review events, whose only consumer is
+  the build-time health score. That keeps the embedded payload near a tenth of the archive.
 - `src/`: page template, and the visual language and interaction code shared
   with the spin representations map.
   `build.py` validates inputs and generates the standalone HTML deterministically.
+
+The two timelines are a *window* of the history, with a minimap carrying the
+draggable window, as on the spin representations map — but on this page's own
+axis: continuous local calendar days, so empty windows keep their width and day
+boundaries stay exact across daylight-saving changes, while each chart keeps
+drawing its six-hour local windows. Drag the box to move the window, its edges to
+resize it, double-click to reset; the arrow keys move it a day, Shift-arrows a
+week, Home and End jump to either end, and Shift-wheel resizes. The viewBox width
+is pinned and the activity plot's height is fixed, so moving the window changes
+column widths and never the page's layout.
 
 From the repository root, with Python 3 and authenticated GitHub CLI available:
 

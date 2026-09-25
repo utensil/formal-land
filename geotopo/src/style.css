@@ -41,6 +41,16 @@ svg{display:block;background:var(--card);border:1px solid var(--line);border-rad
   #prtl { margin: .6rem 0 0; }
   #prtl svg { display: block; width: 100%; height: auto; }
   #prtl .tlp { cursor: default; }
+  /* The windowed viewport's minimap: the whole local-calendar history as one column per
+     day, carrying the draggable window that both timelines are bound to. */
+  #prmini { margin: .7rem 0 0; }
+  #prmini svg { cursor: grab; touch-action: none; }
+  #prmini svg:active { cursor: grabbing; }
+  #prmini .win { fill: rgba(230,225,220,.10); stroke: #e6e1dc; stroke-width: 1; }
+  #prmini .grip { fill: rgba(230,225,220,.18); cursor: ew-resize; }
+  #prwincap { font-size: 12px; margin: 2px 0 0; }
+  .chart { margin: .6rem 0 0; }
+  .chart svg { display: block; width: 100%; height: auto; }
   .tllegend { margin-top: .3rem; font-size: .78rem; color: var(--muted); display: flex; gap: 1rem; flex-wrap: wrap; }
   .tllegend .s { display: inline-flex; align-items: center; gap: .35rem; }
   .tllegend .d { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
@@ -94,8 +104,8 @@ button{cursor:pointer} button:focus-visible, [tabindex]:focus-visible{outline:2p
 .goal .work{font-size:12.5px;margin:8px 0 0;line-height:1.9}
 .goal.off{opacity:.5}.node.dim{opacity:.25}.node.selected circle.main{stroke:#fff;stroke-width:3}
 .node .ns{font-size:11px}.node .ownmark{font-size:11px;fill:var(--tau)}
-.chart-scroll,.map-scroll{overflow-x:auto;overscroll-behavior-x:contain}
-.map-scroll svg{min-width:980px}.chart-scroll svg{min-width:760px}
+.map-scroll{overflow-x:auto;overscroll-behavior-x:contain}
+.map-scroll svg{min-width:980px}
 #map-detail{border-left:3px solid var(--tau);padding:10px 14px;margin:10px 0;background:var(--card);font-size:13px}
 #map-detail p{margin:4px 0} #map-detail:empty{display:none}
 #tip{max-height:65vh;overflow:auto;max-width:min(440px,calc(100vw - 20px))}

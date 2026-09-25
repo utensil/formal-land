@@ -24,14 +24,18 @@
   <div id="map-detail" aria-live="polite"></div>
   <div class="foot" style="margin-top:8px">Rows follow the dependency direction, with subrows for the four route trees. Node colors describe the specific milestone; a green chart-level construction does not make all of Layer 3 complete. Colored lanes are subgraphs of the roadmap dependency schematic, not Lean import claims. Hover or select a node for its contribution, remaining handoff and pinned source.</div>
   <div class="section-tools">
-    <h2>PR activity timeline · full roadmap history</h2>
+    <h2>PR activity timeline</h2>
     <label>PR lens <select id="cohort"><option value="all">TCWORK / TCREVIEW PRs</option><option value="worked">Worked on</option><option value="reviewed">Reviewed by us</option></select></label>
   </div>
-  <div id="prtl" class="chart-scroll" tabindex="0" aria-label="PR state-transition chart"></div>
+  <div id="prmini"></div>
+  <div class="sub" id="prwincap"></div>
+  <div class="chart-note" id="prmininote">One column per local calendar day: height = that day's stage transitions, colour = that day's rolling median (grey when no merged PR was scored that day). Drag the box to move the window, its edges to resize it, double-click to reset.</div>
+  <div id="prtl" class="chart" tabindex="0" aria-label="PR state-transition chart"></div>
   <div class="chart-note" id="activity-note"></div>
   <h2>PR health timeline · the same cohort and time axis</h2>
-  <div id="prhealth" class="chart-scroll" tabindex="0" aria-label="PR health chart"></div>
+  <div id="prhealth" class="chart" tabindex="0" aria-label="PR health chart"></div>
   <div class="hlegend">
+    <span class="s"><span class="d" style="background:rgba(230,225,220,.10);border:1px solid #e6e1dc;border-radius:3px"></span>window (both charts bound)</span>
     <span class="s"><span class="d" style="background:#cc7833;border-radius:2px"></span>3-day rolling median · visible merged PRs · dashed continuation: last available median</span>
     <span class="s"><span class="d" style="background:#7fb069;border-radius:50%"></span>worked-on PR · merged</span>
     <span class="s"><span class="d" style="background:#c97b7b;transform:rotate(45deg)"></span>closed, unmerged</span>
