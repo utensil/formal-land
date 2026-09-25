@@ -1,6 +1,8 @@
 <!--
 ---
-title: SpinRep annotated roadmap
+title: SpinRep annotated roadmap (retired)
+status: archived
+retired: 2026-09-25
 repo: utensil/formal-land/spinrep/spinrep-roadmap-appendix.html
 public-url: https://utensil.github.io/formal-land/spinrep/spinrep-roadmap-appendix.html
 ---
@@ -19,6 +21,12 @@ window.MathJax = {
 </script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
+  .stale {
+    margin: 14px 0 4px; padding: .7rem .9rem; border: 1px solid #bc9458; border-left-width: 3px;
+    border-radius: 8px; background: rgba(188,148,88,.10); color: var(--ink); font-size: 13px;
+    line-height: 1.5; max-width: 980px;
+  }
+  .stale b { color: #e5c07b; }
 
   :root {
     --bg: #232323;
@@ -398,6 +406,15 @@ a:not(.rm-chip):not(.prlink){color:#8ba8c7;text-decoration:none;border-bottom:1p
 <header>
   <div class="wrap">
     <h1>The SpinRepresentations roadmap — annotated</h1>
+    <div class="stale">
+      <b>⚠ Stale and unmaintained.</b> This annotated roadmap was maintained by hand and has
+      been retired: its PR grades, statuses and counts are frozen at 2026-09-25 and were already
+      drifting before that. It is kept as a <b>historical archive and a proof of concept</b> of
+      the annotated layer-by-layer format — not as a current view.
+      For live status use the route maps:
+      <a class="prlink pr-neutral" href="spinrep-route-map.html">SpinRepresentations</a> and
+      <a class="prlink pr-neutral" href="spingrp-route-map.html">orthogonal and spin groups</a>.
+    </div>
     <div class="sub">Every layer, every bullet, with the PRs that landed on them — each graded against the selection criteria.</div>
     <div id="appendix-stats" class="sub" style="margin-top:4px"></div>
     <div class="meta">shared roadmap document · 2026-08-06</div>

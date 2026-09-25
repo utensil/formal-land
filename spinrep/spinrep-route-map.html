@@ -53,6 +53,14 @@ svg{display:block;background:var(--card);border:1px solid var(--line);border-rad
 .edge-goal{stroke-width:2.2;opacity:.5;transition:opacity .12s,stroke-width .12s;pointer-events:stroke}
   #prtl { margin: .6rem 0 0; }
   #prtl svg { display: block; width: 100%; height: auto; }
+.refLink { border-bottom: 1px dashed rgba(230,225,220,.35); cursor: help; }
+.refLink:hover { border-bottom-color: var(--tau); color: var(--ink); }
+#prmini { margin: .1rem 0 .2rem; }
+#prmini svg { display: block; width: 100%; height: auto; cursor: grab; touch-action: none; }
+#prmini svg:active { cursor: grabbing; }
+#prmini .win { fill: rgba(230,225,220,.10); stroke: #e6e1dc; stroke-width: 1; }
+#prmini .grip { fill: rgba(230,225,220,.18); cursor: ew-resize; }
+#prwincap { color: #a9a29b; }
   #prtl .tlp { cursor: default; }
   .tllegend { margin-top: .3rem; font-size: .78rem; color: var(--muted); display: flex; gap: 1rem; flex-wrap: wrap; }
   .tllegend .s { display: inline-flex; align-items: center; gap: .35rem; }
@@ -102,21 +110,35 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 <body>
 <div class="wrap">
 <h1>SpinRep route map</h1>
-<div class="sub">The SpinRepresentations roadmap as a dependency graph. Gray dashed edges are the dependency spine; each goal draws its route as a subgraph of colored edges toward its summit, and where routes share an edge the edge splits into one tight lane per goal, each in its own color; branches meet at the summit instead of zigzagging. Routes prioritize dependency leverage, but do not limit target selection: uncovered roadmap targets and their direct RepresentationTheory prerequisites remain eligible when they form cohesive contributions. Add a goal by appending one entry to the <code>GOALS</code> array in the source.</div>
+<div class="sub">The SpinRepresentations roadmap as a dependency graph: gray dashed edges are the dependency spine, each goal draws its route in its own color toward its summit, and a shared edge splits into one lane per goal. The goals shown do not cap target selection — uncovered roadmap targets and their direct RepresentationTheory prerequisites qualify as cohesive slices — and a new goal is one entry in the <code>GOALS</code> array.</div>
 <h2>Goals</h2>
 <div class="legend" id="legend"></div>
 <div class="goals" id="goals"></div>
 
 <h2>The map (all spinrep)</h2>
 <div id="stats" class="sub" style="margin-top:6px"></div>
-<div class="sub" style="font-size:12px;margin-top:2px">Collected as PRs labelled <code>roadmap/RepresentationTheory</code> whose changed files touch the spinrep directories, plus the lane's goal PRs.</div>
+<div class="sub" style="font-size:12px;margin-top:2px">Collected as PRs labelled <code>roadmap/RepresentationTheory</code> whose changed files touch <span class="refLink" id="dirsRef">the spinrep directories</span>, plus the lane's goal PRs.</div>
+<div class="sub" style="font-size:12px;margin-top:2px">The lane also advances the orthogonal and spin groups roadmap: its PRs (label <code>roadmap/OrthogonalSpinGroups</code>) are listed on the <a class="prlink pr-neutral" href="spingrp-route-map.html">spin groups route map</a> and are not counted here.</div>
 <svg id="map" viewBox="0 0 1420 1180" preserveAspectRatio="xMidYMin meet"></svg>
 
 <div class="foot">The SpinRepresentations roadmap as a dependency graph · node states: merged / in review / unstarted / next up · goal colors follow the legend · rows follow the dependency spine (topological order), not the roadmap's layer numbering: Layer 1's structure theorem sits below the spin module because it is proved forward from it, so every dependency edge points downward and routes never travel upward.</div>
 <div class="foot" style="margin-top:8px">E₈: a scale-specific consumer of the bivector/Lie bridge (route γ), not a target — <a class="prlink pr-neutral" href="https://leanprover.zulipchat.com/#narrow/channel/217875-Is-there-code-for-X.3F/topic/E.E2.82.88.20Lie.20algebra.20formalization.20.2B.20sparse.20Jacobi.20.2B.20scalability" target="_blank" rel="noopener">Zulip thread</a> · <a class="prlink pr-neutral" href="https://leanprover.zulipchat.com/#narrow/channel/217875-Is-there-code-for-X.3F/topic/E.E2.82.88.20Lie.20algebra.20formalization.20.2B.20sparse.20Jacobi.20.2B.20scalability/near/580290449" target="_blank" rel="noopener">msg 580290449</a></div>
-<div class="foot" style="margin-top:8px">Siblings: <a class="prlink pr-neutral" href="spinrep-roadmap-appendix.html">annotated roadmap</a></div><h2>PR activity timeline (utensil)</h2>
+<div class="foot" style="margin-top:8px">Siblings: <a class="prlink pr-neutral" href="spingrp-route-map.html">spin groups route map</a></div><h2>History window</h2>
+<div id="prmini"></div>
+<div class="sub" style="font-size:12px;margin-top:2px"><span id="prwincap"></span></div>
+<div class="hlegend" style="margin-top:4px">
+  <span class="s">colour:</span>
+  <span class="s"><span class="d" style="background:#7fb069"></span>≥ 75</span>
+  <span class="s"><span class="d" style="background:#e5c07b"></span>≥ 60</span>
+  <span class="s"><span class="d" style="background:#c97b7b"></span>&lt; 60</span>
+  <span class="s"><span class="d" style="background:#6f6f6f"></span>no reading</span>
+  <span class="s"><span class="d" style="background:rgba(230,225,220,.10);border:1px solid #e6e1dc;border-radius:3px"></span>window (both charts below)</span>
+</div>
+<div class="sub" style="font-size:12px;margin-top:2px">one column per non-idle day — height = that day's state transitions, colour = that day's health median · drag the window to move it, drag its edges to resize, double-click to reset · idle days take no column in either chart · the window is the one both timelines below draw</div>
+
+<h2>PR activity timeline (utensil)</h2>
 <div id="prtl"></div>
-<div class="sub" style="font-size:12px;margin-top:6px">column height = state transitions in a 6-hour window · hover a column for the activity list</div>
+<div class="sub" style="font-size:12px;margin-top:6px">hover a column for the activity list</div>
 
 <h2>PR health timeline (all spinrep)</h2>
 <div id="prhealth"></div>
@@ -142,6 +164,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
   <span class="t"><b>U</b> current-head non-green rubrics</span>
   <span class="t"><b>S</b> scope/design-reset penalty (currently 0)</span>
 </div>
+<div class="sub" style="font-size:11.5px;margin-top:4px">Health measures review churn, not mathematical quality or review coverage. <a href="audits/2026-09-24-health-100-quality.md">September 24 audit</a> recovered edited scoreboard history and corrected #8245/#8239/#7660/#7620; round-counter resets still undercount cumulative effort. Future refreshes must retain history or report unknown.</div>
 <div class="sub" style="font-size:11.5px;margin-top:4px">median = 3-day rolling median of merge health over a cached per-day sample of up to 6 PRs/day, excluding mine · history is frozen; only new days are sampled on refresh · dots/diamonds sit at the actual merge/close time</div>
 
 
@@ -631,7 +654,7 @@ GOALS.forEach(g => {
     <div class="goal" data-g="${g.id}" style="--gc:${PALETTE[g.color]}">
       <h3><span class="sw" style="background:${PALETTE[g.color]}"></span>${g.name}</h3>
       <div class="bar"><i style="width:${pct}%;background:${PALETTE[g.color]}"></i></div>
-      <div class="pct">${pct}% of the route's milestones progressed (merged = 1, in review = .75, incomplete = .6)</div>
+      <div class="pct">${pct}% of the route's nodes progressed (merged = 1, in review = .75, incomplete = .6)</div>
       <div class="route-lbl">route</div>
       <div class="route">${routeNodes.map(n => `<span data-g="${g.id}" style="cursor:default">${n.short}</span>`).join('<span class="sep">→</span>')}</div>
       <div class="eval">${linkify(g.eval)}</div>
@@ -685,6 +708,41 @@ function scheduleHide() {
 svg.addEventListener("mouseleave", e => { if (!tip.contains(e.relatedTarget)) { clearTimeout(hideTimer); scheduleHide(); } });
 tip.addEventListener("mouseenter", () => clearTimeout(hideTimer));
 tip.addEventListener("mouseleave", () => { clearTimeout(hideTimer); hideTip(); });
+
+/* the scope sentence's directory list: rendered through the same #tip card as
+   every other hover, so its GitHub links are clickable and the 600 ms grace
+   window (plus hover-cancel on the card) lets the cursor travel onto it */
+(function () {
+  const ref = document.getElementById("dirsRef");
+  if (!ref) return;
+  const TREE = "https://github.com/TauCetiProject/TauCeti/tree/main/";
+  const DIRS = [
+    ["LinearAlgebra/CliffordAlgebra", 101, ""],
+    ["RepresentationTheory/Spin", 29, ""],
+    ["Algebra/Lie/GeneralLinear", 24, "the CAR chain"],
+    ["LinearAlgebra/QuadraticForm", 23, "the spin groups' forms"],
+    ["Topology/Algebra/CliffordAlgebra", 21, "compact Spin"],
+    ["Algebra/Lie/UniversalEnveloping", 11, "BCH and the Lie functor"],
+    ["Geometry/Lie", 9, "Lie-group structure"],
+    ["Algebra/Lie/Orthogonal", 8, "type B/D carriers"],
+    ["Algebra/Lie/Weights", 5, ""],
+    ["LinearAlgebra/BilinearForm", 5, ""],
+    ["LinearAlgebra/RootSystem", 5, ""],
+    ["LinearAlgebra/Matrix", 5, ""],
+    ["Algebra/Lie/HighestWeight", 4, ""],
+    ["Topology/Algebra/Group", 4, "quotient local sections"],
+  ];
+  const link = d => '<a class="prlink pr-neutral" href="' + TREE + d + '" target="_blank" rel="noopener">TauCeti/' + d + "</a>";
+  const html = "<b>the spinrep directories</b>" +
+    '<div class="tstatus">labelled PRs are tracked from these trees; the count is how many tracked PRs touch each:</div>' +
+    DIRS.map(d => '<div class="tstatus">' + link(d[0]) + " · " + d[1] + (d[2] ? " · " + d[2] : "") + "</div>").join("") +
+    '<div class="tstatus">plus a long tail of single-PR families (SkewAdjoint, Analysis/Normed, Geometry/Manifold, RingTheory/Idempotents, Algebra/AlgebraicGroup, …)</div>' +
+    '<div class="tstatus">and the lane\'s goal PRs, tracked wherever their files land — the directory filter alone would miss the CAR, type-B/D carrier and Lie-group work</div>';
+  const show = e => { clearTimeout(hideTimer); tip.innerHTML = html; placeTip("dirsRef", e); };
+  ref.addEventListener("mouseenter", show);
+  ref.addEventListener("mousemove", show);
+  ref.addEventListener("mouseleave", () => scheduleHide());
+})();
 </script>
 <script>
 /* PR activity timeline: state-colored dots by date, goal letters, hover = digest */
@@ -703,101 +761,7 @@ Object.assign(PR_META, {
 PR_EV.push(["2026-09-05T12:36:26Z", "R", "4964"], ["2026-09-05T12:20:32Z", "R", "5052"], ["2026-09-05T07:20:26Z", "R", "5106"]);
 const TL_STATE = { D: "#8fa3b8", R: "#6d9cbe", V: "#e5c07b", T: "#a5c261", M: "#7fb069", C: "#c97b7b" };
 const TL_STNAME = { D: "draft", R: "open", V: "review", T: "ready to merge", M: "merged", C: "closed" };
-(function () {
-  const host = document.getElementById("prtl");
-  const tip = document.getElementById("tip");
-  if (!host) return;
-  const byb = {};
-  PR_EV.forEach(ev => {
-    const t = new Date(ev[0]);
-    const h = Math.floor(t.getHours() / 6) * 6;
-    const key = t.getFullYear() + "-" + String(t.getMonth() + 1).padStart(2, "0") + "-" + String(t.getDate()).padStart(2, "0") + " " + h;
-    (byb[key] = byb[key] || []).push(ev);
-  });
-  /* sort by time, not lexicographically: "6" must come after "12"/"18" */
-  const slots = Object.keys(byb).sort((a, b) => {
-    const ka = a.split(" "), kb = b.split(" ");
-    return ka[0] === kb[0] ? +ka[1] - +kb[1] : (ka[0] < kb[0] ? -1 : 1);
-  });
-  const GAP = 6, PER = 9;
-  const BW = Math.max(12, Math.floor((1380 - 90) / slots.length) - GAP);
-  const W = 90 + slots.length * (BW + GAP);
-  const maxN = Math.max(...slots.map(k => byb[k].length));
-  const Y0 = 34 + maxN * PER + 12;
-  const H = Y0 + 34;
-  const ORDER = ["D", "R", "V", "T", "M", "C"];
-  let svg = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMin meet">`;
-  svg += `<line x1="40" y1="${Y0}" x2="${W - 10}" y2="${Y0}" stroke="#444" stroke-dasharray="2 4"/>`;
-  let prevDay = "";
-  slots.forEach((k, i) => {
-    const x = 60 + i * (BW + GAP);
-    const evs = byb[k];
-    const [day, h] = k.split(" ");
-    let base = Y0;
-    for (const st of ORDER) {
-      const n = evs.filter(e => e[1] === st).length;
-      if (!n) continue;
-      base -= n * PER;
-      svg += `<rect x="${x}" y="${base}" width="${BW}" height="${n * PER}" fill="${TL_STATE[st]}" opacity=".85"/>`;
-    }
-    /* date label only at the beginning of each date (browser-local, matching
-       the window slots); no per-window labels so nothing overlaps */
-    if (day !== prevDay) {
-      svg += `<text x="${x + BW / 2}" y="${Y0 + 13}" font-size="9.5" fill="#8a857e" text-anchor="middle">${day.slice(5)}</text>`;
-    }
-    svg += `<text x="${x + BW / 2}" y="${base - 6}" font-size="11" fill="#e6e1dc" text-anchor="middle" font-weight="700">${evs.length}</text>`;
-    svg += `<g class="tlcol" data-k="${k}"><rect x="${x - 3}" y="${base - 20}" width="${BW + 6}" height="${Y0 - base + 34}" fill="transparent"/></g>`;
-    prevDay = day;
-  });
-  svg += '</svg>';
-  host.innerHTML = svg;
-  /* The card sits in a stable spot directly under the hovered column, below the
-     chart. It never chases the cursor (an offset-following card can never be
-     caught), and content switches instantly — the approach to the card is a
-     vertical slide that stays inside the column's x-range, so nothing steals
-     the hover on the way. */
-  const svgEl = host.querySelector("svg");
-  let curK = "";
-  function showCard(k) {
-    const col = [...svgEl.querySelectorAll(".tlcol")].find(c => c.dataset.k === k);
-    const evs = byb[k];
-    const grp = {};
-    evs.forEach(ev => { const g = grp[ev[2] + "|" + ev[1]] = grp[ev[2] + "|" + ev[1]] || []; g.push(ev); });
-    const rows = Object.values(grp).map(g => {
-      const ev = g[0];
-      const dt0 = new Date(ev[0]);
-      const t = String(dt0.getHours()).padStart(2, "0") + ":" + String(dt0.getMinutes()).padStart(2, "0");
-      const nm = PR_META[ev[2]] ? PR_META[ev[2]][1] : "";
-      const nm2 = nm.length > 46 ? nm.slice(0, 45) + "…" : nm;
-      const rep = g.length > 1 ? ` <span style="color:#8a857e">×${g.length}</span>` : "";
-      return `<div class="tstatus"><span style="color:#a9a29b">${t}</span> · <a class="prlink pr-neutral" href="https://github.com/TauCetiProject/TauCeti/pull/${ev[2]}">#${ev[2]}</a> → <span style="color:${TL_STATE[ev[1]]}">${TL_STNAME[ev[1]]}</span>${rep} · ${nm2}</div>`;
-    }).join("");
-    tip.innerHTML = `<b>${k.split(" ")[0].slice(5)} ${k.split(" ")[1]}:00–${Number(k.split(" ")[1]) + 6}:00 — ${evs.length} transition${evs.length > 1 ? "s" : ""}</b>${rows}`;
-    tip.style.display = "block";
-    const cr = col.getBoundingClientRect();
-    const sr = svgEl.getBoundingClientRect();
-    const r = tip.getBoundingClientRect();
-    tip.style.left = Math.max(10, Math.min(cr.left + cr.width / 2 - r.width / 2, innerWidth - r.width - 10)) + "px";
-    tip.style.top = Math.min(sr.bottom + 8, innerHeight - r.height - 10) + "px";
-  }
-  svgEl.addEventListener("mousemove", e => {
-    const col = e.target.closest(".tlcol");
-    if (!col) {
-      if (tip.style.display !== "none" && !tip.contains(e.target)) scheduleHide();
-      return;
-    }
-    clearTimeout(hideTimer);
-    const k = col.dataset.k;
-    if (k !== curK || !tip.style.display || tip.style.display === "none") { curK = k; showCard(k); }
-  });
-  /* leaving the svg only starts the grace timer: the card lives just below the
-     chart, so the slide from a column into it crosses the svg boundary and must
-     not be cut off instantly */
-  svgEl.addEventListener("mouseleave", e => {
-    if (!tip.contains(e.relatedTarget)) scheduleHide();
-  });
-  window.__tlLayout = { slots, W, BW, GAP, Y0, PER, maxN, H };
-})();</script>
+/* the activity timeline is rendered by renderActivity() below */</script>
 <script>
 /* PR health timeline: running-median line over a consistent random sample of
    merged RepresentationTheory PRs in the same time range (excluding mine),
@@ -809,7 +773,7 @@ const HEALTH = {"1708":{"h":83,"A":1,"D":2,"H":2,"L":0,"B":0,"U":0,"failed":["ap
 "3025":{"h":61,"A":2,"D":6,"H":3,"L":0,"B":0,"U":0,"failed":["api-design","documentation","generality","naming","placement","proof-quality"]},"2419":{"h":89,"A":0,"D":2,"H":1,"L":0,"B":0,"U":0,"failed":["placement","proof-quality"]},"2981":{"h":42,"A":2,"D":7,"H":4,"L":2,"B":0,"U":0,"failed":["api-design","generality","naming","documentation","placement","proof-quality","reuse"]},"3089":{"h":97,"A":1,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"3157":{"h":93,"A":0,"D":1,"H":1,"L":0,"B":0,"U":0,"failed":["proof-quality"]},"3176":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"3281":{"h":97,"A":1,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"3321":{"h":96,"A":0,"D":1,"H":0,"L":0,"B":0,"U":0,"failed":["naming"]},"3370":{"h":64,"A":1,"D":6,"H":3,"L":0,"B":0,"U":0,"failed":["api-design","documentation","naming","placement","proof-quality","reuse"]},"2914":{"h":37,"A":0,"D":6,"H":3,"L":0,"B":0,"U":6,"failed":["api-design","documentation","generality","naming","placement","proof-quality"]},
 "3150":{"h":97,"A":1,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},
 
-"3839":{"h":67,"A":5,"D":3,"H":2,"L":0,"B":0,"U":0,"failed":["api-design","naming","proof-quality"]},"3859":{"h":44,"A":2,"D":8,"H":4,"L":1,"B":0,"U":0,"failed":["api-design","correctness","documentation","generality","naming","placement","proof-quality","reuse"]},"3871":{"h":35,"A":5,"D":8,"H":4,"L":1,"B":0,"U":0,"failed":["api-design","correctness","documentation","generality","naming","placement","proof-quality","reuse"]},"3950":{"h":82,"A":3,"D":1,"H":0,"L":0,"B":0,"U":1,"failed":["correctness"]},"4239":{"h":88,"A":1,"D":1,"H":0,"L":0,"B":0,"U":1,"failed":["naming"]},"4289":{"h":86,"A":1,"D":2,"H":1,"L":0,"B":0,"U":0,"failed":["api-design","naming"]},"4292":{"h":70,"A":3,"D":3,"H":3,"L":0,"B":0,"U":0,"failed":["generality","proof-quality","reuse"]},"3078":{"h":70,"A":1,"D":3,"H":3,"L":1,"B":0,"U":0,"failed":["api-design","generality","scope"]},"4308":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"4351":{"h":90,"A":1,"D":1,"H":1,"L":0,"B":0,"U":0,"failed":["proof-quality"]},"4368":{"h":53,"A":1,"D":8,"H":4,"L":0,"B":0,"U":0,"failed":["api-design","attribution","documentation","generality","naming","placement","proof-quality","reuse"]},"4511":{"h":91,"A":3,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"4694":{"h":97,"A":1,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"4697":{"h":97,"A":1,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"4704":{"h":93,"A":0,"D":1,"H":1,"L":0,"B":0,"U":0,"failed":["api-design"]},"4714":{"h":71,"A":2,"D":3,"H":2,"L":0,"B":0,"U":1,"failed":["generality","naming","reuse"]},"4721":{"h":82,"A":0,"D":3,"H":2,"L":0,"B":0,"U":0,"failed":["api-design","naming","proof-quality"]},"4773":{"h":67,"A":1,"D":4,"H":3,"L":0,"B":0,"U":1,"failed":["api-design","correctness","proof-quality","scope"]},"4705":{"h":31,"A":9,"D":6,"H":4,"L":1,"B":0,"U":0,"failed":["api-design","generality","naming","placement","proof-quality","reuse"]},"4639":{"h":56,"A":4,"D":3,"H":3,"L":1,"B":0,"U":1,"failed":["proof-quality","reuse","scope"]},"4786":{"h":52,"A":1,"D":7,"H":4,"L":0,"B":0,"U":1,"failed":["api-design","documentation","generality","naming","proof-quality","reuse","correctness"]},"4942":{"h":57,"A":1,"D":7,"H":4,"L":0,"B":0,"U":4,"failed":["api-design","attribution","documentation","generality","naming","proof-quality","reuse"]},"4946":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"4953":{"h":90,"A":2,"D":1,"H":0,"L":0,"B":0,"U":0,"failed":["placement"]},"4963":{"h":78,"A":0,"D":4,"H":2,"L":0,"B":0,"U":0,"failed":["attribution","generality","naming","proof-quality"]},"4311":{"h":75,"A":3,"D":2,"H":1,"L":0,"B":0,"U":1,"failed":["documentation","reuse"]},"5073":{"h":68,"A":4,"D":3,"H":1,"L":0,"B":0,"U":1,"failed":["generality","naming","placement"]},"5068":{"h":34,"A":5,"D":9,"H":5,"L":0,"B":0,"U":0,"failed":["api-design","attribution","documentation","generality","naming","placement","proof-quality","reuse","scope"]},"5052":{"h":36,"A":8,"D":7,"H":4,"L":0,"B":0,"U":0,"failed":["api-design","attribution","generality","naming","placement","proof-quality","reuse"]},"5106":{"h":40,"A":8,"D":6,"H":4,"L":0,"B":0,"U":0,"failed":["api-design","attribution","documentation","generality","proof-quality","reuse"]},"6055":{"h":91,"A":3,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6096":{"h":71,"A":5,"D":2,"H":2,"L":0,"B":0,"U":0,"failed":["generality","proof-quality"]},"6115":{"h":67,"A":0,"D":6,"H":3,"L":0,"B":0,"U":0,"failed":["api-design","documentation","generality","naming","placement","proof-quality"]},"6159":{"h":74,"A":2,"D":3,"H":1,"L":0,"B":0,"U":1,"failed":["api-design","attribution","placement"]},"6162":{"h":68,"A":1,"D":5,"H":3,"L":0,"B":0,"U":0,"failed":["api-design","attribution","documentation","generality","proof-quality"]},"6163":{"h":97,"A":1,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6166":{"h":69,"A":3,"D":4,"H":2,"L":0,"B":0,"U":0,"failed":["documentation","generality","placement","scope"]},"6167":{"h":56,"A":2,"D":6,"H":3,"L":0,"B":0,"U":1,"failed":["api-design","attribution","documentation","placement","proof-quality","reuse"]},"6171":{"h":42,"A":2,"D":7,"H":4,"L":2,"B":0,"U":0,"failed":["api-design","attribution","documentation","generality","placement","proof-quality","reuse"]},"6175":{"h":86,"A":1,"D":2,"H":1,"L":0,"B":0,"U":0,"failed":["documentation","generality"]},"6190":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6209":{"h":67,"A":5,"D":3,"H":2,"L":0,"B":0,"U":0,"failed":["api-design","generality","placement"]},"6133":{"h":91,"A":3,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6140":{"h":65,"A":2,"D":3,"H":2,"L":1,"B":0,"U":1,"failed":["naming","proof-quality","reuse"]},"6183":{"h":81,"A":4,"D":1,"H":1,"L":0,"B":0,"U":0,"failed":["api-design"]},"6234":{"h":82,"A":2,"D":1,"H":1,"L":0,"B":0,"U":1,"failed":["generality"]},"6262":{"h":64,"A":0,"D":6,"H":4,"L":0,"B":0,"U":0,"failed":["api-design","generality","naming","placement","proof-quality","reuse"]},"6272":{"h":87,"A":2,"D":1,"H":1,"L":0,"B":0,"U":0,"failed":["proof-quality"]},"6290":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6303":{"h":69,"A":3,"D":4,"H":2,"L":0,"B":0,"U":0,"failed":["api-design","attribution","documentation","generality"]},"6314":{"h":86,"A":1,"D":2,"H":1,"L":0,"B":0,"U":0,"failed":["api-design","naming"]},"6286":{"h":72,"A":4,"D":2,"H":1,"L":0,"B":0,"U":1,"failed":["attribution","proof-quality"]},"6304":{"h":85,"A":1,"D":1,"H":1,"L":0,"B":0,"U":1,"failed":["reuse"]},"6306":{"h":59,"A":2,"D":5,"H":3,"L":1,"B":0,"U":0,"failed":["documentation","generality","naming","proof-quality","reuse"]},"6344":{"h":97,"A":1,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6353":{"h":55,"A":4,"D":4,"H":4,"L":0,"B":0,"U":1,"failed":["api-design","generality","proof-quality","reuse"]},"6448":{"h":68,"A":1,"D":5,"H":3,"L":0,"B":0,"U":0,"failed":["api-design","documentation","generality","placement","reuse"]},"6387":{"h":82,"A":3,"D":1,"H":0,"L":0,"B":0,"U":1,"failed":["attribution"]},"6390":{"h":65,"A":2,"D":5,"H":3,"L":0,"B":0,"U":0,"failed":["api-design","documentation","placement","proof-quality","reuse"]},"6395":{"h":76,"A":2,"D":3,"H":2,"L":0,"B":0,"U":0,"failed":["documentation","generality","reuse"]},"6402":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6415":{"h":67,"A":1,"D":4,"H":3,"L":0,"B":0,"U":1,"failed":["documentation","generality","proof-quality","reuse"]},"6429":{"h":61,"A":1,"D":6,"H":4,"L":0,"B":0,"U":0,"failed":["api-design","attribution","documentation","generality","proof-quality","reuse"]},"6430":{"h":97,"A":1,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6437":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6285":{"h":49,"A":0,"D":6,"H":4,"L":0,"B":0,"U":3,"failed":["api-design","documentation","generality","naming","proof-quality","reuse"]},"6294":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6342":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"7617":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"7603":{"h":70,"A":2,"D":3,"H":2,"L":1,"B":0,"U":0,"failed":["api-design","documentation","reuse"]},"7862":{"h": 100, "A": 0, "D": 0, "H": 0, "L": 0, "B": 0, "U": 0, "failed": []},"7868":{"h": 75, "A": 1, "D": 4, "H": 2, "L": 0, "B": 0, "U": 0, "failed": ["api-design", "naming", "placement", "scope"]},"6499":{"h": 84, "A": 2, "D": 1, "H": 0, "L": 1, "B": 0, "U": 0, "failed": ["naming"]},"6522":{"h": 67, "A": 1, "D": 3, "H": 2, "L": 2, "B": 0, "U": 0, "failed": ["api-design", "documentation", "proof-quality"]},"7581":{"h": 77, "A": 1, "D": 2, "H": 2, "L": 1, "B": 0, "U": 0, "failed": ["proof-quality", "reuse"]},"7620":{"h": 83, "A": 2, "D": 2, "H": 1, "B": 0, "L": 0, "U": 0, "failed": ["api-design", "placement"]},"7660":{"h": 63, "A": 3, "D": 4, "H": 2, "B": 0, "L": 1, "U": 0, "failed": ["api-design", "documentation", "naming", "proof-quality"]},"7800":{"h": 90, "A": 1, "D": 1, "H": 1, "L": 0, "B": 0, "U": 0, "failed": ["generality"]},"7597":{"h": 34, "A": 3, "D": 6, "H": 4, "L": 1, "U": 3, "failed": ["generality", "naming", "placement", "proof-quality", "reuse", "scope"], "boards": 5, "full": 4},"7936":{"h": 66, "A": 0, "D": 4, "H": 4, "L": 1, "U": 0, "failed": ["api-design", "proof-quality", "reuse", "scope"], "boards": 4, "full": 1},"8239":{"h": 46, "A": 1, "D": 6, "H": 3, "L": 3, "U": 0, "failed": ["documentation", "naming", "placement", "proof-quality", "reuse", "scope"], "boards": 4, "full": 2},"8244":{"h": 85, "A": 0, "D": 3, "H": 1, "L": 0, "U": 0, "failed": ["documentation", "naming", "reuse"], "boards": 2, "full": 1},"8245":{"h": 82, "A": 0, "D": 3, "H": 2, "L": 0, "U": 0, "failed": ["api-design", "documentation", "proof-quality"], "boards": 3, "full": 1},"8263":{"h": 41, "A": 3, "D": 5, "H": 4, "L": 3, "U": 0, "failed": ["api-design", "generality", "placement", "proof-quality", "reuse"], "boards": 5, "full": 4},"8323":{"h": 100, "A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "failed": [], "boards": 1, "full": 1},"8471":{"h": 100, "A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "failed": [], "boards": 1, "full": 1},"8202":{"h": 65, "A": 2, "D": 3, "H": 2, "L": 1, "U": 1, "failed": ["api-design", "documentation", "proof-quality"], "boards": 3, "full": 3}};/* external merged + open PRs on the map: timestamps for the health timeline */
+"3839":{"h":67,"A":5,"D":3,"H":2,"L":0,"B":0,"U":0,"failed":["api-design","naming","proof-quality"]},"3859":{"h":44,"A":2,"D":8,"H":4,"L":1,"B":0,"U":0,"failed":["api-design","correctness","documentation","generality","naming","placement","proof-quality","reuse"]},"3871":{"h":35,"A":5,"D":8,"H":4,"L":1,"B":0,"U":0,"failed":["api-design","correctness","documentation","generality","naming","placement","proof-quality","reuse"]},"3950":{"h":82,"A":3,"D":1,"H":0,"L":0,"B":0,"U":1,"failed":["correctness"]},"4239":{"h":88,"A":1,"D":1,"H":0,"L":0,"B":0,"U":1,"failed":["naming"]},"4289":{"h":86,"A":1,"D":2,"H":1,"L":0,"B":0,"U":0,"failed":["api-design","naming"]},"4292":{"h":70,"A":3,"D":3,"H":3,"L":0,"B":0,"U":0,"failed":["generality","proof-quality","reuse"]},"3078":{"h":70,"A":1,"D":3,"H":3,"L":1,"B":0,"U":0,"failed":["api-design","generality","scope"]},"4308":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"4351":{"h":90,"A":1,"D":1,"H":1,"L":0,"B":0,"U":0,"failed":["proof-quality"]},"4368":{"h":53,"A":1,"D":8,"H":4,"L":0,"B":0,"U":0,"failed":["api-design","attribution","documentation","generality","naming","placement","proof-quality","reuse"]},"4511":{"h":91,"A":3,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"4694":{"h":97,"A":1,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"4697":{"h":97,"A":1,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"4704":{"h":93,"A":0,"D":1,"H":1,"L":0,"B":0,"U":0,"failed":["api-design"]},"4714":{"h":71,"A":2,"D":3,"H":2,"L":0,"B":0,"U":1,"failed":["generality","naming","reuse"]},"4721":{"h":82,"A":0,"D":3,"H":2,"L":0,"B":0,"U":0,"failed":["api-design","naming","proof-quality"]},"4773":{"h":67,"A":1,"D":4,"H":3,"L":0,"B":0,"U":1,"failed":["api-design","correctness","proof-quality","scope"]},"4705":{"h":31,"A":9,"D":6,"H":4,"L":1,"B":0,"U":0,"failed":["api-design","generality","naming","placement","proof-quality","reuse"]},"4639":{"h":56,"A":4,"D":3,"H":3,"L":1,"B":0,"U":1,"failed":["proof-quality","reuse","scope"]},"4786":{"h":52,"A":1,"D":7,"H":4,"L":0,"B":0,"U":1,"failed":["api-design","documentation","generality","naming","proof-quality","reuse","correctness"]},"4942":{"h":57,"A":1,"D":7,"H":4,"L":0,"B":0,"U":4,"failed":["api-design","attribution","documentation","generality","naming","proof-quality","reuse"]},"4946":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"4953":{"h":90,"A":2,"D":1,"H":0,"L":0,"B":0,"U":0,"failed":["placement"]},"4963":{"h":78,"A":0,"D":4,"H":2,"L":0,"B":0,"U":0,"failed":["attribution","generality","naming","proof-quality"]},"4311":{"h":75,"A":3,"D":2,"H":1,"L":0,"B":0,"U":1,"failed":["documentation","reuse"]},"5073":{"h":68,"A":4,"D":3,"H":1,"L":0,"B":0,"U":1,"failed":["generality","naming","placement"]},"5068":{"h":34,"A":5,"D":9,"H":5,"L":0,"B":0,"U":0,"failed":["api-design","attribution","documentation","generality","naming","placement","proof-quality","reuse","scope"]},"5052":{"h":36,"A":8,"D":7,"H":4,"L":0,"B":0,"U":0,"failed":["api-design","attribution","generality","naming","placement","proof-quality","reuse"]},"5106":{"h":40,"A":8,"D":6,"H":4,"L":0,"B":0,"U":0,"failed":["api-design","attribution","documentation","generality","proof-quality","reuse"]},"6055":{"h":91,"A":3,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6096":{"h":71,"A":5,"D":2,"H":2,"L":0,"B":0,"U":0,"failed":["generality","proof-quality"]},"6115":{"h":67,"A":0,"D":6,"H":3,"L":0,"B":0,"U":0,"failed":["api-design","documentation","generality","naming","placement","proof-quality"]},"6159":{"h":74,"A":2,"D":3,"H":1,"L":0,"B":0,"U":1,"failed":["api-design","attribution","placement"]},"6162":{"h":68,"A":1,"D":5,"H":3,"L":0,"B":0,"U":0,"failed":["api-design","attribution","documentation","generality","proof-quality"]},"6163":{"h":97,"A":1,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6166":{"h":69,"A":3,"D":4,"H":2,"L":0,"B":0,"U":0,"failed":["documentation","generality","placement","scope"]},"6167":{"h":56,"A":2,"D":6,"H":3,"L":0,"B":0,"U":1,"failed":["api-design","attribution","documentation","placement","proof-quality","reuse"]},"6171":{"h":42,"A":2,"D":7,"H":4,"L":2,"B":0,"U":0,"failed":["api-design","attribution","documentation","generality","placement","proof-quality","reuse"]},"6175":{"h":86,"A":1,"D":2,"H":1,"L":0,"B":0,"U":0,"failed":["documentation","generality"]},"6190":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6209":{"h":67,"A":5,"D":3,"H":2,"L":0,"B":0,"U":0,"failed":["api-design","generality","placement"]},"6133":{"h":91,"A":3,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6140":{"h":65,"A":2,"D":3,"H":2,"L":1,"B":0,"U":1,"failed":["naming","proof-quality","reuse"]},"6183":{"h":81,"A":4,"D":1,"H":1,"L":0,"B":0,"U":0,"failed":["api-design"]},"6234":{"h":82,"A":2,"D":1,"H":1,"L":0,"B":0,"U":1,"failed":["generality"]},"6262":{"h":64,"A":0,"D":6,"H":4,"L":0,"B":0,"U":0,"failed":["api-design","generality","naming","placement","proof-quality","reuse"]},"6272":{"h":87,"A":2,"D":1,"H":1,"L":0,"B":0,"U":0,"failed":["proof-quality"]},"6290":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6303":{"h":69,"A":3,"D":4,"H":2,"L":0,"B":0,"U":0,"failed":["api-design","attribution","documentation","generality"]},"6314":{"h":86,"A":1,"D":2,"H":1,"L":0,"B":0,"U":0,"failed":["api-design","naming"]},"6286":{"h":72,"A":4,"D":2,"H":1,"L":0,"B":0,"U":1,"failed":["attribution","proof-quality"]},"6304":{"h":85,"A":1,"D":1,"H":1,"L":0,"B":0,"U":1,"failed":["reuse"]},"6306":{"h":59,"A":2,"D":5,"H":3,"L":1,"B":0,"U":0,"failed":["documentation","generality","naming","proof-quality","reuse"]},"6344":{"h":97,"A":1,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6353":{"h":55,"A":4,"D":4,"H":4,"L":0,"B":0,"U":1,"failed":["api-design","generality","proof-quality","reuse"]},"6448":{"h":68,"A":1,"D":5,"H":3,"L":0,"B":0,"U":0,"failed":["api-design","documentation","generality","placement","reuse"]},"6387":{"h":82,"A":3,"D":1,"H":0,"L":0,"B":0,"U":1,"failed":["attribution"]},"6390":{"h":65,"A":2,"D":5,"H":3,"L":0,"B":0,"U":0,"failed":["api-design","documentation","placement","proof-quality","reuse"]},"6395":{"h":76,"A":2,"D":3,"H":2,"L":0,"B":0,"U":0,"failed":["documentation","generality","reuse"]},"6402":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6415":{"h":67,"A":1,"D":4,"H":3,"L":0,"B":0,"U":1,"failed":["documentation","generality","proof-quality","reuse"]},"6429":{"h":61,"A":1,"D":6,"H":4,"L":0,"B":0,"U":0,"failed":["api-design","attribution","documentation","generality","proof-quality","reuse"]},"6430":{"h":97,"A":1,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6437":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6285":{"h":49,"A":0,"D":6,"H":4,"L":0,"B":0,"U":3,"failed":["api-design","documentation","generality","naming","proof-quality","reuse"]},"6294":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"6342":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"7617":{"h":100,"A":0,"D":0,"H":0,"L":0,"B":0,"U":0,"failed":[]},"7603":{"h":70,"A":2,"D":3,"H":2,"L":1,"B":0,"U":0,"failed":["api-design","documentation","reuse"]},"7862":{"h": 100, "A": 0, "D": 0, "H": 0, "L": 0, "B": 0, "U": 0, "failed": []},"7868":{"h": 75, "A": 1, "D": 4, "H": 2, "L": 0, "B": 0, "U": 0, "failed": ["api-design", "naming", "placement", "scope"]},"6499":{"h": 84, "A": 2, "D": 1, "H": 0, "L": 1, "B": 0, "U": 0, "failed": ["naming"]},"6522":{"h": 67, "A": 1, "D": 3, "H": 2, "L": 2, "B": 0, "U": 0, "failed": ["api-design", "documentation", "proof-quality"]},"7581":{"h": 77, "A": 1, "D": 2, "H": 2, "L": 1, "B": 0, "U": 0, "failed": ["proof-quality", "reuse"]},"7620":{"h": 83, "A": 2, "D": 2, "H": 1, "B": 0, "L": 0, "U": 0, "failed": ["api-design", "placement"], "boards": 4, "full": 3},"7660":{"h": 63, "A": 3, "D": 4, "H": 2, "B": 0, "L": 1, "U": 0, "failed": ["api-design", "documentation", "naming", "proof-quality"], "boards": 5, "full": 4},"7800":{"h": 90, "A": 1, "D": 1, "H": 1, "L": 0, "B": 0, "U": 0, "failed": ["generality"]},"7597":{"h": 34, "A": 3, "D": 6, "H": 4, "L": 1, "U": 3, "failed": ["generality", "naming", "placement", "proof-quality", "reuse", "scope"], "boards": 5, "full": 4},"7936":{"h": 66, "A": 0, "D": 4, "H": 4, "L": 1, "U": 0, "failed": ["api-design", "proof-quality", "reuse", "scope"], "boards": 4, "full": 1},"8239":{"h": 46, "A": 1, "D": 6, "H": 3, "L": 3, "U": 0, "failed": ["documentation", "naming", "placement", "proof-quality", "reuse", "scope"], "boards": 4, "full": 2},"8244":{"h": 85, "A": 0, "D": 3, "H": 1, "L": 0, "U": 0, "failed": ["documentation", "naming", "reuse"], "boards": 2, "full": 1},"8245":{"h": 82, "A": 0, "D": 3, "H": 2, "L": 0, "U": 0, "failed": ["api-design", "documentation", "proof-quality"], "boards": 3, "full": 1},"8263":{"h": 41, "A": 3, "D": 5, "H": 4, "L": 3, "U": 0, "failed": ["api-design", "generality", "placement", "proof-quality", "reuse"], "boards": 5, "full": 4},"8323":{"h": 100, "A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "failed": [], "boards": 1, "full": 1},"8471":{"h": 100, "A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "failed": [], "boards": 1, "full": 1},"8202":{"h": 65, "A": 2, "D": 3, "H": 2, "L": 1, "U": 1, "failed": ["api-design", "documentation", "proof-quality"], "boards": 3, "full": 3}};/* external merged + open PRs on the map: timestamps for the health timeline */
 const UP_MERGED = {"1473":"2026-07-30T16:14:45Z","1499":"2026-07-30T23:54:28Z","1510":"2026-07-31T12:07:44Z","1561":"2026-07-31T10:42:52Z","1611":"2026-08-01T14:14:38Z","1742":"2026-08-02T00:33:50Z","1804":"2026-08-02T16:18:59Z","2224":"2026-08-07T15:52:16Z","2334":"2026-08-08T19:24:31Z","2503":"2026-08-09T13:23:29Z","2505":"2026-08-09T10:07:56Z","2506":"2026-08-09T18:13:35Z","2510":"2026-08-09T11:03:10Z","2511":"2026-08-09T15:59:43Z","2512":"2026-08-10T01:44:54Z","2513":"2026-08-09T14:40:09Z","2518":"2026-08-10T01:06:55Z","2525":"2026-08-09T20:31:16Z","2546":"2026-08-09T22:07:03Z","2547":"2026-08-09T21:04:15Z","2562":"2026-08-09T22:01:50Z","2604":"2026-08-10T04:57:22Z","2606":"2026-08-10T06:13:21Z","2670":"2026-08-10T14:18:26Z","2925":"2026-08-13T00:11:26Z","3049":"2026-08-13T13:16:24Z","3056":"2026-08-13T14:37:56Z","3378":"2026-08-15T16:27:01Z" ,"3151":"2026-08-16T03:28:29Z","3332":"2026-08-16T15:31:03Z","3614":"2026-08-17T13:27:55Z","3655":"2026-08-19T08:51:04Z","3719":"2026-08-19T10:33:16Z","3839":"2026-08-21T06:59:09Z","3859":"2026-08-21T14:38:49Z","3053":"2026-08-18T08:46:52Z","4103":"2026-08-23T12:35:11Z","4220":"2026-08-25T15:48:47Z","4287":"2026-08-24T12:39:04Z","4637":"2026-08-27T13:15:32Z","3871":"2026-08-22T12:01:46Z","4081":"2026-08-22T00:46:34Z","4239":"2026-08-23T17:40:39Z","5150":"2026-08-29T17:06:48Z","5155":"2026-08-29T17:44:21Z","6097":"2026-09-09T14:34:27Z","4419":"2026-08-25T04:36:52Z","5102":"2026-08-29T05:23:13Z","5215":"2026-08-30T11:17:38Z","4582":"2026-08-26T12:48:48Z","4632":"2026-08-26T02:46:21Z","4551":"2026-08-25T13:19:06Z","2961":"2026-08-12T22:38:02Z","3080":"2026-08-14T22:39:10Z","3810":"2026-08-19T21:49:16Z","6447":"2026-09-12T18:26:14Z","4390":"2026-08-24T11:24:35Z","7466":"2026-09-20T13:38:45Z","8258":"2026-09-23T15:34:44Z","8304":"2026-09-23T16:29:48Z"};
 Object.assign(UP_MERGED, {
   "3053":"2026-08-18T08:46:52Z",
@@ -851,105 +815,381 @@ const HEALTH_CLOSED = {"1759":{"t":"2026-08-04T01:51:08Z","h":81,"A":2,"D":1,"H"
 "2652":{"t":"2026-08-11T02:15:02Z","h":47,"A":3,"D":6,"H":3,"L":1,"B":0,"U":1,"failed":["api-design","documentation","generality","naming","placement","proof-quality"]},
 "2530":{"t":"2026-08-11T09:11:22Z","h":56,"A":2,"D":6,"H":3,"L":0,"B":0,"U":1,"failed":["api-design","documentation","generality","naming","placement","proof-quality"]},
 "2853":{"t":"2026-08-12T06:53:56Z","h":16,"A":0,"D":8,"H":4,"L":0,"B":0,"U":8,"failed":["api-design","attribution","documentation","generality","naming","placement","proof-quality","reuse"]},"4356":{"t":"2026-08-26T10:26:11Z","h":22,"A":0,"D":7,"H":5,"L":0,"B":0,"U":7,"failed":["api-design","documentation","generality","placement","proof-quality","reuse","scope"]},"3809":{"t":"2026-08-27T05:34:31Z","h":23,"A":8,"D":8,"H":5,"L":1,"B":0,"U":0,"failed":["api-design","documentation","generality","naming","placement","proof-quality","reuse","scope"]},"4740":{"t":"2026-09-04T16:59:56Z","h":51,"A":2,"D":5,"H":4,"L":1,"B":0,"U":1,"failed":["api-design","documentation","proof-quality","reuse","scope"]},"4964":{"t":"2026-09-08T00:09:05Z","h":0,"A":23,"D":4,"H":3,"L":1,"B":0,"U":3,"failed":["documentation","proof-quality","reuse","scope"]},"3510":{"t":"2026-09-09T06:49:10Z","h":45,"A":0,"D":6,"H":3,"L":2,"B":0,"U":2,"failed":["api-design","documentation","naming","placement","proof-quality","reuse"]},"5914":{"t":"2026-09-08T00:08:13Z","h":48,"A":5,"D":5,"H":2,"L":1,"B":0,"U":1,"failed":["api-design","documentation","naming","placement","reuse"]},"6251":{"t":"2026-09-13T06:43:00Z","h":82,"A":2,"D":1,"H":1,"L":0,"B":0,"U":1,"failed":["scope"]}};
-(function () {
+/* ================= windowed viewport over the non-idle history =================
+   A full-range chart squeezes as history accumulates, so both timelines draw a
+   *window* of it. The window is expressed in non-idle days (idle days take no
+   column, as the timeline always behaved) and the bucket granularity relaxes as
+   the window widens — 6-hour columns for a narrow window, one column per active
+   day for a wide one — so a 90-day window stays readable. The minimap plots the
+   whole history as one unit per non-idle day and carries the draggable window. */
+var WIN = (function () {
+  const HOUR = 36e5, DAY = 864e5;
+  const p2 = n => String(n).padStart(2, "0");
+  const bucketStart = t => {
+    const d = new Date(t);
+    d.setHours(0, 0, 0, 0);
+    d.setHours(Math.floor(new Date(t).getHours() / 6) * 6);
+    return d.getTime();
+  };
+  const dayStart = t => { const d = new Date(t); d.setHours(0, 0, 0, 0); return d.getTime(); };
+  const keyOf = t => { const d = new Date(t); return d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate()); };
+  const label = t => { const d = new Date(t); return p2(d.getMonth() + 1) + "-" + p2(d.getDate()) + " " + p2(d.getHours()) + ":00"; };
+
+  /* The axis is our own PR activity: a column exists exactly where the lane did
+     something, so the activity timeline never shows an empty column for a day
+     that only carries someone else's merge. Others' markers are placed by the
+     health chart on the nearest earlier column. */
+  const stamps = PR_EV.map(e => new Date(e[0]).getTime());
+
+  /* the 6-hour buckets that carry something, and the non-idle day array */
+  const bucketKeys = Array.from(new Set(stamps.map(bucketStart))).sort((a, b) => a - b);
+  const dayKeys = Array.from(new Set(bucketKeys.map(keyOf)));
+  const dayIndex = new Map(dayKeys.map((k, i) => [k, i]));
+  const bucketIndex = new Map(bucketKeys.map((t, i) => [t, i]));
+  const dayFirst = new Map(), dayLast = new Map();
+  bucketKeys.forEach((t, i) => { const k = keyOf(t); if (!dayFirst.has(k)) dayFirst.set(k, i); dayLast.set(k, i); });
+  const dayEvents = {}, dayMergesMine = {};
+  PR_EV.forEach(e => {
+    const k = keyOf(new Date(e[0]).getTime());
+    dayEvents[k] = (dayEvents[k] || 0) + 1;
+    if (e[1] === "M") dayMergesMine[k] = (dayMergesMine[k] || 0) + 1;
+  });
+  /* per-day 3-day rolling median of the sampled rep-theory PRs (lazy: HEALTH_MEDIAN
+     is declared after this module) */
+  let medCache = null;
+  function medByDate() {
+    if (medCache) return medCache;
+    const byDay = {};
+    Object.keys(HEALTH_MEDIAN).forEach(n => {
+      const v = HEALTH_MEDIAN[n], d = new Date(v[0]);
+      const k = d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate());
+      (byDay[k] = byDay[k] || []).push(v[1]);
+    });
+    const keys = Object.keys(byDay).sort(), out = {};
+    keys.forEach(k => {
+      const d = new Date(k + "T12:00:00").getTime();
+      const lo = new Date(d - DAY).toISOString().slice(0, 10), hi = new Date(d + DAY).toISOString().slice(0, 10);
+      const hs = [];
+      keys.forEach(k2 => { if (k2 >= lo && k2 <= hi) hs.push.apply(hs, byDay[k2]); });
+      hs.sort((a, b) => a - b);
+      out[k] = hs[Math.floor((hs.length - 1) / 2)];
+    });
+    medCache = out;
+    return out;
+  }
+
+  /* the window: a slice of the non-idle day array */
+  const DEFAULT_DAYS = 90;
+  const state = { d0: Math.max(0, dayKeys.length - DEFAULT_DAYS), dn: Math.min(dayKeys.length, DEFAULT_DAYS) };
+  const atLatest = () => state.d0 + state.dn >= dayKeys.length;
+  function clamp() {
+    if (state.dn > dayKeys.length) state.dn = dayKeys.length;
+    if (state.dn < 2) state.dn = 2;
+    if (state.d0 > dayKeys.length - state.dn) state.d0 = dayKeys.length - state.dn;
+    if (state.d0 < 0) state.d0 = 0;
+  }
+  function reset() { state.dn = Math.min(dayKeys.length, DEFAULT_DAYS); state.d0 = Math.max(0, dayKeys.length - state.dn); clamp(); renderAll(); }
+  /* the columns the charts draw: 6-hour non-idle buckets for a narrow window,
+     one per active day once the window is wide */
+  /* the columns the charts draw: one per active day, at every window size —
+     granularity does not adapt here, the day is the unit */
+  function view() {
+    clamp();
+    const slots = [];
+    for (let d = state.d0; d < state.d0 + state.dn; d++) {
+      const k = dayKeys[d], t = dayStart(new Date(k + "T12:00:00").getTime());
+      slots.push({ t: t, key: k + " 0", bucket: t, day: k });
+    }
+    return { hours: 24, slots: slots, n: slots.length, d0: state.d0, dn: state.dn };
+  }
+
+  /* ---- minimap: one unit per non-idle day ---- */
+  const MW = 1408, MH = 40, PADL = 54, PADR = 14;
+  const UPD = (MW - PADL - PADR) / Math.max(1, dayKeys.length);
+  const BARW = Math.max(1.4, UPD * 0.45);
+  const mx = d => PADL + (d + 0.5) * UPD;
+  let drag = null;
+  function renderMini() {
+    const host = document.getElementById("prmini");
+    if (!host) return;
+    clamp();
+    const barY = 4, barH = 26;
+    const maxDay = Math.max(1, ...Object.keys(dayEvents).map(k => dayEvents[k]));
+    const med = medByDate();
+    let s = '<svg viewBox="0 0 ' + MW + ' ' + MH + '" preserveAspectRatio="xMidYMin meet" class="mini">';
+    /* one column per non-idle day: height = that day's transitions, colour =
+       that day's overall health (grey when the day has no health reading) */
+    dayKeys.forEach((k, i) => {
+      const n = dayEvents[k] || 0;
+      const m = med[k];
+      const fill = m == null ? "#6f6f6f" : m >= 75 ? "#7fb069" : m >= 60 ? "#e5c07b" : "#c97b7b";
+      const h = Math.max(2, (n / maxDay) * barH);
+      const x = mx(i) - BARW / 2;
+      s += '<rect x="' + x.toFixed(1) + '" y="' + (barY + barH - h).toFixed(1) + '" width="' + BARW.toFixed(1) + '" height="' + h.toFixed(1) + '" fill="' + fill + '" opacity=".9"/>';
+    });
+    s += '<line x1="' + PADL + '" y1="' + (barY + barH + 2) + '" x2="' + (MW - PADR) + '" y2="' + (barY + barH + 2) + '" stroke="#3a3a3a"/>';
+    if (dayKeys.length) {
+      s += '<text x="' + PADL + '" y="' + (MH - 1) + '" font-size="9" fill="#8a857e">' + dayKeys[0].slice(5) + '</text>';
+      s += '<text x="' + (MW - PADR) + '" y="' + (MH - 1) + '" font-size="9" fill="#8a857e" text-anchor="end">' + dayKeys[dayKeys.length - 1].slice(5) + '</text>';
+    }
+    const rx0 = Math.max(PADL, mx(state.d0) - UPD / 2), rx1 = Math.min(MW - PADR, mx(state.d0 + state.dn - 1) + UPD / 2);
+    s += '<g class="winbox">' +
+      '<rect class="win" x="' + rx0.toFixed(1) + '" y="2" width="' + Math.max(6, rx1 - rx0).toFixed(1) + '" height="' + (MH - 6) + '" rx="3"/>' +
+      '<rect class="grip" data-grip="l" x="' + (rx0 - 5).toFixed(1) + '" y="2" width="11" height="' + (MH - 6) + '"/>' +
+      '<rect class="grip" data-grip="r" x="' + (rx1 - 6).toFixed(1) + '" y="2" width="11" height="' + (MH - 6) + '"/></g>';
+    s += '</svg>';
+    host.innerHTML = s;
+    bindMini(host.querySelector("svg"));
+    const cap = document.getElementById("prwincap");
+    if (cap) {
+      const v = view();
+      const first = v.slots[0].t, last = v.slots[v.slots.length - 1].t;
+      cap.textContent = label(dayStart(first)) + " → " + label(dayStart(last)) + " · " +
+        state.dn + " of " + dayKeys.length + " active days · " + v.n + " daily columns" +
+        (atLatest() ? " · latest" : "");
+    }
+  }
+  const dayAt = (svgEl, clientX) => {
+    const r = svgEl.getBoundingClientRect();
+    const x = (clientX - r.left) / Math.max(1, r.width) * MW;
+    return Math.max(0, Math.min(dayKeys.length - 1, Math.floor((x - PADL) / UPD)));
+  };
+  function bindMini(svgEl) {
+    svgEl.addEventListener("pointerdown", e => {
+      const grip = e.target.closest(".grip");
+      const onRect = e.target.closest(".win");
+      let d = dayAt(svgEl, e.clientX);
+      const oldEnd = state.d0 + state.dn;
+      if (grip && grip.dataset.grip === "l") drag = { mode: "l", end0: oldEnd };
+      else if (grip) drag = { mode: "r", d0: state.d0 };
+      else {
+        if (!onRect) {
+          const half = Math.floor(state.dn / 2);
+          state.d0 = Math.max(0, Math.min(dayKeys.length - state.dn, d - half));
+          d = dayAt(svgEl, e.clientX);
+        }
+        drag = { mode: "pan", d0: d, d00: state.d0 };
+      }
+      clamp(); renderAll();
+      e.preventDefault();
+    });
+    svgEl.addEventListener("wheel", e => {
+      e.preventDefault();
+      if (e.shiftKey) state.dn = Math.max(2, Math.round(state.dn * (e.deltaY > 0 ? 1.15 : 1 / 1.15)));
+      else state.d0 += e.deltaY > 0 || e.deltaX > 0 ? 1 : -1;
+      clamp(); renderAll();
+    }, { passive: false });
+    svgEl.addEventListener("dblclick", reset);
+  }
+  /* window-level listeners: the svg is replaced on every render, and pointer
+     capture is avoided so real and synthetic input behave the same */
+  window.addEventListener("pointermove", e => {
+    if (!drag) return;
+    const svgEl = document.querySelector("#prmini svg");
+    if (!svgEl) return;
+    const d = dayAt(svgEl, e.clientX);
+    if (drag.mode === "pan") state.d0 = drag.d00 + (d - drag.d0);
+    else if (drag.mode === "l") { const ns = d; state.d0 = ns; state.dn = drag.end0 - ns; }
+    else state.dn = d - drag.d0 + 1;
+    clamp(); renderAll();
+  });
+  window.addEventListener("pointerup", () => { drag = null; });
+  window.addEventListener("pointercancel", () => { drag = null; });
+  document.addEventListener("keydown", e => {
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+    if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+      const step = e.shiftKey ? 7 : 1;
+      state.d0 += e.key === "ArrowLeft" ? -step : step;
+      clamp(); renderAll(); e.preventDefault();
+    } else if (e.key === "Home") { state.d0 = 0; clamp(); renderAll(); e.preventDefault(); }
+    else if (e.key === "End") { state.d0 = dayKeys.length - state.dn; clamp(); renderAll(); e.preventDefault(); }
+  });
+
+  function renderAll() { renderActivity(); renderHealth(); renderMini(); }
+  return {
+    state: state, view: view, dayKeys: dayKeys, dayFirst: dayFirst, dayLast: dayLast,
+    bucketKeys: bucketKeys, bucketIndex: bucketIndex, dayIndex: dayIndex, dayStart: dayStart,
+    bucketStart: bucketStart, keyOf: keyOf, medByDate: medByDate, dayEvents: dayEvents,
+    dayMergesMine: dayMergesMine, clamp: clamp, renderAll: renderAll, atLatest: atLatest,
+    reset: reset, DEFAULT_DAYS: DEFAULT_DAYS,
+  };
+})();
+
+/* PR activity timeline: state transitions per column over the window slice.
+   The viewBox width is pinned, so the rendered height never changes as the window
+   moves — only the column width does. */
+function renderActivity() {
+  const host = document.getElementById("prtl");
+  if (!host) return;
+  const W = 1408, GAP = 5, PER = 9, CAP = 12;
+  const v = WIN.view();
+  const n = v.n;
+  /* one column per active day: width follows the window, capped so a very
+     narrow window does not stretch into absurdly fat columns, and the block is
+     centred inside the pinned width */
+  const BW = Math.min(30, Math.max(5, (W - 90 - 30) / n - GAP));
+  const x0 = 60 + Math.max(0, (W - 90 - 30 - (n * (BW + GAP) - GAP)) / 2);
+  const keys = v.slots.map(s => s.key);
+  const byIdx = v.slots.map(() => []);
+  PR_EV.forEach(ev => {
+    const t = new Date(ev[0]).getTime();
+    const j = WIN.dayIndex.get(WIN.keyOf(t)) - v.d0;
+    if (j >= 0 && j < n) byIdx[j].push(ev);
+  });
+  const peak = Math.max(1, Math.max.apply(null, byIdx.map(a => a.length)));
+  const unit = Math.min(PER, (CAP * PER) / peak);
+  const Y0 = 34 + CAP * PER + 12, H = Y0 + 34;
+  const ORDER = ["D", "R", "V", "T", "M", "C"];
+  let svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMin meet">';
+  svg += '<line x1="40" y1="' + Y0 + '" x2="' + (W - 10) + '" y2="' + Y0 + '" stroke="#444" stroke-dasharray="2 4"/>';
+  let prevDay = "";
+  /* daily columns: label every k-th one so the dates do not collide */
+  const lstep = Math.max(1, Math.ceil(n / 12));
+  v.slots.forEach((s, k) => {
+    const x = x0 + k * (BW + GAP), evs = byIdx[k], day = s.key.split(" ")[0];
+    let base = Y0;
+    ORDER.forEach(st => {
+      const c = evs.filter(e => e[1] === st).length;
+      if (!c) return;
+      base -= c * unit;
+      svg += '<rect x="' + x.toFixed(1) + '" y="' + base.toFixed(1) + '" width="' + BW.toFixed(1) + '" height="' + (c * unit).toFixed(1) + '" fill="' + TL_STATE[st] + '" opacity=".85"/>';
+    });
+    if (k % lstep === 0) {
+      svg += '<text x="' + (x + BW / 2).toFixed(1) + '" y="' + (Y0 + 13) + '" font-size="9.5" fill="#8a857e" text-anchor="middle">' + day.slice(5) + '</text>';
+    }
+    if (evs.length) svg += '<text x="' + (x + BW / 2).toFixed(1) + '" y="' + (base - 6).toFixed(1) + '" font-size="11" fill="#e6e1dc" text-anchor="middle" font-weight="700">' + evs.length + '</text>';
+    svg += '<g class="tlcol" data-k="' + s.key + '"><rect x="' + (x - 2).toFixed(1) + '" y="30" width="' + (BW + 4).toFixed(1) + '" height="' + (H - 60) + '" fill="transparent"/></g>';
+    prevDay = day;
+  });
+  svg += '</svg>';
+  host.innerHTML = svg;
+  const svgEl = host.querySelector("svg");
+  let curK = "";
+  function showCard(k) {
+    const col = svgEl.querySelector('.tlcol[data-k="' + k + '"]');
+    const i = keys.indexOf(k), evs = byIdx[i] || [];
+    const grp = {};
+    evs.forEach(ev => { const g = grp[ev[2] + "|" + ev[1]] = grp[ev[2] + "|" + ev[1]] || []; g.push(ev); });
+    const rows = Object.values(grp).map(g => {
+      const ev = g[0], dt0 = new Date(ev[0]);
+      const t = String(dt0.getHours()).padStart(2, "0") + ":" + String(dt0.getMinutes()).padStart(2, "0");
+      const nm = PR_META[ev[2]] ? PR_META[ev[2]][1] : "";
+      const nm2 = nm.length > 46 ? nm.slice(0, 45) + "\u2026" : nm;
+      const rep = g.length > 1 ? ' <span style="color:#8a857e">\u00d7' + g.length + '</span>' : "";
+      return '<div class="tstatus"><span style="color:#a9a29b">' + t + '</span> \u00b7 <a class="prlink pr-neutral" href="https://github.com/TauCetiProject/TauCeti/pull/' + ev[2] + '">#' + ev[2] + '</a> \u2192 <span style="color:' + TL_STATE[ev[1]] + '">' + TL_STNAME[ev[1]] + '</span>' + rep + ' \u00b7 ' + nm2 + '</div>';
+    }).join("");
+    const head = k.split(" ")[0].slice(5) + " (whole day)";
+    tip.innerHTML = '<b>' + head + ' \u2014 ' + evs.length + ' transition' + (evs.length === 1 ? "" : "s") + '</b>' + rows;
+    tip.style.display = "block";
+    const cr = col.getBoundingClientRect(), sr = svgEl.getBoundingClientRect(), r = tip.getBoundingClientRect();
+    tip.style.left = Math.max(10, Math.min(cr.left + cr.width / 2 - r.width / 2, innerWidth - r.width - 10)) + "px";
+    tip.style.top = Math.min(sr.bottom + 8, innerHeight - r.height - 10) + "px";
+  }
+  svgEl.addEventListener("mousemove", e => {
+    const col = e.target.closest(".tlcol");
+    if (!col) { if (tip.style.display !== "none" && !tip.contains(e.target)) scheduleHide(); return; }
+    clearTimeout(hideTimer);
+    const k = col.dataset.k;
+    if (k !== curK || !tip.style.display || tip.style.display === "none") { curK = k; showCard(k); }
+  });
+  svgEl.addEventListener("mouseleave", e => { if (!tip.contains(e.relatedTarget)) scheduleHide(); });
+  window.__tlLayout = { slots: keys, W: W, BW: BW, GAP: GAP, Y0: Y0, PER: PER, H: H, n: n, hours: 24, unit: unit, peak: peak, CAP: CAP, byIdx: byIdx, v: v, x0: x0 };
+}
+
+/* PR health timeline: dots and the rolling-median reference line over the same
+   window slice, mapped through the same pinned-width column grid. */
+function renderHealth() {
   const host = document.getElementById("prhealth");
-  const tip = document.getElementById("tip");
   const L = window.__tlLayout;
   if (!host || !L) return;
-  const parse = k => { const p = k.split(" "), d = p[0].split("-").map(Number); return new Date(Date.UTC(d[0], d[1] - 1, d[2], Number(p[1]))); };
-  const t0 = parse(L.slots[0]).getTime();
-  const t1 = parse(L.slots[L.slots.length - 1]).getTime() + 6 * 3600 * 1000;
-  const x0 = 60, x1 = 60 + L.slots.length * (L.BW + L.GAP);
-  const xOf = t => x0 + (t - t0) / (t1 - t0) * (x1 - x0);
-  /* health chart is half the activity timeline's height */
-  const plotH = Math.max(24, Math.round(L.maxN * L.PER / 2));
+  const HOUR = 36e5, DAY = 864e5;
+  const v = L.v;
+  const x0 = L.x0, x1 = L.x0 + L.n * (L.BW + L.GAP) - L.GAP;
+  const colX = j => L.x0 + j * (L.BW + L.GAP);
+  const slotSpan = DAY;
+  /* the axis is PR activity, so a marker with no column of its own — an external
+     merge on a day the lane did nothing — lands on the nearest earlier column,
+     and anything outside the window is skipped */
+  const slotOf = t => {
+    if (t < v.slots[0].bucket) return -1;
+    if (t >= v.slots[L.n - 1].bucket + slotSpan) return -1;
+    let lo = 0, hi = L.n - 1, res = 0;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (v.slots[mid].bucket <= t) { res = mid; lo = mid + 1; } else hi = mid - 1;
+    }
+    return res;
+  };
+  const xOf = t => {
+    const j = slotOf(t);
+    if (j < 0 || j >= L.n) return null;
+    const frac = Math.max(0.1, Math.min(0.9, (t - v.slots[j].bucket) / slotSpan));
+    return colX(j) + L.BW * frac;
+  };
+  const xOfClamped = t => { const x = xOf(t); if (x != null) return x; return t < v.slots[0].t ? x0 : x1; };
+  /* the health chart gets the full activity plot height for legibility */
+  const plotH = Math.round(L.CAP * L.PER);
   const top = 30, baseline = top + plotH, H = baseline + 32;
   const yOf = h => baseline - (Math.max(0, Math.min(100, h)) / 100) * plotH;
   const band = h => h >= 75 ? "#7fb069" : h >= 60 ? "#e5c07b" : "#c97b7b";
   const bandName = h => h >= 75 ? "green" : h >= 60 ? "yellow" : "red";
-  /* my merged PRs (dots): merge time from PR_EV + health */
+  const med = WIN.medByDate();
+  let svg = '<svg viewBox="0 0 ' + L.W + ' ' + H + '" preserveAspectRatio="xMidYMin meet">';
+  svg += '<line x1="40" y1="' + baseline + '" x2="' + (L.W - 10) + '" y2="' + baseline + '" stroke="#444" stroke-dasharray="2 4"/>';
+  [0, 25, 50, 75, 100].forEach(h => {
+    const y = yOf(h);
+    svg += '<line x1="40" y1="' + y + '" x2="' + (x1 + 10) + '" y2="' + y + '" stroke="#333" stroke-width="0.5"/>';
+    svg += '<text x="32" y="' + (y + 3) + '" font-size="8" fill="#8a857e" text-anchor="end">' + h + '</text>';
+  });
+  /* one median point per column (its local date), carrying the last known value */
+  let carry = null, mpts = [];
+  v.slots.forEach((s, j) => {
+    const k = s.key.split(" ")[0];
+    if (med[k] != null) carry = med[k];
+    if (carry != null) mpts.push({ x: colX(j) + L.BW / 2, y: yOf(carry) });
+  });
+  if (mpts.length > 1) {
+    svg += '<path d="' + mpts.map((p, i) => (i ? "L" : "M") + p.x.toFixed(1) + " " + p.y.toFixed(1)).join(" ") + '" fill="none" stroke="#cc7833" stroke-width="1.5" opacity=".85"/>';
+  }
   const pts = [];
   PR_EV.forEach(ev => { if (ev[1] === "M" && HEALTH[ev[2]] != null) pts.push({ n: ev[2], t: new Date(ev[0]).getTime(), c: HEALTH[ev[2]] }); });
   pts.sort((a, b) => a.t - b.t);
-  /* median line over the sampled rep-theory PRs, merged by each window's end */
-  const samp = Object.entries(HEALTH_MEDIAN).map(([n, v]) => ({ n, t: new Date(v[0]).getTime(), h: v[1] }));
-  /* 3-day rolling median of the sampled PRs' merge health: each point is the
-     median over the PRs merged in that local day plus one day either side, so
-     sparse days (n = 1-2) and single bad/clean PRs do not swing the line.
-     The genuine dips (e.g. the churn-heavy 08-22 cluster) stay visible but
-     softened. */
-  const med = [];
-  const dayMed = {};
-  samp.forEach(p => {
-    const dt = new Date(p.t);
-    const key = dt.getFullYear() + "-" + String(dt.getMonth() + 1).padStart(2, "0") + "-" + String(dt.getDate()).padStart(2, "0");
-    (dayMed[key] = dayMed[key] || []).push(p.h);
-  });
-  const days = Object.keys(dayMed).sort();
-  const dayMs = 24 * 3600 * 1000;
-  days.forEach(day => {
-    const d = new Date(day + "T12:00:00").getTime();
-    const lo = new Date(d - dayMs).toISOString().slice(0, 10);
-    const hi = new Date(d + dayMs).toISOString().slice(0, 10);
-    const hs = [];
-    for (let i = 0; i < days.length; i++) {
-      if (days[i] >= lo && days[i] <= hi) hs.push(...dayMed[days[i]]);
-    }
-    hs.sort((a, b) => a - b);
-    const tMid = d;
-    med.push({ x: Math.max(x0, Math.min(xOf(tMid), x1)), y: yOf(hs[Math.floor((hs.length - 1) / 2)]) });
-  });
-  /* carry the last day-median to the chart's end so the line spans the full range */
-  if (med.length) med.push({ x: x1, y: med[med.length - 1].y });
-  let svg = `<svg viewBox="0 0 ${L.W} ${H}" preserveAspectRatio="xMidYMin meet">`;
-  svg += `<line x1="40" y1="${baseline}" x2="${L.W - 10}" y2="${baseline}" stroke="#444" stroke-dasharray="2 4"/>`;
-  [0, 25, 50, 75, 100].forEach(h => {
-    const y = yOf(h);
-    svg += `<line x1="40" y1="${y}" x2="${x1 + 10}" y2="${y}" stroke="#333" stroke-width="0.5"/>`;
-    svg += `<text x="32" y="${y + 3}" font-size="8" fill="#8a857e" text-anchor="end">${h}</text>`;
-  });
-  if (med.length > 1) {
-    const d = med.map((p, i) => (i ? "L" : "M") + p.x.toFixed(1) + " " + p.y.toFixed(1)).join(" ");
-    svg += `<path d="${d}" fill="none" stroke="#cc7833" stroke-width="1.5" opacity=".85"/>`;
-  }
-  /* external merged PRs (semi-transparent boxes) + open PRs (triangles): drawn first, under my PRs */
   const upm = Object.entries(UP_MERGED).map(([n, t]) => ({ n, t: new Date(t).getTime(), c: EXT_HEALTH[n] }));
   upm.forEach(p => {
-    const cx = xOf(p.t), cy = yOf(p.c ? p.c.h : 100), r = 4.5;
-    const f = n => n.toFixed(1);
-    const rev = REVIEWED[p.n] ? `<circle cx="${f(cx)}" cy="${f(cy)}" r="7" fill="none" stroke="#e6e1dc" stroke-width="1" stroke-dasharray="2 2"/>` : "";
-    svg += `<g class="hp" data-n="${p.n}" data-ext="1" opacity="0.5"><path d="M${f(cx - r)} ${f(cy - r)} L${f(cx + r)} ${f(cy - r)} L${f(cx + r)} ${f(cy + r)} L${f(cx - r)} ${f(cy + r)} Z" fill="${p.c ? band(p.c.h) : "#9d9485"}" stroke="#1e1e1e" stroke-width="1"/>${rev}<circle cx="${f(cx)}" cy="${f(cy)}" r="11" fill="transparent"/></g>`;
+    const cx = xOf(p.t);
+    if (cx == null) return;
+    const cy = yOf(p.c ? p.c.h : 100), r = 4.5, f = n => n.toFixed(1);
+    const rev = REVIEWED[p.n] ? '<circle cx="' + f(cx) + '" cy="' + f(cy) + '" r="7" fill="none" stroke="#e6e1dc" stroke-width="1" stroke-dasharray="2 2"/>' : "";
+    svg += '<g class="hp" data-n="' + p.n + '" data-ext="1" opacity="0.5"><path d="M' + f(cx - r) + ' ' + f(cy - r) + ' L' + f(cx + r) + ' ' + f(cy - r) + ' L' + f(cx + r) + ' ' + f(cy + r) + ' L' + f(cx - r) + ' ' + f(cy + r) + ' Z" fill="' + (p.c ? band(p.c.h) : "#9d9485") + '" stroke="#1e1e1e" stroke-width="1"/>' + rev + '<circle cx="' + f(cx) + '" cy="' + f(cy) + '" r="11" fill="transparent"/></g>';
   });
   const opn = Object.entries(OPEN_TS).map(([n, t]) => ({ n, t: new Date(t).getTime() }));
   opn.forEach(p => {
-    const cx = xOf(p.t), cy = yOf(100), r = 4.5;
-    const f = n => n.toFixed(1);
-    svg += `<g class="hp" data-n="${p.n}" data-open="1" opacity="0.55"><path d="M${f(cx)} ${f(cy - r)} L${f(cx + r)} ${f(cy + r)} L${f(cx - r)} ${f(cy + r)} Z" fill="#e5c07b" stroke="#1e1e1e" stroke-width="1"/><circle cx="${f(cx)}" cy="${f(cy)}" r="11" fill="transparent"/></g>`;
+    const cx = xOf(p.t);
+    if (cx == null) return;
+    const cy = yOf(100), r = 4.5, f = n => n.toFixed(1);
+    svg += '<g class="hp" data-n="' + p.n + '" data-open="1" opacity="0.55"><path d="M' + f(cx) + ' ' + f(cy - r) + ' L' + f(cx + r) + ' ' + f(cy + r) + ' L' + f(cx - r) + ' ' + f(cy + r) + ' Z" fill="#e5c07b" stroke="#1e1e1e" stroke-width="1"/><circle cx="' + f(cx) + '" cy="' + f(cy) + '" r="11" fill="transparent"/></g>';
   });
-  /* my merged PRs (dots) on top */
   pts.forEach(p => {
-    const px = xOf(p.t).toFixed(1), py = yOf(p.c.h).toFixed(1);
-    const rev = REVIEWED[p.n] ? `<circle cx="${px}" cy="${py}" r="7" fill="none" stroke="#e6e1dc" stroke-width="1" stroke-dasharray="2 2"/>` : "";
-    svg += `<g class="hp" data-n="${p.n}"><circle cx="${px}" cy="${py}" r="4.5" fill="${band(p.c.h)}" stroke="#1e1e1e" stroke-width="1"/>${rev}<circle cx="${px}" cy="${py}" r="11" fill="transparent"/></g>`;
+    const cx = xOf(p.t);
+    if (cx == null) return;
+    const px = cx.toFixed(1), py = yOf(p.c.h).toFixed(1);
+    const rev = REVIEWED[p.n] ? '<circle cx="' + px + '" cy="' + py + '" r="7" fill="none" stroke="#e6e1dc" stroke-width="1" stroke-dasharray="2 2"/>' : "";
+    svg += '<g class="hp" data-n="' + p.n + '"><circle cx="' + px + '" cy="' + py + '" r="4.5" fill="' + band(p.c.h) + '" stroke="#1e1e1e" stroke-width="1"/>' + rev + '<circle cx="' + px + '" cy="' + py + '" r="11" fill="transparent"/></g>';
   });
-  /* my closed (unmerged) PRs as diamonds at their close times */
-  const cls = Object.entries(HEALTH_CLOSED).map(([n, v]) => ({ n, t: new Date(v.t).getTime(), c: v }));
+  const cls = Object.entries(HEALTH_CLOSED).map(([n, x]) => ({ n, t: new Date(x.t).getTime(), c: x }));
   cls.forEach(p => {
-    const cx = xOf(p.t), cy = yOf(p.c.h), r = 4.5;
-    const f = n => n.toFixed(1);
-    svg += `<g class="hp" data-n="${p.n}" data-closed="1"><path d="M${f(cx)} ${f(cy - r)} L${f(cx + r)} ${f(cy)} L${f(cx)} ${f(cy + r)} L${f(cx - r)} ${f(cy)} Z" fill="${band(p.c.h)}" stroke="#1e1e1e" stroke-width="1"/><circle cx="${f(cx)}" cy="${f(cy)}" r="11" fill="transparent"/></g>`;
+    const cx = xOf(p.t);
+    if (cx == null) return;
+    const cy = yOf(p.c.h), r = 4.5, f = n => n.toFixed(1);
+    svg += '<g class="hp" data-n="' + p.n + '" data-closed="1"><path d="M' + f(cx) + ' ' + f(cy - r) + ' L' + f(cx + r) + ' ' + f(cy) + ' L' + f(cx) + ' ' + f(cy + r) + ' L' + f(cx - r) + ' ' + f(cy) + ' Z" fill="' + band(p.c.h) + '" stroke="#1e1e1e" stroke-width="1"/><circle cx="' + f(cx) + '" cy="' + f(cy) + '" r="11" fill="transparent"/></g>';
   });
-  /* bottom labels mirror the activity timeline: date at date starts, clock after */
-  let prevDay = "";
-  L.slots.forEach((k, i) => {
-    const [day, h] = k.split(" ");
-    const lbl = day !== prevDay ? day.slice(5) : h + ":00";
-    svg += `<text x="${x0 + (i + 0.5) * (L.BW + L.GAP)}" y="${baseline + 14}" font-size="8" fill="#8a857e" text-anchor="middle">${lbl}</text>`;
-    prevDay = day;
+  const lstep = Math.max(1, Math.ceil(L.n / 12));
+  L.slots.forEach((k, j) => {
+    if (j % lstep) return;
+    const day = k.split(" ")[0];
+    svg += '<text x="' + (colX(j) + L.BW / 2).toFixed(1) + '" y="' + (baseline + 14) + '" font-size="8" fill="#8a857e" text-anchor="middle">' + day.slice(5) + '</text>';
   });
-  /* annotated activity clusters: a bubble spanning the burst window, labelled
-     with the event title; hover shows the course and the health mechanism */
-  /* measure label widths so each event chip is wide enough to contain its title */
+  /* annotated bursts overlapping the window; chips clamped inside it */
   const measSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   measSvg.style.cssText = "position:absolute;left:-9999px;top:0;width:2000px;height:60px;visibility:hidden";
   const measTxt = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -958,46 +1198,47 @@ const HEALTH_CLOSED = {"1759":{"t":"2026-08-04T01:51:08Z","h":81,"A":2,"D":1,"H"
   measSvg.appendChild(measTxt);
   document.body.appendChild(measSvg);
   const textW = t => { measTxt.textContent = t; return measTxt.getComputedTextLength() || t.length * 5.4; };
+  const winA = v.slots[0].t, winB = v.slots[v.slots.length - 1].t + (v.hours === 6 ? 6 * HOUR : DAY);
   CLUSTERS.forEach(c => {
-    const xa = Math.max(x0, xOf(new Date(c.start).getTime())), xb = Math.min(x1, xOf(new Date(c.end).getTime()));
-    const cx = (xa + xb) / 2;
+    const ca = new Date(c.start).getTime(), cb = new Date(c.end).getTime();
+    if (cb < winA || ca > winB) return;
+    const xa = Math.max(x0, xOfClamped(ca)), xb = Math.min(x1, xOfClamped(cb));
     const chipW = Math.max(40, textW(c.title) + 16);
+    const cx = Math.min(Math.max((xa + xb) / 2, x0 + chipW / 2 + 2), x1 - chipW / 2 - 2);
     const chipY = 2, chipH = 18;
-    svg += `<g class="cl" data-cl="${c.title}">` +
-      /* the exact burst window, marked under the chip */
-      `<line x1="${xa.toFixed(1)}" y1="${chipY + chipH + 4}" x2="${xb.toFixed(1)}" y2="${chipY + chipH + 4}" stroke="${c.color}" stroke-width="1.5" opacity="0.75"/>` +
-      /* the event chip, sized to its title and centred on the window */
-      `<rect x="${(cx - chipW / 2 - 6).toFixed(1)}" y="0" width="${(chipW + 12).toFixed(1)}" height="26" fill="transparent"/><rect x="${(cx - chipW / 2).toFixed(1)}" y="${chipY}" width="${chipW.toFixed(1)}" height="${chipH}" rx="${chipH / 2}" fill="${c.color}" fill-opacity="0.16" stroke="${c.color}" stroke-width="1" stroke-dasharray="3 3"/>` +
-      `<text x="${cx.toFixed(1)}" y="${chipY + 12.5}" text-anchor="middle" font-size="9.5" fill="${c.color}" stroke="#12100e" stroke-width="2.4" paint-order="stroke" stroke-linejoin="round" style="pointer-events:none">${c.title}</text></g>`;
+    svg += '<g class="cl" data-cl="' + c.title + '">' +
+      '<line x1="' + xa.toFixed(1) + '" y1="' + (chipY + chipH + 4) + '" x2="' + xb.toFixed(1) + '" y2="' + (chipY + chipH + 4) + '" stroke="' + c.color + '" stroke-width="1.5" opacity="0.75"/>' +
+      '<rect x="' + (cx - chipW / 2 - 6).toFixed(1) + '" y="0" width="' + (chipW + 12).toFixed(1) + '" height="26" fill="transparent"/><rect x="' + (cx - chipW / 2).toFixed(1) + '" y="' + chipY + '" width="' + chipW.toFixed(1) + '" height="' + chipH + '" rx="' + (chipH / 2) + '" fill="' + c.color + '" fill-opacity="0.16" stroke="' + c.color + '" stroke-width="1" stroke-dasharray="3 3"/>' +
+      '<text x="' + cx.toFixed(1) + '" y="' + (chipY + 12.5) + '" text-anchor="middle" font-size="9.5" fill="' + c.color + '" stroke="#12100e" stroke-width="2.4" paint-order="stroke" stroke-linejoin="round" style="pointer-events:none">' + c.title + '</text></g>';
   });
   svg += '</svg>';
   host.innerHTML = svg;
   host.querySelectorAll(".hp").forEach(el => {
     el.addEventListener("mousemove", e => {
       clearTimeout(hideTimer);
+      const n = el.dataset.n;
       let p, verb;
-      if (el.dataset.closed) { p = cls.find(q => q.n === el.dataset.n); verb = "closed"; }
-      else if (el.dataset.ext) { p = upm.find(q => q.n === el.dataset.n); verb = "merged by " + (UPSTREAM[el.dataset.n] || "others"); }
-      else if (el.dataset.open) { p = opn.find(q => q.n === el.dataset.n); verb = "in review since"; }
-      else { p = pts.find(q => q.n === el.dataset.n); verb = "merged"; }
+      if (el.dataset.closed) { p = cls.find(q => q.n === n); verb = "closed"; }
+      else if (el.dataset.ext) { p = upm.find(q => q.n === n); verb = "merged by " + (UPSTREAM[n] || "others"); }
+      else if (el.dataset.open) { p = opn.find(q => q.n === n); verb = "in review since"; }
+      else { p = pts.find(q => q.n === n); verb = "merged"; }
       const dt = new Date(p.t);
       const local = dt.getFullYear() + "-" + String(dt.getMonth() + 1).padStart(2, "0") + "-" + String(dt.getDate()).padStart(2, "0") + " " + String(dt.getHours()).padStart(2, "0") + ":" + String(dt.getMinutes()).padStart(2, "0");
       const c = p.c;
-      const terms = c ? [["A", c.A], ["D", c.D], ["H", c.H], ["L", c.L], ["B", c.B], ["U", c.U]].filter(([, v]) => v > 0).map(([k, v]) => `${k}=${v}`).join(" · ") : "";
-      const title = (PR_META[p.n] || [])[1] || "";
-      const tname = title;
-      const revLine = REVIEWED[p.n] ? `<div class="tstatus">reviewed by us · ${REVIEWED[p.n][0]}/${REVIEWED[p.n][1]} rounds${REVIEWED[p.n][2] ? ` — ${REVIEWED[p.n][2]}` : ""}</div>` : "";
-      tip.innerHTML = (tname
-        ? `<div class="tstatus" style="color:var(--tau)"><a class="prlink pr-neutral" href="https://github.com/TauCetiProject/TauCeti/pull/${p.n}" target="_blank" rel="noopener">#${p.n}</a> · ${tname}</div>`
-        : `<b><a class="prlink pr-neutral" href="https://github.com/TauCetiProject/TauCeti/pull/${p.n}" target="_blank" rel="noopener">#${p.n}</a></b>`) +
-        `<div class="tstatus">${verb} ${local}</div>` +
+      const terms = c ? [["A", c.A], ["D", c.D], ["H", c.H], ["L", c.L], ["B", c.B], ["U", c.U]].filter(([, x]) => x > 0).map(([k, x]) => k + "=" + x).join(" \u00b7 ") : "";
+      const title = (PR_META[n] || [])[1] || "";
+      const revLine = REVIEWED[n] ? '<div class="tstatus">reviewed by us \u00b7 ' + REVIEWED[n][0] + "/" + REVIEWED[n][1] + ' rounds' + (REVIEWED[n][2] ? " \u2014 " + REVIEWED[n][2] : "") + '</div>' : "";
+      tip.innerHTML = (title
+        ? '<div class="tstatus" style="color:var(--tau)"><a class="prlink pr-neutral" href="https://github.com/TauCetiProject/TauCeti/pull/' + n + '" target="_blank" rel="noopener">#' + n + '</a> \u00b7 ' + title + '</div>'
+        : '<b><a class="prlink pr-neutral" href="https://github.com/TauCetiProject/TauCeti/pull/' + n + '" target="_blank" rel="noopener">#' + n + '</a></b>') +
+        '<div class="tstatus">' + verb + ' ' + local + '</div>' +
         (c
-          ? `<div class="tstatus">health <span style="color:${band(c.h)}">${c.h}</span> (${bandName(c.h)})${el.dataset.closed ? " · not merged" : ""}</div>` +
-            (terms ? `<div class="tstatus">${terms}</div>` : "") +
-            `<div class="tstatus">failed rubrics: ${c.failed.length ? c.failed.join(", ") : "none"}</div>`
-          : `<div class="tstatus">health n/a${el.dataset.open ? " · open" : ""}</div>`) +
+          ? '<div class="tstatus">health <span style="color:' + band(c.h) + '">' + c.h + '</span> (' + bandName(c.h) + ')' + (el.dataset.closed ? " \u00b7 not merged" : "") + '</div>' +
+            (terms ? '<div class="tstatus">' + terms + '</div>' : "") +
+            '<div class="tstatus">failed rubrics: ' + (c.failed.length ? c.failed.join(", ") : "none") + '</div>'
+          : '<div class="tstatus">health n/a' + (el.dataset.open ? " \u00b7 open" : "") + '</div>') +
         revLine;
-      placeTip("hs:" + el.dataset.n, e);
+      placeTip("hs:" + n, e);
     });
     el.addEventListener("mouseleave", () => scheduleHide());
   });
@@ -1007,15 +1248,16 @@ const HEALTH_CLOSED = {"1759":{"t":"2026-08-04T01:51:08Z","h":81,"A":2,"D":1,"H"
       const c = CLUSTERS.find(x => x.title === el.dataset.cl);
       if (!c) return;
       const fmt = d => { const dt = new Date(d); return dt.getFullYear() + "-" + String(dt.getMonth() + 1).padStart(2, "0") + "-" + String(dt.getDate()).padStart(2, "0"); };
-      tip.innerHTML = `<b style="color:${c.color}">${c.title}</b>` +
-        `<div class="tstatus">${fmt(c.start)} -> ${fmt(c.end)}</div>` +
-        `<div class="tstatus">ours: ${c.n} merges \u00b7 avg health ${c.avg} \u00b7 ${c.red} red` +
-          (c.others ? ` \u00b7 others: ${c.others} (avg ${c.othersAvg})` : "") + `</div>` +
-        `<div class="tstatus">${linkify(c.detail)}</div>`;
+      tip.innerHTML = '<b style="color:' + c.color + '">' + c.title + '</b>' +
+        '<div class="tstatus">' + fmt(c.start) + ' -> ' + fmt(c.end) + '</div>' +
+        '<div class="tstatus">ours: ' + c.n + ' merges \u00b7 avg health ' + c.avg + ' \u00b7 ' + c.red + ' red' + (c.others ? ' \u00b7 others: ' + c.others + ' (avg ' + c.othersAvg + ')' : "") + '</div>' +
+        '<div class="tstatus">' + linkify(c.detail) + '</div>';
       placeTip("cluster:" + c.title, e);
     });
     el.addEventListener("mouseleave", () => scheduleHide());
   });
-})();</script>
+}
+
+WIN.renderAll();</script>
 </body>
 </html>

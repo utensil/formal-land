@@ -1,0 +1,1184 @@
+<!--
+---
+title: Spin groups route map
+repo: utensil/formal-land/spinrep/spingrp-route-map.html
+public-url: https://utensil.github.io/formal-land/spinrep/spingrp-route-map.html
+---
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spin groups route map — the orthogonal and spin groups roadmap</title>
+<style>
+:root{
+  --bg:#232323; --card:#2b2b2b; --line:#3d3d3d; --fg:#e6e1dc; --muted:#9d9485;
+  --ok:#7fb069; --ok-soft:rgba(127,176,105,.16); --warn:#e5c07b; --warn-soft:rgba(229,192,123,.14);
+  --bad:#e06c75; --bad-soft:rgba(224,108,117,.14); --tau:#61afef;
+  --done:#7fb069; --review:#e5c07b; --open:#9d9485; --branch:#a5c9e8; --incomplete:#bc9458;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1460px;margin:0 auto;padding:28px 26px 60px}
+h1{font-size:22px;margin:0 0 4px}
+.sub{color:var(--muted);font-size:13.5px;margin-bottom:18px}
+h2{font-size:16px;margin:26px 0 10px;color:var(--tau)}
+.legend{display:flex;flex-direction:column;gap:6px;margin:10px 0 6px;font-size:12.5px;color:var(--muted)}.legend .legrow{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}
+.legend .dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px;background:var(--open)}
+.legend .dot.nodest-done{background:var(--done)}
+.legend .dot.nodest-review{background:var(--review)}
+.legend .dot.nodest-branch{background:var(--branch)}
+.legend .dot.nodest-incomplete{background:var(--incomplete)}
+.legend .st{display:inline-flex;align-items:center;margin-right:4px}
+.legend .gl{cursor:pointer;user-select:none;padding:3px 9px;border:1px solid var(--line);border-radius:999px;background:var(--card)}
+.legend .gl.off{opacity:.35}
+.legend .gl .sw{display:inline-block;width:16px;height:4px;border-radius:2px;margin-right:6px;vertical-align:2px}
+svg{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;width:100%;height:auto}
+.node{cursor:pointer}
+.node circle{stroke:#e6e1dc;stroke-width:1.1}
+.node .nl{font-size:16.8px;fill:#c9c2b4;pointer-events:none}
+.node .ns{font-size:9px;fill:var(--muted);pointer-events:none}
+.node:hover circle{stroke:#fff;stroke-width:2}
+.nodest-done{fill:var(--done)}
+.nodest-review{fill:var(--review)}
+.nodest-open{fill:var(--open)}
+.nodest-branch{fill:var(--branch)}
+.nodest-incomplete{fill:var(--incomplete)} .nodest-active{fill:#61afef}
+.summit-halo{pointer-events:none;transform-box:fill-box;transform-origin:center;animation:breathe 3.4s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.10;transform:scale(1)}50%{opacity:.26;transform:scale(1.22)}}
+@media (prefers-reduced-motion:reduce){.summit-halo{animation:none}}
+.edge{fill:none;stroke-linecap:round}
+.edge-dep{stroke:#555;stroke-width:.9;stroke-dasharray:2.5 4;opacity:.42}
+.edge-goal{stroke-width:2.2;opacity:.5;transition:opacity .12s,stroke-width .12s;pointer-events:stroke}
+  #prtl { margin: .6rem 0 0; }
+  #prtl svg { display: block; width: 100%; height: auto; }
+.refLink { border-bottom: 1px dashed rgba(230,225,220,.35); cursor: help; }
+.refLink:hover { border-bottom-color: var(--tau); color: var(--ink); }
+#prmini { margin: .1rem 0 .2rem; }
+#prmini svg { display: block; width: 100%; height: auto; cursor: grab; touch-action: none; }
+#prmini svg:active { cursor: grabbing; }
+#prmini .win { fill: rgba(230,225,220,.10); stroke: #e6e1dc; stroke-width: 1; }
+#prmini .grip { fill: rgba(230,225,220,.18); cursor: ew-resize; }
+#prwincap { color: #a9a29b; }
+  #prtl .tlp { cursor: default; }
+  .tllegend { margin-top: .3rem; font-size: .78rem; color: var(--muted); display: flex; gap: 1rem; flex-wrap: wrap; }
+  .tllegend .s { display: inline-flex; align-items: center; gap: .35rem; }
+  .tllegend .d { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.junction{fill:none;stroke:#e6e1dc;stroke-width:1.2;opacity:.85}
+.edge-goal.lit{opacity:.98;stroke-width:3.6}
+.goal{transition:border-color .12s,box-shadow .12s}
+.goal.lit{border-color:var(--gc);box-shadow:0 0 0 1px var(--gc),0 8px 26px rgba(0,0,0,.45)}
+.lrow{font-size:23px;fill:var(--muted);letter-spacing:.04em}
+#tip{position:fixed;pointer-events:auto;background:#1e1e1e;border:1px solid #555;border-radius:8px;padding:8px 11px;font-size:12.5px;max-width:340px;display:none;z-index:99;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+a.prlink{text-decoration:none;border-bottom:1px dotted rgba(230,225,220,.35);font-weight:600}
+a.prlink:hover{border-bottom-style:solid;border-bottom-color:currentColor}
+a.prlink.pr-merged{color:#9fc37e}
+a.prlink.pr-closed{color:#b98d88;text-decoration:line-through}
+a.prlink.pr-draft{color:#8aa0b8}
+a.prlink.pr-merged.pr-upstream{color:#5f9e8f}
+a.prlink.pr-open{color:#e8bc6e}
+a.prlink.pr-roadmap{color:#b197fc}
+a:not(.rm-chip):not(.prlink){color:#8ba8c7;text-decoration:none;border-bottom:1px dotted rgba(230,225,220,.3)}
+  a:not(.rm-chip):not(.prlink):hover{color:#e6e1dc;border-bottom-style:solid}
+a.prlink.pr-neutral{color:var(--tau)}
+#tip b{color:var(--tau)}
+#tip .tstatus{margin-top:3px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:14px;margin-top:8px}
+.goal{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--gc);border-radius:12px;padding:14px 16px}
+.goal h3{margin:0 0 6px;font-size:15px;display:flex;align-items:center;gap:8px}
+.goal h3 .sw{display:inline-block;width:22px;height:7px;border-radius:3px}
+.goal .route-lbl{font-size:11.5px;color:var(--muted);margin:8px 0 4px;text-transform:uppercase;letter-spacing:.06em}
+.goal .route{font-size:12.5px;color:var(--fg);overflow-wrap:anywhere}
+.goal .route .sep{color:var(--muted);margin:0 3px}
+.goal .bar{height:8px;background:#1e1e1e;border-radius:5px;margin:10px 0 6px;overflow:hidden}
+.goal .bar i{display:block;height:100%;border-radius:5px}
+.goal .pct{font-size:12px;color:var(--muted)}
+.goal p{font-size:13px;margin:8px 0 0;color:#d4cdbf}
+.goal .eval{margin-top:8px;border-top:1px dashed var(--line);padding-top:8px;font-size:12.5px;color:var(--muted);overflow-wrap:break-word;overflow-wrap:anywhere}
+.goal .rdev{margin-top:6px;font-size:12px;color:var(--muted);overflow-wrap:anywhere}
+.foot:not(.pat .foot){margin-top:24px;color:var(--muted);font-size:12px;line-height:1.8}
+  .foot:not(.pat .foot) a{color:#8ba8c7;text-decoration:none;border-bottom:1px dotted rgba(230,225,220,.3);font-weight:500}
+  .foot:not(.pat .foot) a:hover{color:#e6e1dc;border-bottom-style:solid}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:#333;border-radius:4px;padding:0 .3em}
+.hlegend{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:12.5px;color:var(--muted);margin-top:6px}
+.hlegend .s{display:inline-flex;align-items:center;gap:5px}
+.hlegend .d{width:11px;height:11px;display:inline-block;border:1px solid rgba(255,255,255,.15)}
+.hformula{display:flex;flex-wrap:wrap;gap:3px 16px;align-items:baseline;font-size:12px;color:var(--muted);margin-top:5px}
+.hformula b{color:var(--fg)}</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Spin groups route map</h1>
+<div class="sub">The <b>orthogonal and spin groups</b> roadmap as a dependency graph: gray dashed edges are its stated layer order, each goal draws its route in its own color toward its summit, and a shared edge splits into one lane per goal. Rows are the roadmap's four layers and the nodes carry its own bullet ids (0A–3H). Siblings: <a class="prlink pr-neutral" href="spinrep-route-map.html">SpinRepresentations route map</a> · </div>
+
+<h2>Goals</h2>
+<div class="goals" id="goals"></div>
+<div class="sub" style="font-size:12px">The four goals are what the named successor <code>OrthogonalTamagawaAndLatticeMass</code>, the roadmap's named successor (which has no roadmap of its own yet), imports: the spinor norm with its local table and localization, the transvections and their Spin lifts, the adelic point groups with the adelic spinor kernel, and the low-rank cases that stand as acceptance evidence. Nothing downstream of that contract is a node here.</div>
+
+<h2>The map (orthogonal and spin groups)</h2>
+<div id="stats" class="sub" style="margin-top:6px"></div>
+<div class="sub" style="font-size:12px;margin-top:2px">Collected as PRs labelled <code>roadmap/OrthogonalSpinGroups</code> whose changed files touch <span class="refLink" id="dirsRef">the orthogonal directories</span>. Node statuses are read from those PRs' own targets — the roadmap publishes no status report yet — so a node with no PR shows as unstarted; the edges are the roadmap's stated supplier order, the only dependency list it publishes.</div>
+<svg id="map" viewBox="0 0 1420 620" preserveAspectRatio="xMidYMin meet" role="img" aria-label="OrthogonalSpinGroups route map"></svg>
+<div class="legend" id="legend"></div>
+
+<h2>History window</h2>
+<div id="prmini"></div>
+<div class="sub" style="font-size:12px;margin-top:2px"><span id="prwincap"></span></div>
+<div class="hlegend" style="margin-top:4px">
+  <span class="s">minimap — one column per non-idle day: height = that day's state transitions, colour = that day's health median</span>
+  <span class="s" style="margin-left:.5rem">colour:</span>
+  <span class="s"><span class="d" style="background:#7fb069"></span>≥ 75</span>
+  <span class="s"><span class="d" style="background:#e5c07b"></span>≥ 60</span>
+  <span class="s"><span class="d" style="background:#c97b7b"></span>&lt; 60</span>
+  <span class="s"><span class="d" style="background:#6f6f6f"></span>no reading</span>
+  <span class="s"><span class="d" style="background:rgba(230,225,220,.10);border:1px solid #e6e1dc;border-radius:3px"></span>window (both charts below)</span>
+</div>
+<div class="sub" style="font-size:12px;margin-top:2px">one column per non-idle day — height = that day's state transitions, colour = that day's health median · drag the window to move it, drag its edges to resize, double-click to reset · the window is the one both timelines below draw</div>
+
+<h2>PR activity timeline (utensil)</h2>
+<div id="prtl"></div>
+<div class="sub" style="font-size:12px;margin-top:6px">hover a column for the activity list</div>
+
+<h2>PR health timeline (all orthogonal and spin groups)</h2>
+<div id="prhealth"></div>
+<div class="hlegend">
+  <span class="s"><span class="d" style="background:#cc7833;border-radius:2px"></span>median — 3-day rolling (per-day cache)</span>
+  <span class="s"><span class="d" style="background:#7fb069;border-radius:50%"></span>my merged PRs</span>
+  <span class="s"><span class="d" style="background:#5f9e8f"></span>merged by others (band = health)</span>
+  <span class="s"><span class="d" style="background:rgba(230,225,220,.10);border:1px solid #e6e1dc;border-radius:50%"></span>reviewed by us</span>
+  <span class="s" style="margin-left:.5rem">health bands:</span>
+  <span class="s"><span class="d" style="background:#7fb069"></span>≥ 75</span>
+  <span class="s"><span class="d" style="background:#e5c07b"></span>≥ 60</span>
+  <span class="s"><span class="d" style="background:#c97b7b"></span>&lt; 60</span>
+</div>
+<div id="tip"></div>
+
+<div class="foot" style="margin-top:14px">Siblings: <a class="prlink pr-neutral" href="spinrep-route-map.html">SpinRepresentations route map</a> · </div>
+</div>
+<script>
+
+/* ================= data ================= */
+const LAYERS = [
+  "L0 · the orthogonal group",
+  "L1 · Lipschitz & spinor norm",
+  "L2 · local topology, transvections",
+  "L3 · localization & adelics"
+]
+const ST = { done:"merged", review:"in review", open:"unstarted", branch:"next up", incomplete:"incomplete", active:"active" };
+
+/* id, layer (index into LAYERS), label, short label, status, prs */
+const NODES = [
+  "0A|0|determinant & SO|done|#8392 merged (0A complete after it)|The determinant, and the two spellings of `SO`",
+  "0B|0|base change|done|#8444 · #8507 · #8684 merged|Functoriality and base change",
+  "0C|0|bilinear dictionary|review|#8684 merged names 0C; the dictionary itself is open|The bilinear dictionary",
+  "0D|0|reflections|review|#8539 merged — only the bundled group-level base-change form is left|Reflections, as this roadmap uses them",
+  "0E|0|transitivity|open|no PR yet|Transitivity, explicitly",
+  "0F|0|parity|open|no PR yet|Parity",
+  "1A|1|Clifford norm|review|#8462 merged (reverse Clifford norm vs Mathlib's `star`)|The Clifford norm, with the two anti-involutions kept apart",
+  "1B|1|Lipschitz carrier|review|#8474 merged|Mathlib's Lipschitz carrier, the graded centre, and the scalar subgroup",
+  "1C|1|vector representation|review|#8694 merged — Lipschitz action natural under quadratic isometries|The vector representation",
+  "1D|1|spinor norm|review|#8694 names 1D|The spinor norm",
+  "1E|1|comparison sequence|review|#8619 merged — the Pin/Lipschitz action comparison|The comparison sequence, with its dimension branches",
+  "1F|1|low-rank carriers|review|#8644 merged — the even unitary carrier|Low rank, against a named carrier, with the split and nonsplit cases separated",
+  "2A|2|topology|open|no PR yet|The topology is Mathlib's",
+  "2B|2|point groups|open|no PR yet|Point groups as topological groups, in one canonical topology",
+  "2C|2|Eichler transvections|review|#8490 merged — `transvection` and its Spin lift|Eichler transvections and their Spin lifts",
+  "2D|2|compactness|open|no PR yet|Compactness, stated sharply",
+  "2E|2|continuity of the norm|open|no PR yet|Continuity of the spinor norm",
+  "2F|2|local norm table|open|no PR yet|Local spinor norms: the table, by field, dimension and signature",
+  "2G|2|real place|open|no PR yet|The real place, beyond the table",
+  "2H|2|localization|open|no PR yet|Localization of factorizations",
+  "3B|3|restricted products|open|no PR yet|Imported generic restricted-product substrate",
+  "3C|3|compact-open data|open|no PR yet|Compatible compact-open data",
+  "3D|3|adelic point groups|open|no PR yet|The three adelic point groups",
+  "3E|3|diagonal points|open|no PR yet|Diagonal points: discrete in the full adeles, not generally discrete in the finite",
+  "3F|3|adelic spinor norm|open|no PR yet|The adelic spinor norm",
+  "3G|3|double cosets|open|no PR yet|Double cosets, with the maps stated separately",
+  "3H|3|stop point|open|no PR yet|Explicit stop point"
+].map(r => { const [id, L, short, status, prs, label] = r.split("|"); return { id, L: +L, short, status, prs, label }; })
+
+
+/* gray dependency-spine edges [from, to] */
+const DEPS = [["0A","0B"],["0B","0C"],["0C","0D"],["0D","0E"],["0E","0F"],["0F","1A"],["1A","1B"],["1B","1C"],["1C","1D"],["1D","1E"],["1E","1F"],["1F","2A"],["2A","2B"],["2B","2C"],["2C","2D"],["2D","2E"],["2E","2F"],["2F","2G"],["2G","2H"],["2H","3B"],["3B","3C"],["3C","3D"],["3D","3E"],["3E","3F"],["3F","3G"],["3G","3H"]];
+
+
+/* goals: add one entry per new goal; color picks from the rotating palette
+   below. Goal colors stay distinguishable from the node-state colors
+   (done #7fb069, review #e5c07b, open #9d9485, branch #a5c9e8) — alpha's
+   dark green and beta's blue are offset shades, not matches; future goal
+   colors must keep that rule. */
+const PALETTE = ["#6d9cbe","#6b8e23","#cc7833","#7570b3","#a5c261","#bc9458","#da4939"];
+const GOALS = [
+  "sigma|0|Goal σ — the spinor norm, its local table and its localization|0D 0E 0F 1A 1B 1C 1D 2E 2F 2G 2H|The successor imports `spinorNorm` with its local table (2F–2G) and its localization (2H), so the route runs from reflections and the Lipschitz carrier through the exact spinor-kernel sequence to the table by field, dimension and signature, and then to the localization the adelization consumes.",
+  "tau|1|Goal τ — transvections and the elementary subgroup|0D 0E 0F 1A 1B 1C 2A 2B 2C 2D|Eichler transvections and their Spin lifts are the root subgroups the successor imports as `transvection` and `transvectionLiftHom`; the route carries the topology and point-group statement they are stated against, then the generation of the elementary subgroup and its sharp compactness statement.",
+  "upsilon|2|Goal υ — the adelic point groups and the spinor kernel|2H 3B 3C 3D 3E 3F 3G|The adelization imports `finiteAdelicOrthogonal`, `finiteAdelicSpecialOrthogonal` and `finiteAdelicSpin` with their away-S and full forms and the diagonals of 3D–3E, `adelicSpinorNorm` with `adelicSpinorKernel`, and the reference-image theorems of 3C. The route follows the localization of the spinor norm into the imported restricted-product substrate.",
+  "phi|3|Goal φ — low-rank carriers and the stop points|1B 1C 1D 1E 1F 3H|The worked dimension cases are the acceptance evidence for everything above: low rank against a named carrier with split and nonsplit separated, the comparison sequence with its dimension branches, and the explicit stop point where the dimension-six transfer leaves this roadmap."
+].map(r => { const [id, color, name, nodeStr, evalText] = r.split("|"); const es = nodeStr.split(" "); const edges = []; for (let i = 0; i + 1 < es.length; i++) edges.push([es[i], es[i + 1]]); return { id, color: +color, name, edges, eval: evalText }; })
+
+
+/* ================= layout =================
+   Sugiyama-style: nodes ordered within each layer by the barycenter of
+   their neighbors (fewer crossings), then positioned by barycenter, then
+   overlaps pushed apart. The roadmap layer stays the row. */
+const W = 1560, ROW = 120, TOP = 72, H = TOP + (LAYERS.length - 1) * ROW + 170;
+/* measure label widths offscreen at render font sizes, so the overlap
+   resolution below keeps the doubled node labels apart and the left layer
+   labels fit in their own column */
+const { nodeW, lrowW } = (() => {
+  const ms = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  ms.style.cssText = "position:absolute;left:-9999px;top:0;width:2000px;height:120px;visibility:hidden";
+  const mt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  mt.style.fontFamily = "ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";
+  ms.appendChild(mt);
+  document.body.appendChild(ms);
+  const m = (txt, font, ls) => { mt.style.fontSize = font + "px"; mt.style.letterSpacing = ls + "em"; mt.textContent = txt; return mt.getComputedTextLength() || txt.length * 0.6 * font; };
+  const cache = {};
+  return {
+    nodeW: id => { if (cache[id] === undefined) { const n = NODES.find(x => x.id === id); cache[id] = m(n.short, 16.8, 0); } return cache[id]; },
+    lrowW: l => m(l, 23, 0.04),
+  };
+})();
+const X0 = Math.max(220, Math.ceil(Math.max(...LAYERS.map(lrowW))) + 22);
+const X1 = W - 90, MIN_GAP = 78;
+const pairGap = (a, b) => Math.max(MIN_GAP, (nodeW(a.id) + nodeW(b.id)) / 2 + 16);
+
+const adj = {};
+function link(a, b) { (adj[a] = adj[a] || new Set()).add(b); (adj[b] = adj[b] || new Set()).add(a); }
+DEPS.forEach(([a, b]) => link(a, b));
+GOALS.forEach(g => g.edges.forEach(([a, b]) => link(a, b)));
+
+/* rows follow the dependency spine (topological order), not the roadmap's layer numbering:
+   e.g. Layer 1's structure theorem is proved forward from the spin module, so its row sits
+   below Layer 4. Every dependency edge therefore points downward. */
+const layerDep = {};
+LAYERS.forEach((_, i) => layerDep[i] = new Set());
+const addL = (a, b) => { if (a !== b) layerDep[a].add(b); };
+DEPS.forEach(([x, y]) => addL(NODES.find(n => n.id === x).L, NODES.find(n => n.id === y).L));
+GOALS.forEach(g => g.edges.forEach(([a, b]) => addL(NODES.find(x => x.id === a).L, NODES.find(x => x.id === b).L)));
+const indeg = LAYERS.map((_, i) => 0);
+LAYERS.forEach((_, a) => layerDep[a].forEach(b => indeg[b]++));
+const ready = LAYERS.map((_, i) => i).filter(i => indeg[i] === 0);
+const rowOf = {};
+let placed = 0;
+while (ready.length) {
+  const L = ready.sort((a, b) => a - b).shift();
+  rowOf[L] = placed++;
+  layerDep[L].forEach(b => { if (--indeg[b] === 0) ready.push(b); });
+}
+if (placed < LAYERS.length) LAYERS.forEach((_, i) => { if (rowOf[i] === undefined) rowOf[i] = placed++; });
+
+const byLayer = LAYERS.map((_, L) => NODES.filter(n => n.L === L));
+const posX = {};
+const spread = arr => arr.forEach((n, i) => { posX[n.id] = X0 + (X1 - X0) * (arr.length === 1 ? 0.5 : (i + 1) / (arr.length + 1)); });
+byLayer.forEach(spread);
+
+/* order sweeps: sort each layer by the mean x of its cross-layer neighbors */
+for (let sweep = 0; sweep < 6; sweep++) {
+  const seq = LAYERS.map((_, i) => i);
+  (sweep % 2 ? seq.reverse() : seq).forEach(L => {
+    const arr = byLayer[L];
+    /* within-layer chain edges flow left-to-right: a chain order key precedes the barycenter.
+       Built from the directed edge data (DEPS + goal edges), since adj is undirected. */
+    const chainPred = {};
+    arr.forEach(n => chainPred[n.id] = new Set());
+    const sameL = id => NODES.find(x => x.id === id).L === L;
+    DEPS.forEach(([a, b]) => { if (sameL(a) && sameL(b)) chainPred[b].add(a); });
+    GOALS.forEach(g => g.edges.forEach(([a, b]) => { if (sameL(a) && sameL(b)) chainPred[b].add(a); }));
+    const inChain = id => chainPred[id].size > 0 || arr.some(x => chainPred[x.id].has(id));
+    let orderCount = 0;
+    const chainKey = {};
+    const visit = id => {
+      if (chainKey[id] !== undefined) return;
+      const preds = [...chainPred[id]].filter(inChain);
+      if (!preds.length) { chainKey[id] = orderCount++; }
+      else { visit(preds[0]); chainKey[id] = chainKey[preds[0]] + 1; }
+    };
+    arr.forEach(n => visit(n.id));
+    const bc = arr.map(n => {
+      const ns = [...(adj[n.id] || [])].filter(m => NODES.find(x => x.id === m).L !== L).map(m => posX[m]).sort((p, q) => p - q);
+      return ns.length ? ns[Math.floor(ns.length / 2)] : null;
+    });
+    byLayer[L] = arr.map((n, i) => ({ n, i, bc: bc[i], ck: chainKey[n.id] ?? 1e9 }))
+      .sort((p, q) => (p.bc === null && q.bc === null) ? p.ck - q.ck || p.i - q.i : p.bc === null ? 1 : q.bc === null ? -1 : p.ck - q.ck || p.bc - q.bc || p.i - q.i)
+      .map(o => o.n);
+    spread(byLayer[L]);
+  });
+}
+
+/* position sweeps: x = mean of neighbors, clamped */
+for (let it = 0; it < 10; it++) {
+  const next = {};
+  NODES.forEach(n => {
+    const ns = [...(adj[n.id] || [])].filter(m => NODES.find(x => x.id === m).L !== n.L).map(m => posX[m]).sort((p, q) => p - q);
+    next[n.id] = ns.length ? ns[Math.floor(ns.length / 2)] : posX[n.id];
+  });
+  NODES.forEach(n => { posX[n.id] = Math.max(X0, Math.min(X1, next[n.id])); });
+}
+
+/* overlap resolution within each layer */
+function resolveOverlaps() {
+  for (let pass = 0; pass < 30; pass++) {
+    let moved = false;
+    for (let L = 0; L < LAYERS.length; L++) {
+      const arr = byLayer[L].slice().sort((a, b) => posX[a.id] - posX[b.id]);
+      for (let i = 1; i < arr.length; i++) {
+        const need = pairGap(arr[i - 1], arr[i]);
+        const d = posX[arr[i].id] - posX[arr[i - 1].id];
+        if (d < need) { posX[arr[i].id] = posX[arr[i - 1].id] + need; moved = true; }
+      }
+      // rows may push past X1; shift the whole row left when it overflows
+      const last = arr[arr.length - 1];
+      const over = posX[last.id] - X1;
+      if (over > 0) {
+        const first = arr[0];
+        const shift = Math.min(over, posX[first.id] - X0);
+        if (shift > 0) { for (const n of arr) posX[n.id] -= shift; moved = true; }
+      }
+    }
+    if (!moved) break;
+  }
+}
+resolveOverlaps();
+
+/* crossing-minimization: hill-climb each node's x against the straight-chord crossing count */
+const segX = (a, b, c, d) => {
+  const cr = (p, q) => p[0] * q[1] - p[1] * q[0];
+  const r = [b.x - a.x, b.y - a.y], s = [d.x - c.x, d.y - c.y], q = [c.x - a.x, c.y - a.y];
+  const den = cr(r, s);
+  if (Math.abs(den) < 1e-9) return false;
+  const t = cr(q, s) / den, u = cr(q, r) / den;
+  return t > 0 && t < 1 && u > 0 && u < 1;
+};
+const uniqueEdges = (() => {
+  const seen = new Set(), out = [];
+  const add = (a, b) => {
+    const k = [a.id, b.id].sort().join("→");
+    if (!seen.has(k)) { seen.add(k); out.push([a, b]); }
+  };
+  DEPS.forEach(([a, b]) => add(a, b));
+  GOALS.forEach(g => g.edges.forEach(([a, b]) => add(a, b)));
+  return out;
+})();
+const P = n => pos[n.id];
+function crossingCount() {
+  let c = 0;
+  for (let i = 0; i < uniqueEdges.length; i++)
+    for (let j = i + 1; j < uniqueEdges.length; j++)
+      if (segX(P(uniqueEdges[i][0]), P(uniqueEdges[i][1]), P(uniqueEdges[j][0]), P(uniqueEdges[j][1]))) c++;
+  return c;
+}
+function layerOverlaps(L) {
+  const arr = byLayer[L].slice().sort((a, b) => posX[a.id] - posX[b.id]);
+  for (let i = 1; i < arr.length; i++) if (posX[arr[i].id] - posX[arr[i - 1].id] < pairGap(arr[i - 1], arr[i])) return true;
+  return false;
+}
+{
+  let cur = crossingCount();
+  for (let it = 0; it < 80 && cur > 0; it++) {
+    let improved = false;
+    for (let L = 0; L < LAYERS.length; L++) {
+      const arr = byLayer[L].slice().sort((a, b) => posX[a.id] - posX[b.id]);
+      for (const n of arr) {
+        let best = posX[n.id];
+        for (const dx of [-16, -9, -4, 4, 9, 16]) {
+          const nx = Math.max(X0, Math.min(X1, posX[n.id] + dx));
+          if (Math.abs(nx - posX[n.id]) < 1) continue;
+          posX[n.id] = nx;
+          const c = crossingCount();
+          if (c < cur && !layerOverlaps(L)) { cur = c; best = nx; improved = true; }
+          posX[n.id] = best;
+        }
+      }
+    }
+    if (!improved) break;
+  }
+}
+
+/* enforce within-layer chain order on the final positions (the barycenter phase can scramble it) */
+const sameLayerEdges = [];
+DEPS.forEach(([a, b]) => { const A = NODES.find(x => x.id === a), B = NODES.find(x => x.id === b); if (A.L === B.L) sameLayerEdges.push([a, b]); });
+GOALS.forEach(g => g.edges.forEach(([a, b]) => { const A = NODES.find(x => x.id === a), B = NODES.find(x => x.id === b); if (A.L === B.L) sameLayerEdges.push([a, b]); }));
+for (let pass = 0; pass < 20; pass++) {
+  let moved = false;
+  for (const [a, b] of sameLayerEdges) {
+    if (posX[a] > posX[b] + 2) { const t = posX[a]; posX[a] = posX[b]; posX[b] = t; moved = true; }
+  }
+  if (!moved) break;
+}
+resolveOverlaps();
+
+const pos = {};
+NODES.forEach(n => { pos[n.id] = { x: posX[n.id], y: TOP + rowOf[n.L] * ROW }; });
+
+const span = (a, b) => Math.abs(a.L - b.L);
+
+/* gentle curves; longer edges get a slightly wider bow so far connections read cleanly */
+function edgePath(a, b) {
+  const dx = b.x - a.x, dy = b.y - a.y;
+  const len = Math.hypot(dx, dy) || 1;
+  const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+  const bend = Math.min(26, 8 + len * 0.10);
+  return `M${a.x.toFixed(1)},${a.y.toFixed(1)} C${(mx - dy / len * bend).toFixed(1)},${(my + dx / len * bend).toFixed(1)} ${(mx + dy / len * bend).toFixed(1)},${(my - dx / len * bend).toFixed(1)} ${b.x.toFixed(1)},${b.y.toFixed(1)}`;
+}
+
+/* one continuous, C1-smooth path per goal route: Catmull-Rom through offset waypoints */
+const LANE = 5.5;
+function norm(dx, dy) { const l = Math.hypot(dx, dy) || 1; return { x: -dy / l, y: dx / l }; }
+function catmullRom(pts) {
+  if (pts.length < 2) return "";
+  if (pts.length === 2) return `M${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)} L${pts[1].x.toFixed(1)},${pts[1].y.toFixed(1)}`;
+  const P = i => pts[Math.max(0, Math.min(pts.length - 1, i))];
+  let d = `M${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)}`;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = P(i - 1), p1 = P(i), p2 = P(i + 1), p3 = P(i + 2);
+    const c1 = { x: p1.x + (p2.x - p0.x) / 6, y: p1.y + (p2.y - p0.y) / 6 };
+    const c2 = { x: p2.x - (p3.x - p1.x) / 6, y: p2.y - (p3.y - p1.y) / 6 };
+    d += ` C${c1.x.toFixed(1)},${c1.y.toFixed(1)} ${c2.x.toFixed(1)},${c2.y.toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)}`;
+  }
+  return d;
+}
+
+/* lane assignment: for every shared edge, each goal gets a tight lane index */
+const edgeLane = {};
+function laneOf(g, k) {
+  if (!edgeLane[k]) edgeLane[k] = { count: 0, lanes: {} };
+  const e = edgeLane[k];
+  if (e.lanes[g] === undefined) e.lanes[g] = e.count++;
+  return (e.lanes[g] - (e.count - 1) / 2) * LANE;
+}
+GOALS.forEach(g => g.edges.forEach(([a, b]) => laneOf(g.id, [a, b].sort().join("→"))));
+
+/* each goal route is a subgraph of colored edges; shared edges split into tight lanes */
+function goalEdgePath(a, b, off) {
+  const dx = b.x - a.x, dy = b.y - a.y;
+  const len = Math.hypot(dx, dy) || 1;
+  const nx = -dy / len, ny = dx / len;
+  const p1 = { x: a.x + nx * off, y: a.y + ny * off };
+  const p2 = { x: b.x + nx * off, y: b.y + ny * off };
+  const mx = (p1.x + p2.x) / 2, my = (p1.y + p2.y) / 2;
+  const bend = Math.min(24, len * 0.12);
+  return `M${p1.x.toFixed(1)},${p1.y.toFixed(1)} C${(mx - dy / len * bend).toFixed(1)},${(my + dx / len * bend).toFixed(1)} ${(mx + dy / len * bend).toFixed(1)},${(my - dx / len * bend).toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)}`;
+}
+
+/* ================= render ================= */
+const svg = document.getElementById("map");
+let inner = "";
+
+/* layer rows */
+for (let L = 0; L < LAYERS.length; L++)
+  inner += `<text class="lrow" x="${X0 - 12}" y="${TOP + L * ROW - 14}" text-anchor="end">${LAYERS[L]}</text>`;
+
+/* dependency edges */
+DEPS.forEach(([a, b]) => {
+  inner += `<path class="edge edge-dep" d="${edgePath(pos[a], pos[b])}"/>`;
+});
+
+/* goal routes: one colored edge per route edge; hovering lights the whole goal's subgraph */
+GOALS.forEach(g => g.edges.forEach(([a, b]) => {
+  inner += `<path class="edge edge-goal" data-goal="${g.id}" stroke="${PALETTE[g.color]}" d="${goalEdgePath(pos[a], pos[b], laneOf(g.id, [a, b].sort().join("→")))}"/>`;
+}));
+
+/* nodes */
+const goalOfNode = {};
+GOALS.forEach(g => g.edges.flat().forEach(id => (goalOfNode[id] = (goalOfNode[id] || []).concat(g.id))));
+const MEET = {
+  "1B": "the Lipschitz carrier is the same one the SpinRepresentations route uses for its Pin/Spin action",
+  "1D": "the spinor norm is the object the spinrep α route's spinor-norm cover packages",
+  "2C": "Eichler transvections meet the reflection-pair lifts of the spinrep α route"
+}
+/* summit nodes: the goal's mathematical capstone, ringed in that goal's color.
+   A goal may extend to worked cases beyond the summit; the summit stays the weighted math piece. */
+const SUMMIT = { sigma: "2H", tau: "2C", upsilon: "3D", phi: "1F" }
+const summitOf = {};
+GOALS.forEach(g => {
+  (summitOf[SUMMIT[g.id]] = summitOf[SUMMIT[g.id]] || []).push(g.id);
+});
+NODES.forEach(n => {
+  const halo = summitOf[n.id] && summitOf[n.id].length
+    ? `<circle class="summit-halo" r="24" cx="${pos[n.id].x}" cy="${pos[n.id].y}" fill="${PALETTE[GOALS.find(g => g.id === summitOf[n.id][0]).color]}" opacity=".16"/>`
+    : "";
+  const junction = (goalOfNode[n.id] || []).length >= 2 && MEET[n.id]
+    ? `<circle class="junction" r="4" cx="${pos[n.id].x}" cy="${pos[n.id].y}"/>`
+    : "";
+  inner += `<g class="node" data-id="${n.id}" data-goals="${(goalOfNode[n.id] || []).join(" ")}">
+    ${halo}
+    <circle cx="${pos[n.id].x}" cy="${pos[n.id].y}" r="13" class="nodest-${n.status}"/>
+    ${junction}
+    <text class="nl" x="${pos[n.id].x}" y="${pos[n.id].y - 18}" text-anchor="middle">${n.short}</text>
+  </g>`;
+});
+svg.innerHTML = inner;
+svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+
+const GREEK = { sigma: "σ", tau: "τ", upsilon: "υ", phi: "φ" }
+const gname = id => GREEK[id] || id;
+
+/* ================= legend ================= */
+const legend = document.getElementById("legend");
+const stl = [["open", ST.open], ["branch", ST.branch], ["review", ST.review], ["incomplete", ST.incomplete], ["done", ST.done], ["active", ST.active]];
+legend.innerHTML =
+  '<div class="legrow">' +
+    '<span class="st" style="margin-right:4px">routes:</span>' + GOALS.map(g => `<span class="gl" data-g="${g.id}"><span class="sw" style="background:${PALETTE[g.color]}"></span>${gname(g.id)}</span>`).join(" ") +
+    '<span style="margin:0 10px">|</span><span class="st"><span style="display:inline-block;width:13px;height:13px;border-radius:50%;border:1.2px solid #e6e1dc;background:transparent;margin-right:5px;vertical-align:-2px"></span>junction · routes meet</span>' +
+    '<span style="margin:0 10px">|</span><span class="st"><span style="display:inline-block;width:16px;height:16px;border-radius:50%;border:2.8px solid #e6e1dc;margin-right:5px;vertical-align:-4px"></span>summit</span>' +
+  '</div>' +
+  '<div class="legrow">' +
+    '<span class="st" style="margin-right:4px">node state:</span>' + stl.map(([k, v]) => `<span class="st"><span class="dot nodest-${k}"></span>${v}</span>`).join("") +
+    '<span style="margin:0 10px">|</span><span class="st" style="margin-right:4px">PR activity:</span>' +
+    '<span class="st"><span class="dot" style="background:#8fa3b8"></span>draft</span>' +
+    '<span class="st"><span class="dot" style="background:#6d9cbe"></span>open</span>' +
+    '<span class="st"><span class="dot" style="background:#e5c07b"></span>review</span>' +
+    '<span class="st"><span class="dot" style="background:#a5c261"></span>ready to merge</span>' +
+    '<span class="st"><span class="dot" style="background:#7fb069"></span>merged</span>' +
+    '<span class="st"><span class="dot" style="background:#5f9e8f"></span>merged by others</span>' +
+    '<span class="st"><span class="dot" style="background:#c97b7b"></span>closed</span>' +
+  '</div>';
+legend.querySelectorAll(".gl").forEach(el => el.addEventListener("click", () => {
+  el.classList.toggle("off");
+  const on = !el.classList.contains("off");
+  svg.querySelectorAll(`.edge-goal[data-goal="${el.dataset.g}"]`).forEach(e => e.style.display = on ? "" : "none");
+}));
+
+/* ================= PR links ================= */
+const ROADPRS = {}
+const PRS = {"8392":"m","8444":"m","8462":"m","8474":"m","8490":"m","8507":"m","8539":"m","8619":"m","8644":"m","8684":"m","8694":"m","8735":"m"}
+/* roadmap PRs merged by upstream authors; every other merged PR is utensil's */
+const UPSTREAM = {"8392":"sqrt-of-2","8444":"sqrt-of-2","8462":"sqrt-of-2","8474":"sqrt-of-2","8490":"sqrt-of-2","8507":"sqrt-of-2","8539":"sqrt-of-2","8735":"CBirkbeck"}
+/* commit-type classification for the merged PRs (drives the live tally) */
+const TYPES = {"8392":"feat","8444":"feat","8462":"feat","8474":"feat","8490":"feat","8507":"feat","8539":"feat","8619":"feat","8644":"feat","8684":"feat","8694":"feat","8735":"perf"}
+
+Object.assign(TYPES, {5102:"refactor",5215:"feat"});
+/* live tally from the data above — never hand-edited */
+(function () {
+  const es = Object.entries(PRS);
+  const merged = es.filter(([, v]) => v === "m");
+  const n = f => merged.filter(f).length;
+  const feat = n(([k]) => TYPES[k] === "feat");
+  const featMine = n(([k]) => !UPSTREAM[k] && TYPES[k] === "feat");
+  const ref = n(([k]) => TYPES[k] === "refactor");
+  const refMine = n(([k]) => !UPSTREAM[k] && TYPES[k] === "refactor");
+  const misc = n(([k]) => TYPES[k] === "docs" || TYPES[k] === "chore");
+  const drafts = es.filter(([, v]) => v === "d").length;
+  const open = es.filter(([, v]) => v === "o").length;
+  const closed = es.filter(([, v]) => v === "c").length;
+  const el = document.getElementById("stats");
+  if (el) el.innerHTML =
+    `${merged.length} merged PRs on the roadmap · ` +
+    `feat × ${feat} (${featMine} by utensil) · refactor × ${ref} (${refMine} by utensil) · ` +
+    `docs/chore × ${misc} · ${drafts} drafts · ${open} open · ${closed} closed`;
+})();
+
+function linkify(t) {
+  return t.replace(/(?:mathlib|TauCetiRoadmap)?#(\d+)(\u271d)?/g, (m, n, d) => {
+    const isML = m.indexOf("mathlib") === 0;
+    const isRM = m.indexOf("TauCetiRoadmap") === 0;
+    const st = isRM ? (ROADPRS[n] || [])[0] : PRS[n];
+    const cls = isRM ? "pr-roadmap" : st === "m" ? "pr-merged" : st === "c" ? "pr-closed" : st === "d" ? "pr-draft" : st === "o" ? "pr-open" : "pr-neutral";
+    const pre = isML ? "mathlib#" : isRM ? "TauCetiRoadmap#" : "#";
+    const href = isML ? `https://github.com/leanprover-community/mathlib4/pull/${n}`
+                      : isRM ? `https://github.com/TauCetiProject/TauCetiRoadmap/pull/${n}`
+                      : `https://github.com/TauCetiProject/TauCeti/pull/${n}`;
+    const au = UPSTREAM[n];
+    const cls2 = cls === "pr-merged" && au ? " pr-upstream" : "";
+    const tip = au ? ` title="merged by ${au}"` : "";
+    return `<a class="prlink ${cls}${cls2}" href="${href}" target="_blank" rel="noopener"${tip}>${pre}${n}</a>` + (d ? "✝" : "");
+  });
+}
+
+/* ================= hover: light the whole route ================= */
+const lit = new Set();
+function refreshLit() {
+  svg.querySelectorAll(".edge-goal").forEach(e => e.classList.toggle("lit", lit.has(e.dataset.goal)));
+  document.querySelectorAll(".goal").forEach(c => c.classList.toggle("lit", lit.has(c.dataset.g)));
+}
+svg.querySelectorAll(".edge-goal").forEach(p => {
+  p.addEventListener("mouseenter", () => { lit.add(p.dataset.goal); refreshLit(); });
+  p.addEventListener("mouseleave", () => { lit.delete(p.dataset.goal); refreshLit(); });
+});
+svg.querySelectorAll(".node").forEach(el => {
+  el.addEventListener("mouseenter", () => { (el.dataset.goals || "").split(" ").filter(Boolean).forEach(g => lit.add(g)); refreshLit(); });
+  el.addEventListener("mouseleave", () => { (el.dataset.goals || "").split(" ").filter(Boolean).forEach(g => lit.delete(g)); refreshLit(); });
+});
+
+/* ================= goal cards ================= */
+const goalsEl = document.getElementById("goals");
+GOALS.forEach(g => {
+  const routeNodes = [...new Set(g.edges.flat())].map(id => NODES.find(n => n.id === id));
+  const weight = { done: 1, review: 0.75, open: 0.05, branch: 0.2, incomplete: 0.6, active: 1 };
+  const prog = routeNodes.reduce((a, n) => a + weight[n.status], 0) / routeNodes.length;
+  const pct = Math.round(prog * 100);
+  goalsEl.insertAdjacentHTML("beforeend", `
+    <div class="goal" data-g="${g.id}" style="--gc:${PALETTE[g.color]}">
+      <h3><span class="sw" style="background:${PALETTE[g.color]}"></span>${g.name}</h3>
+      <div class="bar"><i style="width:${pct}%;background:${PALETTE[g.color]}"></i></div>
+      <div class="pct">${pct}% of the route's nodes progressed (merged = 1, in review = .75, incomplete = .6)</div>
+      <div class="route-lbl">route</div>
+      <div class="route">${routeNodes.map(n => `<span data-g="${g.id}" style="cursor:default">${n.short}</span>`).join('<span class="sep">→</span>')}</div>
+      <div class="eval">${linkify(g.eval)}</div>
+      ${(rd => rd.length ? `<div class="route-lbl">roadmap slices</div><div class="rdev">${rd.map(([n, v]) => `<a class="prlink pr-roadmap" href="https://github.com/TauCetiProject/TauCetiRoadmap/pull/${n}" target="_blank" rel="noopener" title="${v[1]}">TauCetiRoadmap#${n}</a>`).join(" · ")}</div>` : "")(Object.entries(ROADPRS).filter(([, v]) => v[2] === g.id))}
+    </div>`);
+});
+
+/* ================= tooltip ================= */
+const tip = document.getElementById("tip");
+svg.addEventListener("mousemove", e => {
+  const el = e.target.closest(".node");
+  if (!el) {
+    if (tip.style.display !== "none" && !tip.contains(e.target)) scheduleHide();
+    return;
+  }
+  clearTimeout(hideTimer);
+  const n = NODES.find(x => x.id === el.dataset.id);
+  const sum = summitOf[n.id] || [];
+  const goalsOn = GOALS.filter(g => g.edges.flat().includes(n.id) && !sum.includes(g.id)).map(g => `<span style="color:${PALETTE[g.color]}">${gname(g.id)}</span>`).join(", ");
+  const sumTxt = sum.map(gid => `<span style="color:${PALETTE[GOALS.find(g => g.id === gid).color]}">${gname(gid)}</span>`).join(", ");
+  const isJunction = MEET[n.id] != null;
+  const revIds = (n.prs.match(/#(\d+)/g) || []).map(x => x.slice(1)).filter(x => REVIEWED[x]);
+  const revTxt = revIds.map(x => linkify("#" + x) + ` (${REVIEWED[x][0]}/${REVIEWED[x][1]})` + (REVIEWED[x][2] ? ` — ${REVIEWED[x][2]}` : "")).join(", ");
+  tip.innerHTML = `<b>${n.label}</b><div class="tstatus">state: ${ST[n.status]} · ${linkify(n.prs)}</div>` +
+    (revTxt ? `<div class="tstatus">reviewed by us: ${revTxt} rounds</div>` : "") +
+    (sumTxt ? `<div class="tstatus">summit of: ${sumTxt}</div>` : "") +
+    (isJunction ? `<div class="tstatus">meeting of: ${goalsOn}</div>` : "") +
+    (isJunction ? `<div class="tstatus" style="font-size:11px">${MEET[n.id]}</div>` : "") +
+    (goalsOn && !isJunction ? `<div class="tstatus">on routes: ${goalsOn}</div>` : "");
+  placeTip("node:" + n.id, e);
+});
+let hideTimer = null;
+/* which element the tip currently describes; while it stays the same the tip
+   keeps its position, so the cursor can be moved onto it to select text or
+   click the PR links inside it */
+let tipKey = null;
+function placeTip(key, e) {
+  const same = tipKey === key && tip.style.display === "block";
+  tipKey = key;
+  tip.style.display = "block";
+  if (same) return;                     /* keep the anchor while hovering one element */
+  const r = tip.getBoundingClientRect();
+  tip.style.left = Math.min(e.clientX + 14, innerWidth - r.width - 10) + "px";
+  tip.style.top = Math.min(e.clientY + 14, innerHeight - r.height - 10) + "px";
+}
+function hideTip() { tipKey = null; tip.style.display = "none"; }
+function scheduleHide() {
+  clearTimeout(hideTimer);
+  hideTimer = setTimeout(() => { if (!tip.matches(":hover")) hideTip(); }, 600);
+}
+svg.addEventListener("mouseleave", e => { if (!tip.contains(e.relatedTarget)) { clearTimeout(hideTimer); scheduleHide(); } });
+tip.addEventListener("mouseenter", () => clearTimeout(hideTimer));
+tip.addEventListener("mouseleave", () => { clearTimeout(hideTimer); hideTip(); });
+
+/* the scope sentence's directory list: rendered through the same #tip card as
+   every other hover, so its GitHub links are clickable and the 600 ms grace
+   window (plus hover-cancel on the card) lets the cursor travel onto it */
+(function () {
+  const ref = document.getElementById("dirsRef");
+  if (!ref) return;
+  const TREE = "https://github.com/TauCetiProject/TauCeti/tree/main/";
+  const DIRS = [
+    ["LinearAlgebra/QuadraticForm", 7, "the spin groups' forms"],
+    ["LinearAlgebra/CliffordAlgebra", 6, "the Clifford carriers"],
+    ["Topology/Algebra/CliffordAlgebra", 1, ""],
+    ["LinearAlgebra/Prod.lean", 1, ""],
+    ["RepresentationTheory/Spin", 1, ""]
+  ]
+  const link = d => '<a class="prlink pr-neutral" href="' + TREE + d + '" target="_blank" rel="noopener">TauCeti/' + d + "</a>";
+  const html = "<b>the orthogonal directories</b>" +
+    '<div class="tstatus">labelled PRs are tracked from these trees; the count is how many tracked PRs touch each:</div>' +
+    DIRS.map(d => '<div class="tstatus">' + link(d[0]) + " · " + d[1] + (d[2] ? " · " + d[2] : "") + "</div>").join("") +
+    '<div class="tstatus">plus a long tail of single-PR families (SkewAdjoint, Analysis/Normed, Geometry/Manifold, RingTheory/Idempotents, Algebra/AlgebraicGroup, …)</div>' +
+    '<div class="tstatus">and the lane\'s goal PRs, tracked wherever their files land — the directory filter alone would miss the CAR, type-B/D carrier and Lie-group work</div>';
+  const show = e => { clearTimeout(hideTimer); tip.innerHTML = html; placeTip("dirsRef", e); };
+  ref.addEventListener("mouseenter", show);
+  ref.addEventListener("mousemove", show);
+  ref.addEventListener("mouseleave", () => scheduleHide());
+})();
+</script>
+<script>
+
+/* PR activity timeline: state-colored dots by date, goal letters, hover = digest */
+const PR_META = {"8392": ["", "feat: the determinant of the orthogonal group and the index of SO(Q)"], "8444": ["", "feat: base change orthogonal groups"], "8462": ["", "feat: the reverse Clifford norm on the Lipschitz group"], "8474": ["", "feat: the Lipschitz group as products of vectors, and the kernel of its action"], "8490": ["", "feat: Eichler transvections of a quadratic form"], "8507": ["", "feat: the orthogonal sum of orthogonal groups and its image"], "8539": ["", "feat: conjugation law, coefficient spellings and base change of quadratic reflections"], "8619": ["", "feat: expose the Pin action comparison"], "8644": ["", "feat: add the even unitary Clifford carrier"], "8684": ["", "feat: make orthogonal base change functorial in scalar towers"], "8694": ["", "feat: make the Lipschitz action natural under quadratic isometries"], "8735": ["", "perf(Spin/Exceptional/Three): speed up the rank-three spin comparison"]}
+const PR_EV = [["2026-09-23T19:59:30Z", "R", "8392"], ["2026-09-23T21:36:11Z", "R", "8444"], ["2026-09-23T22:24:36Z", "R", "8462"], ["2026-09-23T23:35:37Z", "R", "8474"], ["2026-09-24T01:48:22Z", "R", "8490"], ["2026-09-24T04:09:15Z", "R", "8507"], ["2026-09-24T07:03:25Z", "M", "8474"], ["2026-09-24T09:13:26Z", "R", "8539"], ["2026-09-24T10:09:35Z", "M", "8392"], ["2026-09-24T10:11:27Z", "M", "8507"], ["2026-09-24T10:56:06Z", "M", "8444"], ["2026-09-24T13:27:38Z", "R", "8619"], ["2026-09-24T15:13:47Z", "R", "8644"], ["2026-09-24T17:22:26Z", "M", "8619"], ["2026-09-24T19:00:05Z", "M", "8490"], ["2026-09-24T19:48:37Z", "R", "8684"], ["2026-09-24T21:12:20Z", "M", "8462"], ["2026-09-24T21:20:50Z", "R", "8694"], ["2026-09-24T22:04:13Z", "V", "8684"], ["2026-09-24T22:04:15Z", "V", "8684"], ["2026-09-24T22:55:09Z", "M", "8644"], ["2026-09-24T23:49:12Z", "M", "8539"], ["2026-09-25T00:42:50Z", "M", "8684"], ["2026-09-25T02:02:48Z", "R", "8735"], ["2026-09-25T02:42:39Z", "M", "8735"], ["2026-09-25T04:31:51Z", "M", "8694"]]
+Object.assign(PR_META, {
+  "3510": ["β", "feat: identify the derivation adjoint exponential"],
+  "3719": ["βδ", "feat: the dimensions of the half-spin summands"],
+  "3839": ["βδ", "feat: the half-spin summands are simple and inequivalent"],
+  "3859": ["α", "feat: the volume element of a Clifford algebra"]
+});
+Object.assign(PR_META, {
+  "5102": ["αβ", "refactor(CliffordAlgebra): name the multiplicative step of the parity formula"],
+  "5215": ["δ", "feat: add type D simple-root spin bivectors"]
+});
+PR_EV.push(["2026-09-05T12:36:26Z", "R", "4964"], ["2026-09-05T12:20:32Z", "R", "5052"], ["2026-09-05T07:20:26Z", "R", "5106"]);
+const TL_STATE = { D: "#8fa3b8", R: "#6d9cbe", V: "#e5c07b", T: "#a5c261", M: "#7fb069", C: "#c97b7b" };
+const TL_STNAME = { D: "draft", R: "open", V: "review", T: "ready to merge", M: "merged", C: "closed" };
+/* the activity timeline is rendered by renderActivity() below */</script>
+<script>
+/* PR health timeline: running-median line over a consistent random sample of
+   merged RepresentationTheory PRs in the same time range (excluding mine),
+   plus dots for my merged PRs at their actual merge times, colored by health.
+   Health = max(0, 100 - (3A + 4D + 3H + 6L + 8B + 12S + 5U)) per the live formula. */
+const HEALTH = {"8619": {"A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "boards": 1, "failed": [], "full": 1, "h": 100}, "8644": {"A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "boards": 1, "failed": [], "full": 1, "h": 100}, "8684": {"A": 1, "D": 2, "H": 2, "L": 0, "U": 0, "boards": 2, "failed": ["api-design", "reuse"], "full": 2, "h": 83}, "8694": {"A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "boards": 1, "failed": [], "full": 1, "h": 100}}/* external merged + open PRs on the map: timestamps for the health timeline */
+const UP_MERGED = {"8392": "2026-09-24T10:09:35Z", "8444": "2026-09-24T10:56:06Z", "8462": "2026-09-24T21:12:20Z", "8474": "2026-09-24T07:03:25Z", "8490": "2026-09-24T19:00:05Z", "8507": "2026-09-24T10:11:27Z", "8539": "2026-09-24T23:49:12Z", "8735": "2026-09-25T02:42:39Z"}
+Object.assign(UP_MERGED, {
+  "3053":"2026-08-18T08:46:52Z",
+  "3614":"2026-08-17T13:27:55Z",
+  "3655":"2026-08-19T08:51:04Z",
+  "3719":"2026-08-19T10:33:16Z",
+  "5102":"2026-08-29T05:23:13Z",
+  "5215":"2026-08-30T11:17:38Z"
+});
+const OPEN_TS = {}
+const EXT_HEALTH = {"8392": {"A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "boards": 1, "failed": [], "full": 1, "h": 100}, "8444": {"A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "boards": 1, "failed": [], "full": 1, "h": 100}, "8462": {"A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "boards": 1, "failed": [], "full": 1, "h": 100}, "8474": {"A": 1, "D": 7, "H": 4, "L": 0, "U": 0, "boards": 2, "failed": ["api-design", "documentation", "generality", "naming", "placement", "proof-quality", "reuse"], "full": 2, "h": 57}, "8490": {"A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "boards": 1, "failed": [], "full": 1, "h": 100}, "8507": {"A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "boards": 1, "failed": [], "full": 1, "h": 100}, "8539": {"A": 0, "D": 2, "H": 1, "L": 0, "U": 0, "boards": 2, "failed": ["placement", "proof-quality"], "full": 1, "h": 89}, "8735": {"A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "boards": 1, "failed": [], "full": 1, "h": 100}}
+const REVIEWED = {"8684": [2, 5, "orthogonal-roadmap review round"]}
+const HEALTH_MEDIAN = {"8392": ["2026-09-24T10:09:35Z", 100], "8444": ["2026-09-24T10:56:06Z", 100], "8462": ["2026-09-24T21:12:20Z", 100], "8474": ["2026-09-24T07:03:25Z", 57], "8490": ["2026-09-24T19:00:05Z", 100], "8507": ["2026-09-24T10:11:27Z", 100], "8539": ["2026-09-24T23:49:12Z", 89], "8735": ["2026-09-25T02:42:39Z", 100]}
+/* annotated activity clusters (events) on the health timeline.
+   start/end are UTC; the chart positions them with the same xOf mapping as the dots. */
+const CLUSTERS = []
+const HEALTH_CLOSED = {}
+/* ================= windowed viewport over the non-idle history =================
+   A full-range chart squeezes as history accumulates, so both timelines draw a
+   *window* of it. The window is expressed in non-idle days (idle days take no
+   column, as the timeline always behaved) and the bucket granularity relaxes as
+   the window widens — 6-hour columns for a narrow window, one column per active
+   day for a wide one — so a 90-day window stays readable. The minimap plots the
+   whole history as one unit per non-idle day and carries the draggable window. */
+var WIN = (function () {
+  const HOUR = 36e5, DAY = 864e5;
+  const p2 = n => String(n).padStart(2, "0");
+  const bucketStart = t => {
+    const d = new Date(t);
+    d.setHours(0, 0, 0, 0);
+    d.setHours(Math.floor(new Date(t).getHours() / 6) * 6);
+    return d.getTime();
+  };
+  const dayStart = t => { const d = new Date(t); d.setHours(0, 0, 0, 0); return d.getTime(); };
+  const keyOf = t => { const d = new Date(t); return d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate()); };
+  const label = t => { const d = new Date(t); return p2(d.getMonth() + 1) + "-" + p2(d.getDate()) + " " + p2(d.getHours()) + ":00"; };
+
+  /* The axis is our own PR activity: a column exists exactly where the lane did
+     something, so the activity timeline never shows an empty column for a day
+     that only carries someone else's merge. Others' markers are placed by the
+     health chart on the nearest earlier column. */
+  const stamps = PR_EV.map(e => new Date(e[0]).getTime());
+
+  /* the 6-hour buckets that carry something, and the non-idle day array */
+  const bucketKeys = Array.from(new Set(stamps.map(bucketStart))).sort((a, b) => a - b);
+  const dayKeys = Array.from(new Set(bucketKeys.map(keyOf)));
+  const dayIndex = new Map(dayKeys.map((k, i) => [k, i]));
+  const bucketIndex = new Map(bucketKeys.map((t, i) => [t, i]));
+  const dayFirst = new Map(), dayLast = new Map();
+  bucketKeys.forEach((t, i) => { const k = keyOf(t); if (!dayFirst.has(k)) dayFirst.set(k, i); dayLast.set(k, i); });
+  const dayEvents = {}, dayMergesMine = {};
+  PR_EV.forEach(e => {
+    const k = keyOf(new Date(e[0]).getTime());
+    dayEvents[k] = (dayEvents[k] || 0) + 1;
+    if (e[1] === "M") dayMergesMine[k] = (dayMergesMine[k] || 0) + 1;
+  });
+  /* per-day 3-day rolling median of the sampled rep-theory PRs (lazy: HEALTH_MEDIAN
+     is declared after this module) */
+  let medCache = null;
+  function medByDate() {
+    if (medCache) return medCache;
+    const byDay = {};
+    Object.keys(HEALTH_MEDIAN).forEach(n => {
+      const v = HEALTH_MEDIAN[n], d = new Date(v[0]);
+      const k = d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate());
+      (byDay[k] = byDay[k] || []).push(v[1]);
+    });
+    const keys = Object.keys(byDay).sort(), out = {};
+    keys.forEach(k => {
+      const d = new Date(k + "T12:00:00").getTime();
+      const lo = new Date(d - DAY).toISOString().slice(0, 10), hi = new Date(d + DAY).toISOString().slice(0, 10);
+      const hs = [];
+      keys.forEach(k2 => { if (k2 >= lo && k2 <= hi) hs.push.apply(hs, byDay[k2]); });
+      hs.sort((a, b) => a - b);
+      out[k] = hs[Math.floor((hs.length - 1) / 2)];
+    });
+    medCache = out;
+    return out;
+  }
+
+  /* the window: a slice of the non-idle day array */
+  const DEFAULT_DAYS = 90;
+  const state = { d0: Math.max(0, dayKeys.length - DEFAULT_DAYS), dn: Math.min(dayKeys.length, DEFAULT_DAYS) };
+  const atLatest = () => state.d0 + state.dn >= dayKeys.length;
+  function clamp() {
+    if (state.dn > dayKeys.length) state.dn = dayKeys.length;
+    if (state.dn < 2) state.dn = 2;
+    if (state.d0 > dayKeys.length - state.dn) state.d0 = dayKeys.length - state.dn;
+    if (state.d0 < 0) state.d0 = 0;
+  }
+  function reset() { state.dn = Math.min(dayKeys.length, DEFAULT_DAYS); state.d0 = Math.max(0, dayKeys.length - state.dn); clamp(); renderAll(); }
+  /* the columns the charts draw: 6-hour non-idle buckets for a narrow window,
+     one per active day once the window is wide */
+  /* the columns the charts draw: one per active day, at every window size —
+     granularity does not adapt here, the day is the unit */
+  function view() {
+    clamp();
+    const slots = [];
+    for (let d = state.d0; d < state.d0 + state.dn; d++) {
+      const k = dayKeys[d], t = dayStart(new Date(k + "T12:00:00").getTime());
+      slots.push({ t: t, key: k + " 0", bucket: t, day: k });
+    }
+    return { hours: 24, slots: slots, n: slots.length, d0: state.d0, dn: state.dn };
+  }
+
+  /* ---- minimap: one unit per non-idle day ---- */
+  const MW = 1408, MH = 40, PADL = 54, PADR = 14;
+  const UPD = (MW - PADL - PADR) / Math.max(1, dayKeys.length);
+  const BARW = Math.max(1.4, UPD * 0.45);
+  const mx = d => PADL + (d + 0.5) * UPD;
+  let drag = null;
+  function renderMini() {
+    const host = document.getElementById("prmini");
+    if (!host) return;
+    clamp();
+    const barY = 4, barH = 26;
+    const maxDay = Math.max(1, ...Object.keys(dayEvents).map(k => dayEvents[k]));
+    const med = medByDate();
+    let s = '<svg viewBox="0 0 ' + MW + ' ' + MH + '" preserveAspectRatio="xMidYMin meet" class="mini">';
+    /* one column per non-idle day: height = that day's transitions, colour =
+       that day's overall health (grey when the day has no health reading) */
+    dayKeys.forEach((k, i) => {
+      const n = dayEvents[k] || 0;
+      const m = med[k];
+      const fill = m == null ? "#6f6f6f" : m >= 75 ? "#7fb069" : m >= 60 ? "#e5c07b" : "#c97b7b";
+      const h = Math.max(2, (n / maxDay) * barH);
+      const x = mx(i) - BARW / 2;
+      s += '<rect x="' + x.toFixed(1) + '" y="' + (barY + barH - h).toFixed(1) + '" width="' + BARW.toFixed(1) + '" height="' + h.toFixed(1) + '" fill="' + fill + '" opacity=".9"/>';
+    });
+    s += '<line x1="' + PADL + '" y1="' + (barY + barH + 2) + '" x2="' + (MW - PADR) + '" y2="' + (barY + barH + 2) + '" stroke="#3a3a3a"/>';
+    if (dayKeys.length) {
+      s += '<text x="' + PADL + '" y="' + (MH - 1) + '" font-size="9" fill="#8a857e">' + dayKeys[0].slice(5) + '</text>';
+      s += '<text x="' + (MW - PADR) + '" y="' + (MH - 1) + '" font-size="9" fill="#8a857e" text-anchor="end">' + dayKeys[dayKeys.length - 1].slice(5) + '</text>';
+    }
+    const rx0 = Math.max(PADL, mx(state.d0) - UPD / 2), rx1 = Math.min(MW - PADR, mx(state.d0 + state.dn - 1) + UPD / 2);
+    s += '<g class="winbox">' +
+      '<rect class="win" x="' + rx0.toFixed(1) + '" y="2" width="' + Math.max(6, rx1 - rx0).toFixed(1) + '" height="' + (MH - 6) + '" rx="3"/>' +
+      '<rect class="grip" data-grip="l" x="' + (rx0 - 5).toFixed(1) + '" y="2" width="11" height="' + (MH - 6) + '"/>' +
+      '<rect class="grip" data-grip="r" x="' + (rx1 - 6).toFixed(1) + '" y="2" width="11" height="' + (MH - 6) + '"/></g>';
+    s += '</svg>';
+    host.innerHTML = s;
+    bindMini(host.querySelector("svg"));
+    const cap = document.getElementById("prwincap");
+    if (cap) {
+      const v = view();
+      const first = v.slots[0].t, last = v.slots[v.slots.length - 1].t;
+      cap.textContent = label(dayStart(first)) + " → " + label(dayStart(last)) + " · " +
+        state.dn + " of " + dayKeys.length + " active days · " + v.n + " daily columns" +
+        (atLatest() ? " · latest" : "");
+    }
+  }
+  const dayAt = (svgEl, clientX) => {
+    const r = svgEl.getBoundingClientRect();
+    const x = (clientX - r.left) / Math.max(1, r.width) * MW;
+    return Math.max(0, Math.min(dayKeys.length - 1, Math.floor((x - PADL) / UPD)));
+  };
+  function bindMini(svgEl) {
+    svgEl.addEventListener("pointerdown", e => {
+      const grip = e.target.closest(".grip");
+      const onRect = e.target.closest(".win");
+      let d = dayAt(svgEl, e.clientX);
+      const oldEnd = state.d0 + state.dn;
+      if (grip && grip.dataset.grip === "l") drag = { mode: "l", end0: oldEnd };
+      else if (grip) drag = { mode: "r", d0: state.d0 };
+      else {
+        if (!onRect) {
+          const half = Math.floor(state.dn / 2);
+          state.d0 = Math.max(0, Math.min(dayKeys.length - state.dn, d - half));
+          d = dayAt(svgEl, e.clientX);
+        }
+        drag = { mode: "pan", d0: d, d00: state.d0 };
+      }
+      clamp(); renderAll();
+      e.preventDefault();
+    });
+    svgEl.addEventListener("wheel", e => {
+      e.preventDefault();
+      if (e.shiftKey) state.dn = Math.max(2, Math.round(state.dn * (e.deltaY > 0 ? 1.15 : 1 / 1.15)));
+      else state.d0 += e.deltaY > 0 || e.deltaX > 0 ? 1 : -1;
+      clamp(); renderAll();
+    }, { passive: false });
+    svgEl.addEventListener("dblclick", reset);
+  }
+  /* window-level listeners: the svg is replaced on every render, and pointer
+     capture is avoided so real and synthetic input behave the same */
+  window.addEventListener("pointermove", e => {
+    if (!drag) return;
+    const svgEl = document.querySelector("#prmini svg");
+    if (!svgEl) return;
+    const d = dayAt(svgEl, e.clientX);
+    if (drag.mode === "pan") state.d0 = drag.d00 + (d - drag.d0);
+    else if (drag.mode === "l") { const ns = d; state.d0 = ns; state.dn = drag.end0 - ns; }
+    else state.dn = d - drag.d0 + 1;
+    clamp(); renderAll();
+  });
+  window.addEventListener("pointerup", () => { drag = null; });
+  window.addEventListener("pointercancel", () => { drag = null; });
+  document.addEventListener("keydown", e => {
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+    if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+      const step = e.shiftKey ? 7 : 1;
+      state.d0 += e.key === "ArrowLeft" ? -step : step;
+      clamp(); renderAll(); e.preventDefault();
+    } else if (e.key === "Home") { state.d0 = 0; clamp(); renderAll(); e.preventDefault(); }
+    else if (e.key === "End") { state.d0 = dayKeys.length - state.dn; clamp(); renderAll(); e.preventDefault(); }
+  });
+
+  function renderAll() { renderActivity(); renderHealth(); renderMini(); }
+  return {
+    state: state, view: view, dayKeys: dayKeys, dayFirst: dayFirst, dayLast: dayLast,
+    bucketKeys: bucketKeys, bucketIndex: bucketIndex, dayIndex: dayIndex, dayStart: dayStart,
+    bucketStart: bucketStart, keyOf: keyOf, medByDate: medByDate, dayEvents: dayEvents,
+    dayMergesMine: dayMergesMine, clamp: clamp, renderAll: renderAll, atLatest: atLatest,
+    reset: reset, DEFAULT_DAYS: DEFAULT_DAYS,
+  };
+})();
+
+/* PR activity timeline: state transitions per column over the window slice.
+   The viewBox width is pinned, so the rendered height never changes as the window
+   moves — only the column width does. */
+function renderActivity() {
+  const host = document.getElementById("prtl");
+  if (!host) return;
+  const W = 1408, GAP = 5, PER = 9, CAP = 12;
+  const v = WIN.view();
+  const n = v.n;
+  /* one column per active day: width follows the window, capped so a very
+     narrow window does not stretch into absurdly fat columns, and the block is
+     centred inside the pinned width */
+  const BW = Math.min(30, Math.max(5, (W - 90 - 30) / n - GAP));
+  const x0 = 60 + Math.max(0, (W - 90 - 30 - (n * (BW + GAP) - GAP)) / 2);
+  const keys = v.slots.map(s => s.key);
+  const byIdx = v.slots.map(() => []);
+  PR_EV.forEach(ev => {
+    const t = new Date(ev[0]).getTime();
+    const j = WIN.dayIndex.get(WIN.keyOf(t)) - v.d0;
+    if (j >= 0 && j < n) byIdx[j].push(ev);
+  });
+  const peak = Math.max(1, Math.max.apply(null, byIdx.map(a => a.length)));
+  const unit = Math.min(PER, (CAP * PER) / peak);
+  const Y0 = 34 + CAP * PER + 12, H = Y0 + 34;
+  const ORDER = ["D", "R", "V", "T", "M", "C"];
+  let svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMin meet">';
+  svg += '<line x1="40" y1="' + Y0 + '" x2="' + (W - 10) + '" y2="' + Y0 + '" stroke="#444" stroke-dasharray="2 4"/>';
+  let prevDay = "";
+  /* daily columns: label every k-th one so the dates do not collide */
+  const lstep = Math.max(1, Math.ceil(n / 12));
+  v.slots.forEach((s, k) => {
+    const x = x0 + k * (BW + GAP), evs = byIdx[k], day = s.key.split(" ")[0];
+    let base = Y0;
+    ORDER.forEach(st => {
+      const c = evs.filter(e => e[1] === st).length;
+      if (!c) return;
+      base -= c * unit;
+      svg += '<rect x="' + x.toFixed(1) + '" y="' + base.toFixed(1) + '" width="' + BW.toFixed(1) + '" height="' + (c * unit).toFixed(1) + '" fill="' + TL_STATE[st] + '" opacity=".85"/>';
+    });
+    if (k % lstep === 0) {
+      svg += '<text x="' + (x + BW / 2).toFixed(1) + '" y="' + (Y0 + 13) + '" font-size="9.5" fill="#8a857e" text-anchor="middle">' + day.slice(5) + '</text>';
+    }
+    if (evs.length) svg += '<text x="' + (x + BW / 2).toFixed(1) + '" y="' + (base - 6).toFixed(1) + '" font-size="11" fill="#e6e1dc" text-anchor="middle" font-weight="700">' + evs.length + '</text>';
+    svg += '<g class="tlcol" data-k="' + s.key + '"><rect x="' + (x - 2).toFixed(1) + '" y="30" width="' + (BW + 4).toFixed(1) + '" height="' + (H - 60) + '" fill="transparent"/></g>';
+    prevDay = day;
+  });
+  svg += '</svg>';
+  host.innerHTML = svg;
+  const svgEl = host.querySelector("svg");
+  let curK = "";
+  function showCard(k) {
+    const col = svgEl.querySelector('.tlcol[data-k="' + k + '"]');
+    const i = keys.indexOf(k), evs = byIdx[i] || [];
+    const grp = {};
+    evs.forEach(ev => { const g = grp[ev[2] + "|" + ev[1]] = grp[ev[2] + "|" + ev[1]] || []; g.push(ev); });
+    const rows = Object.values(grp).map(g => {
+      const ev = g[0], dt0 = new Date(ev[0]);
+      const t = String(dt0.getHours()).padStart(2, "0") + ":" + String(dt0.getMinutes()).padStart(2, "0");
+      const nm = PR_META[ev[2]] ? PR_META[ev[2]][1] : "";
+      const nm2 = nm.length > 46 ? nm.slice(0, 45) + "\u2026" : nm;
+      const rep = g.length > 1 ? ' <span style="color:#8a857e">\u00d7' + g.length + '</span>' : "";
+      return '<div class="tstatus"><span style="color:#a9a29b">' + t + '</span> \u00b7 <a class="prlink pr-neutral" href="https://github.com/TauCetiProject/TauCeti/pull/' + ev[2] + '">#' + ev[2] + '</a> \u2192 <span style="color:' + TL_STATE[ev[1]] + '">' + TL_STNAME[ev[1]] + '</span>' + rep + ' \u00b7 ' + nm2 + '</div>';
+    }).join("");
+    const head = k.split(" ")[0].slice(5) + " (whole day)";
+    tip.innerHTML = '<b>' + head + ' \u2014 ' + evs.length + ' transition' + (evs.length === 1 ? "" : "s") + '</b>' + rows;
+    tip.style.display = "block";
+    const cr = col.getBoundingClientRect(), sr = svgEl.getBoundingClientRect(), r = tip.getBoundingClientRect();
+    tip.style.left = Math.max(10, Math.min(cr.left + cr.width / 2 - r.width / 2, innerWidth - r.width - 10)) + "px";
+    tip.style.top = Math.min(sr.bottom + 8, innerHeight - r.height - 10) + "px";
+  }
+  svgEl.addEventListener("mousemove", e => {
+    const col = e.target.closest(".tlcol");
+    if (!col) { if (tip.style.display !== "none" && !tip.contains(e.target)) scheduleHide(); return; }
+    clearTimeout(hideTimer);
+    const k = col.dataset.k;
+    if (k !== curK || !tip.style.display || tip.style.display === "none") { curK = k; showCard(k); }
+  });
+  svgEl.addEventListener("mouseleave", e => { if (!tip.contains(e.relatedTarget)) scheduleHide(); });
+  window.__tlLayout = { slots: keys, W: W, BW: BW, GAP: GAP, Y0: Y0, PER: PER, H: H, n: n, hours: 24, unit: unit, peak: peak, CAP: CAP, byIdx: byIdx, v: v, x0: x0 };
+}
+
+/* PR health timeline: dots and the rolling-median reference line over the same
+   window slice, mapped through the same pinned-width column grid. */
+function renderHealth() {
+  const host = document.getElementById("prhealth");
+  const L = window.__tlLayout;
+  if (!host || !L) return;
+  const HOUR = 36e5, DAY = 864e5;
+  const v = L.v;
+  const x0 = L.x0, x1 = L.x0 + L.n * (L.BW + L.GAP) - L.GAP;
+  const colX = j => L.x0 + j * (L.BW + L.GAP);
+  const slotSpan = DAY;
+  /* the axis is PR activity, so a marker with no column of its own — an external
+     merge on a day the lane did nothing — lands on the nearest earlier column,
+     and anything outside the window is skipped */
+  const slotOf = t => {
+    if (t < v.slots[0].bucket) return -1;
+    if (t >= v.slots[L.n - 1].bucket + slotSpan) return -1;
+    let lo = 0, hi = L.n - 1, res = 0;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (v.slots[mid].bucket <= t) { res = mid; lo = mid + 1; } else hi = mid - 1;
+    }
+    return res;
+  };
+  const xOf = t => {
+    const j = slotOf(t);
+    if (j < 0 || j >= L.n) return null;
+    const frac = Math.max(0.1, Math.min(0.9, (t - v.slots[j].bucket) / slotSpan));
+    return colX(j) + L.BW * frac;
+  };
+  const xOfClamped = t => { const x = xOf(t); if (x != null) return x; return t < v.slots[0].t ? x0 : x1; };
+  /* the health chart gets the full activity plot height for legibility */
+  const plotH = Math.round(L.CAP * L.PER);
+  const top = 30, baseline = top + plotH, H = baseline + 32;
+  const yOf = h => baseline - (Math.max(0, Math.min(100, h)) / 100) * plotH;
+  const band = h => h >= 75 ? "#7fb069" : h >= 60 ? "#e5c07b" : "#c97b7b";
+  const bandName = h => h >= 75 ? "green" : h >= 60 ? "yellow" : "red";
+  const med = WIN.medByDate();
+  let svg = '<svg viewBox="0 0 ' + L.W + ' ' + H + '" preserveAspectRatio="xMidYMin meet">';
+  svg += '<line x1="40" y1="' + baseline + '" x2="' + (L.W - 10) + '" y2="' + baseline + '" stroke="#444" stroke-dasharray="2 4"/>';
+  [0, 25, 50, 75, 100].forEach(h => {
+    const y = yOf(h);
+    svg += '<line x1="40" y1="' + y + '" x2="' + (x1 + 10) + '" y2="' + y + '" stroke="#333" stroke-width="0.5"/>';
+    svg += '<text x="32" y="' + (y + 3) + '" font-size="8" fill="#8a857e" text-anchor="end">' + h + '</text>';
+  });
+  /* one median point per column (its local date), carrying the last known value */
+  let carry = null, mpts = [];
+  v.slots.forEach((s, j) => {
+    const k = s.key.split(" ")[0];
+    if (med[k] != null) carry = med[k];
+    if (carry != null) mpts.push({ x: colX(j) + L.BW / 2, y: yOf(carry) });
+  });
+  if (mpts.length > 1) {
+    svg += '<path d="' + mpts.map((p, i) => (i ? "L" : "M") + p.x.toFixed(1) + " " + p.y.toFixed(1)).join(" ") + '" fill="none" stroke="#cc7833" stroke-width="1.5" opacity=".85"/>';
+  }
+  const pts = [];
+  PR_EV.forEach(ev => { if (ev[1] === "M" && HEALTH[ev[2]] != null) pts.push({ n: ev[2], t: new Date(ev[0]).getTime(), c: HEALTH[ev[2]] }); });
+  pts.sort((a, b) => a.t - b.t);
+  const upm = Object.entries(UP_MERGED).map(([n, t]) => ({ n, t: new Date(t).getTime(), c: EXT_HEALTH[n] }));
+  upm.forEach(p => {
+    const cx = xOf(p.t);
+    if (cx == null) return;
+    const cy = yOf(p.c ? p.c.h : 100), r = 4.5, f = n => n.toFixed(1);
+    const rev = REVIEWED[p.n] ? '<circle cx="' + f(cx) + '" cy="' + f(cy) + '" r="7" fill="none" stroke="#e6e1dc" stroke-width="1" stroke-dasharray="2 2"/>' : "";
+    svg += '<g class="hp" data-n="' + p.n + '" data-ext="1" opacity="0.5"><path d="M' + f(cx - r) + ' ' + f(cy - r) + ' L' + f(cx + r) + ' ' + f(cy - r) + ' L' + f(cx + r) + ' ' + f(cy + r) + ' L' + f(cx - r) + ' ' + f(cy + r) + ' Z" fill="' + (p.c ? band(p.c.h) : "#9d9485") + '" stroke="#1e1e1e" stroke-width="1"/>' + rev + '<circle cx="' + f(cx) + '" cy="' + f(cy) + '" r="11" fill="transparent"/></g>';
+  });
+  const opn = Object.entries(OPEN_TS).map(([n, t]) => ({ n, t: new Date(t).getTime() }));
+  opn.forEach(p => {
+    const cx = xOf(p.t);
+    if (cx == null) return;
+    const cy = yOf(100), r = 4.5, f = n => n.toFixed(1);
+    svg += '<g class="hp" data-n="' + p.n + '" data-open="1" opacity="0.55"><path d="M' + f(cx) + ' ' + f(cy - r) + ' L' + f(cx + r) + ' ' + f(cy + r) + ' L' + f(cx - r) + ' ' + f(cy + r) + ' Z" fill="#e5c07b" stroke="#1e1e1e" stroke-width="1"/><circle cx="' + f(cx) + '" cy="' + f(cy) + '" r="11" fill="transparent"/></g>';
+  });
+  pts.forEach(p => {
+    const cx = xOf(p.t);
+    if (cx == null) return;
+    const px = cx.toFixed(1), py = yOf(p.c.h).toFixed(1);
+    const rev = REVIEWED[p.n] ? '<circle cx="' + px + '" cy="' + py + '" r="7" fill="none" stroke="#e6e1dc" stroke-width="1" stroke-dasharray="2 2"/>' : "";
+    svg += '<g class="hp" data-n="' + p.n + '"><circle cx="' + px + '" cy="' + py + '" r="4.5" fill="' + band(p.c.h) + '" stroke="#1e1e1e" stroke-width="1"/>' + rev + '<circle cx="' + px + '" cy="' + py + '" r="11" fill="transparent"/></g>';
+  });
+  const cls = Object.entries(HEALTH_CLOSED).map(([n, x]) => ({ n, t: new Date(x.t).getTime(), c: x }));
+  cls.forEach(p => {
+    const cx = xOf(p.t);
+    if (cx == null) return;
+    const cy = yOf(p.c.h), r = 4.5, f = n => n.toFixed(1);
+    svg += '<g class="hp" data-n="' + p.n + '" data-closed="1"><path d="M' + f(cx) + ' ' + f(cy - r) + ' L' + f(cx + r) + ' ' + f(cy) + ' L' + f(cx) + ' ' + f(cy + r) + ' L' + f(cx - r) + ' ' + f(cy) + ' Z" fill="' + band(p.c.h) + '" stroke="#1e1e1e" stroke-width="1"/><circle cx="' + f(cx) + '" cy="' + f(cy) + '" r="11" fill="transparent"/></g>';
+  });
+  const lstep = Math.max(1, Math.ceil(L.n / 12));
+  L.slots.forEach((k, j) => {
+    if (j % lstep) return;
+    const day = k.split(" ")[0];
+    svg += '<text x="' + (colX(j) + L.BW / 2).toFixed(1) + '" y="' + (baseline + 14) + '" font-size="8" fill="#8a857e" text-anchor="middle">' + day.slice(5) + '</text>';
+  });
+  /* annotated bursts overlapping the window; chips clamped inside it */
+  const measSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  measSvg.style.cssText = "position:absolute;left:-9999px;top:0;width:2000px;height:60px;visibility:hidden";
+  const measTxt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  measTxt.style.fontFamily = "ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif";
+  measTxt.style.fontSize = "9.5px";
+  measSvg.appendChild(measTxt);
+  document.body.appendChild(measSvg);
+  const textW = t => { measTxt.textContent = t; return measTxt.getComputedTextLength() || t.length * 5.4; };
+  const winA = v.slots[0].t, winB = v.slots[v.slots.length - 1].t + (v.hours === 6 ? 6 * HOUR : DAY);
+  CLUSTERS.forEach(c => {
+    const ca = new Date(c.start).getTime(), cb = new Date(c.end).getTime();
+    if (cb < winA || ca > winB) return;
+    const xa = Math.max(x0, xOfClamped(ca)), xb = Math.min(x1, xOfClamped(cb));
+    const chipW = Math.max(40, textW(c.title) + 16);
+    const cx = Math.min(Math.max((xa + xb) / 2, x0 + chipW / 2 + 2), x1 - chipW / 2 - 2);
+    const chipY = 2, chipH = 18;
+    svg += '<g class="cl" data-cl="' + c.title + '">' +
+      '<line x1="' + xa.toFixed(1) + '" y1="' + (chipY + chipH + 4) + '" x2="' + xb.toFixed(1) + '" y2="' + (chipY + chipH + 4) + '" stroke="' + c.color + '" stroke-width="1.5" opacity="0.75"/>' +
+      '<rect x="' + (cx - chipW / 2 - 6).toFixed(1) + '" y="0" width="' + (chipW + 12).toFixed(1) + '" height="26" fill="transparent"/><rect x="' + (cx - chipW / 2).toFixed(1) + '" y="' + chipY + '" width="' + chipW.toFixed(1) + '" height="' + chipH + '" rx="' + (chipH / 2) + '" fill="' + c.color + '" fill-opacity="0.16" stroke="' + c.color + '" stroke-width="1" stroke-dasharray="3 3"/>' +
+      '<text x="' + cx.toFixed(1) + '" y="' + (chipY + 12.5) + '" text-anchor="middle" font-size="9.5" fill="' + c.color + '" stroke="#12100e" stroke-width="2.4" paint-order="stroke" stroke-linejoin="round" style="pointer-events:none">' + c.title + '</text></g>';
+  });
+  svg += '</svg>';
+  host.innerHTML = svg;
+  host.querySelectorAll(".hp").forEach(el => {
+    el.addEventListener("mousemove", e => {
+      clearTimeout(hideTimer);
+      const n = el.dataset.n;
+      let p, verb;
+      if (el.dataset.closed) { p = cls.find(q => q.n === n); verb = "closed"; }
+      else if (el.dataset.ext) { p = upm.find(q => q.n === n); verb = "merged by " + (UPSTREAM[n] || "others"); }
+      else if (el.dataset.open) { p = opn.find(q => q.n === n); verb = "in review since"; }
+      else { p = pts.find(q => q.n === n); verb = "merged"; }
+      const dt = new Date(p.t);
+      const local = dt.getFullYear() + "-" + String(dt.getMonth() + 1).padStart(2, "0") + "-" + String(dt.getDate()).padStart(2, "0") + " " + String(dt.getHours()).padStart(2, "0") + ":" + String(dt.getMinutes()).padStart(2, "0");
+      const c = p.c;
+      const terms = c ? [["A", c.A], ["D", c.D], ["H", c.H], ["L", c.L], ["B", c.B], ["U", c.U]].filter(([, x]) => x > 0).map(([k, x]) => k + "=" + x).join(" \u00b7 ") : "";
+      const title = (PR_META[n] || [])[1] || "";
+      const revLine = REVIEWED[n] ? '<div class="tstatus">reviewed by us \u00b7 ' + REVIEWED[n][0] + "/" + REVIEWED[n][1] + ' rounds' + (REVIEWED[n][2] ? " \u2014 " + REVIEWED[n][2] : "") + '</div>' : "";
+      tip.innerHTML = (title
+        ? '<div class="tstatus" style="color:var(--tau)"><a class="prlink pr-neutral" href="https://github.com/TauCetiProject/TauCeti/pull/' + n + '" target="_blank" rel="noopener">#' + n + '</a> \u00b7 ' + title + '</div>'
+        : '<b><a class="prlink pr-neutral" href="https://github.com/TauCetiProject/TauCeti/pull/' + n + '" target="_blank" rel="noopener">#' + n + '</a></b>') +
+        '<div class="tstatus">' + verb + ' ' + local + '</div>' +
+        (c
+          ? '<div class="tstatus">health <span style="color:' + band(c.h) + '">' + c.h + '</span> (' + bandName(c.h) + ')' + (el.dataset.closed ? " \u00b7 not merged" : "") + '</div>' +
+            (terms ? '<div class="tstatus">' + terms + '</div>' : "") +
+            '<div class="tstatus">failed rubrics: ' + (c.failed.length ? c.failed.join(", ") : "none") + '</div>'
+          : '<div class="tstatus">health n/a' + (el.dataset.open ? " \u00b7 open" : "") + '</div>') +
+        revLine;
+      placeTip("hs:" + n, e);
+    });
+    el.addEventListener("mouseleave", () => scheduleHide());
+  });
+  host.querySelectorAll("g.cl").forEach(el => {
+    el.addEventListener("mousemove", e => {
+      clearTimeout(hideTimer);
+      const c = CLUSTERS.find(x => x.title === el.dataset.cl);
+      if (!c) return;
+      const fmt = d => { const dt = new Date(d); return dt.getFullYear() + "-" + String(dt.getMonth() + 1).padStart(2, "0") + "-" + String(dt.getDate()).padStart(2, "0"); };
+      tip.innerHTML = '<b style="color:' + c.color + '">' + c.title + '</b>' +
+        '<div class="tstatus">' + fmt(c.start) + ' -> ' + fmt(c.end) + '</div>' +
+        '<div class="tstatus">ours: ' + c.n + ' merges \u00b7 avg health ' + c.avg + ' \u00b7 ' + c.red + ' red' + (c.others ? ' \u00b7 others: ' + c.others + ' (avg ' + c.othersAvg + ')' : "") + '</div>' +
+        '<div class="tstatus">' + linkify(c.detail) + '</div>';
+      placeTip("cluster:" + c.title, e);
+    });
+    el.addEventListener("mouseleave", () => scheduleHide());
+  });
+}
+
+WIN.renderAll();
+</script>
+</body>
+</html>
