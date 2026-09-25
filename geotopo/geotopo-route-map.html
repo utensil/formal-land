@@ -116,7 +116,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 <div class="goals" id="goals"></div>
 <div class="sub" style="font-size:12px">The four routes are the roadmap's own: each carries its branches as its own edges, its checkpoints as milestones on the route, and its summit criterion in the evaluation. A milestone two routes pass through is a junction on the map and says so on hover.</div>
 
-<h2>The map (all 11 layers, our work overlaid)</h2>
+<h2>The map (all 11 layers)</h2>
 <div id="stats" class="sub" style="margin-top:6px"></div>
 <div class="sub" style="font-size:12px;margin-top:2px">Collected as PRs labelled <code>roadmap/GeometricTopology</code>: 149 discovered, 41 attributed to this work — 29 merged, 2 open, 10 closed — 14 with verified review coverage, 129 scored. Node states refine the roadmap's own: an open PR makes a milestone in review, a merged one landed, and a proof summit is never marked landed before the roadmap says so.</div>
 <svg id="map" viewBox="0 0 1420 1442" preserveAspectRatio="xMidYMin meet" role="img" aria-label="Geometric topology route map"></svg>
@@ -177,7 +177,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 
 /* ================= data ================= */
 const LAYERS = ["L1 · manifolds & gluing","L1 · collar interface","L2 · locally flat","L7 · geometry","L3 · Diff(M) topology","L3 · group & relative API","L3 · statement gate","L3 · proof horizon","L4 · presentations","L4 · presentation maps","L4 · isotopy & code APIs","L4 · equivalence hub","L5 · surgery","L5 · statement & inputs","L5 · proof horizon","L6 · concordance","L6 · statement & inputs","L6 · proof horizon","L8 · decompositions","L7–8 · statement gates","L8 · proof horizon","L9 · Heegaard","L9 · proof horizon","L10 · foliations","L11 · realization","L11 · collapse & PL","L1 ↔ L11 · comparison","L11 · far horizon"];
-const ST = {"done":"landed / available","review":"in review","open":"future milestone","branch":"next handoff","incomplete":"partial / unfinished","active":"active"};
+const ST = { done:"merged", review:"in review", open:"unstarted", branch:"next up", incomplete:"incomplete", active:"active" };
 
 /* id, layer (index into LAYERS), label, short label, status, prs */
 const NODES = [
