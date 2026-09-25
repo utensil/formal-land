@@ -43,14 +43,12 @@ svg{display:block;background:var(--card);border:1px solid var(--line);border-rad
   #prtl .tlp { cursor: default; }
   /* The windowed viewport's minimap: the whole local-calendar history as one column per
      day, carrying the draggable window that both timelines are bound to. */
-  #prmini { margin: .7rem 0 0; }
-  #prmini svg { cursor: grab; touch-action: none; }
+  #prmini { margin: .1rem 0 .2rem; }
+  #prmini svg { display: block; width: 100%; height: auto; cursor: grab; touch-action: none; }
   #prmini svg:active { cursor: grabbing; }
   #prmini .win { fill: rgba(230,225,220,.10); stroke: #e6e1dc; stroke-width: 1; }
   #prmini .grip { fill: rgba(230,225,220,.18); cursor: ew-resize; }
-  #prwincap { font-size: 12px; margin: 2px 0 0; }
-  .chart { margin: .6rem 0 0; }
-  .chart svg { display: block; width: 100%; height: auto; }
+  #prwincap { color: #a9a29b; }
   .tllegend { margin-top: .3rem; font-size: .78rem; color: var(--muted); display: flex; gap: 1rem; flex-wrap: wrap; }
   .tllegend .s { display: inline-flex; align-items: center; gap: .35rem; }
   .tllegend .d { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
@@ -113,7 +111,6 @@ button{cursor:pointer} button:focus-visible, [tabindex]:focus-visible{outline:2p
 .snapshot{font-size:12px;color:var(--muted);margin-top:8px}
 .section-tools{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .section-tools h2{margin-bottom:8px}.section-tools label{font-size:12px;color:var(--muted)}
-.chart-note{font-size:12px;margin-top:6px;color:var(--muted)}
 .hformula{line-height:1.8}.hformula .t{white-space:normal}
 .hlegend .d{flex-shrink:0}
 details{font-size:12.5px;color:var(--muted);margin-top:14px}summary{cursor:pointer;color:var(--fg)}
