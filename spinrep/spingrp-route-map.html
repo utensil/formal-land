@@ -542,11 +542,11 @@ legend.querySelectorAll(".gl").forEach(el => el.addEventListener("click", () => 
 
 /* ================= PR links ================= */
 const ROADPRS = {}
-const PRS = {"8392":"m","8444":"m","8462":"m","8474":"m","8490":"m","8507":"m","8539":"m","8619":"m","8644":"m","8684":"m","8694":"m","8735":"m"}
+const PRS = {"8392":"m","8444":"m","8462":"m","8474":"m","8490":"m","8507":"m","8539":"m","8619":"m","8644":"m","8684":"m","8694":"m","8735":"m","8790":"o","8835":"o","8840":"o"}
 /* roadmap PRs merged by upstream authors; every other merged PR is utensil's */
-const UPSTREAM = {"8392":"sqrt-of-2","8444":"sqrt-of-2","8462":"sqrt-of-2","8474":"sqrt-of-2","8490":"sqrt-of-2","8507":"sqrt-of-2","8539":"sqrt-of-2","8735":"CBirkbeck"}
+const UPSTREAM = {"8392":"sqrt-of-2","8444":"sqrt-of-2","8462":"sqrt-of-2","8474":"sqrt-of-2","8490":"sqrt-of-2","8507":"sqrt-of-2","8539":"sqrt-of-2","8735":"CBirkbeck","8840":"sqrt-of-2"}
 /* commit-type classification for the merged PRs (drives the live tally) */
-const TYPES = {"8392":"feat","8444":"feat","8462":"feat","8474":"feat","8490":"feat","8507":"feat","8539":"feat","8619":"feat","8644":"feat","8684":"feat","8694":"feat","8735":"perf"}
+const TYPES = {"8392":"feat","8444":"feat","8462":"feat","8474":"feat","8490":"feat","8507":"feat","8539":"feat","8619":"feat","8644":"feat","8684":"feat","8694":"feat","8735":"perf","8790":"feat","8835":"feat","8840":"feat"}
 
 Object.assign(TYPES, {5102:"refactor",5215:"feat"});
 /* live tally from the data above — never hand-edited */
@@ -675,8 +675,8 @@ tip.addEventListener("mouseleave", () => { clearTimeout(hideTimer); hideTip(); }
   if (!ref) return;
   const TREE = "https://github.com/TauCetiProject/TauCeti/tree/main/";
   const DIRS = [
+    ["LinearAlgebra/CliffordAlgebra", 9, "the Clifford carriers"],
     ["LinearAlgebra/QuadraticForm", 7, "the spin groups' forms"],
-    ["LinearAlgebra/CliffordAlgebra", 6, "the Clifford carriers"],
     ["Topology/Algebra/CliffordAlgebra", 1, ""],
     ["LinearAlgebra/Prod.lean", 1, ""],
     ["RepresentationTheory/Spin", 1, ""]
@@ -696,8 +696,8 @@ tip.addEventListener("mouseleave", () => { clearTimeout(hideTimer); hideTip(); }
 <script>
 
 /* PR activity timeline: state-colored dots by date, goal letters, hover = digest */
-const PR_META = {"8392": ["", "feat: the determinant of the orthogonal group and the index of SO(Q)"], "8444": ["", "feat: base change orthogonal groups"], "8462": ["", "feat: the reverse Clifford norm on the Lipschitz group"], "8474": ["", "feat: the Lipschitz group as products of vectors, and the kernel of its action"], "8490": ["", "feat: Eichler transvections of a quadratic form"], "8507": ["", "feat: the orthogonal sum of orthogonal groups and its image"], "8539": ["", "feat: conjugation law, coefficient spellings and base change of quadratic reflections"], "8619": ["", "feat: expose the Pin action comparison"], "8644": ["", "feat: add the even unitary Clifford carrier"], "8684": ["", "feat: make orthogonal base change functorial in scalar towers"], "8694": ["", "feat: make the Lipschitz action natural under quadratic isometries"], "8735": ["", "perf(Spin/Exceptional/Three): speed up the rank-three spin comparison"]}
-const PR_EV = [["2026-09-23T19:59:30Z", "R", "8392"], ["2026-09-23T21:36:11Z", "R", "8444"], ["2026-09-23T22:24:36Z", "R", "8462"], ["2026-09-23T23:35:37Z", "R", "8474"], ["2026-09-24T01:48:22Z", "R", "8490"], ["2026-09-24T04:09:15Z", "R", "8507"], ["2026-09-24T07:03:25Z", "M", "8474"], ["2026-09-24T09:13:26Z", "R", "8539"], ["2026-09-24T10:09:35Z", "M", "8392"], ["2026-09-24T10:11:27Z", "M", "8507"], ["2026-09-24T10:56:06Z", "M", "8444"], ["2026-09-24T13:27:38Z", "R", "8619"], ["2026-09-24T15:13:47Z", "R", "8644"], ["2026-09-24T17:22:26Z", "M", "8619"], ["2026-09-24T19:00:05Z", "M", "8490"], ["2026-09-24T19:48:37Z", "R", "8684"], ["2026-09-24T21:12:20Z", "M", "8462"], ["2026-09-24T21:20:50Z", "R", "8694"], ["2026-09-24T22:04:13Z", "V", "8684"], ["2026-09-24T22:04:15Z", "V", "8684"], ["2026-09-24T22:55:09Z", "M", "8644"], ["2026-09-24T23:49:12Z", "M", "8539"], ["2026-09-25T00:42:50Z", "M", "8684"], ["2026-09-25T02:02:48Z", "R", "8735"], ["2026-09-25T02:42:39Z", "M", "8735"], ["2026-09-25T04:31:51Z", "M", "8694"]]
+const PR_META = {"8392": ["", "feat: the determinant of the orthogonal group and the index of SO(Q)"], "8444": ["", "feat: base change orthogonal groups"], "8462": ["", "feat: the reverse Clifford norm on the Lipschitz group"], "8474": ["", "feat: the Lipschitz group as products of vectors, and the kernel of its action"], "8490": ["", "feat: Eichler transvections of a quadratic form"], "8507": ["", "feat: the orthogonal sum of orthogonal groups and its image"], "8539": ["", "feat: conjugation law, coefficient spellings and base change of quadratic reflections"], "8619": ["", "feat: expose the Pin action comparison"], "8644": ["", "feat: add the even unitary Clifford carrier"], "8684": ["", "feat: make orthogonal base change functorial in scalar towers"], "8694": ["", "feat: make the Lipschitz action natural under quadratic isometries"], "8735": ["", "perf(Spin/Exceptional/Three): speed up the rank-three spin comparison"], "8790": ["", "feat: align the spinor norm with the reverse norm"], "8835": ["", "feat: derive the Spin action from the Lipschitz action"], "8840": ["", "feat: spinor norm naturality under isometries"]}
+const PR_EV = [["2026-09-23T19:59:30Z", "R", "8392"], ["2026-09-23T21:36:11Z", "R", "8444"], ["2026-09-23T22:24:36Z", "R", "8462"], ["2026-09-23T23:35:37Z", "R", "8474"], ["2026-09-24T01:48:22Z", "R", "8490"], ["2026-09-24T04:09:15Z", "R", "8507"], ["2026-09-24T07:03:25Z", "M", "8474"], ["2026-09-24T09:13:26Z", "R", "8539"], ["2026-09-24T10:09:35Z", "M", "8392"], ["2026-09-24T10:11:27Z", "M", "8507"], ["2026-09-24T10:56:06Z", "M", "8444"], ["2026-09-24T13:27:38Z", "R", "8619"], ["2026-09-24T15:13:47Z", "R", "8644"], ["2026-09-24T17:22:26Z", "M", "8619"], ["2026-09-24T19:00:05Z", "M", "8490"], ["2026-09-24T19:48:37Z", "R", "8684"], ["2026-09-24T21:12:20Z", "M", "8462"], ["2026-09-24T21:20:50Z", "R", "8694"], ["2026-09-24T22:04:13Z", "V", "8684"], ["2026-09-24T22:04:15Z", "V", "8684"], ["2026-09-24T22:55:09Z", "M", "8644"], ["2026-09-24T23:49:12Z", "M", "8539"], ["2026-09-25T00:42:50Z", "M", "8684"], ["2026-09-25T02:02:48Z", "R", "8735"], ["2026-09-25T02:42:39Z", "M", "8735"], ["2026-09-25T04:31:51Z", "M", "8694"], ["2026-09-25T06:48:28Z", "R", "8790"], ["2026-09-25T09:33:36Z", "R", "8835"], ["2026-09-25T09:41:05Z", "R", "8840"]]
 Object.assign(PR_META, {
   "3510": ["β", "feat: identify the derivation adjoint exponential"],
   "3719": ["βδ", "feat: the dimensions of the half-spin summands"],
@@ -727,7 +727,7 @@ Object.assign(UP_MERGED, {
   "5102":"2026-08-29T05:23:13Z",
   "5215":"2026-08-30T11:17:38Z"
 });
-const OPEN_TS = {}
+const OPEN_TS = {"8790": "2026-09-25T06:48:28Z", "8835": "2026-09-25T09:33:36Z", "8840": "2026-09-25T09:41:05Z"}
 const EXT_HEALTH = {"8392": {"A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "boards": 1, "failed": [], "full": 1, "h": 100}, "8444": {"A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "boards": 1, "failed": [], "full": 1, "h": 100}, "8462": {"A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "boards": 1, "failed": [], "full": 1, "h": 100}, "8474": {"A": 1, "D": 7, "H": 4, "L": 0, "U": 0, "boards": 2, "failed": ["api-design", "documentation", "generality", "naming", "placement", "proof-quality", "reuse"], "full": 2, "h": 57}, "8490": {"A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "boards": 1, "failed": [], "full": 1, "h": 100}, "8507": {"A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "boards": 1, "failed": [], "full": 1, "h": 100}, "8539": {"A": 0, "D": 2, "H": 1, "L": 0, "U": 0, "boards": 2, "failed": ["placement", "proof-quality"], "full": 1, "h": 89}, "8735": {"A": 0, "D": 0, "H": 0, "L": 0, "U": 0, "boards": 1, "failed": [], "full": 1, "h": 100}}
 const REVIEWED = {"8684": [2, 5, "orthogonal-roadmap review round"]}
 const HEALTH_MEDIAN = {"8392": ["2026-09-24T10:09:35Z", 100], "8444": ["2026-09-24T10:56:06Z", 100], "8462": ["2026-09-24T21:12:20Z", 100], "8474": ["2026-09-24T07:03:25Z", 57], "8490": ["2026-09-24T19:00:05Z", 100], "8507": ["2026-09-24T10:11:27Z", 100], "8539": ["2026-09-24T23:49:12Z", 89], "8735": ["2026-09-25T02:42:39Z", 100]}
