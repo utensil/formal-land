@@ -18,9 +18,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Validate data and standalone page
+      - name: Validate the standalone page
         run: |
-          python3 geotopo/build.py --check
+          # The JSON inputs are private (a published page is one self-contained
+          # HTML carrying its own data), so this checkout usually has none and
+          # the build check is skipped here; run it locally, where the private
+          # data lives. The unit tests guard themselves the same way.
+          if [ -f geotopo/data/prs.json ]; then
+            python3 geotopo/build.py --check
+          else
+            echo "No private data in this checkout; skipping build.py --check (run it locally)."
+          fi
           python3 -m unittest discover -s geotopo/tests -v
           node --check geotopo/src/app.js
           node --test geotopo/tests/time.test.cjs

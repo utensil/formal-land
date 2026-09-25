@@ -49,7 +49,7 @@ function nodeState(n) {
   if (ps.some(p=>p.state === "merged")) return "done";
   return "incomplete";
 }
-function visiblePrs() {return PRS.filter(p=>(p.worked || p.reviewed) && (state.cohort !== "worked" || p.worked) && (state.cohort !== "reviewed" || p.reviewed) && (state.routes.size === GOALS.length || GOALS.some(g=>state.routes.has(g.id) && p.nodes.some(n=>routeNodes.get(g.id).has(n)))));}
+function visiblePrs() {return PRS.filter(p=>(p.worked || p.reviewed) && (state.cohort !== "reviewed" || p.reviewed) && (state.routes.size === GOALS.length || GOALS.some(g=>state.routes.has(g.id) && p.nodes.some(n=>routeNodes.get(g.id).has(n)))));}
 const band = value => value >= 75 ? "#7fb069" : value >= 60 ? "#e5c07b" : "#c97b7b";
 
 function renderLegend() {

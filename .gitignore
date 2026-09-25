@@ -17,3 +17,8 @@ tla/states
 lean4-verso-xp/_out
 github-pages/
 .aider*
+
+# geotopo's JSON inputs are private: a published page is one self-contained HTML
+# carrying its own data. Their canonical home is projects/geotopo/data in the
+# private vault; build.py finds it, or takes --data / $GEOTOPO_DATA.
+geotopo/data/*.json

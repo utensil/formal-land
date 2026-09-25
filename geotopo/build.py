@@ -3,10 +3,27 @@
 import argparse
 import datetime as dt
 import json
+import os
 from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parent
+VAULT = Path.home() / "projects/cog-land/projects/geotopo/data"
+
+
+def data_dir(argument=None):
+    """Where the JSON inputs live.
+
+    They are private: not committed here (a published page is a single
+    self-contained HTML carrying its own data), and their canonical home is the
+    private vault. Resolution order: --data, $GEOTOPO_DATA, ./data, the vault.
+    """
+    for candidate in (argument, os.environ.get("GEOTOPO_DATA"), ROOT / "data", VAULT):
+        if candidate and (Path(candidate) / "prs.json").exists():
+            return Path(candidate)
+    raise SystemExit(
+        "Private data not found (prs.json, roadmap.json, selection.json).\n"
+        f"Expected in {VAULT} or pass --data DIR; the collector refresh.py writes them.")
 HIGH_IMPACT = {"scope", "api-design", "generality", "reuse", "proof-quality"}
 UNASSESSED = {"pending", "running", "not_run", "skipped", "absent", "stale"}
 HEALTH_TERMS = ("A", "D", "H", "L", "B", "S", "U")
@@ -186,10 +203,11 @@ def validate(roadmap, selection, snapshot):
         assert set(coverage["discovered"]) | set(coverage["retained"]) == snapshot_ids, "Incomplete roadmap inventory"
 
 
-def generate():
-    roadmap = json.loads((ROOT / "data/roadmap.json").read_text())
-    selection = json.loads((ROOT / "data/selection.json").read_text())
-    snapshot = json.loads((ROOT / "data/prs.json").read_text())
+def generate(data=None):
+    data = data_dir(data)
+    roadmap = json.loads((data / "roadmap.json").read_text())
+    selection = json.loads((data / "selection.json").read_text())
+    snapshot = json.loads((data / "prs.json").read_text())
     validate(roadmap, selection, snapshot)
     selected = {item["number"]: item for item in selection}
     prs = []
@@ -211,8 +229,9 @@ def generate():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="fail when the committed HTML differs from its inputs")
+    parser.add_argument("--data", help="directory holding the private JSON inputs")
     args = parser.parse_args()
-    result = generate()
+    result = generate(args.data)
     path = ROOT / "geotopo-route-map.html"
     if args.check:
         assert path.read_text() == result, "Generated HTML is stale; run python3 geotopo/build.py"

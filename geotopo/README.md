@@ -57,6 +57,13 @@ exact-head review evidence remains unscored.
 
 ## Data and updates
 
+A published page is one self-contained HTML carrying its own data, so **the JSON
+inputs are private and not in this repository.** Their canonical home is
+`projects/geotopo/data/` in the private vault; `build.py` and `refresh.py` find it
+there, or take `--data DIR` / `$GEOTOPO_DATA`. Without it, `build.py` says so and
+stops, and the data-dependent unit tests skip themselves, so a fresh clone stays
+green.
+
 - `data/roadmap.json`: pinned roadmap sources, milestone scope, dependencies,
   diagram layout, route trees, frontiers, summit criteria and checkpoints. Update these editorial interpretations
   when a new contribution changes the available API or next handoff.
@@ -64,8 +71,9 @@ exact-head review evidence remains unscored.
   attribution. A reviewed marker requires a public evidence link. Authorship
   alone never establishes review attribution.
 - `data/prs.json`: public metadata and preserved review observations for every
-  discovered labeled PR and retained historical record. The charts filter this
-  archive to explicitly attributed contributions. The collector stores no comment bodies or credentials.
+  discovered labeled PR and retained historical record, written by `refresh.py`.
+  The charts filter this archive to explicitly attributed contributions. The
+  collector stores no comment bodies or credentials.
   The **page never ships this archive**: `build.py` projects it into positional rows
   with index tables — no repeated key names, no per-record URLs, epoch-millisecond
   timestamps, and none of the review boards and review events, whose only consumer is

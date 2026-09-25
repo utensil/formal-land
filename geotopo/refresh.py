@@ -4,12 +4,14 @@ import argparse
 import concurrent.futures
 import datetime as dt
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
 import time
 
 ROOT = Path(__file__).resolve().parent
+VAULT = Path.home() / "projects/cog-land/projects/geotopo/data"
 REPO = "TauCetiProject/TauCeti"
 
 
@@ -163,8 +165,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--all", action="store_true", help="also refresh unchanged terminal evidence")
     parser.add_argument("--discover", action="store_true", help="list labeled PRs without milestone mappings")
+    parser.add_argument("--data", help="directory holding the private JSON inputs (default: the private vault)")
     args = parser.parse_args()
-    selection = json.loads((ROOT / "data/selection.json").read_text())
+    data = Path(args.data) if args.data else Path(os.environ.get("GEOTOPO_DATA", VAULT))
+    selection = json.loads((data / "selection.json").read_text())
     discovered = discover()
     if args.discover:
         mapped = {item["number"] for item in selection}
@@ -172,7 +176,8 @@ def main():
             item = discovered[number]
             print(f"#{number} {item['state']} {clean_title(item['title'])}")
         return
-    path = ROOT / "data/prs.json"
+    data.mkdir(parents=True, exist_ok=True)
+    path = data / "prs.json"
     previous = json.loads(path.read_text()) if path.exists() else {"prs": []}
     snapshot = refresh_snapshot(selection, previous, discovered, args.all)
     temporary = path.with_suffix(".json.tmp")

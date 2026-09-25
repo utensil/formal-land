@@ -188,7 +188,7 @@ th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);verti
 
 <div class="section-tools">
   <h2>PR activity timeline</h2>
-  <label>PR lens <select id="cohort"><option value="all">TCWORK / TCREVIEW PRs</option><option value="worked">Worked on</option><option value="reviewed">Reviewed by us</option></select></label>
+  <label>PR lens <select id="cohort"><option value="all">TCWORK / TCREVIEW PRs</option><option value="reviewed">Reviewed by us</option></select></label>
 </div>
 <div id="prtl" tabindex="0" aria-label="PR state-transition chart"></div>
 <div class="sub" style="font-size:12px;margin-top:6px">hover a column for the activity list</div>
@@ -325,7 +325,7 @@ function nodeState(n) {
   if (ps.some(p=>p.state === "merged")) return "done";
   return "incomplete";
 }
-function visiblePrs() {return PRS.filter(p=>(p.worked || p.reviewed) && (state.cohort !== "worked" || p.worked) && (state.cohort !== "reviewed" || p.reviewed) && (state.routes.size === GOALS.length || GOALS.some(g=>state.routes.has(g.id) && p.nodes.some(n=>routeNodes.get(g.id).has(n)))));}
+function visiblePrs() {return PRS.filter(p=>(p.worked || p.reviewed) && (state.cohort !== "reviewed" || p.reviewed) && (state.routes.size === GOALS.length || GOALS.some(g=>state.routes.has(g.id) && p.nodes.some(n=>routeNodes.get(g.id).has(n)))));}
 const band = value => value >= 75 ? "#7fb069" : value >= 60 ? "#e5c07b" : "#c97b7b";
 
 function renderLegend() {

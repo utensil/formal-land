@@ -1,6 +1,7 @@
 """The page ships a projection of the archive, not the archive: these tests pin what
 the viewer is allowed to depend on, and the size that projection must stay under."""
 import json
+import os
 import re
 from pathlib import Path
 import sys
@@ -16,9 +17,21 @@ def payload(html):
     return json.loads(re.search(r'<script id="route-data"[^>]*>(.*?)</script>', html, re.S).group(1))
 
 
+# The JSON inputs are private: they are not committed, and their canonical home
+# is the private vault. Resolve them the way build.py does, and skip these tests
+# where they are absent so a fresh clone stays green.
+VAULT = Path.home() / "projects/cog-land/projects/geotopo/data"
+DATA = Path(os.environ.get("GEOTOPO_DATA", ROOT / "data"))
+if not (DATA / "prs.json").exists() and (VAULT / "prs.json").exists():
+    DATA = VAULT
+HAVE_DATA = all((DATA / name).exists() for name in ("prs.json", "roadmap.json", "selection.json"))
+REASON = "private data not present at " + str(DATA)
+
+
+@unittest.skipUnless(HAVE_DATA, REASON)
 class ProjectionTests(unittest.TestCase):
     def setUp(self):
-        self.snapshot = json.loads((ROOT / 'data/prs.json').read_text())
+        self.snapshot = json.loads((DATA / 'prs.json').read_text())
         self.prs = [dict(pr, health={'score': None, 'terms': {k: 0 for k in HEALTH_TERMS},
                                      'failed': [], 'reason': 'test', 'source': None})
                     for pr in self.snapshot['prs']]
