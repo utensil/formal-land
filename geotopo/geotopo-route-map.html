@@ -322,7 +322,7 @@ function renderGoals() {
     return `<div class="goal" data-g="${g.id}" style="--gc:${PALETTE[g.color]}">
       <h3><span class="sw" style="background:${PALETTE[g.color]}"></span>Route ${esc(g.symbol)} — ${esc(g.title)}</h3>
       <div class="bar"><i style="width:${pct}%;background:${PALETTE[g.color]}"></i></div>
-      <div class="pct">${pct}% of the route's nodes progressed (done = 1, in review = .75, incomplete = .6, branch = .2, open = .05)</div>
+      <div class="pct">${pct}% of the route's nodes progressed (merged = 1, in review = .75, incomplete = .6)</div>
       <div class="route-lbl">route</div>
       <div class="route">${nodes.map(n=>esc(n.label)).join('<span class="sep">→</span>')}</div>
       <div class="route-lbl">branches</div>
