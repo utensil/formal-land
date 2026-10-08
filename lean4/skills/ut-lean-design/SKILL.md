@@ -35,10 +35,11 @@ hypothesis question, run a focused recon probe and update the manifest.
    the first concrete consumer and name the coherence law between them; use
    that probe to decide whether introduction, elimination, uniqueness,
    identity, inverse, or composition laws are actually needed.
-5. **Proof boundary.** Which named map or boundary lemma replaces an
-   elementwise chain or private-construction definitional equality? Public
-   proofs must not rely on unexplained `change`, `show`, or bare `rfl` across
-   that boundary.
+5. **Proof boundary.** Find the structure whose API supplies the needed law
+   and reuse its comparison lemmas. Where one is missing, try `change`, or
+   prove a local equality `h` by `rfl` and use `simp [h]` or `rw [h]`.
+   Extract a bridge if the conversion recurs; check that the original
+   consumer's proof closes.
 
 ## Locks and exit
 
