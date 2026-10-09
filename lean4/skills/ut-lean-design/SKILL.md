@@ -17,29 +17,15 @@ hypothesis question, run a focused recon probe and update the manifest.
 
 ## Five questions
 
-1. **Dependency and scope.** Which authoritative requirement does the slice
-   discharge? What declaration consumes it? Why is the boundary coherent?
-2. **Natural statement.** Which variables are genuinely arbitrary? Link the
-   recon hypothesis probes by declaration name and result. Before accepting
-   finiteness for an equivalence, try an explicit inverse or extensionality
-   route.
-3. **Existing structure.** Which pinned map, equivalence, or composition
-   theorem is the starting point? Link the recon evidence.
-4. **Public consumer contract.** Name each scratch consumer declaration and
-   record whether it compiled. The probe must elaborate the actual immediate
-   downstream declaration signature and first use; an author-supplied proxy is
-   evidence to challenge, not the contract. Cover the applicable application,
-   membership, forward/inverse, zero/successor, and canonical-coordinate
-   equations with opaque definitions and bare `simp` or an explicitly named
-   theorem. When an abstraction combines an operation with a relation, compile
-   the first concrete consumer and name the coherence law between them; use
-   that probe to decide whether introduction, elimination, uniqueness,
-   identity, inverse, or composition laws are actually needed.
-5. **Proof boundary.** Find the structure whose API supplies the needed law
-   and reuse its comparison lemmas. Where one is missing, try `change`, or
-   prove a local equality `h` by `rfl` and use `simp [h]` or `rw [h]`.
-   Extract a bridge if the conversion recurs; check that the original
-   consumer's proof closes.
+1. **Dependency and scope.** Which authoritative requirement does this slice address, and why is it a coherent unit? Trace its prerequisites and first downstream use; distinguish inseparable support from independently reusable results.
+
+2. **Natural statement.** Which variables are arbitrary, and which hypotheses does the mathematics need? Compare nearby statements and recon probes; weakening assumptions, or trying an explicit inverse or extensionality for an equivalence, can reveal the natural generality.
+
+3. **Existing structure.** Which existing map, equivalence, universal property, or composition theorem offers a starting point? Search the pinned library by structure and conclusion, then try the candidate’s actual signature in a small recon probe.
+
+4. **Public consumer contract.** What should the immediate downstream declaration be able to state and prove through this API? Try its actual signature and first use in a compiled scratch consumer without unfolding definitions. Representative application, membership, inverse, recursion, or coordinate equations can reveal missing laws; for an operation paired with a relation, what makes them coherent?
+
+5. **Proof boundary.** Which map or lemma should connect the chosen construction to its downstream proofs? Test the existing API in a small consumer; if presentations differ, `change` or a local `rfl` equality can help reveal the needed comparison. Is that comparison specific to this proof, or useful enough to expose as a reusable lemma?
 
 ## Locks and exit
 
