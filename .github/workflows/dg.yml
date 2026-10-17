@@ -1,0 +1,43 @@
+name: DG CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/dg.yml'
+      - 'dg/**'
+  workflow_dispatch:
+
+jobs:
+  pages:
+    name: Stage DG pages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore github-pages cache
+        uses: actions/cache/restore@v4
+        with:
+            path: github-pages
+            key: github-pages-${{ github.run_id }}
+            restore-keys: |
+              github-pages
+      - name: Stage pages
+        run: |
+          # Stage exactly the current tree: delete-then-copy so files removed from dg/
+          # drop out of the cached github-pages directory instead of persisting. The
+          # generator and its data are private, so this directory holds the published
+          # page alone.
+          rm -rf github-pages/dg
+          mkdir -p github-pages/dg
+          cp -R dg/. github-pages/dg/
+      - name: Save github-pages cache
+        uses: actions/cache/save@v4
+        with:
+            path: github-pages
+            key: github-pages-${{ github.run_id }}
+      - name: Upload pages artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pages-dg
+          path: github-pages/dg
+          if-no-files-found: error

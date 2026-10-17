@@ -71,7 +71,7 @@ jobs:
             # and a section whose latest successful run uploaded no artifact
             # (e.g. lean4 without an [annotate] tag) keeps its last cached content
             # instead of being dropped from the deployed site.
-            for spec in "aya.yml pages-aya" "lean4.yml pages-lean4" "tla.yml pages-tla" "spinrep.yml pages-spinrep" "geotopo.yml pages-geotopo"; do
+            for spec in "aya.yml pages-aya" "lean4.yml pages-lean4" "tla.yml pages-tla" "spinrep.yml pages-spinrep" "geotopo.yml pages-geotopo" "dg.yml pages-dg"; do
               set -- $spec
               wf_file=$1
               artifact=$2
@@ -88,6 +88,7 @@ jobs:
                   pages-tla)     mkdir -p github-pages/tla;     cp -R "staging-$artifact/." github-pages/tla/ ;;
                   pages-spinrep) rm -rf github-pages/spinrep; mkdir -p github-pages/spinrep; cp -R "staging-$artifact/." github-pages/spinrep/ ;;
                   pages-geotopo) rm -rf github-pages/geotopo; mkdir -p github-pages/geotopo; cp -R "staging-$artifact/." github-pages/geotopo/ ;;
+                  pages-dg) rm -rf github-pages/dg; mkdir -p github-pages/dg; cp -R "staging-$artifact/." github-pages/dg/ ;;
                   pages-lean4) cp -R "staging-$artifact/." github-pages/ ;;
                 esac
               else
@@ -106,7 +107,7 @@ jobs:
             # [annotate] tag in the commit message so cache and artifact are
             # rebuilt, then retry this deploy.
             missing=0
-            for d in aya tla spinrep geotopo lean4 lean4-duper-xp lean4-verso-xp; do
+            for d in aya tla spinrep geotopo dg lean4 lean4-duper-xp lean4-verso-xp; do
               if [ ! -d "github-pages/$d" ]; then
                 echo "::error::github-pages/$d is missing: no fresh artifact and no cached content. Re-run the project CIs with an [annotate] commit to rebuild the pages cache, then retry the deploy."
                 missing=1
