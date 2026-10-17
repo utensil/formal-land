@@ -1,6 +1,6 @@
 <!--
 ---
-title: Spin representations route map
+title: Differential geometry route map
 repo: utensil/formal-land/spinrep/spinrep-route-map.html
 public-url: https://utensil.github.io/formal-land/spinrep/spinrep-route-map.html
 ---
@@ -10,7 +10,7 @@ public-url: https://utensil.github.io/formal-land/spinrep/spinrep-route-map.html
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Spin representations route map — dependency graph with goal-colored routes</title>
+<title>Differential geometry route map — dependency graph with goal-colored routes</title>
 <style>
 :root{
   --bg:#232323; --card:#2b2b2b; --line:#3d3d3d; --fg:#e6e1dc; --muted:#9d9485;
@@ -109,7 +109,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 </head>
 <body>
 <div class="wrap">
-<h1>Spin representations route map</h1>
+<h1>Differential geometry route map</h1>
 <div class="sub">The SpinRepresentations roadmap as a dependency graph: gray dashed edges are the dependency spine, each goal draws its route in its own color toward its summit, and a shared edge splits into one lane per goal. The goals shown do not cap target selection — uncovered roadmap targets and their direct RepresentationTheory prerequisites qualify as cohesive slices — and a new goal is one entry in the <code>GOALS</code> array.</div>
 <h2>Goals</h2>
 <div class="sub">Successor routes reconciled 7 October 2026: completed assignments do not exhaust the roadmap. Skip supplied milestones, consume active owners’ work, and advance the first dependency-ready missing slice across each route. Goal panels express mathematical priorities; worker rollout is tracked separately. Other historical node annotations retain their earlier audit dates.</div>
@@ -118,7 +118,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 
 <h2>The map (all 13 layers)</h2>
 <div id="stats" class="sub" style="margin-top:6px"></div>
-<div class="sub" style="font-size:12px;margin-top:2px">Collected as PRs labelled <code>roadmap/RepresentationTheory</code> whose changed files touch <span class="refLink" id="dirsRef">the spin representations directories</span>, plus the lane's goal PRs.</div>
+<div class="sub" style="font-size:12px;margin-top:2px">Collected as PRs labelled <code>roadmap/DifferentialGeometry</code> whose changed files touch <span class="refLink" id="dirsRef">the differential geometry directories</span>, plus the lane's goal PRs.</div>
 <div class="sub" style="font-size:12px;margin-top:2px">The lane also advances the orthogonal and spin groups roadmap: its PRs (label <code>roadmap/OrthogonalSpinGroups</code>) are listed on the <a class="prlink pr-neutral" href="spingrp-route-map.html">orthogonal and spin groups route map</a> and are not counted here.</div>
 <svg id="map" viewBox="0 0 1420 1180" preserveAspectRatio="xMidYMin meet"></svg>
 
@@ -720,7 +720,7 @@ tip.addEventListener("mouseleave", () => { clearTimeout(hideTimer); hideTip(); }
   const TREE = "https://github.com/TauCetiProject/TauCeti/tree/main/";
   const DIRS = [];
   const link = d => '<a class="prlink pr-neutral" href="' + TREE + d + '" target="_blank" rel="noopener">TauCeti/' + d + "</a>";
-  const html = "<b>the spin representations directories</b>" +
+  const html = "<b>the differential geometry directories</b>" +
     '<div class="tstatus">labelled PRs are tracked from these trees; the count is how many tracked PRs touch each:</div>' +
     DIRS.map(d => '<div class="tstatus">' + link(d[0]) + " · " + d[1] + (d[2] ? " · " + d[2] : "") + "</div>").join("") +
     '<div class="tstatus">plus a long tail of single-PR families (SkewAdjoint, Analysis/Normed, Geometry/Manifold, RingTheory/Idempotents, Algebra/AlgebraicGroup, …)</div>' +
