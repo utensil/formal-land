@@ -12,6 +12,7 @@ The following projects are agent work closely steered by me, with guidance from 
     - [Spin representations](https://utensil.github.io/formal-land/spinrep/spinrep-route-map.html)
         - [math notes (agent drafted)](https://utensil.github.io/forest/fcap-0019/)
     - [Orthogonal and spin groups](https://utensil.github.io/formal-land/spinrep/spingrp-route-map.html)
+    - [Differential geometry](https://utensil.github.io/formal-land/dg/dg-route-map.html)
     - [Geometric topology](https://utensil.github.io/formal-land/geotopo/geotopo-route-map.html)
 - [FGAP](https://github.com/utensil/fgap): Study the foundational gap between established mathematical tools and open questions about physical structures, grounded by formalization.
     - [math notes (agent drafted)](https://utensil.github.io/forest/fgap-0001/)
